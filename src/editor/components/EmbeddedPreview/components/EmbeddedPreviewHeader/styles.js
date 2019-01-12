@@ -4,40 +4,49 @@ import { css } from 'emotion';
 import { transparentize } from 'polished';
 import colors from '../../../../../styles/config/colors';
 import fontWeights from '../../../../../styles/config/fontWeights';
+import { getRem } from '../../../../../styles/utils/measurements';
+import { smallBoldTextCss } from '../../../../../styles/shared/typography';
 
 const headerClass = css`
-  border-bottom: 1px solid ${transparentize(0.75, colors.shadeBlue)};
-  height: 36px;
+  border-bottom: ${getRem(1)} solid ${transparentize(0.75, colors.shadeBlue)};
+  height: ${getRem(36)};
   display: flex;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 ${getRem(10)};
 `;
 
 const optionClass = css`
-  margin-right: 26px;
+  margin-right: ${getRem(26)};
 
   &:last-child {
     margin-right: 0;
   }
 `;
 
-const deviceSelectorClass = css`
-  font-weight: ${fontWeights.bold};
-  font-size: 12px;
-  color: ${colors.darkBlue};
+const selectorCss = css`
+  ${smallBoldTextCss};
   display: flex;
   cursor: pointer;
   align-items: center;
 
   svg {
     display: block;
-    margin-left: 3px;
+    margin-left: ${getRem(3)};
     color: ${colors.darkLightBlue};
   }
+`;
+
+const deviceSelectorClass = css`
+  ${selectorCss};
+`;
+
+const zoomSelectorClass = css`
+  ${selectorCss};
 `;
 
 export default {
   headerClass,
   optionClass,
   deviceSelectorClass,
+  zoomSelectorClass,
 };

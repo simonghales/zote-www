@@ -3,6 +3,7 @@
 import { css } from 'emotion';
 import colors from '../../../../../styles/config/colors';
 import fontWeights from '../../../../../styles/config/fontWeights';
+import { getRem } from '../../../../../styles/utils/measurements';
 
 const classNames = {
   blockItemSelected: 'blockItemSelected',
@@ -20,7 +21,7 @@ const containerClass = css`
     top: 0;
     right: 0;
     bottom: 0;
-    width: 3px;
+    width: ${getRem(3)};
     background-color: ${colors.vibrant};
   }
 `;
@@ -38,7 +39,7 @@ const selectedClass = css`
 const clickableClass = css`
   display: flex;
   align-items: center;
-  padding: 7px;
+  padding: ${getRem(7)};
 
   &:hover {
     color: ${colors.vibrant};
@@ -52,18 +53,18 @@ const clickableClass = css`
 
 const iconClass = css`
   color: ${colors.darkLightBlue};
-  width: 15px;
-  height: 15px;
+  width: ${getRem(15)};
+  height: ${getRem(15)};
   background-color: ${colors.white};
-  border-radius: 3px;
-  margin-right: 5px;
+  border-radius: ${getRem(3)};
+  margin-right: ${getRem(5)};
   display: flex;
   align-items: center;
   justify-content: center;
 
   svg {
     display: block;
-    width: 8px;
+    width: ${getRem(8)};
   }
 
   .${classNames.blockItemSelected} & {

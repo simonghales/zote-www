@@ -2,6 +2,7 @@
 
 import { css } from 'emotion';
 import spacing from '../../../../../../styles/config/spacing';
+import { getRem } from '../../../../../../styles/utils/measurements';
 
 const containerClass = css`
   height: 100%;
@@ -10,9 +11,9 @@ const containerClass = css`
 `;
 
 const addBlockWrapperClass = css`
-  padding: 0 ${spacing.medium}px;
-  margin: 7px 0;
-  margin-left: -8px;
+  padding: 0 ${getRem(spacing.medium)};
+  margin: ${getRem(7)} 0;
+  margin-left: ${getRem(-8)};
 `;
 
 const contentWrapperClass = css`

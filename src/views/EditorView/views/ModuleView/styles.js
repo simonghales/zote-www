@@ -1,6 +1,7 @@
 // @flow
 
 import { css } from 'emotion';
+import { getRem } from '../../../../styles/utils/measurements';
 
 const containerClass = css`
   width: 100%;
@@ -10,13 +11,14 @@ const containerClass = css`
 
 const editorContainerClass = css`
   width: 100%;
-  max-width: 320px;
+  max-width: ${getRem(320)};
   height: 100%;
 `;
 
 const previewContainerClass = css`
   flex: 1;
   height: 100%;
+  overflow: hidden;
 `;
 
 export default {

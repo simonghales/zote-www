@@ -4,6 +4,8 @@ import colors from './config/colors';
 import fontFamilies from './config/fontFamilies';
 import fontSizes from './config/fontSizes';
 
+export const ROOT_FONT_SIZE = fontSizes.body;
+
 export default injectGlobal`
     ${reset};
     
@@ -11,11 +13,14 @@ export default injectGlobal`
         box-sizing: border-box;
     }
     
+    html {
+        font-size: ${ROOT_FONT_SIZE}px;
+    }
+    
     body {
         ${fontFamilies.body};
         background-color: ${colors.siteBackground};
         color: ${colors.darkText};
-        font-size: ${fontSizes.body};
         line-height: 1.35;
     }
     

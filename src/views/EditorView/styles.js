@@ -1,6 +1,7 @@
 // @flow
 
 import { css } from 'emotion';
+import { getRem } from '../../styles/utils/measurements';
 
 const containerClass = css`
   position: fixed;
@@ -12,13 +13,14 @@ const containerClass = css`
 `;
 
 const sidebarClass = css`
-  width: 180px;
+  width: ${getRem(180)};
   height: 100%;
 `;
 
 const mainClass = css`
   flex: 1;
   height: 100%;
+  overflow: hidden;
 `;
 
 export default {

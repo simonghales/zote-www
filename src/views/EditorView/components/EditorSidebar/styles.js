@@ -5,6 +5,7 @@ import colors from '../../../../styles/config/colors';
 import zindexes from '../../../../styles/config/zindexes';
 import spacing from '../../../../styles/config/spacing';
 import fontWeights from '../../../../styles/config/fontWeights';
+import { getRem } from '../../../../styles/utils/measurements';
 
 const containerClass = css`
   background-color: ${colors.sidebarBackground};
@@ -16,7 +17,7 @@ const containerClass = css`
 `;
 
 const headerClass = css`
-  padding: ${spacing.medium}px ${spacing.medium}px 0 ${spacing.medium}px;
+  padding: ${getRem(spacing.medium)} ${getRem(spacing.medium)} 0 ${getRem(spacing.medium)};
 `;
 
 const logoClass = css`
@@ -30,11 +31,11 @@ const middleClass = css`
 `;
 
 const footerClass = css`
-  padding: 0 ${spacing.medium}px ${spacing.medium}px ${spacing.medium}px;
+  padding: 0 ${getRem(spacing.medium)} ${getRem(spacing.medium)} ${getRem(spacing.medium)};
 `;
 
 const navSelectorClass = css`
-  margin-top: 8px;
+  margin-top: ${getRem(8)};
   font-weight: ${fontWeights.bold};
   font-size: 14px;
   color: ${colors.darkBlue};
@@ -47,11 +48,11 @@ const navSelectorTextClass = css``;
 
 const navSelectorIconClass = css`
   color: ${colors.darkLightBlue};
-  margin-left: 4px;
+  margin-left: ${getRem(4)};
 
   svg {
     display: block;
-    width: 7px;
+    width: ${getRem(7)};
   }
 `;
 

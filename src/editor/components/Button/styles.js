@@ -5,6 +5,7 @@ import { darken } from 'polished';
 import { buttonResetCss, solidButtonCss } from '../../../styles/button';
 import fontWeights from '../../../styles/config/fontWeights';
 import colors from '../../../styles/config/colors';
+import { getEm } from '../../../styles/utils/measurements';
 
 const classNames = {
   buttonIcon: 'buttonIcon',
@@ -18,20 +19,22 @@ const solidButtonClass = css`
   ${solidButtonCss};
 `;
 
+const slimIconButtonFontSize = 11;
+
 const slimIconButtonClass = css`
   display: flex;
   align-items: center;
-  font-size: 11px;
+  font-size: ${slimIconButtonFontSize}px;
   font-weight: ${fontWeights.bold};
   background-color: ${colors.lightBlue};
   color: ${colors.darkLightBlue};
-  padding: 3px 9px;
-  border-radius: 18px;
+  padding: ${getEm(3, slimIconButtonFontSize)} ${getEm(9, slimIconButtonFontSize)};
+  border-radius: ${getEm(18, slimIconButtonFontSize)};
 
   svg {
     //width: 8px;
     display: block;
-    margin-right: 4px;
+    margin-right: ${getEm(4, slimIconButtonFontSize)};
   }
 
   &:hover {

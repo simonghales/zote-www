@@ -6,9 +6,11 @@
     "emotion": "^10.0.6",
     "polished": "^2.3.3",
     "react": "^16.7.0",
+    "react-container-dimensions": "^1.4.1",
     "react-dom": "^16.7.0",
     "react-emotion": "^10.0.0",
     "react-icons": "^3.3.0",
+    "react-resizable": "^1.7.5",
     "react-scripts": "2.1.3"
   },
   "devDependencies": {
