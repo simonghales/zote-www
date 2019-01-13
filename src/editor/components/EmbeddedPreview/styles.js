@@ -12,6 +12,7 @@ const containerClass = css`
 
 const bodyClass = css`
   flex: 1;
+  overflow: hidden;
 `;
 
 export default {

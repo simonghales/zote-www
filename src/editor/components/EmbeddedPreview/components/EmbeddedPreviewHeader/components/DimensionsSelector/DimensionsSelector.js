@@ -19,7 +19,7 @@ const DimensionsSelector = ({ width, height, setWidth, setHeight }: Props) => (
   <div className={styles.dimensionsSelectorClass}>
     <div>
       <ShortInput
-        value={width.toString()}
+        value={Math.round(width).toString()}
         onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
           setWidth(getInputNumberValue(event));
         }}
@@ -28,7 +28,7 @@ const DimensionsSelector = ({ width, height, setWidth, setHeight }: Props) => (
     <div className={styles.dividerClass}>x</div>
     <div>
       <ShortInput
-        value={height.toString()}
+        value={Math.round(height).toString()}
         onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
           setHeight(getInputNumberValue(event));
         }}

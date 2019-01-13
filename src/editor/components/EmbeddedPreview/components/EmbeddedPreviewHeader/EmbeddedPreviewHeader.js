@@ -5,20 +5,15 @@ import styles from './styles';
 import { SlimIconDarkerButton } from '../../../Button/Button';
 import DimensionsSelector from './components/DimensionsSelector/DimensionsSelector';
 import { EmbeddedPreviewConfigContext } from '../../context';
+import ZoomSelector from './components/ZoomSelector/ZoomSelector';
+import DeviceSelector from './components/DeviceSelector/DeviceSelector';
 
-const DeviceSelector = () => (
-  <div className={styles.deviceSelectorClass}>
-    <div>Large Desktop</div>
-    <FaCaretDown />
-  </div>
-);
-
-const ZoomSelector = () => (
-  <div className={styles.zoomSelectorClass}>
-    <div>100%</div>
-    <FaCaretDown />
-  </div>
-);
+// const ZoomSelector = () => (
+//   <div className={styles.zoomSelectorClass}>
+//     <div>100%</div>
+//     <FaCaretDown />
+//   </div>
+// );
 
 const OpenInTab = () => (
   <SlimIconDarkerButton icon={<FaExternalLinkAlt size={10} />}>Open in tab</SlimIconDarkerButton>
@@ -26,10 +21,10 @@ const OpenInTab = () => (
 
 const EmbeddedPreviewHeader = () => (
   <EmbeddedPreviewConfigContext.Consumer>
-    {({ width, height, setWidth, setHeight }) => (
+    {({ width, height, setWidth, setHeight, zoom, setZoom, preset, setPreset }) => (
       <header className={styles.headerClass}>
         <div className={styles.optionClass}>
-          <DeviceSelector />
+          <DeviceSelector preset={preset} setPreset={setPreset} width={width} height={height} />
         </div>
         <div className={styles.optionClass}>
           <DimensionsSelector
@@ -40,7 +35,7 @@ const EmbeddedPreviewHeader = () => (
           />
         </div>
         <div className={styles.optionClass}>
-          <ZoomSelector />
+          <ZoomSelector zoom={zoom} setZoom={setZoom} />
         </div>
         <div className={styles.optionClass}>
           <OpenInTab />
