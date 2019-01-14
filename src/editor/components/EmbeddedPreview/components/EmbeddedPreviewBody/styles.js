@@ -60,7 +60,6 @@ const contentClass = css`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${colors.white};
 `;
 
 export default {

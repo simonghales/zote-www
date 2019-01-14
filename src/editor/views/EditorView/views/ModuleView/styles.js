@@ -1,7 +1,7 @@
 // @flow
 
 import { css } from 'emotion';
-import { getRem } from '../../../../styles/utils/measurements';
+import { getRem } from '../../../../../styles/utils/measurements';
 
 const containerClass = css`
   width: 100%;

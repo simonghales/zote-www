@@ -1,8 +1,8 @@
 // @flow
 
 import { css } from 'emotion';
-import spacing from '../../../../../../styles/config/spacing';
-import { getRem } from '../../../../../../styles/utils/measurements';
+import spacing from '../../../../../../../styles/config/spacing';
+import { getRem } from '../../../../../../../styles/utils/measurements';
 
 const containerClass = css`
   height: 100%;

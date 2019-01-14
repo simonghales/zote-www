@@ -1,11 +1,11 @@
 // @flow
 
 import { css } from 'emotion';
-import colors from '../../../../styles/config/colors';
-import zindexes from '../../../../styles/config/zindexes';
-import spacing from '../../../../styles/config/spacing';
-import fontWeights from '../../../../styles/config/fontWeights';
-import { getRem } from '../../../../styles/utils/measurements';
+import colors from '../../../../../styles/config/colors';
+import zindexes from '../../../../../styles/config/zindexes';
+import spacing from '../../../../../styles/config/spacing';
+import fontWeights from '../../../../../styles/config/fontWeights';
+import { getRem } from '../../../../../styles/utils/measurements';
 
 const containerClass = css`
   background-color: ${colors.sidebarBackground};

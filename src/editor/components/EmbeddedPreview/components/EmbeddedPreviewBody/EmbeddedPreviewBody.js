@@ -157,7 +157,13 @@ class EmbeddedPreviewBodyContent extends Component<Props> {
   };
 
   render() {
-    const { availableWidth, availableHeight } = this.props;
+    const {
+      availableWidth,
+      availableHeight,
+      desiredWidth,
+      desiredHeight,
+      desiredZoom,
+    } = this.props;
     const [width, height] = this.getBoxDimensions();
     return (
       <ResizableBox
@@ -169,7 +175,7 @@ class EmbeddedPreviewBodyContent extends Component<Props> {
       >
         <div className={styles.contentWrapperClass}>
           <div className={styles.contentClass}>
-            <ModuleIframe />
+            <ModuleIframe width={desiredWidth} height={desiredHeight} zoom={desiredZoom} />
           </div>
         </div>
       </ResizableBox>

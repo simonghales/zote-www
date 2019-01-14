@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import EditorView from '../../views/EditorView/EditorView';
+import EditorView from '../../editor/views/EditorView/EditorView';
 
 const App = () => <EditorView />;
 

@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
 import styles from './styles';
-import ModuleEditor from '../../../../editor/components/ModuleEditor/ModuleEditor';
-import EmbeddedPreview from '../../../../editor/components/EmbeddedPreview/EmbeddedPreview';
+import ModuleEditor from '../../../../components/ModuleEditor/ModuleEditor';
+import EmbeddedPreview from '../../../../components/EmbeddedPreview/EmbeddedPreview';
 
 const ModuleView = () => (
   <div className={styles.containerClass}>

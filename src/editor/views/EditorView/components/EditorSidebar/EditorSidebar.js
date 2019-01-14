@@ -2,8 +2,8 @@
 import React from 'react';
 import { FaCaretDown } from 'react-icons/fa';
 import styles from './styles';
-import { SolidButton } from '../../../../editor/components/Button/Button';
-import SiteLogo from '../../../../editor/components/SiteLogo/SiteLogo';
+import { SolidButton } from '../../../../components/Button/Button';
+import SiteLogo from '../../../../components/SiteLogo/SiteLogo';
 import EditorSidebarModules from './views/EditorSidebarModules/EditorSidebarModules';
 
 const NavSelector = () => (

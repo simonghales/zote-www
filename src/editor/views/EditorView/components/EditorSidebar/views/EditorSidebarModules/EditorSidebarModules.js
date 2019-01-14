@@ -2,8 +2,8 @@
 import React from 'react';
 import { FaPlus } from 'react-icons/fa';
 import styles from './styles';
-import { SlimIconButton } from '../../../../../../editor/components/Button/Button';
-import ModulesSortable from '../../../../../../editor/components/ModulesSortable/ModulesSortable';
+import { SlimIconButton } from '../../../../../../components/Button/Button';
+import ModulesSortable from '../../../../../../components/ModulesSortable/ModulesSortable';
 
 const EditorSidebarModules = () => (
   <div className={styles.containerClass}>
