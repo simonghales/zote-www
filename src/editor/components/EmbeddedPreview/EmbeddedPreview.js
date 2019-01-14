@@ -35,7 +35,6 @@ class EmbeddedPreview extends Component<Props, State> {
 
   handleSetPreset = (preset: string) => {
     const dimensions = getPresetDimensions(preset);
-    console.log('dimensions', dimensions);
     this.setState((state: State) => ({
       ...state,
       config: {
@@ -44,6 +43,7 @@ class EmbeddedPreview extends Component<Props, State> {
         width: dimensions ? dimensions[0] : state.config.width,
         height: dimensions ? dimensions[1] : state.config.height,
         lastCause: EMBEDDED_PREVIEW_CONFIG_CAUSES.size,
+        zoom: 100,
       },
     }));
   };
@@ -85,7 +85,6 @@ class EmbeddedPreview extends Component<Props, State> {
 
   getContextState() {
     const { config } = this.state;
-    console.log('config', config);
     return {
       ...config,
       setPreset: this.handleSetPreset,

@@ -14,16 +14,17 @@ const containerClass = css`
   justify-content: center;
 `;
 
-const iframeClass = css`
+const iframeContainerClass = css`
   background: ${colors.white};
   width: 100%;
   height: 100%;
   position: absolute;
   transform-origin: center center;
   transform: scale(1);
+  overflow: hidden;
 `;
 
 export default {
   containerClass,
-  iframeClass,
+  iframeContainerClass,
 };

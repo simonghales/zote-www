@@ -2,8 +2,9 @@
 import React, { Component } from 'react';
 import { Resizable, ResizableBox } from 'react-resizable';
 import ContainerDimensions from 'react-container-dimensions';
+import { cx } from 'emotion';
 import styles from './styles';
-import ModuleIframe from '../../../ModuleIframe/ModuleIframe';
+import ModuleIframeWrapper from '../../../ModuleIframeWrapper/ModuleIframeWrapper';
 import { EMBEDDED_PREVIEW_CONFIG_CAUSES, EmbeddedPreviewConfigContext } from '../../context';
 import type { EmbeddedPreviewConfigLastCause } from '../../context';
 
@@ -80,7 +81,18 @@ type Props = {
   setZoom: (zoom: number) => void,
 };
 
-class EmbeddedPreviewBodyContent extends Component<Props> {
+type State = {
+  resizing: boolean,
+};
+
+class EmbeddedPreviewBodyContent extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      resizing: false,
+    };
+  }
+
   componentDidMount(): void {
     this.calculateZoom(this.props);
   }
@@ -138,6 +150,18 @@ class EmbeddedPreviewBodyContent extends Component<Props> {
     );
   }
 
+  handleResizeStart = () => {
+    this.setState({
+      resizing: true,
+    });
+  };
+
+  handleResizeStop = () => {
+    this.setState({
+      resizing: false,
+    });
+  };
+
   handleResize = (
     event: SyntheticEvent<any>,
     data: {
@@ -153,6 +177,9 @@ class EmbeddedPreviewBodyContent extends Component<Props> {
     } = data;
     const updatedWidth = width / (desiredZoom / 100);
     const updatedHeight = height / (desiredZoom / 100);
+    this.setState({
+      resizing: true,
+    });
     onResize(updatedWidth, updatedHeight);
   };
 
@@ -165,6 +192,7 @@ class EmbeddedPreviewBodyContent extends Component<Props> {
       desiredZoom,
     } = this.props;
     const [width, height] = this.getBoxDimensions();
+    const { resizing } = this.state;
     return (
       <ResizableBox
         width={width}
@@ -173,9 +201,13 @@ class EmbeddedPreviewBodyContent extends Component<Props> {
         maxConstraints={[availableWidth, availableHeight]}
         onResize={this.handleResize}
       >
-        <div className={styles.contentWrapperClass}>
+        <div
+          className={cx(styles.contentWrapperClass, {
+            [styles.contentWrapperResizingClass]: resizing,
+          })}
+        >
           <div className={styles.contentClass}>
-            <ModuleIframe width={desiredWidth} height={desiredHeight} zoom={desiredZoom} />
+            <ModuleIframeWrapper width={desiredWidth} height={desiredHeight} zoom={desiredZoom} />
           </div>
         </div>
       </ResizableBox>

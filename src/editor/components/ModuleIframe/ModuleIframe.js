@@ -1,26 +1,25 @@
 // @flow
 import React from 'react';
-import styles from './styles';
+import debounceRender from 'react-debounce-render';
 
 type Props = {
   width: number,
   height: number,
-  zoom: number,
 };
 
-const ModuleIframe = ({ width, height, zoom }: Props) => (
-  <div className={styles.containerClass}>
-    <div
-      className={styles.iframeClass}
-      style={{
-        width,
-        height,
-        transform: `scale(${zoom / 100})`
-      }}
-    >
-      iframe...
-    </div>
-  </div>
+const getPreviewUrl = (): string => `${window.location.origin}/preview`;
+
+const ModuleIframe = ({ width, height }: Props) => (
+  <iframe
+    style={{
+      width,
+      height,
+    }}
+    src={getPreviewUrl()}
+  />
 );
 
-export default ModuleIframe;
+export default debounceRender(ModuleIframe, 200, {
+  leading: true,
+  trailing: true,
+});

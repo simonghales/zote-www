@@ -54,6 +54,10 @@ const contentWrapperClass = css`
   }
 `;
 
+const contentWrapperResizingClass = css`
+  pointer-events: none;
+`;
+
 const contentClass = css`
   position: absolute;
   top: 0;
@@ -66,5 +70,6 @@ export default {
   containerClass,
   availableSpaceClass,
   contentWrapperClass,
+  contentWrapperResizingClass,
   contentClass,
 };
