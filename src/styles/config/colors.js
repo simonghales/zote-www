@@ -5,6 +5,7 @@ const white = '#FFFFFF';
 const darkBlue = '#3C5071';
 const darkLightBlue = '#6E85AB';
 const shadeBlue = '#8498BA';
+const lightFaintShade = '#D3D8EA';
 const lightishBlue = '#E9EBF2';
 const lightBlue = '#EFF2F8';
 const lightBlueDarkened = '#E6EBF4';
@@ -24,6 +25,7 @@ export default {
   lightishBlue,
   lightBlue,
   lightBlueDarkened,
+  lightFaintShade,
   richBlue,
   siteBackground,
   sidebarBackground,

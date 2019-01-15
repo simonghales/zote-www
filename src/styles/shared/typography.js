@@ -9,3 +9,9 @@ export const smallBoldTextCss = css`
   font-size: 12px;
   color: ${colors.darkBlue};
 `;
+
+export const mediumBoldTextCss = css`
+  font-weight: ${fontWeights.bold};
+  font-size: 14px;
+  color: ${colors.darkBlue};
+`;

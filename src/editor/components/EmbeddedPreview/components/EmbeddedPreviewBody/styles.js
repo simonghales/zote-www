@@ -10,6 +10,10 @@ const containerClass = css`
   overflow: hidden;
   padding: ${getRem(100)};
 
+  @media only screen and (min-width: 1400px) {
+    padding: ${getRem(50)};
+  }
+
   .react-resizable {
     position: relative;
   }

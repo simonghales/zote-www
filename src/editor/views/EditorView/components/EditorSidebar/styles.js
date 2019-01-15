@@ -3,9 +3,13 @@
 import { css } from 'emotion';
 import colors from '../../../../../styles/config/colors';
 import zindexes from '../../../../../styles/config/zindexes';
-import spacing from '../../../../../styles/config/spacing';
-import fontWeights from '../../../../../styles/config/fontWeights';
 import { getRem } from '../../../../../styles/utils/measurements';
+import {
+  commonSidePadding,
+  selectHeaderCss,
+  selectHeaderIconCss,
+  selectHeaderTextCss,
+} from '../../../../../styles/shared/misc';
 
 const containerClass = css`
   background-color: ${colors.sidebarBackground};
@@ -17,7 +21,7 @@ const containerClass = css`
 `;
 
 const headerClass = css`
-  padding: ${getRem(spacing.medium)} ${getRem(spacing.medium)} 0 ${getRem(spacing.medium)};
+  padding: ${commonSidePadding} ${commonSidePadding} 0 ${commonSidePadding};
 `;
 
 const logoClass = css`
@@ -31,29 +35,20 @@ const middleClass = css`
 `;
 
 const footerClass = css`
-  padding: 0 ${getRem(spacing.medium)} ${getRem(spacing.medium)} ${getRem(spacing.medium)};
+  padding: 0 ${commonSidePadding} ${commonSidePadding} ${commonSidePadding};
 `;
 
 const navSelectorClass = css`
+  ${selectHeaderCss};
   margin-top: ${getRem(8)};
-  font-weight: ${fontWeights.bold};
-  font-size: 14px;
-  color: ${colors.darkBlue};
-  display: flex;
-  align-items: center;
-  cursor: pointer;
 `;
 
-const navSelectorTextClass = css``;
+const navSelectorTextClass = css`
+  ${selectHeaderTextCss};
+`;
 
 const navSelectorIconClass = css`
-  color: ${colors.darkLightBlue};
-  margin-left: ${getRem(4)};
-
-  svg {
-    display: block;
-    width: ${getRem(7)};
-  }
+  ${selectHeaderIconCss};
 `;
 
 export default {

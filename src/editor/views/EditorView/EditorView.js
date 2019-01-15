@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import 'styles/global';
 import styles from './styles';
 import EditorSidebar from './components/EditorSidebar/EditorSidebar';
 import ModuleView from './views/ModuleView/ModuleView';
