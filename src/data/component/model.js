@@ -14,3 +14,7 @@ export type ModuleComponentModel = {
   key: string,
   componentKey: string,
 };
+
+export type ComponentsModels = {
+  [string]: ComponentModel,
+};

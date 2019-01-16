@@ -6,7 +6,11 @@ export type StateStylesModel = {
   },
 };
 
-export type StylesModel = {
+export const STYLE_STATES = {
+  default: 'default',
+};
+
+export type StyleModel = {
   key: string,
   mixins: {
     [string]: {
@@ -20,4 +24,8 @@ export type StylesModel = {
       styles: StateStylesModel,
     },
   },
+};
+
+export type StylesModels = {
+  [string]: StyleModel,
 };

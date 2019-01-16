@@ -26,12 +26,25 @@ const fontFamilyColumn: EditorFormSectionColumnModel = {
   input: fontFamilyInput,
 };
 
+const fontSizeInput: EditorFormInputModel = {
+  name: 'font-size',
+  key: 'font-size',
+  inactive: true,
+  value: '',
+  onChange: () => {},
+};
+
+const fontSizeColumn: EditorFormSectionColumnModel = {
+  columns: 1,
+  input: fontSizeInput,
+};
+
 const textFormSection: EditorFormSectionModel = {
   heading: 'Text',
   key: 'text',
   rows: [
     {
-      columns: [fontFamilyColumn],
+      columns: [fontFamilyColumn, fontSizeColumn],
     },
   ],
 };

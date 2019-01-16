@@ -4,8 +4,8 @@ import React from 'react';
 import { cx } from 'emotion';
 import styles from './styles';
 import FormInput from '../FormInput/FormInput';
-import type { EditorFormSectionRowModel } from '../../data/models';
-import { getFormInput } from '../ReduxFormInput/ReduxFormInput';
+import type { EditorFormInputModel, EditorFormSectionRowModel } from '../../data/models';
+import ReduxFormInput from '../ReduxFormInput/ReduxFormInput';
 
 const Column = ({ children, columns }: { children: Node, columns: number }) => (
   <div
@@ -26,6 +26,13 @@ type Props = {
   heading: string,
   rows: Array<EditorFormSectionRowModel>,
 };
+
+export function getFormInput(input: EditorFormInputModel): Node {
+  if (input.reduxConnected) {
+    return <ReduxFormInput input={input} />;
+  }
+  return <FormInput name={input.name} value={input.value} inactive={input.inactive} />;
+}
 
 const FormSection = ({ heading, rows }: Props) => (
   <div className={styles.containerClass}>

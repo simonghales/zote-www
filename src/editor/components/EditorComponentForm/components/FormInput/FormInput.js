@@ -9,7 +9,7 @@ type Props = {
   inactive?: boolean,
 };
 
-const FormInput = ({ name, inactive }: Props) => (
+const FormInput = ({ name, inactive, value }: Props) => (
   <div>
     <header className={styles.headerClass}>
       <label
@@ -20,7 +20,7 @@ const FormInput = ({ name, inactive }: Props) => (
         {name}
       </label>
     </header>
-    <div>input...</div>
+    <div>{value}</div>
   </div>
 );
 

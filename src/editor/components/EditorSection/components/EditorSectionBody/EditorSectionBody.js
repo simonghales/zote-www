@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import styles from './styles';
-import EditorForm from '../../../EditorForm/EditorForm';
+import EditorForm from '../../../EditorComponentForm/EditorComponentForm';
 
 const EditorSectionBody = () => (
   <div className={styles.containerClass}>
