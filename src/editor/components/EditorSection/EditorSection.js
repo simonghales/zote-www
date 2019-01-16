@@ -1,16 +1,42 @@
 // @flow
-import React from 'react';
+import React, { Component } from 'react';
 import styles from './styles';
-import EditorSectionNav from './components/EditorSectionNav/EditorSectionNav';
+import EditorSectionNav, {
+  CONTENT_NAV_OPTION,
+} from './components/EditorSectionNav/EditorSectionNav';
 import EditorSectionBody from './components/EditorSectionBody/EditorSectionBody';
 
-const EditorSection = () => (
-  <div className={styles.containerClass}>
-    <EditorSectionNav />
-    <div className={styles.contentClass}>
-      <EditorSectionBody />
-    </div>
-  </div>
-);
+type Props = {};
+
+type State = {
+  selectedTab: string,
+};
+
+class EditorSection extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      selectedTab: CONTENT_NAV_OPTION.key,
+    };
+  }
+
+  setTab = (tab: string) => {
+    this.setState({
+      selectedTab: tab,
+    });
+  };
+
+  render() {
+    const { selectedTab } = this.state;
+    return (
+      <div className={styles.containerClass}>
+        <EditorSectionNav selectedTab={selectedTab} setTab={this.setTab} />
+        <div className={styles.contentClass}>
+          <EditorSectionBody />
+        </div>
+      </div>
+    );
+  }
+}
 
 export default EditorSection;

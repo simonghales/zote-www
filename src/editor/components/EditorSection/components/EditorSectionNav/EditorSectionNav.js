@@ -31,26 +31,42 @@ export const HTML_NAV_OPTION: NavOptionModel = {
 
 const options: Array<NavOptionModel> = [CONTENT_NAV_OPTION, STYLES_NAV_OPTION, HTML_NAV_OPTION];
 
-const NavOption = ({ label, icon, selected }: { label: string, icon: Node, selected: boolean }) => (
+type NavOptionProps = {
+  label: string,
+  icon: Node,
+  selected: boolean,
+  onClick: () => void,
+};
+
+const NavOption = ({ label, icon, selected, onClick }: NavOptionProps) => (
   <div
     className={cx(styles.navOptionClass, {
       [styles.navOptionSelectedClass]: selected,
     })}
+    onClick={onClick}
   >
     <div className={styles.navOptionIconClass}>{icon}</div>
     <div className={styles.navOptionTextClass}>{label}</div>
   </div>
 );
 
-const EditorSectionNav = () => (
+type Props = {
+  selectedTab: string,
+  setTab: (tab: string) => void,
+};
+
+const EditorSectionNav = ({ selectedTab, setTab }: Props) => (
   <div className={styles.wrapperClass}>
     <nav className={styles.containerClass}>
-      {options.map((option, index) => (
+      {options.map(option => (
         <NavOption
           label={option.label}
           key={option.key}
           icon={option.icon}
-          selected={index === 1}
+          selected={option.key === selectedTab}
+          onClick={() => {
+            setTab(option.key);
+          }}
         />
       ))}
     </nav>

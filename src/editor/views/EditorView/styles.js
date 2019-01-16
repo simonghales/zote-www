@@ -13,7 +13,7 @@ const containerClass = css`
 `;
 
 const sidebarClass = css`
-  width: ${getRem(180)};
+  width: ${getRem(200)};
   height: 100%;
 `;
 

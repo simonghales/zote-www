@@ -5,6 +5,7 @@ import colors from '../../../../../styles/config/colors';
 import zindexes from '../../../../../styles/config/zindexes';
 import { getRem } from '../../../../../styles/utils/measurements';
 import {
+  commonHeaderHeight,
   commonSidePadding,
   selectHeaderCss,
   selectHeaderIconCss,
@@ -21,10 +22,14 @@ const containerClass = css`
 `;
 
 const headerClass = css`
-  padding: ${commonSidePadding} ${commonSidePadding} 0 ${commonSidePadding};
+  padding: 0 ${commonSidePadding} 0 ${commonSidePadding};
 `;
 
 const logoClass = css`
+  height: ${commonHeaderHeight};
+  display: flex;
+  align-items: center;
+
   svg {
     display: block;
   }

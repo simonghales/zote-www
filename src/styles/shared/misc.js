@@ -14,11 +14,15 @@ export const selectHeaderCss = css`
 
 export const selectHeaderTextCss = css`
   ${mediumBoldTextCss};
+  position: relative;
+  top: 1px;
 `;
 
 export const selectHeaderIconCss = css`
   color: ${colors.darkLightBlue};
   margin-left: ${getRem(4)};
+  position: relative;
+  top: 1px;
 
   svg {
     display: block;
@@ -27,3 +31,5 @@ export const selectHeaderIconCss = css`
 `;
 
 export const commonSidePadding = getRem(spacing.medium);
+
+export const commonHeaderHeight = getRem(60);

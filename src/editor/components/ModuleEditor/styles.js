@@ -4,22 +4,25 @@ import { css } from 'emotion';
 import spacing from 'styles/config/spacing';
 import { getRem } from '../../../styles/utils/measurements';
 import {
+  commonHeaderHeight,
   selectHeaderCss,
   selectHeaderIconCss,
   selectHeaderTextCss,
 } from '../../../styles/shared/misc';
+import colors from '../../../styles/config/colors';
 
 const padding = getRem(spacing.medium);
 
 const containerClass = css`
   height: 100%;
-  padding: ${getRem(51)} 0 0 0;
   display: flex;
   flex-direction: column;
 `;
 
 const headerClass = css`
   ${selectHeaderCss};
+  height: ${commonHeaderHeight};
+  border-bottom: 1px solid #e3e5f0;
   padding: 0 ${padding};
 `;
 
@@ -32,7 +35,7 @@ const headerIconClass = css`
 `;
 
 const bodyClass = css`
-  margin-top: ${getRem(10)};
+  margin-top: ${padding};
   flex: 1;
 `;
 

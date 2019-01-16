@@ -6,13 +6,14 @@ import colors from '../../../../../styles/config/colors';
 import fontWeights from '../../../../../styles/config/fontWeights';
 import { getRem } from '../../../../../styles/utils/measurements';
 import { smallBoldTextCss } from '../../../../../styles/shared/typography';
+import { commonHeaderHeight, commonSidePadding } from '../../../../../styles/shared/misc';
 
 const headerClass = css`
   border-bottom: ${getRem(1)} solid ${transparentize(0.75, colors.shadeBlue)};
-  height: ${getRem(36)};
+  height: ${commonHeaderHeight};
   display: flex;
   align-items: center;
-  padding: 0 ${getRem(10)};
+  padding: 0 ${commonSidePadding};
 `;
 
 const optionClass = css`

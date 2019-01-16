@@ -1,6 +1,7 @@
 // @flow
 
 import { css } from 'emotion';
+import { transparentize } from 'polished';
 import { commonSidePadding } from '../../../../../styles/shared/misc';
 import { getRem } from '../../../../../styles/utils/measurements';
 import colors from '../../../../../styles/config/colors';
@@ -43,7 +44,7 @@ const navOptionClass = css`
     right: 0;
     bottom: 0;
     height: 2px;
-    background-color: ${colors.darkLightBlue};
+    background-color: ${transparentize(0.75, colors.darkLightBlue)};
     visibility: hidden;
     transform: translateX(-100%);
     transition: transform 250ms ease;

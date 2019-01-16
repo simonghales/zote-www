@@ -3,8 +3,11 @@ import React, { Component } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
 import Select from 'react-select';
 import styles from './styles';
+import colors from '../../../styles/config/colors';
 
-const CustomDropdownIndicator = () => <FaCaretDown size={12} />;
+const CustomDropdownIndicator = () => (
+  <FaCaretDown size={12} color={colors.darkLightBlue} style={{ display: 'block' }} />
+);
 
 export const DROPDOWN_SELECT_THEMES = {
   default: 'default',
