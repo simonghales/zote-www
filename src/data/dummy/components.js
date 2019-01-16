@@ -19,8 +19,8 @@ export const DUMMY_BLOCK_STYLES: StyleModel = {
   },
 };
 
-const DUMMY_BLOCK_COMPONENT: BlockModel = {
-  key: 'DUMMY_BLOCK_COMPONENT',
+export const DUMMY_BLOCK: BlockModel = {
+  key: 'DUMMY_BLOCK',
   blockTypeKey: '', // todo
   name: 'Dummy Block',
   styles: {
@@ -31,7 +31,7 @@ const DUMMY_BLOCK_COMPONENT: BlockModel = {
 export const DUMMY_TEST_COMPONENT: ComponentModel = {
   key: 'DUMMY_TEST_COMPONENT',
   blocks: {
-    [DUMMY_BLOCK_COMPONENT.key]: DUMMY_BLOCK_COMPONENT,
+    [DUMMY_BLOCK.key]: DUMMY_BLOCK,
   },
-  rootBlockKey: DUMMY_BLOCK_COMPONENT.key,
+  rootBlockKey: DUMMY_BLOCK.key,
 };
