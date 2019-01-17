@@ -1,9 +1,11 @@
 // @flow
 
 import { css } from 'emotion';
+import colors from './config/colors';
 import fontFamilies from './config/fontFamilies';
-import { getEm } from './utils/measurements';
+import { getEm, getRem } from './utils/measurements';
 import { smallBoldTextCss } from './shared/typography';
+import fontWeights from './config/fontWeights';
 
 export const inputResetCss = css`
   font: inherit;
@@ -16,16 +18,30 @@ export const inputResetCss = css`
   padding: 0;
 `;
 
-const shortInputFontSize = 13;
+const shortInputFontSize = 12;
 
 export const shortInputCss = css`
   ${fontFamilies.body};
   background: #dee2f0;
-  font-size: ${shortInputFontSize}px;
   border: ${getEm(1, shortInputFontSize)} solid #cbd2e4;
   padding: ${getEm(3, shortInputFontSize)} ${getEm(5, shortInputFontSize)};
   border-radius: ${getEm(2, shortInputFontSize)};
   width: ${getEm(44, shortInputFontSize)};
   text-align: center;
   ${smallBoldTextCss};
+`;
+
+export const plainInputCss = css`
+  background-color: ${colors.inputShade};
+  color: ${colors.darkBlue};
+  font-weight: ${fontWeights.medium};
+  font-size: ${shortInputFontSize}px;
+  border-radius: ${getEm(2, shortInputFontSize)};
+  padding: ${getEm(6, shortInputFontSize)} ${getRem(3)};
+  border: 2px solid ${colors.inputShade};
+
+  &:focus {
+    //background-color: ${colors.inputShadeFocused};
+    border-color: ${colors.focusColor};
+  }
 `;

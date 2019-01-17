@@ -33,7 +33,8 @@ export function getFormInput(
   input: EditorFormInputModel,
   componentKey: string,
   blockKey: string,
-  blockStyleKey: string
+  blockStyleKey: string,
+  styleStateKey: string
 ): Node {
   if (input.reduxConnected) {
     return (
@@ -42,10 +43,21 @@ export function getFormInput(
         componentKey={componentKey}
         blockKey={blockKey}
         blockStyleKey={blockStyleKey}
+        styleStateKey={styleStateKey}
       />
     );
   }
-  return <FormInput name={input.name} value={input.value} inactive={input.inactive} />;
+  return (
+    <FormInput
+      inputKey={input.key}
+      name={input.name}
+      value={input.value}
+      defaultValue={input.defaultValue}
+      inactive={input.inactive}
+      updateValue={input.onChange}
+      inputType={input.inputType}
+    />
+  );
 }
 
 class FormSection extends Component<Props> {
@@ -55,7 +67,7 @@ class FormSection extends Component<Props> {
 
   render() {
     const { heading, rows } = this.props;
-    const { componentKey, blockKey, blockStyleKey } = this.context;
+    const { componentKey, blockKey, blockStyleKey, styleStateKey } = this.context;
     return (
       <div className={styles.containerClass}>
         <header className={styles.headerClass}>
@@ -66,7 +78,7 @@ class FormSection extends Component<Props> {
             <Row key={index.toString()}>
               {row.columns.map(({ columns, input }) => (
                 <Column columns={columns} key={input.key}>
-                  {getFormInput(input, componentKey, blockKey, blockStyleKey)}
+                  {getFormInput(input, componentKey, blockKey, blockStyleKey, styleStateKey)}
                 </Column>
               ))}
             </Row>

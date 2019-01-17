@@ -1,5 +1,5 @@
 // @flow
-import { transparentize } from 'polished';
+import { transparentize, darken } from 'polished';
 
 const white = '#FFFFFF';
 const darkBlue = '#3C5071';
@@ -9,7 +9,10 @@ const lightFaintShade = '#D3D8EA';
 const lightishBlue = '#E9EBF2';
 const lightBlue = '#EFF2F8';
 const lightBlueDarkened = '#E6EBF4';
+const inputShade = '#DEE2F0';
+const inputShadeFocused = darken(0.05, inputShade);
 const richBlue = '#3640FF';
+const focusColor = '#ff7e00';
 
 const siteBackground = lightBlue;
 const sidebarBackground = white;
@@ -30,4 +33,7 @@ export default {
   siteBackground,
   sidebarBackground,
   vibrant,
+  inputShade,
+  inputShadeFocused,
+  focusColor,
 };

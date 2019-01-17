@@ -5,7 +5,9 @@ import colors from '../../../styles/config/colors';
 
 const customStyles = {};
 
-const plainStyles = {
+const plainStyles = {};
+
+const dropdownStyles = {
   control: (provided: {}, state: {}) => ({
     ...provided,
     background: 'none',
@@ -37,8 +39,22 @@ const plainStyles = {
     ...provided,
   }),
 };
+export const DROPDOWN_SELECT_THEMES = {
+  default: 'default',
+  plain: 'plain',
+  dropdown: 'dropdown',
+};
+export type DropdownSelectThemes = $Keys<typeof DROPDOWN_SELECT_THEMES>;
+
+export const getDropdownSelectStyles = (theme: string): {} => {
+  if (theme === DROPDOWN_SELECT_THEMES.dropdown) {
+    return dropdownStyles;
+  }
+  return customStyles;
+};
 
 export default {
   customStyles,
   plainStyles,
+  dropdownStyles,
 };

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { PlainDropdownSelect } from '../../../../../DropdownSelect/DropdownSelect';
+import { GenericDropdownSelect } from '../../../../../DropdownSelect/DropdownSelect';
 import type { SelectOptionType } from '../../../../../DropdownSelect/DropdownSelect';
 import { EMBEDDED_PREVIEW_CONFIG_PRESETS, getPresetDimensions } from '../../../../presets';
 import type { EmbeddedPreviewConfigPreset } from '../../../../presets';
@@ -46,7 +46,7 @@ class DeviceSelector extends Component<Props> {
   render() {
     return (
       <div className={styles.containerClass}>
-        <PlainDropdownSelect
+        <GenericDropdownSelect
           options={options}
           value={this.getValue()}
           onChange={this.handleSetPreset}

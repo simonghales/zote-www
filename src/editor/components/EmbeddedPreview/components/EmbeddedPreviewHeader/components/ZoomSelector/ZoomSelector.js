@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { PlainDropdownSelect } from '../../../../../DropdownSelect/DropdownSelect';
+import { GenericDropdownSelect } from '../../../../../DropdownSelect/DropdownSelect';
 import type { SelectOptionType } from '../../../../../DropdownSelect/DropdownSelect';
 import styles from './styles';
 
@@ -45,7 +45,7 @@ class ZoomSelector extends Component<Props> {
   render() {
     return (
       <div className={styles.containerClass}>
-        <PlainDropdownSelect
+        <GenericDropdownSelect
           options={options}
           value={this.getValue()}
           onChange={this.handleSetZoom}

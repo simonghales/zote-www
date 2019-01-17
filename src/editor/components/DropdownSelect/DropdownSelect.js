@@ -2,19 +2,13 @@
 import React, { Component } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
 import Select from 'react-select';
-import styles from './styles';
+import type { DropdownSelectThemes } from './styles';
+import styles, { DROPDOWN_SELECT_THEMES, getDropdownSelectStyles } from './styles';
 import colors from '../../../styles/config/colors';
 
 const CustomDropdownIndicator = () => (
   <FaCaretDown size={12} color={colors.darkLightBlue} style={{ display: 'block' }} />
 );
-
-export const DROPDOWN_SELECT_THEMES = {
-  default: 'default',
-  plain: 'plain',
-};
-
-type DropdownSelectThemes = $Keys<typeof DROPDOWN_SELECT_THEMES>;
 
 export type SelectOptionType = {
   [string]: any,
@@ -39,13 +33,13 @@ class DropdownSelect extends Component<Props> {
   };
 
   render() {
-    const { options, value, theme } = this.props;
+    const { options, value, theme = '' } = this.props;
     return (
       <Select
         value={value}
         options={options}
         onChange={this.handleChange}
-        styles={theme === DROPDOWN_SELECT_THEMES.plain ? styles.plainStyles : styles.customStyles}
+        styles={getDropdownSelectStyles(theme)}
         components={{
           DropdownIndicator: CustomDropdownIndicator,
         }}
@@ -55,6 +49,10 @@ class DropdownSelect extends Component<Props> {
 }
 
 export default DropdownSelect;
+
+export const GenericDropdownSelect = (props: Props) => (
+  <DropdownSelect {...props} theme={DROPDOWN_SELECT_THEMES.dropdown} />
+);
 
 export const PlainDropdownSelect = (props: Props) => (
   <DropdownSelect {...props} theme={DROPDOWN_SELECT_THEMES.plain} />

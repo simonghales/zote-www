@@ -14,6 +14,7 @@ import {
   getRootBlockKeyFromComponent,
 } from '../../../data/component/state';
 import { getStyleKeyFromBlock } from '../../../data/block/state';
+import { STYLE_STATES } from '../../../data/styles/model';
 
 type Props = {
   componentKey: string,
@@ -22,7 +23,9 @@ type Props = {
 };
 
 const EditorComponentForm = ({ componentKey, blockKey, blockStyleKey }: Props) => (
-  <EditorComponentFormContext.Provider value={{ componentKey, blockKey, blockStyleKey }}>
+  <EditorComponentFormContext.Provider
+    value={{ componentKey, blockKey, blockStyleKey, styleStateKey: STYLE_STATES.default }}
+  >
     <div>
       {STYLES_FORM_DATA.sections.map(section => (
         <FormSection heading={section.heading} rows={section.rows} key={section.key} />

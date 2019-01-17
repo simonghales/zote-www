@@ -7,18 +7,26 @@ import type {
   FormDataModel,
 } from './models';
 import { EDITOR_FORM_REDUX_TYPES } from './models';
+import { FORM_INPUT_TYPES } from '../components/FormInput/FormInput';
 
 // Text
 
-const fontFamilyInput: EditorFormInputModel = {
-  name: 'font-family',
-  key: 'font-family',
-  inactive: true,
+const defaultReduxStyleInput = {
+  inactive: false,
+  defaultValue: '',
   value: '',
   onChange: () => {},
   reduxConnected: {
     type: EDITOR_FORM_REDUX_TYPES.style,
   },
+  inputType: FORM_INPUT_TYPES.string,
+};
+
+const fontFamilyInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'font-family',
+  key: 'font-family',
+  inputType: FORM_INPUT_TYPES.fontFamily,
 };
 
 const fontFamilyColumn: EditorFormSectionColumnModel = {
@@ -27,11 +35,9 @@ const fontFamilyColumn: EditorFormSectionColumnModel = {
 };
 
 const fontSizeInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
   name: 'font-size',
   key: 'font-size',
-  inactive: true,
-  value: '',
-  onChange: () => {},
 };
 
 const fontSizeColumn: EditorFormSectionColumnModel = {

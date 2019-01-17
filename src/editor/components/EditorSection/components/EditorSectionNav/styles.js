@@ -22,7 +22,7 @@ const navOptionClass = css`
   align-items: center;
   color: ${colors.darkLightBlue};
   cursor: pointer;
-  padding-bottom: ${getRem(2)};
+  padding-bottom: ${getRem(3)};
   position: relative;
   opacity: 0.5;
   overflow: hidden;
