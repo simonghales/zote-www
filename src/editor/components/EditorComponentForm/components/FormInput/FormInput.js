@@ -3,7 +3,8 @@ import React from 'react';
 import { cx } from 'emotion';
 import styles from './styles';
 import TextInput from '../../../inputs/TextInput/TextInput';
-import { FontFamilyInput } from '../../../inputs/SelectInput/SelectInput';
+import { FontFamilyInput, FontWeightInput } from '../../../inputs/SelectInput/SelectInput';
+import ColorInput from '../../../inputs/ColorInput/ColorInput';
 
 export type DefaultFormInputProps = {
   inputId: string,
@@ -15,6 +16,8 @@ export type DefaultFormInputProps = {
 export const FORM_INPUT_TYPES = {
   string: 'string',
   fontFamily: 'fontFamily',
+  fontWeight: 'fontWeight',
+  color: 'color',
 };
 
 export type FormInputTypes = $Keys<typeof FORM_INPUT_TYPES>;
@@ -22,6 +25,8 @@ export type FormInputTypes = $Keys<typeof FORM_INPUT_TYPES>;
 const MAPPED_FORM_INPUT_TYPES = {
   [FORM_INPUT_TYPES.string]: TextInput,
   [FORM_INPUT_TYPES.fontFamily]: FontFamilyInput,
+  [FORM_INPUT_TYPES.fontWeight]: FontWeightInput,
+  [FORM_INPUT_TYPES.color]: ColorInput,
 };
 
 function getMappedFormInput(inputType: FormInputTypes) {

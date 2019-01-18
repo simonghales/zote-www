@@ -45,10 +45,34 @@ const fontSizeColumn: EditorFormSectionColumnModel = {
   input: fontSizeInput,
 };
 
+const fontWeightInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'font-weight',
+  key: 'font-weight',
+  inputType: FORM_INPUT_TYPES.fontWeight,
+};
+
+const fontWeightColumn: EditorFormSectionColumnModel = {
+  columns: 3,
+  input: fontWeightInput,
+};
+
+const colorInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'color',
+  key: 'color',
+  inputType: FORM_INPUT_TYPES.color,
+};
+
+const colorColumn: EditorFormSectionColumnModel = {
+  columns: 1,
+  input: colorInput,
+};
+
 const textFormSection: EditorFormSectionModel = {
   heading: 'Text',
   key: 'text',
-  columns: [fontFamilyColumn, fontSizeColumn],
+  columns: [fontFamilyColumn, fontSizeColumn, fontWeightColumn, colorColumn],
 };
 
 // Appearance

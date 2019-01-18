@@ -32,7 +32,14 @@ const rowGridClass = css`
   grid-column-gap: ${getRem(5)};
 `;
 
-const columnClass = css``;
+const columnClass = css`
+  margin-top: ${getRem(2)};
+
+  &:nth-of-type(1),
+  &:nth-of-type(2) {
+    margin-top: 0;
+  }
+`;
 
 export default {
   containerClass,

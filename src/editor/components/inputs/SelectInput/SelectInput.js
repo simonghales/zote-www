@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import type { DefaultFormInputProps } from '../../EditorComponentForm/components/FormInput/FormInput';
 import { PlainDropdownSelect } from '../../DropdownSelect/DropdownSelect';
-import { FONT_FAMILY_OPTIONS } from './data';
+import { FONT_FAMILY_OPTIONS, FONT_WEIGHT_OPTIONS } from './data';
 import type { SelectOptionType } from '../../DropdownSelect/DropdownSelect';
 
 const getSelectInputValue = (values: string): Array<SelectOptionType> | null => {
@@ -27,6 +27,7 @@ const parseSelectOptionsValue = (options: Array<SelectOptionType> | SelectOption
 type Props = DefaultFormInputProps & {
   isCreatable: boolean,
   isMulti: boolean,
+  options: Array<SelectOptionType>,
 };
 
 type State = {
@@ -51,13 +52,13 @@ class SelectInput extends Component<Props, State> {
   };
 
   render() {
-    const { defaultValue = '', isCreatable, isMulti } = this.props;
+    const { defaultValue = '', isCreatable, isMulti, options = [] } = this.props;
     const { value } = this.state;
     return (
       <PlainDropdownSelect
         onChange={this.handleOnChange}
         value={getSelectInputValue(value || defaultValue)}
-        options={FONT_FAMILY_OPTIONS}
+        options={options}
         isCreatable={isCreatable}
         isMulti={isMulti}
       />
@@ -68,5 +69,9 @@ class SelectInput extends Component<Props, State> {
 export default SelectInput;
 
 export const FontFamilyInput = (props: DefaultFormInputProps) => (
-  <SelectInput {...props} isCreatable isMulti />
+  <SelectInput {...props} isCreatable isMulti options={FONT_FAMILY_OPTIONS} />
+);
+
+export const FontWeightInput = (props: DefaultFormInputProps) => (
+  <SelectInput {...props} isCreatable isMulti options={FONT_WEIGHT_OPTIONS} />
 );

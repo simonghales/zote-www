@@ -64,7 +64,7 @@ const plainStyles = {
       ? plainInputStyles.focusBorderColor
       : plainInputStyles.backgroundColor,
     borderRadius: plainInputStyles.borderRadius,
-    minHeight: 32,
+    minHeight: plainInputStyles.minHeight,
     boxShadow: 'none',
     ':hover': {
       borderColor: state.isFocused

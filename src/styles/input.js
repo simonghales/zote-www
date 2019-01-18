@@ -32,6 +32,7 @@ export const shortInputCss = css`
 `;
 
 export const plainInputStyles = {
+  minHeight: 32,
   backgroundColor: colors.inputShade,
   focusBorderColor: colors.focusColor,
   paddingVertical: 8,
