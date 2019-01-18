@@ -1,7 +1,7 @@
 // @flow
 
 import type { ReduxState } from '../store';
-import type { UIReduxState } from './reducer';
+import type { EditorFormSectionsVisibility, UIReduxState } from './reducer';
 
 export function getReduxUiSelectedComponentKey(state: ReduxState): string {
   return state.ui.selectedComponentKey;
@@ -14,4 +14,8 @@ export function getReduxUiComponentSelectedBlockKey(
   return state.componentsSelectedBlockKeys[componentKey]
     ? state.componentsSelectedBlockKeys[componentKey]
     : '';
+}
+
+export function getEditorFormSectionsVisibility(state: UIReduxState): EditorFormSectionsVisibility {
+  return state.editorFormSectionsVisibility;
 }

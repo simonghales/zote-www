@@ -2,6 +2,7 @@
 import type { Node } from 'react';
 import React, { Component } from 'react';
 import { cx } from 'emotion';
+import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import styles from './styles';
 import FormInput from '../FormInput/FormInput';
 import type {
@@ -31,6 +32,8 @@ const Row = ({ children }: { children: Node }) => (
 type Props = {
   heading: string,
   columns: Array<EditorFormSectionColumnModel>,
+  visible?: boolean,
+  setVisible: (visible: boolean) => void,
 };
 
 export function getFormInput(
@@ -67,17 +70,33 @@ export function getFormInput(
 class FormSection extends Component<Props> {
   context: EditorComponentFormContextState;
 
+  static defaultProps = {
+    visible: true,
+  };
+
   static contextType = EditorComponentFormContext;
 
+  handleToggleVisible = () => {
+    const { setVisible, visible = true } = this.props;
+    setVisible(!visible);
+  };
+
   render() {
-    const { heading, columns } = this.props;
+    const { heading, columns, visible } = this.props;
     const { componentKey, blockKey, blockStyleKey, styleStateKey } = this.context;
     return (
       <div className={styles.containerClass}>
-        <header className={styles.headerClass}>
+        <header className={styles.headerClass} onClick={this.handleToggleVisible}>
           <div className={styles.headerTextClass}>{heading}</div>
+          <div className={styles.headerIconClass}>
+            {visible ? <FaChevronDown size={8} /> : <FaChevronRight size={8} />}
+          </div>
         </header>
-        <div>
+        <div
+          className={cx({
+            [styles.hiddenBodyClass]: !visible,
+          })}
+        >
           <Row>
             {columns.map(({ columns: numberOfColumns, input }) => (
               <Column columns={numberOfColumns} key={input.key}>

@@ -13,6 +13,10 @@ const containerClass = css`
 const headerClass = css`
   border-bottom: 1px solid ${colors.lightFaintShade};
   padding-bottom: ${getRem(2)};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
 `;
 
 const headerTextClass = css`
@@ -20,6 +24,24 @@ const headerTextClass = css`
   font-size: 11px;
   color: ${colors.shadeBlue};
   text-transform: uppercase;
+`;
+
+const headerIconClass = css`
+  color: ${colors.shadeBlue};
+  width: ${getRem(10)};
+  height: ${getRem(10)};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: ${getRem(2)};
+
+  svg {
+    display: block;
+  }
+`;
+
+const hiddenBodyClass = css`
+  display: none;
 `;
 
 const rowClass = css`
@@ -45,7 +67,9 @@ export default {
   containerClass,
   headerClass,
   headerTextClass,
+  headerIconClass,
   rowClass,
   rowGridClass,
   columnClass,
+  hiddenBodyClass,
 };
