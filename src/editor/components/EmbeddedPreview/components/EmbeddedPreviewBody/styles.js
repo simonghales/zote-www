@@ -8,10 +8,10 @@ const containerClass = css`
   height: 100%;
   width: 100%;
   overflow: hidden;
-  padding: ${getRem(100)};
+  padding: ${getRem(50)};
 
   @media only screen and (min-width: 1400px) {
-    padding: ${getRem(50)};
+    padding: ${getRem(100)};
   }
 
   .react-resizable {

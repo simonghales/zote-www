@@ -28,7 +28,7 @@ const EditorComponentForm = ({ componentKey, blockKey, blockStyleKey }: Props) =
   >
     <div>
       {STYLES_FORM_DATA.sections.map(section => (
-        <FormSection heading={section.heading} rows={section.rows} key={section.key} />
+        <FormSection heading={section.heading} columns={section.columns} key={section.key} />
       ))}
     </div>
   </EditorComponentFormContext.Provider>

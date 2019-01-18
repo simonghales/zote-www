@@ -4,7 +4,11 @@ import React, { Component } from 'react';
 import { cx } from 'emotion';
 import styles from './styles';
 import FormInput from '../FormInput/FormInput';
-import type { EditorFormInputModel, EditorFormSectionRowModel } from '../../data/models';
+import type {
+  EditorFormInputModel,
+  EditorFormSectionColumnModel,
+  EditorFormSectionRowModel,
+} from '../../data/models';
 import ReduxFormInput from '../ReduxFormInput/ReduxFormInput';
 import { EditorComponentFormContext } from '../../context';
 import type { EditorComponentFormContextState } from '../../context';
@@ -26,7 +30,7 @@ const Row = ({ children }: { children: Node }) => (
 
 type Props = {
   heading: string,
-  rows: Array<EditorFormSectionRowModel>,
+  columns: Array<EditorFormSectionColumnModel>,
 };
 
 export function getFormInput(
@@ -66,7 +70,7 @@ class FormSection extends Component<Props> {
   static contextType = EditorComponentFormContext;
 
   render() {
-    const { heading, rows } = this.props;
+    const { heading, columns } = this.props;
     const { componentKey, blockKey, blockStyleKey, styleStateKey } = this.context;
     return (
       <div className={styles.containerClass}>
@@ -74,15 +78,13 @@ class FormSection extends Component<Props> {
           <div className={styles.headerTextClass}>{heading}</div>
         </header>
         <div>
-          {rows.map((row, index) => (
-            <Row key={index.toString()}>
-              {row.columns.map(({ columns, input }) => (
-                <Column columns={columns} key={input.key}>
-                  {getFormInput(input, componentKey, blockKey, blockStyleKey, styleStateKey)}
-                </Column>
-              ))}
-            </Row>
-          ))}
+          <Row>
+            {columns.map(({ columns: numberOfColumns, input }) => (
+              <Column columns={numberOfColumns} key={input.key}>
+                {getFormInput(input, componentKey, blockKey, blockStyleKey, styleStateKey)}
+              </Column>
+            ))}
+          </Row>
         </div>
       </div>
     );

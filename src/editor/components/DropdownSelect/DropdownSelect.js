@@ -2,12 +2,19 @@
 import React, { Component } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
 import Select from 'react-select';
+import CreatableSelect from 'react-select/lib/Creatable';
 import type { DropdownSelectThemes } from './styles';
 import styles, { DROPDOWN_SELECT_THEMES, getDropdownSelectStyles } from './styles';
 import colors from '../../../styles/config/colors';
 
+function formatCreateLabel(inputValue: string): string {
+  return `Add "${inputValue}"`;
+}
+
 const CustomDropdownIndicator = () => (
-  <FaCaretDown size={12} color={colors.darkLightBlue} style={{ display: 'block' }} />
+  <div className={styles.classNames.selectDropdownIndicator}>
+    <FaCaretDown size={12} color={colors.darkLightBlue} style={{ display: 'block' }} />
+  </div>
 );
 
 export type SelectOptionType = {
@@ -18,13 +25,18 @@ type Props = {
   // eslint-disable-next-line react/require-default-props
   theme?: DropdownSelectThemes,
   options: Array<SelectOptionType>,
-  value: SelectOptionType | null,
+  value: SelectOptionType | Array<SelectOptionType> | null,
   onChange: (option: SelectOptionType) => void,
+  // eslint-disable-next-line react/require-default-props,react/require-default-props
+  isCreatable?: boolean,
+  isMulti?: boolean,
 };
 
 class DropdownSelect extends Component<Props> {
   static defaultProps = {
     theme: DROPDOWN_SELECT_THEMES.default,
+    isCreatable: false,
+    isMulti: false,
   };
 
   handleChange = (selectedOption: SelectOptionType) => {
@@ -33,18 +45,21 @@ class DropdownSelect extends Component<Props> {
   };
 
   render() {
-    const { options, value, theme = '' } = this.props;
-    return (
-      <Select
-        value={value}
-        options={options}
-        onChange={this.handleChange}
-        styles={getDropdownSelectStyles(theme)}
-        components={{
-          DropdownIndicator: CustomDropdownIndicator,
-        }}
-      />
-    );
+    const { options, value, theme = '', isCreatable, isMulti } = this.props;
+    const sharedProps = {
+      value,
+      options,
+      onChange: this.handleChange,
+      styles: getDropdownSelectStyles(theme),
+      components: {
+        DropdownIndicator: CustomDropdownIndicator,
+      },
+      isMulti,
+    };
+    if (isCreatable) {
+      return <CreatableSelect {...sharedProps} formatCreateLabel={formatCreateLabel} />;
+    }
+    return <Select {...sharedProps} />;
   }
 }
 

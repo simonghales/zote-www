@@ -32,7 +32,7 @@ export type EditorFormSectionRowModel = {
 export type EditorFormSectionModel = {
   heading: string,
   key: string,
-  rows: Array<EditorFormSectionRowModel>,
+  columns: Array<EditorFormSectionColumnModel>,
 };
 
 export type FormDataModel = {

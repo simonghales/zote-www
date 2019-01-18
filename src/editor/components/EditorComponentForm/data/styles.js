@@ -48,11 +48,7 @@ const fontSizeColumn: EditorFormSectionColumnModel = {
 const textFormSection: EditorFormSectionModel = {
   heading: 'Text',
   key: 'text',
-  rows: [
-    {
-      columns: [fontFamilyColumn, fontSizeColumn],
-    },
-  ],
+  columns: [fontFamilyColumn, fontSizeColumn],
 };
 
 // Appearance
@@ -60,7 +56,7 @@ const textFormSection: EditorFormSectionModel = {
 const appearanceFormSection: EditorFormSectionModel = {
   heading: 'Appearance',
   key: 'appearance',
-  rows: [],
+  columns: [],
 };
 
 export const STYLES_FORM_DATA: FormDataModel = {

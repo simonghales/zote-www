@@ -31,17 +31,28 @@ export const shortInputCss = css`
   ${smallBoldTextCss};
 `;
 
+export const plainInputStyles = {
+  backgroundColor: colors.inputShade,
+  focusBorderColor: colors.focusColor,
+  paddingVertical: 8,
+  paddingHorizontal: 3,
+  borderRadius: 2,
+  fontSize: shortInputFontSize,
+  color: colors.darkBlue,
+};
+
 export const plainInputCss = css`
-  background-color: ${colors.inputShade};
-  color: ${colors.darkBlue};
+  background-color: ${plainInputStyles.backgroundColor};
+  color: ${plainInputStyles.color};
   font-weight: ${fontWeights.medium};
-  font-size: ${shortInputFontSize}px;
-  border-radius: ${getEm(2, shortInputFontSize)};
-  padding: ${getEm(6, shortInputFontSize)} ${getRem(3)};
-  border: 2px solid ${colors.inputShade};
+  font-size: ${plainInputStyles.fontSize}px;
+  line-height: ${plainInputStyles.fontSize}px;
+  border-radius: ${plainInputStyles.borderRadius}px;
+  padding: ${plainInputStyles.paddingVertical}px ${plainInputStyles.paddingHorizontal}px;
+  border: 2px solid ${plainInputStyles.backgroundColor};
 
   &:focus {
     //background-color: ${colors.inputShadeFocused};
-    border-color: ${colors.focusColor};
+    border-color: ${plainInputStyles.focusBorderColor};
   }
 `;

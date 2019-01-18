@@ -2,10 +2,122 @@
 
 import fontWeights from '../../../styles/config/fontWeights';
 import colors from '../../../styles/config/colors';
+import { plainInputStyles } from '../../../styles/input';
+
+const classNames = {
+  selectDropdownIndicator: 'selectDropdownIndicator',
+};
 
 const customStyles = {};
 
-const plainStyles = {};
+const plainTextStyles = {
+  fontFamily: 'Roboto',
+  fontSize: plainInputStyles.fontSize,
+  fontWeight: fontWeights.medium,
+  color: plainInputStyles.color,
+};
+
+const plainStyles = {
+  groupHeading: (provided: {}, state: any) => ({
+    ...provided,
+    fontSize: plainInputStyles.fontSize,
+    color: colors.darkLightBlue,
+  }),
+  noOptionsMessage: (provided: {}, state: any) => ({
+    ...provided,
+    fontSize: plainInputStyles.fontSize,
+    color: colors.darkLightBlue,
+  }),
+  menu: (provided: {}, state: any) => ({
+    ...provided,
+    background: colors.white,
+    borderRadius: plainInputStyles.borderRadius,
+    margin: '5px 0 5px 0',
+  }),
+  option: (provided: {}, state: any) => ({
+    ...provided,
+    ...plainTextStyles,
+    background: state.isFocused ? colors.lightBlue : '',
+    color: state.isFocused ? plainInputStyles.focusBorderColor : plainInputStyles.color,
+    ':hover': {
+      color: plainInputStyles.focusBorderColor,
+    },
+    ':active': {
+      color: plainInputStyles.focusBorderColor,
+    },
+  }),
+  placeholder: (provided: {}, state: any) => ({
+    ...provided,
+    ...plainTextStyles,
+    color: colors.shadeBlue,
+  }),
+  input: (provided: {}, state: any) => ({
+    ...provided,
+    ...plainTextStyles,
+    margin: 0,
+  }),
+  control: (provided: {}, state: any) => ({
+    ...provided,
+    background: plainInputStyles.backgroundColor,
+    borderWidth: 2,
+    borderColor: state.isFocused
+      ? plainInputStyles.focusBorderColor
+      : plainInputStyles.backgroundColor,
+    borderRadius: plainInputStyles.borderRadius,
+    minHeight: 32,
+    boxShadow: 'none',
+    ':hover': {
+      borderColor: state.isFocused
+        ? plainInputStyles.focusBorderColor
+        : plainInputStyles.backgroundColor,
+    },
+    // minWidth: 60,
+  }),
+  valueContainer: (provided: {}) => ({
+    ...provided,
+    padding: 0,
+    paddingLeft: plainInputStyles.paddingHorizontal,
+    paddingRight: plainInputStyles.paddingHorizontal,
+  }),
+  singleValue: (provided: {}, state: {}) => ({
+    ...provided,
+    ...plainTextStyles,
+  }),
+  multiValue: (provided: {}, state: {}) => ({
+    ...provided,
+    background: colors.white,
+  }),
+  multiValueLabel: (provided: {}, state: {}) => ({
+    ...provided,
+    ...plainTextStyles,
+  }),
+  multiValueRemove: (provided: {}, state: {}) => ({
+    ...provided,
+    padding: 2,
+    color: colors.shadeBlue,
+    ':hover': {
+      color: plainInputStyles.focusBorderColor,
+    },
+  }),
+  clearIndicator: (provided: {}, state: {}) => ({
+    ...provided,
+    padding: 2,
+    color: colors.shadeBlue,
+    ':hover': {
+      color: plainInputStyles.focusBorderColor,
+    },
+    '& svg': {
+      width: 14,
+      height: 14,
+    },
+  }),
+  indicatorsContainer: (provided: {}) => ({
+    ...provided,
+    [`& .${classNames.selectDropdownIndicator}`]: {
+      padding: '0 2px',
+    },
+  }),
+};
 
 const dropdownStyles = {
   control: (provided: {}, state: {}) => ({
@@ -50,10 +162,14 @@ export const getDropdownSelectStyles = (theme: string): {} => {
   if (theme === DROPDOWN_SELECT_THEMES.dropdown) {
     return dropdownStyles;
   }
+  if (theme === DROPDOWN_SELECT_THEMES.plain) {
+    return plainStyles;
+  }
   return customStyles;
 };
 
 export default {
+  classNames,
   customStyles,
   plainStyles,
   dropdownStyles,
