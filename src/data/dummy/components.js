@@ -14,15 +14,30 @@ export const DUMMY_BLOCK_STYLES: StyleModel = {
         'font-family': {
           value: 'Gday world!',
         },
+        'text-align': {
+          value: 'center',
+        },
       },
     },
   },
+};
+
+export const DUMMY_TEXT_BLOCK: BlockModel = {
+  key: 'DUMMY_TEXT_BLOCK',
+  blockTypeKey: '', // todo
+  name: 'Dummy Text Block',
 };
 
 export const DUMMY_BLOCK: BlockModel = {
   key: 'DUMMY_BLOCK',
   blockTypeKey: '', // todo
   name: 'Dummy Block',
+  props: {
+    children: {
+      key: 'children',
+      value: [DUMMY_TEXT_BLOCK.key],
+    },
+  },
   styles: {
     stylesKey: DUMMY_BLOCK_STYLES.key,
   },

@@ -27,3 +27,14 @@ export const FONT_WEIGHT_OPTIONS: Array<SelectOptionType> = [
     label: '700',
   },
 ];
+
+export const FONT_STYLE_OPTIONS: Array<SelectOptionType> = [
+  {
+    value: 'normal',
+    label: 'normal',
+  },
+  {
+    value: 'italic',
+    label: 'italic',
+  },
+];

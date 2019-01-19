@@ -34,12 +34,15 @@ export const shortInputCss = css`
 export const plainInputStyles = {
   minHeight: 32,
   backgroundColor: colors.inputShade,
+  backgroundHoverColor: colors.inputShadeFocused,
   focusBorderColor: colors.focusColor,
   paddingVertical: 8,
   paddingHorizontal: 3,
   borderRadius: 2,
   fontSize: shortInputFontSize,
   color: colors.darkBlue,
+  inactiveColor: colors.shadeBlue,
+  selectedColor: colors.vibrant,
 };
 
 export const plainInputCss = css`

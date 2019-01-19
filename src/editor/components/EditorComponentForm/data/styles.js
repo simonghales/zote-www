@@ -69,10 +69,54 @@ const colorColumn: EditorFormSectionColumnModel = {
   input: colorInput,
 };
 
+const fontStyleInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'font-style',
+  key: 'font-style',
+  inputType: FORM_INPUT_TYPES.fontStyle,
+};
+
+const fontStyleColumn: EditorFormSectionColumnModel = {
+  columns: 3,
+  input: fontStyleInput,
+};
+
+const lineHeightInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'line-height',
+  key: 'line-height',
+  inputType: FORM_INPUT_TYPES.string,
+};
+
+const lineHeightColumn: EditorFormSectionColumnModel = {
+  columns: 1,
+  input: lineHeightInput,
+};
+
+const textAlignInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'text-align',
+  key: 'text-align',
+  inputType: FORM_INPUT_TYPES.textAlign,
+};
+
+const textAlignColumn: EditorFormSectionColumnModel = {
+  columns: 4,
+  input: textAlignInput,
+};
+
 const textFormSection: EditorFormSectionModel = {
   heading: 'Text',
   key: 'text',
-  columns: [fontFamilyColumn, fontSizeColumn, fontWeightColumn, colorColumn],
+  columns: [
+    fontFamilyColumn,
+    fontSizeColumn,
+    fontWeightColumn,
+    colorColumn,
+    fontStyleColumn,
+    lineHeightColumn,
+    textAlignColumn,
+  ],
 };
 
 // Appearance

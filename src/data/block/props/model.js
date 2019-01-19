@@ -2,7 +2,7 @@
 
 export type BlockPropModel = {
   key: string,
-  value: string | null,
+  value: any,
   linked?: {
     blockKey: string,
     propKey: string,

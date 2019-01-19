@@ -1,5 +1,6 @@
 // @flow
 
+import { darken } from 'polished';
 import fontWeights from '../../../styles/config/fontWeights';
 import colors from '../../../styles/config/colors';
 import { plainInputStyles } from '../../../styles/input';
@@ -18,6 +19,10 @@ const plainTextStyles = {
 };
 
 const plainStyles = {
+  indicatorSeparator: (provided: {}, state: any) => ({
+    ...provided,
+    backgroundColor: darken(0.1, plainInputStyles.backgroundColor),
+  }),
   groupHeading: (provided: {}, state: any) => ({
     ...provided,
     fontSize: plainInputStyles.fontSize,

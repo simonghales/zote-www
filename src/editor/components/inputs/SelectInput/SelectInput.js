@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import type { DefaultFormInputProps } from '../../EditorComponentForm/components/FormInput/FormInput';
 import { PlainDropdownSelect } from '../../DropdownSelect/DropdownSelect';
-import { FONT_FAMILY_OPTIONS, FONT_WEIGHT_OPTIONS } from './data';
+import { FONT_FAMILY_OPTIONS, FONT_STYLE_OPTIONS, FONT_WEIGHT_OPTIONS } from './data';
 import type { SelectOptionType } from '../../DropdownSelect/DropdownSelect';
 
 const getSelectInputValue = (values: string): Array<SelectOptionType> | null => {
@@ -73,5 +73,9 @@ export const FontFamilyInput = (props: DefaultFormInputProps) => (
 );
 
 export const FontWeightInput = (props: DefaultFormInputProps) => (
-  <SelectInput {...props} isCreatable isMulti options={FONT_WEIGHT_OPTIONS} />
+  <SelectInput {...props} isCreatable isMulti={false} options={FONT_WEIGHT_OPTIONS} />
+);
+
+export const FontStyleInput = (props: DefaultFormInputProps) => (
+  <SelectInput {...props} isCreatable isMulti={false} options={FONT_STYLE_OPTIONS} />
 );

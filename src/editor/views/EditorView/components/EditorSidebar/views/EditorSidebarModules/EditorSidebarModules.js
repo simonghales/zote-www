@@ -3,7 +3,7 @@ import React from 'react';
 import { FaPlus } from 'react-icons/fa';
 import styles from './styles';
 import { SlimIconButton } from '../../../../../../components/Button/Button';
-import ModulesSortable from '../../../../../../components/ModulesSortable/ModulesSortable';
+import { ReduxComponentSortable } from '../../../../../../components/ComponentSortable/ComponentSortable';
 
 const EditorSidebarModules = () => (
   <div className={styles.containerClass}>
@@ -11,7 +11,7 @@ const EditorSidebarModules = () => (
       <SlimIconButton icon={<FaPlus size={9} />}>Add Block</SlimIconButton>
     </div>
     <div className={styles.contentWrapperClass}>
-      <ModulesSortable />
+      <ReduxComponentSortable />
     </div>
   </div>
 );

@@ -1,6 +1,7 @@
 // @flow
 
 import { css } from 'emotion';
+import { darken } from 'polished';
 import colors from '../../../../../styles/config/colors';
 import fontWeights from '../../../../../styles/config/fontWeights';
 import { getRem } from '../../../../../styles/utils/measurements';
@@ -9,24 +10,28 @@ const classNames = {
   blockItemSelected: 'blockItemSelected',
 };
 
+const sliverCss = css`
+  content: '';
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: ${getRem(3)};
+`;
+
+const highlightColor = colors.lightBlueDarkened;
+
 const containerClass = css`
   cursor: pointer;
   position: relative;
   background-color: ${colors.lightBlue};
 
   &::after {
-    content: '';
-    visibility: hidden;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: ${getRem(3)};
+    ${sliverCss};
     background-color: ${colors.vibrant};
   }
 `;
-
-const highlightColor = colors.lightBlueDarkened;
 
 const selectedClass = css`
   &::after {
@@ -40,6 +45,8 @@ const clickableClass = css`
   display: flex;
   align-items: center;
   padding: ${getRem(7)};
+  position: relative;
+  overflow: hidden;
 
   &:hover {
     color: ${colors.vibrant};
@@ -48,6 +55,29 @@ const clickableClass = css`
 
   .${classNames.blockItemSelected} & {
     color: ${colors.vibrant};
+  }
+
+  &::before {
+    ${sliverCss};
+    background-color: ${darken(0.03, highlightColor)};
+  }
+
+  &::after {
+    ${sliverCss};
+    background-color: ${darken(0.07, highlightColor)};
+    transform: translateY(-100%);
+    transition: transform 250ms ease-in;
+  }
+
+  &:hover {
+    &::before,
+    &::after {
+      visibility: visible;
+    }
+
+    &::after {
+      transform: translateY(0);
+    }
   }
 `;
 
