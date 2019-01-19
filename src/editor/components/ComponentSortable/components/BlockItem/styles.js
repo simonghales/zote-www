@@ -25,7 +25,6 @@ const highlightColor = colors.lightBlueDarkened;
 const containerClass = css`
   cursor: pointer;
   position: relative;
-  background-color: ${colors.lightBlue};
 
   &::after {
     ${sliverCss};

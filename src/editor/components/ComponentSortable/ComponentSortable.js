@@ -1,9 +1,11 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './styles';
-import BlockItem from './components/BlockItem/BlockItem';
+import { DUMMY_SORTABLE_BLOCKS } from './models';
 import type { SortableBlockModel } from './models';
+import styles from './styles';
+import NestList from './components/NestList/NestList';
+import BlockItem from './components/BlockItem/BlockItem';
 
 type Props = {
   blocks: Array<SortableBlockModel>,
@@ -11,29 +13,16 @@ type Props = {
 
 const ComponentSortable = ({ blocks }: Props) => (
   <div className={styles.containerClass}>
-    {blocks.map(block => (
-      <BlockItem selected />
-    ))}
+    <BlockItem selected>
+      <NestList blocks={blocks} />
+    </BlockItem>
   </div>
 );
 
 export default ComponentSortable;
 
 const mapStateToProps = () => ({
-  blocks: [
-    {
-      icon: 'todo',
-      name: 'Container',
-      key: 'todo',
-      children: [
-        {
-          icon: 'todo',
-          name: 'Child',
-          key: 'todo-child',
-        },
-      ],
-    },
-  ],
+  blocks: DUMMY_SORTABLE_BLOCKS,
 });
 
 export const ReduxComponentSortable = connect(mapStateToProps)(ComponentSortable);
