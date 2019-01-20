@@ -1,6 +1,7 @@
 // @flow
 
 import type { StateStylesModel, StyleModel } from './model';
+import { generateEmptyStylesObject } from './generators';
 
 export function updateStyleStateStyleValue(
   styles: StateStylesModel,
@@ -17,16 +18,26 @@ export function updateStyleStateStyleValue(
 
 export function updateStyleStyleValue(
   style: StyleModel,
+  styleKey: string,
   stateKey: string,
   styleValueKey: string,
   value: any
 ): StyleModel {
+  if (!style) {
+    style = generateEmptyStylesObject(styleKey);
+  }
+  let styleState = style.states[stateKey];
+  if (!styleState) {
+    styleState = {
+      styles: {},
+    };
+  }
   return {
     ...style,
     states: {
       ...style.states,
       [stateKey]: {
-        styles: updateStyleStateStyleValue(style.states[stateKey].styles, styleValueKey, value),
+        styles: updateStyleStateStyleValue(styleState.styles, styleValueKey, value),
       },
     },
   };

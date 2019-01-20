@@ -5,9 +5,10 @@ import type { BlockModel } from '../block/model';
 import type { StyleModel } from '../styles/model';
 import { STYLE_STATES } from '../styles/model';
 import ContainerBlock from '../block/types/groups/basic/Container';
+import { getBlockStyleKeyFormat } from '../block/state';
 
 export const DUMMY_BLOCK_STYLES: StyleModel = {
-  key: 'DUMMY_BLOCK_STYLES',
+  key: getBlockStyleKeyFormat('DUMMY_BLOCK'),
   mixins: {},
   states: {
     [STYLE_STATES.default]: {
@@ -40,7 +41,7 @@ export const DUMMY_BLOCK: BlockModel = {
     },
   },
   styles: {
-    stylesKey: DUMMY_BLOCK_STYLES.key,
+    stylesKey: getBlockStyleKeyFormat('DUMMY_BLOCK'),
   },
 };
 

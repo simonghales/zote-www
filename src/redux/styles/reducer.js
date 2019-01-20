@@ -48,7 +48,13 @@ function handleSetModuleStyleValue(
 ): EditorReduxState {
   return {
     ...state,
-    [styleKey]: updateStyleStyleValue(state[styleKey], styleStateKey, styleValueKey, value),
+    [styleKey]: updateStyleStyleValue(
+      state[styleKey],
+      styleKey,
+      styleStateKey,
+      styleValueKey,
+      value
+    ),
   };
 }
 

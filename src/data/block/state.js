@@ -9,11 +9,15 @@ import { getPropsConfigFromBlockType } from './types/state';
 import { getPropConfigFromPropsConfig, parsePropValue } from './props/state';
 import type { ParsedPropBlocksValue } from './props/state';
 
+export function getBlockStyleKeyFormat(blockKey: string): string {
+  return `block::${blockKey}`;
+}
+
 export function getStyleKeyFromBlock(block: BlockModel): string {
-  if (block.styles) {
+  if (block.styles && block.styles.stylesKey) {
     return block.styles.stylesKey;
   }
-  return '';
+  return getBlockStyleKeyFormat(block.key);
 }
 
 export function getPropFromBlock(propKey: string, block: BlockModel): BlockPropModel | null {
