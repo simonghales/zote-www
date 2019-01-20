@@ -8,6 +8,7 @@ import type { SortableBlockModel } from '../../models';
 type Props = {
   blocks: Array<SortableBlockModel>,
   onSelect: (blockKey: string) => void,
+  onOrderChange: (items: Array<SortableBlockModel>) => void,
 };
 
 function renderCondensedNestItem(item: SortableBlockModel, onSelect: (blockKey: string) => void) {
@@ -21,13 +22,13 @@ class NestList extends Component<Props> {
   };
 
   render() {
-    const { blocks } = this.props;
+    const { blocks, onOrderChange } = this.props;
     return (
       <div className={styles.containerClass}>
         <Nestable
           items={blocks}
           renderItem={this.handleRenderItem}
-          onChange={() => {}}
+          onChange={onOrderChange}
           maxDepth={50}
         />
       </div>

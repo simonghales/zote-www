@@ -1,7 +1,12 @@
 // @flow
 import { get } from 'lodash';
 import type { BlockModel, BlocksModel } from './model';
-import type { BlockPropConfigModel, BlockPropModel, BlockPropsConfigModel } from './props/model';
+import type {
+  BlockPropConfigModel,
+  BlockPropModel,
+  BlockPropsConfigModel,
+  BlockPropsModel,
+} from './props/model';
 import { BLOCK_PROPS_CONFIG_TYPES, COMMON_PROPS } from './props/model';
 import type { BlockTypeModel } from './types/model';
 import { BLOCK_TYPES } from './types/data';
@@ -20,8 +25,14 @@ export function getStyleKeyFromBlock(block: BlockModel): string {
   return getBlockStyleKeyFormat(block.key);
 }
 
+export function getPropsFromBlock(block: BlockModel): BlockPropsModel {
+  const { props = {} } = block;
+  return props;
+}
+
 export function getPropFromBlock(propKey: string, block: BlockModel): BlockPropModel | null {
-  return get(block, `props[${propKey}]`, null);
+  const props = getPropsFromBlock(block);
+  return props[propKey] ? props[propKey] : null;
 }
 
 export function getPropsConfigFromBlock(block: BlockModel): BlockPropsConfigModel {

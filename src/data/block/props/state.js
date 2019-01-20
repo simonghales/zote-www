@@ -5,6 +5,7 @@ import type {
   BlockPropModel,
   BlockPropsConfigModel,
   BlockPropsConfigTypes,
+  BlockPropsModel,
 } from './model';
 import { BLOCK_PROPS_CONFIG_TYPES } from './model';
 
@@ -37,4 +38,8 @@ export function parsePropValue(
     default:
       return prop.value;
   }
+}
+
+export function getPropFromProps(propKey: string, props: BlockPropsModel): BlockPropModel | null {
+  return props[propKey] ? props[propKey] : null;
 }

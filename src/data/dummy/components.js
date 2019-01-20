@@ -30,6 +30,18 @@ export const DUMMY_TEXT_BLOCK: BlockModel = {
   name: 'Dummy Text Block',
 };
 
+export const DUMMY_CONTAINER_BLOCK: BlockModel = {
+  key: 'DUMMY_CONTAINER_BLOCK',
+  blockTypeKey: ContainerBlock.key, // todo
+  name: 'Dummy Container Block',
+  props: {
+    children: {
+      key: 'children',
+      value: [DUMMY_TEXT_BLOCK.key],
+    },
+  },
+};
+
 export const DUMMY_BLOCK: BlockModel = {
   key: 'DUMMY_BLOCK',
   blockTypeKey: ContainerBlock.key, // todo
@@ -37,12 +49,13 @@ export const DUMMY_BLOCK: BlockModel = {
   props: {
     children: {
       key: 'children',
-      value: [DUMMY_TEXT_BLOCK.key],
+      value: [DUMMY_CONTAINER_BLOCK.key],
     },
   },
   styles: {
     stylesKey: getBlockStyleKeyFormat('DUMMY_BLOCK'),
   },
+  isRootBlock: true,
 };
 
 export const DUMMY_TEST_COMPONENT: ComponentModel = {
@@ -50,6 +63,7 @@ export const DUMMY_TEST_COMPONENT: ComponentModel = {
   blocks: {
     [DUMMY_BLOCK.key]: DUMMY_BLOCK,
     [DUMMY_TEXT_BLOCK.key]: DUMMY_TEXT_BLOCK,
+    [DUMMY_CONTAINER_BLOCK.key]: DUMMY_CONTAINER_BLOCK,
   },
   rootBlockKey: DUMMY_BLOCK.key,
 };

@@ -37,11 +37,9 @@ export function mapComponentBlocksToSortableBlocks(
   selectedBlockKey: string
 ): Array<SortableBlockModel> {
   const blocks = getBlocksFromComponent(component);
-  console.log('blocks', blocks);
   const rootBlockKey = getRootBlockKeyFromComponent(component);
   const rootBlock = getBlockFromBlocks(rootBlockKey, blocks);
   const rootBlockChildrenKeys = getBlockChildrenKeysFromBlock(rootBlock);
-  console.log(`rootBlockChildrenKeys`, rootBlockChildrenKeys);
   return rootBlockChildrenKeys.map(blockKey =>
     mapComponentBlockToSortableBlock(blockKey, blocks, selectedBlockKey)
   );
