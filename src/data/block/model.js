@@ -13,3 +13,8 @@ export type BlockModel = {
   },
   isRootBlock?: boolean,
 };
+
+
+export type BlocksModel = {
+  [string]: BlockModel,
+}

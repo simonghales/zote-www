@@ -1,5 +1,9 @@
 // @flow
 
+export const COMMON_PROPS = {
+  children: 'children',
+};
+
 export type BlockPropModel = {
   key: string,
   value: any,
@@ -41,6 +45,7 @@ export type BlockPropConfigModel = {
   label?: string,
   hidden?: boolean,
   displaySection?: BlockPropsDisplaySections,
+  defaultValue?: any,
 };
 
 export type BlockPropsConfigModel = {

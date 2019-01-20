@@ -1,7 +1,7 @@
 // @flow
 
 import type { ComponentModel, ComponentsModels } from './model';
-import type { BlockModel } from '../block/model';
+import type { BlockModel, BlocksModel } from '../block/model';
 
 export function getComponentFromComponents(
   componentKey: string,
@@ -16,4 +16,13 @@ export function getBlockFromComponent(component: ComponentModel, blockKey: strin
 
 export function getRootBlockKeyFromComponent(component: ComponentModel): string {
   return component.rootBlockKey;
+}
+
+export function getBlocksFromComponent(component: ComponentModel): BlocksModel {
+  const { blocks = {} } = component;
+  return blocks;
+}
+
+export function getKeyFromComponent(component: ComponentModel): string {
+  return component.key;
 }

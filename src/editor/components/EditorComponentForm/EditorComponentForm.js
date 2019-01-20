@@ -49,7 +49,7 @@ const EditorComponentForm = ({
   <EditorComponentFormContext.Provider
     value={{ componentKey, blockKey, blockStyleKey, styleStateKey: STYLE_STATES.default }}
   >
-    <div>
+    <div key={blockKey}>
       {STYLES_FORM_DATA.sections.map(section => (
         <FormSection
           heading={section.heading}

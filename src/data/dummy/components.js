@@ -4,6 +4,7 @@ import type { ComponentModel } from '../component/model';
 import type { BlockModel } from '../block/model';
 import type { StyleModel } from '../styles/model';
 import { STYLE_STATES } from '../styles/model';
+import ContainerBlock from '../block/types/groups/basic/Container';
 
 export const DUMMY_BLOCK_STYLES: StyleModel = {
   key: 'DUMMY_BLOCK_STYLES',
@@ -24,13 +25,13 @@ export const DUMMY_BLOCK_STYLES: StyleModel = {
 
 export const DUMMY_TEXT_BLOCK: BlockModel = {
   key: 'DUMMY_TEXT_BLOCK',
-  blockTypeKey: '', // todo
+  blockTypeKey: ContainerBlock.key, // todo
   name: 'Dummy Text Block',
 };
 
 export const DUMMY_BLOCK: BlockModel = {
   key: 'DUMMY_BLOCK',
-  blockTypeKey: '', // todo
+  blockTypeKey: ContainerBlock.key, // todo
   name: 'Dummy Block',
   props: {
     children: {
@@ -47,6 +48,7 @@ export const DUMMY_TEST_COMPONENT: ComponentModel = {
   key: 'DUMMY_TEST_COMPONENT',
   blocks: {
     [DUMMY_BLOCK.key]: DUMMY_BLOCK,
+    [DUMMY_TEXT_BLOCK.key]: DUMMY_TEXT_BLOCK,
   },
   rootBlockKey: DUMMY_BLOCK.key,
 };

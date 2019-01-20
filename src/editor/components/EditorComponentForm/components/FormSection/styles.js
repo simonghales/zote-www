@@ -50,7 +50,7 @@ const rowClass = css`
 
 const rowGridClass = css`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-column-gap: ${getRem(5)};
 `;
 

@@ -7,8 +7,11 @@ import fontWeights from '../../../../../styles/config/fontWeights';
 import { getRem } from '../../../../../styles/utils/measurements';
 
 const classNames = {
+  blockItemWrapperSelected: 'blockItemWrapperSelected',
   blockItemSelected: 'blockItemSelected',
 };
+
+export const blockItemClassNames = classNames;
 
 const sliverCss = css`
   content: '';
@@ -52,7 +55,7 @@ const clickableClass = css`
     background-color: ${highlightColor};
   }
 
-  .${classNames.blockItemSelected} & {
+  &.${classNames.blockItemSelected} {
     color: ${colors.vibrant};
   }
 

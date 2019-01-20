@@ -7,14 +7,18 @@ import type { SortableBlockModel } from '../../models';
 
 type Props = {
   blocks: Array<SortableBlockModel>,
+  onSelect: (blockKey: string) => void,
 };
 
-function renderCondensedNestItem(item: SortableBlockModel) {
-  return <BlockItem selected={item.selected} />;
+function renderCondensedNestItem(item: SortableBlockModel, onSelect: (blockKey: string) => void) {
+  return <BlockItem blockKey={item.blockKey} selected={item.selected} onSelect={onSelect} />;
 }
 
 class NestList extends Component<Props> {
-  handleRenderItem = ({ item }: { item: SortableBlockModel }) => renderCondensedNestItem(item);
+  handleRenderItem = ({ item }: { item: SortableBlockModel }) => {
+    const { onSelect } = this.props;
+    return renderCondensedNestItem(item, onSelect);
+  };
 
   render() {
     const { blocks } = this.props;

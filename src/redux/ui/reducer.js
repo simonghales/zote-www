@@ -24,6 +24,44 @@ export const initialUiReduxState: UIReduxState = {
   ...dummyUiReduxState,
 };
 
+const SET_COMPONENT_SELECTED_BLOCK_KEY = 'SET_COMPONENT_SELECTED_BLOCK_KEY';
+
+type SetComponentSelectedBlockKeyPayload = {
+  componentKey: string,
+  blockKey: string,
+};
+
+type SetComponentSelectedBlockKeyAction = {
+  type: string,
+  payload: SetComponentSelectedBlockKeyPayload,
+};
+
+export function setComponentSelectedBlockKeyRedux(
+  componentKey: string,
+  blockKey: string
+): SetComponentSelectedBlockKeyAction {
+  return {
+    type: SET_COMPONENT_SELECTED_BLOCK_KEY,
+    payload: {
+      componentKey,
+      blockKey,
+    },
+  };
+}
+
+function handleSetComponentSelectedBlockKey(
+  state: UIReduxState,
+  { componentKey, blockKey }: SetComponentSelectedBlockKeyPayload
+): UIReduxState {
+  return {
+    ...state,
+    componentsSelectedBlockKeys: {
+      ...state.componentsSelectedBlockKeys,
+      [componentKey]: blockKey,
+    },
+  };
+}
+
 const SET_EDITOR_FORM_SECTION_VISIBILITY = 'SET_EDITOR_FORM_SECTION_VISIBILITY';
 
 type SetEditorFormSectionVisibilityPayload = {
@@ -63,6 +101,7 @@ function handleSetEditorFormSectionVisibility(
 }
 
 const ACTION_HANDLERS = {
+  [SET_COMPONENT_SELECTED_BLOCK_KEY]: handleSetComponentSelectedBlockKey,
   [SET_EDITOR_FORM_SECTION_VISIBILITY]: handleSetEditorFormSectionVisibility,
 };
 

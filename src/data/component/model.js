@@ -1,12 +1,10 @@
 // @flow
 
-import type { BlockModel } from '../block/model';
+import type { BlocksModel } from '../block/model';
 
 export type ComponentModel = {
   key: string,
-  blocks: {
-    [string]: BlockModel,
-  },
+  blocks: BlocksModel,
   rootBlockKey: string,
 };
 
