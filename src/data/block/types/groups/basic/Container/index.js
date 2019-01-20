@@ -1,5 +1,6 @@
 // @flow
-
+import React from 'react';
+import { FaCube } from 'react-icons/fa';
 import type { BlockTypeModel } from '../../../model';
 import { containerPropsConfig } from './props';
 import config from './config';
@@ -13,6 +14,7 @@ const ContainerBlock: BlockTypeModel = {
   propsEnabled: true,
   stylesEnabled: true,
   htmlEnabled: true,
+  icon: <FaCube />,
 };
 
 export default ContainerBlock;

@@ -1,5 +1,5 @@
 // @flow
-
+import type { Node } from 'react';
 import type { BlockPropsConfigModel } from '../props/model';
 
 export type BlockTypeModel = {
@@ -10,6 +10,7 @@ export type BlockTypeModel = {
   propsEnabled: boolean,
   stylesEnabled: boolean,
   htmlEnabled: boolean,
+  icon: Node,
 };
 
 export type BlockTypesGroupModel = {

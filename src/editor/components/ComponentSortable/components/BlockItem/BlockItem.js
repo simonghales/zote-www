@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import type { Node } from 'react';
-import { FaParagraph } from 'react-icons/fa';
+import { FaParagraph, FaCube } from 'react-icons/fa';
 import { cx } from 'emotion';
 import { connect } from 'react-redux';
 import styles from './styles';
@@ -35,7 +35,7 @@ const BlockItem = ({ blockKey, name, selected, children, onSelect }: Props) => (
       }}
     >
       <div className={styles.iconClass}>
-        <FaParagraph />
+        <FaCube />
       </div>
       <div className={styles.nameClass}>{name}</div>
     </div>
