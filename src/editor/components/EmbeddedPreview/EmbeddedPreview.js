@@ -1,13 +1,20 @@
 // @flow
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styles from './styles';
 import EmbeddedPreviewHeader from './components/EmbeddedPreviewHeader/EmbeddedPreviewHeader';
 import EmbeddedPreviewBody from './components/EmbeddedPreviewBody/EmbeddedPreviewBody';
 import { EMBEDDED_PREVIEW_CONFIG_CAUSES, EmbeddedPreviewConfigContext } from './context';
 import { EMBEDDED_PREVIEW_CONFIG_PRESETS, getPresetDimensions } from './presets';
 import type { EmbeddedPreviewConfigLastCause } from './context';
+import type { ReduxState } from '../../../redux/store';
+import { getSelectedComponentSelector } from '../../state/reselect/component';
+import { mapComponentBlocksToMappedBlocks } from '../../../preview/data/block/state';
+import { getReduxStyles } from '../../../redux/styles/state';
 
-type Props = {};
+type Props = {
+  data: any,
+};
 
 type State = {
   config: {
@@ -85,12 +92,14 @@ class EmbeddedPreview extends Component<Props, State> {
 
   getContextState() {
     const { config } = this.state;
+    const { data } = this.props;
     return {
       ...config,
       setPreset: this.handleSetPreset,
       setWidth: this.handleSetWidth,
       setHeight: this.handleSetHeight,
       setZoom: this.handleSetZoom,
+      data,
     };
   }
 
@@ -109,3 +118,14 @@ class EmbeddedPreview extends Component<Props, State> {
 }
 
 export default EmbeddedPreview;
+
+const mapStateToProps = (state: ReduxState) => {
+  const selectedComponent = getSelectedComponentSelector(state);
+  const styles = getReduxStyles(state);
+  const mappedBlocks = mapComponentBlocksToMappedBlocks(selectedComponent, styles);
+  return {
+    data: mappedBlocks,
+  };
+};
+
+export const ComponentEmbeddedPreview = connect(mapStateToProps)(EmbeddedPreview);

@@ -67,6 +67,7 @@ function doesBoxFitZoomWithinParent(
 }
 
 type Props = {
+  data: any,
   desiredWidth: number,
   desiredHeight: number,
   desiredZoom: number,
@@ -190,6 +191,7 @@ class EmbeddedPreviewBodyContent extends Component<Props, State> {
       desiredWidth,
       desiredHeight,
       desiredZoom,
+      data,
     } = this.props;
     const [width, height] = this.getBoxDimensions();
     const { resizing } = this.state;
@@ -207,7 +209,12 @@ class EmbeddedPreviewBodyContent extends Component<Props, State> {
           })}
         >
           <div className={styles.contentClass}>
-            <ModuleIframeWrapper width={desiredWidth} height={desiredHeight} zoom={desiredZoom} />
+            <ModuleIframeWrapper
+              width={desiredWidth}
+              height={desiredHeight}
+              zoom={desiredZoom}
+              data={data}
+            />
           </div>
         </div>
       </ResizableBox>
@@ -225,6 +232,7 @@ const EmbeddedPreviewBody = () => (
       setHeight,
       setZoom,
       lastCause,
+      data,
     }) => (
       <div className={styles.containerClass}>
         <div className={styles.availableSpaceClass}>
@@ -246,6 +254,7 @@ const EmbeddedPreviewBody = () => (
                   setHeight(newHeight, true);
                 }}
                 lastCause={lastCause}
+                data={data}
               />
             )}
           </ContainerDimensions>

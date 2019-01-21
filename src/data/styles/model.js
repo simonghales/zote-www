@@ -1,13 +1,23 @@
 // @flow
 
+export type RawStyleModel = {
+  value: string,
+};
+
 export type StateStylesModel = {
-  [string]: {
-    value: string,
-  },
+  [string]: RawStyleModel,
 };
 
 export const STYLE_STATES = {
   default: 'default',
+};
+
+export type StyleStateModel = {
+  styles: StateStylesModel,
+};
+
+export type StyleStatesModel = {
+  [string]: StyleStateModel,
 };
 
 export type StyleModel = {
@@ -19,11 +29,7 @@ export type StyleModel = {
       },
     },
   },
-  states: {
-    [string]: {
-      styles: StateStylesModel,
-    },
-  },
+  states: StyleStatesModel,
 };
 
 export type StylesModels = {

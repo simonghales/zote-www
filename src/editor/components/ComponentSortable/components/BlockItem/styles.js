@@ -96,7 +96,6 @@ const iconClass = css`
 
   svg {
     display: block;
-    width: ${getRem(8)};
   }
 
   .${classNames.blockItemSelected} & {

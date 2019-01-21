@@ -9,6 +9,9 @@ export function getPropsConfigFromBlockType(blockType: BlockTypeModel): BlockPro
 }
 
 export function getIconFromBlockType(blockType: BlockTypeModel): Node {
-  // todo - finish implementing
   return blockType.icon ? blockType.icon : null;
+}
+
+export function getComponentFromBlockType(blockType: BlockTypeModel): Node {
+  return blockType.component;
 }

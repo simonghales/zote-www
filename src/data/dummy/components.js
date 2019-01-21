@@ -6,15 +6,17 @@ import type { StyleModel } from '../styles/model';
 import { STYLE_STATES } from '../styles/model';
 import ContainerBlock from '../block/types/groups/basic/Container';
 import { getBlockStyleKeyFormat } from '../block/state';
+import ComponentBlock from '../block/types/groups/component/Component';
+import HeadingBlock from '../block/types/groups/basic/Heading';
 
 export const DUMMY_BLOCK_STYLES: StyleModel = {
-  key: getBlockStyleKeyFormat('DUMMY_BLOCK'),
+  key: getBlockStyleKeyFormat('DUMMY_CONTAINER_BLOCK'),
   mixins: {},
   states: {
     [STYLE_STATES.default]: {
       styles: {
         'font-family': {
-          value: 'Gday world!',
+          value: 'Roboto',
         },
         'text-align': {
           value: 'center',
@@ -26,13 +28,19 @@ export const DUMMY_BLOCK_STYLES: StyleModel = {
 
 export const DUMMY_TEXT_BLOCK: BlockModel = {
   key: 'DUMMY_TEXT_BLOCK',
-  blockTypeKey: ContainerBlock.key, // todo
+  blockTypeKey: HeadingBlock.key,
   name: 'Dummy Text Block',
+  props: {
+    text: {
+      key: 'text',
+      value: 'Hello world!',
+    },
+  },
 };
 
 export const DUMMY_CONTAINER_BLOCK: BlockModel = {
   key: 'DUMMY_CONTAINER_BLOCK',
-  blockTypeKey: ContainerBlock.key, // todo
+  blockTypeKey: ContainerBlock.key,
   name: 'Dummy Container Block',
   props: {
     children: {
@@ -44,7 +52,7 @@ export const DUMMY_CONTAINER_BLOCK: BlockModel = {
 
 export const DUMMY_BLOCK: BlockModel = {
   key: 'DUMMY_BLOCK',
-  blockTypeKey: ContainerBlock.key, // todo
+  blockTypeKey: ComponentBlock.key,
   name: 'Dummy Block',
   props: {
     children: {

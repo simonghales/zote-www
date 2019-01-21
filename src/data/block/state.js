@@ -95,6 +95,26 @@ export function getMergedPropConfigFromBlock(
   return mergedPropConfig;
 }
 
+export function getMergedPropsConfigFromBlock(block: BlockModel): BlockPropsConfigModel {
+  const mergedPropsConfig = {};
+  const availablePropsKeys = {};
+  const propsConfig = getPropsConfigFromBlock(block);
+  const blockTypePropsConfig = getPropsConfigFromBlockBlockType(block);
+  Object.keys(propsConfig).forEach(propKey => {
+    availablePropsKeys[propKey] = true;
+  });
+  Object.keys(blockTypePropsConfig).forEach(propKey => {
+    availablePropsKeys[propKey] = true;
+  });
+  Object.keys(availablePropsKeys).forEach(propKey => {
+    const propConfig = getMergedPropConfigFromBlock(propKey, block);
+    if (propConfig) {
+      mergedPropsConfig[propKey] = propConfig;
+    }
+  });
+  return mergedPropsConfig;
+}
+
 export function getPropValueFromBlock(propKey: string, block: BlockModel): any {
   const prop = getPropFromBlock(propKey, block);
   return prop ? prop.value : null;
@@ -131,4 +151,17 @@ export function doesBlockAllowChildBlocks(block: BlockModel): boolean {
 
 export function getNameFromBlock(block: BlockModel): string {
   return block.name;
+}
+
+export function getAvailablePropKeysFromBlock(block: BlockModel): Array<string> {
+  const availableProps = {};
+  const props = getPropsFromBlock(block);
+  Object.keys(props).forEach(propKey => {
+    availableProps[propKey] = true;
+  });
+  const propsConfig = getMergedPropsConfigFromBlock(block);
+  Object.keys(propsConfig).forEach(propKey => {
+    availableProps[propKey] = true;
+  });
+  return Object.keys(availableProps);
 }

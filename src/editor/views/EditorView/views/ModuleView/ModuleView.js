@@ -2,7 +2,7 @@
 import React from 'react';
 import styles from './styles';
 import ModuleEditor from '../../../../components/ModuleEditor/ModuleEditor';
-import EmbeddedPreview from '../../../../components/EmbeddedPreview/EmbeddedPreview';
+import { ComponentEmbeddedPreview } from '../../../../components/EmbeddedPreview/EmbeddedPreview';
 
 const ModuleView = () => (
   <div className={styles.containerClass}>
@@ -10,7 +10,7 @@ const ModuleView = () => (
       <ModuleEditor />
     </div>
     <div className={styles.previewContainerClass}>
-      <EmbeddedPreview />
+      <ComponentEmbeddedPreview />
     </div>
   </div>
 );

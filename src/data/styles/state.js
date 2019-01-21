@@ -1,15 +1,36 @@
 // @flow
 
-import type { StateStylesModel, StyleModel, StylesModels } from './model';
+import type {
+  RawStyleModel,
+  StateStylesModel,
+  StyleModel,
+  StylesModels,
+  StyleStateModel,
+  StyleStatesModel,
+} from './model';
 
-export function getStyleFromStyles(styleKey: string, styles: StylesModels): StyleModel {
+export function getValueFromRawStyle(style: RawStyleModel): string {
+  return style.value;
+}
+
+export function getStyleFromStyles(styleKey: string, styles: StylesModels): StyleModel | null {
   return styles[styleKey];
 }
 
-export function getStyleStateStyles(stateKey: string, style: StyleModel): StateStylesModel {
-  const state = style.states[stateKey];
-  const { styles = {} } = state;
+export function getStylesFromStyleState(styleState: StyleStateModel): StateStylesModel {
+  const { styles = {} } = styleState;
   return styles;
+}
+
+export function getStyleStatesFromStyle(style: StyleModel): StyleStatesModel {
+  const { states = {} } = style;
+  return states;
+}
+
+export function getStyleStateStyles(stateKey: string, style: StyleModel): StateStylesModel {
+  const states = getStyleStatesFromStyle(style);
+  const state = states[stateKey];
+  return getStylesFromStyleState(state);
 }
 
 export function getStyleValueFromStyle(

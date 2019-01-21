@@ -19,6 +19,7 @@ export type EmbeddedPreviewConfigContextState = {
   setWidth: (width: number, auto?: boolean) => void,
   setHeight: (height: number, auto?: boolean) => void,
   setZoom: (zoom: number, auto?: boolean) => void,
+  data: any,
 };
 
 const defaultState: EmbeddedPreviewConfigContextState = {
@@ -31,6 +32,7 @@ const defaultState: EmbeddedPreviewConfigContextState = {
   setWidth: () => {},
   setHeight: () => {},
   setZoom: () => {},
+  data: null,
 };
 
 export const EmbeddedPreviewConfigContext = React.createContext(defaultState);

@@ -1,14 +1,18 @@
 // @flow
 import React from 'react';
 import type { Node } from 'react';
-import { FaParagraph, FaCube } from 'react-icons/fa';
 import { cx } from 'emotion';
 import { connect } from 'react-redux';
 import styles from './styles';
 import { getSelectedComponentSelector } from '../../../../state/reselect/component';
 import { getBlocksFromComponent } from '../../../../../data/component/state';
-import { getBlockFromBlocks, getNameFromBlock } from '../../../../../data/block/state';
+import {
+  getBlockFromBlocks,
+  getBlockTypeFromBlock,
+  getNameFromBlock,
+} from '../../../../../data/block/state';
 import type { ReduxState } from '../../../../../redux/store';
+import { getIconFromBlockType } from '../../../../../data/block/types/state';
 
 type Props = {
   // eslint-disable-next-line react/no-unused-prop-types
@@ -17,9 +21,10 @@ type Props = {
   selected: boolean,
   children?: Node,
   onSelect: (blockKey: string) => void,
+  icon: Node,
 };
 
-const BlockItem = ({ blockKey, name, selected, children, onSelect }: Props) => (
+const BlockItem = ({ icon, blockKey, name, selected, children, onSelect }: Props) => (
   <div
     className={cx(styles.containerClass, {
       [styles.selectedClass]: selected,
@@ -34,9 +39,7 @@ const BlockItem = ({ blockKey, name, selected, children, onSelect }: Props) => (
         onSelect(blockKey);
       }}
     >
-      <div className={styles.iconClass}>
-        <FaCube />
-      </div>
+      <div className={styles.iconClass}>{icon}</div>
       <div className={styles.nameClass}>{name}</div>
     </div>
     {children && children}
@@ -51,7 +54,10 @@ const mapStateToProps = (state: ReduxState, { blockKey }: Props) => {
   const selectedComponent = getSelectedComponentSelector(state);
   const blocks = getBlocksFromComponent(selectedComponent);
   const block = getBlockFromBlocks(blockKey, blocks);
+  const blockType = getBlockTypeFromBlock(block);
+  const icon = getIconFromBlockType(blockType);
   return {
+    icon,
     name: getNameFromBlock(block),
   };
 };
