@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import type { Node } from 'react';
+import { css } from 'emotion';
 import type { ParsedStylesModel } from '../../../../../../parser/models';
 
 export type HeadingParsedProps = {
@@ -11,9 +12,15 @@ export type HeadingParsedProps = {
 
 class HeadingComponent extends PureComponent<HeadingParsedProps> {
   render() {
-    const { element, text } = this.props;
+    const { element, text, zoteStyles } = this.props;
     const Element = element;
-    return React.createElement(Element, {}, text);
+    return React.createElement(
+      Element,
+      {
+        className: css(zoteStyles),
+      },
+      text
+    );
   }
 }
 

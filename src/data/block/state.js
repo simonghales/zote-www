@@ -1,5 +1,4 @@
 // @flow
-import { get } from 'lodash';
 import type { BlockModel, BlocksModel } from './model';
 import type {
   BlockPropConfigModel,
@@ -7,7 +6,11 @@ import type {
   BlockPropsConfigModel,
   BlockPropsModel,
 } from './props/model';
-import { BLOCK_PROPS_CONFIG_TYPES, COMMON_PROPS } from './props/model';
+import {
+  BLOCK_PROPS_CONFIG_TYPES,
+  BLOCK_PROPS_DISPLAY_SECTIONS,
+  COMMON_PROPS,
+} from './props/model';
 import type { BlockTypeModel } from './types/model';
 import { BLOCK_TYPES } from './types/data';
 import { getPropsConfigFromBlockType } from './types/state';
@@ -164,4 +167,18 @@ export function getAvailablePropKeysFromBlock(block: BlockModel): Array<string> 
     availableProps[propKey] = true;
   });
   return Object.keys(availableProps);
+}
+
+export function getBlockContentProps(block: BlockModel): Array<BlockPropConfigModel> {
+  const mergedPropsConfig = getMergedPropsConfigFromBlock(block);
+  return Object.keys(mergedPropsConfig)
+    .filter(propKey => {
+      const propConfig = mergedPropsConfig[propKey];
+      if (propConfig.hidden) return false;
+      return (
+        !propConfig.displaySection ||
+        propConfig.displaySection !== BLOCK_PROPS_DISPLAY_SECTIONS.html
+      );
+    })
+    .map(propKey => mergedPropsConfig[propKey]);
 }

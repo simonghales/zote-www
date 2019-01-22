@@ -1,8 +1,6 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import FormSection from './components/FormSection/FormSection';
-import { STYLES_FORM_DATA } from './data/styles';
 import type { ReduxState } from '../../../redux/store';
 import { getSelectedComponentKeySelector } from '../../state/reselect/component';
 import { EditorComponentFormContext } from './context';
@@ -20,6 +18,7 @@ import { getStyleKeyFromBlock } from '../../../data/block/state';
 import { STYLE_STATES } from '../../../data/styles/model';
 import type { EditorFormSectionsVisibility } from '../../../redux/ui/reducer';
 import { setEditorFormSectionVisibilityRedux } from '../../../redux/ui/reducer';
+import ContentFormView from './views/ContentFormView/ContentFormView';
 
 export function getFormSectionVisibility(
   sectionKey: string,
@@ -50,17 +49,12 @@ const EditorComponentForm = ({
     value={{ componentKey, blockKey, blockStyleKey, styleStateKey: STYLE_STATES.default }}
   >
     <div key={blockKey}>
-      {STYLES_FORM_DATA.sections.map(section => (
-        <FormSection
-          heading={section.heading}
-          columns={section.columns}
-          key={section.key}
-          visible={getFormSectionVisibility(section.key, formSectionsVisibility)}
-          setVisible={(visible: boolean) => {
-            setFormSectionVisibility(section.key, visible);
-          }}
-        />
-      ))}
+      <ContentFormView
+        blockKey={blockKey}
+        componentKey={componentKey}
+        formSectionsVisibility={formSectionsVisibility}
+        setFormSectionVisibility={setFormSectionVisibility}
+      />
     </div>
   </EditorComponentFormContext.Provider>
 );

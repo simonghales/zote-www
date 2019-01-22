@@ -3,6 +3,7 @@
 import type { FormInputTypes } from '../components/FormInput/FormInput';
 
 export const EDITOR_FORM_REDUX_TYPES = {
+  prop: 'prop',
   style: 'style',
 };
 
