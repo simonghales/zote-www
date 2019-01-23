@@ -45,7 +45,9 @@ const hiddenBodyClass = css`
 `;
 
 const rowClass = css`
-  margin-top: ${getRem(5)};
+  &:not(:first-of-type) {
+    margin-top: ${getRem(5)};
+  }
 `;
 
 const rowGridClass = css`

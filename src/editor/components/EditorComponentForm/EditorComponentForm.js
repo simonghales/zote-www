@@ -19,6 +19,8 @@ import { STYLE_STATES } from '../../../data/styles/model';
 import type { EditorFormSectionsVisibility } from '../../../redux/ui/reducer';
 import { setEditorFormSectionVisibilityRedux } from '../../../redux/ui/reducer';
 import ContentFormView from './views/ContentFormView/ContentFormView';
+import { STYLES_NAV_OPTION } from '../EditorSection/components/EditorSectionNav/EditorSectionNav';
+import StylesFormView from './views/StylesFormView/StylesFormView';
 
 export function getFormSectionVisibility(
   sectionKey: string,
@@ -36,28 +38,47 @@ type Props = {
   blockStyleKey: string,
   formSectionsVisibility: EditorFormSectionsVisibility,
   setFormSectionVisibility: (sectionKey: string, visible: boolean) => void,
+  selectedTab: string,
 };
 
-const EditorComponentForm = ({
-  componentKey,
-  blockKey,
-  blockStyleKey,
-  formSectionsVisibility,
-  setFormSectionVisibility,
-}: Props) => (
-  <EditorComponentFormContext.Provider
-    value={{ componentKey, blockKey, blockStyleKey, styleStateKey: STYLE_STATES.default }}
-  >
-    <div key={blockKey}>
+class EditorComponentForm extends React.Component<Props> {
+  renderFormView() {
+    const {
+      componentKey,
+      blockKey,
+      formSectionsVisibility,
+      setFormSectionVisibility,
+      selectedTab,
+    } = this.props;
+    if (selectedTab === STYLES_NAV_OPTION.key) {
+      return (
+        <StylesFormView
+          formSectionsVisibility={formSectionsVisibility}
+          setFormSectionVisibility={setFormSectionVisibility}
+        />
+      );
+    }
+    return (
       <ContentFormView
         blockKey={blockKey}
         componentKey={componentKey}
         formSectionsVisibility={formSectionsVisibility}
         setFormSectionVisibility={setFormSectionVisibility}
       />
-    </div>
-  </EditorComponentFormContext.Provider>
-);
+    );
+  }
+
+  render() {
+    const { componentKey, blockKey, blockStyleKey } = this.props;
+    return (
+      <EditorComponentFormContext.Provider
+        value={{ componentKey, blockKey, blockStyleKey, styleStateKey: STYLE_STATES.default }}
+      >
+        <div key={blockKey}>{this.renderFormView()}</div>
+      </EditorComponentFormContext.Provider>
+    );
+  }
+}
 
 const mapStateToProps = (state: ReduxState) => {
   const componentKey = getSelectedComponentKeySelector(state);

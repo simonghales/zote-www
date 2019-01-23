@@ -3,9 +3,13 @@ import React from 'react';
 import styles from './styles';
 import EditorForm from '../../../EditorComponentForm/EditorComponentForm';
 
-const EditorSectionBody = () => (
+type Props = {
+  selectedTab: string,
+};
+
+const EditorSectionBody = ({ selectedTab }: Props) => (
   <div className={styles.containerClass}>
-    <EditorForm />
+    <EditorForm selectedTab={selectedTab} />
   </div>
 );
 

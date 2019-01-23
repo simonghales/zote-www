@@ -51,6 +51,7 @@ export function getFormInput(
         blockKey={blockKey}
         blockStyleKey={blockStyleKey}
         styleStateKey={styleStateKey}
+        reduxType={input.reduxConnected.type}
       />
     );
   }
@@ -86,12 +87,14 @@ class FormSection extends Component<Props> {
     const { componentKey, blockKey, blockStyleKey, styleStateKey } = this.context;
     return (
       <div className={styles.containerClass}>
-        <header className={styles.headerClass} onClick={this.handleToggleVisible}>
-          <div className={styles.headerTextClass}>{heading}</div>
-          <div className={styles.headerIconClass}>
-            {visible ? <FaChevronDown size={8} /> : <FaChevronRight size={8} />}
-          </div>
-        </header>
+        {heading && (
+          <header className={styles.headerClass} onClick={this.handleToggleVisible}>
+            <div className={styles.headerTextClass}>{heading}</div>
+            <div className={styles.headerIconClass}>
+              {visible ? <FaChevronDown size={8} /> : <FaChevronRight size={8} />}
+            </div>
+          </header>
+        )}
         <div
           className={cx({
             [styles.hiddenBodyClass]: !visible,

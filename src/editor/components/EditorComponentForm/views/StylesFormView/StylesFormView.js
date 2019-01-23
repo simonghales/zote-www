@@ -1,8 +1,9 @@
 // @flow
 import React from 'react';
 import { STYLES_FORM_DATA } from '../../data/styles';
-import FormSection, { getFormSectionVisibility } from '../../EditorComponentForm';
+import { getFormSectionVisibility } from '../../EditorComponentForm';
 import type { EditorFormSectionsVisibility } from '../../../../../redux/ui/reducer';
+import FormSection from '../../components/FormSection/FormSection';
 
 type Props = {
   formSectionsVisibility: EditorFormSectionsVisibility,

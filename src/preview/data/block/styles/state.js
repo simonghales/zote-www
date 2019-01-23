@@ -1,5 +1,5 @@
 // @flow
-
+import { camelCase } from 'lodash';
 import type { MappedBlockStylesModel } from '../model';
 import type { StateStylesModel, StylesModels } from '../../../../data/styles/model';
 import {
@@ -18,7 +18,7 @@ export function getMappedStateStyles(
   const mappedStyles = {};
   Object.keys(stateStyle).forEach(styleKey => {
     const style = stateStyle[styleKey];
-    mappedStyles[styleKey] = getValueFromRawStyle(style);
+    mappedStyles[camelCase(styleKey)] = getValueFromRawStyle(style); // emotion wants camelCase CSS properties
   });
   return mappedStyles;
 }

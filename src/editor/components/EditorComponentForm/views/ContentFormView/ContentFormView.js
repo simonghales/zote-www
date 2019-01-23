@@ -46,15 +46,14 @@ const mapStateToProps = (state: ReduxState, { blockKey, componentKey }: Props) =
   const inputs = mapBlockPropConfigsToEditorFormInputModel(contentPropsConfigs);
   const sections = [
     {
-      heading: 'Todo',
-      key: 'todo',
+      heading: '',
+      key: '',
       columns: inputs.map(input => ({
         columns: 4,
         input,
       })),
     },
   ];
-  console.log(`sections`, sections);
   return {
     sections,
   };

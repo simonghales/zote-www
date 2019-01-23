@@ -32,7 +32,7 @@ class EditorSection extends Component<Props, State> {
       <div className={styles.containerClass}>
         <EditorSectionNav selectedTab={selectedTab} setTab={this.setTab} />
         <div className={styles.contentClass}>
-          <EditorSectionBody />
+          <EditorSectionBody selectedTab={selectedTab} />
         </div>
       </div>
     );
