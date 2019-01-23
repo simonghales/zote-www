@@ -3,13 +3,13 @@
 import type { BlockPropsConfigModel } from '../../../../props/model';
 import { BLOCK_PROPS_CONFIG_TYPES, BLOCK_PROPS_DISPLAY_SECTIONS } from '../../../../props/model';
 
-export const headingPropsConfig: BlockPropsConfigModel = {
+export const textPropsConfig: BlockPropsConfigModel = {
   element: {
     key: 'element',
     label: 'Element',
     type: BLOCK_PROPS_CONFIG_TYPES.html,
     displaySection: BLOCK_PROPS_DISPLAY_SECTIONS.html,
-    defaultValue: 'h3',
+    defaultValue: 'p',
   },
   text: {
     key: 'text',

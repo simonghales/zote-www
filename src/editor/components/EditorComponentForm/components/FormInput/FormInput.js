@@ -7,6 +7,9 @@ import {
   FontFamilyInput,
   FontStyleInput,
   FontWeightInput,
+  HtmlContainerInput,
+  HtmlHeadingInput,
+  HtmlInput,
 } from '../../../inputs/SelectInput/SelectInput';
 import ColorInput from '../../../inputs/ColorInput/ColorInput';
 import { TextAlignInput } from '../../../inputs/RadioInput/RadioInput';
@@ -25,6 +28,9 @@ export const FORM_INPUT_TYPES = {
   fontStyle: 'fontStyle',
   textAlign: 'textAlign',
   color: 'color',
+  html: 'html',
+  htmlContainer: 'htmlContainer',
+  htmlHeading: 'htmlHeading',
 };
 
 export type FormInputTypes = $Keys<typeof FORM_INPUT_TYPES>;
@@ -36,6 +42,9 @@ const MAPPED_FORM_INPUT_TYPES = {
   [FORM_INPUT_TYPES.fontStyle]: FontStyleInput,
   [FORM_INPUT_TYPES.color]: ColorInput,
   [FORM_INPUT_TYPES.textAlign]: TextAlignInput,
+  [FORM_INPUT_TYPES.html]: HtmlInput,
+  [FORM_INPUT_TYPES.htmlContainer]: HtmlContainerInput,
+  [FORM_INPUT_TYPES.htmlHeading]: HtmlHeadingInput,
 };
 
 function getMappedFormInput(inputType: FormInputTypes) {

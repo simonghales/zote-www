@@ -1,4 +1,5 @@
 // @flow
+import htmlTags from 'html-tags';
 import React, { Component } from 'react';
 import type { DefaultFormInputProps } from '../../EditorComponentForm/components/FormInput/FormInput';
 import { PlainDropdownSelect } from '../../DropdownSelect/DropdownSelect';
@@ -78,4 +79,26 @@ export const FontWeightInput = (props: DefaultFormInputProps) => (
 
 export const FontStyleInput = (props: DefaultFormInputProps) => (
   <SelectInput {...props} isCreatable isMulti={false} options={FONT_STYLE_OPTIONS} />
+);
+
+const mapHtmlTags = (tags: Array<string>): Array<SelectOptionType> =>
+  tags.map((tag: string) => ({
+    value: tag,
+    label: tag,
+  }));
+
+const allHtmlTags = mapHtmlTags(htmlTags);
+const headingHtmlTags = mapHtmlTags(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
+const containerHtmlTags = mapHtmlTags(['div', 'section']);
+
+export const HtmlInput = (props: DefaultFormInputProps) => (
+  <SelectInput {...props} isCreatable={false} isMulti={false} options={allHtmlTags} />
+);
+
+export const HtmlContainerInput = (props: DefaultFormInputProps) => (
+  <SelectInput {...props} isCreatable={false} isMulti={false} options={containerHtmlTags} />
+);
+
+export const HtmlHeadingInput = (props: DefaultFormInputProps) => (
+  <SelectInput {...props} isCreatable={false} isMulti={false} options={headingHtmlTags} />
 );

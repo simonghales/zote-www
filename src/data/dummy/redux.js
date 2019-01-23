@@ -11,9 +11,11 @@ export const dummyEditorReduxState: EditorReduxState = {
   },
 };
 
-export const dummyUiReduxState: UIReduxState = {
+export const dummyUiReduxState = {
   selectedComponentKey: DUMMY_TEST_COMPONENT.key,
-  componentsSelectedBlockKeys: {},
+  componentsSelectedBlockKeys: {
+    DUMMY_TEST_COMPONENT: 'DUMMY_TEXT_BLOCK',
+  },
 };
 
 export const dummyStylesReduxState: StylesReduxState = {

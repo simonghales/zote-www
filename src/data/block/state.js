@@ -169,16 +169,28 @@ export function getAvailablePropKeysFromBlock(block: BlockModel): Array<string> 
   return Object.keys(availableProps);
 }
 
-export function getBlockContentProps(block: BlockModel): Array<BlockPropConfigModel> {
+export function getBlockVisibleProps(block: BlockModel): Array<BlockPropConfigModel> {
   const mergedPropsConfig = getMergedPropsConfigFromBlock(block);
   return Object.keys(mergedPropsConfig)
     .filter(propKey => {
       const propConfig = mergedPropsConfig[propKey];
-      if (propConfig.hidden) return false;
-      return (
-        !propConfig.displaySection ||
-        propConfig.displaySection !== BLOCK_PROPS_DISPLAY_SECTIONS.html
-      );
+      return !propConfig.hidden;
     })
     .map(propKey => mergedPropsConfig[propKey]);
+}
+
+export function getBlockContentProps(block: BlockModel): Array<BlockPropConfigModel> {
+  const visiblePropsConfig = getBlockVisibleProps(block);
+  return visiblePropsConfig.filter(
+    propConfig =>
+      !propConfig.displaySection || propConfig.displaySection !== BLOCK_PROPS_DISPLAY_SECTIONS.html
+  );
+}
+
+export function getBlockHtmlProps(block: BlockModel): Array<BlockPropConfigModel> {
+  const visiblePropsConfig = getBlockVisibleProps(block);
+  return visiblePropsConfig.filter(
+    propConfig =>
+      propConfig.displaySection && propConfig.displaySection === BLOCK_PROPS_DISPLAY_SECTIONS.html
+  );
 }

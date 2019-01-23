@@ -18,8 +18,16 @@ import { getStyleKeyFromBlock } from '../../../data/block/state';
 import { STYLE_STATES } from '../../../data/styles/model';
 import type { EditorFormSectionsVisibility } from '../../../redux/ui/reducer';
 import { setEditorFormSectionVisibilityRedux } from '../../../redux/ui/reducer';
-import ContentFormView from './views/ContentFormView/ContentFormView';
-import { STYLES_NAV_OPTION } from '../EditorSection/components/EditorSectionNav/EditorSectionNav';
+import {
+  CONTENT_FORM_VIEW_TYPES,
+  ContentFormView,
+  HtmlFormView,
+} from './views/PropsFormView/PropsFormView';
+import {
+  CONTENT_NAV_OPTION,
+  HTML_NAV_OPTION,
+  STYLES_NAV_OPTION,
+} from '../EditorSection/components/EditorSectionNav/EditorSectionNav';
 import StylesFormView from './views/StylesFormView/StylesFormView';
 
 export function getFormSectionVisibility(
@@ -58,14 +66,16 @@ class EditorComponentForm extends React.Component<Props> {
         />
       );
     }
-    return (
-      <ContentFormView
-        blockKey={blockKey}
-        componentKey={componentKey}
-        formSectionsVisibility={formSectionsVisibility}
-        setFormSectionVisibility={setFormSectionVisibility}
-      />
-    );
+    const sharedProps = {
+      blockKey,
+      componentKey,
+      formSectionsVisibility,
+      setFormSectionVisibility,
+    };
+    if (selectedTab === HTML_NAV_OPTION.key) {
+      return <HtmlFormView {...sharedProps} />;
+    }
+    return <ContentFormView {...sharedProps} />;
   }
 
   render() {

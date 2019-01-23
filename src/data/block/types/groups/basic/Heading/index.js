@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { FaParagraph } from 'react-icons/fa';
+import { FaHeading } from 'react-icons/fa';
 import type { BlockTypeModel } from '../../../model';
 import { headingPropsConfig } from './props';
 import config from './config';
@@ -14,7 +14,7 @@ const HeadingBlock: BlockTypeModel = {
   propsEnabled: true,
   stylesEnabled: true,
   htmlEnabled: true,
-  icon: <FaParagraph size={8} />,
+  icon: <FaHeading size={8} />,
 };
 
 export default HeadingBlock;

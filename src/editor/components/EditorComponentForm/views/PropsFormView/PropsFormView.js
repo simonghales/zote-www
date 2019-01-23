@@ -11,18 +11,29 @@ import {
   getBlockFromComponent,
   getComponentFromComponents,
 } from '../../../../../data/component/state';
-import { getBlockContentProps } from '../../../../../data/block/state';
+import { getBlockContentProps, getBlockHtmlProps } from '../../../../../data/block/state';
 import { mapBlockPropConfigsToEditorFormInputModel } from '../../data/state';
 
-type Props = {
+export const CONTENT_FORM_VIEW_TYPES = {
+  content: 'content',
+  html: 'html',
+};
+
+export type contentFormViewTypes = $Keys<typeof CONTENT_FORM_VIEW_TYPES>;
+
+type PassedProps = {
   blockKey: string,
   componentKey: string,
-  sections: Array<any>,
   formSectionsVisibility: EditorFormSectionsVisibility,
   setFormSectionVisibility: (sectionKey: string, visible: boolean) => void,
 };
 
-const ContentFormView = ({ sections, formSectionsVisibility, setFormSectionVisibility }: Props) => (
+type Props = PassedProps & {
+  sections: Array<any>,
+  viewType: contentFormViewTypes,
+};
+
+const PropsFormView = ({ sections, formSectionsVisibility, setFormSectionVisibility }: Props) => (
   <React.Fragment>
     {sections.map(section => (
       <FormSection
@@ -38,12 +49,15 @@ const ContentFormView = ({ sections, formSectionsVisibility, setFormSectionVisib
   </React.Fragment>
 );
 
-const mapStateToProps = (state: ReduxState, { blockKey, componentKey }: Props) => {
+const mapStateToProps = (state: ReduxState, { blockKey, componentKey, viewType }: Props) => {
   const components = getComponentsFromReduxEditorState(state.editor);
   const component = getComponentFromComponents(componentKey, components);
   const block = getBlockFromComponent(component, blockKey);
-  const contentPropsConfigs = getBlockContentProps(block);
-  const inputs = mapBlockPropConfigsToEditorFormInputModel(contentPropsConfigs);
+  const propsConfig =
+    viewType === CONTENT_FORM_VIEW_TYPES.content
+      ? getBlockContentProps(block)
+      : getBlockHtmlProps(block);
+  const inputs = mapBlockPropConfigsToEditorFormInputModel(propsConfig, block);
   const sections = [
     {
       heading: '',
@@ -59,4 +73,14 @@ const mapStateToProps = (state: ReduxState, { blockKey, componentKey }: Props) =
   };
 };
 
-export default connect(mapStateToProps)(ContentFormView);
+const MappedPropsFormView = connect(mapStateToProps)(PropsFormView);
+
+export default MappedPropsFormView;
+
+export const ContentFormView = (props: PassedProps) => (
+  <MappedPropsFormView {...props} viewType={CONTENT_FORM_VIEW_TYPES.content} />
+);
+
+export const HtmlFormView = (props: PassedProps) => (
+  <MappedPropsFormView {...props} viewType={CONTENT_FORM_VIEW_TYPES.html} />
+);

@@ -7,12 +7,16 @@ import FormInput from '../FormInput/FormInput';
 import { getReduxStyleStyleValue } from '../../../../../redux/styles/state';
 import { setModuleStyleValueRedux } from '../../../../../redux/styles/reducer';
 import { EDITOR_FORM_REDUX_TYPES } from '../../data/models';
-import { getReduxComponentBlockPropValue } from '../../../../../redux/editor/state';
+import {
+  getReduxComponentBlockPropDefaultValue,
+  getReduxComponentBlockPropValue,
+} from '../../../../../redux/editor/state';
 import { setBlockPropValueRedux } from '../../../../../redux/editor/reducer';
 
 type Props = {
   input: EditorFormInputModel,
   value: any,
+  defaultValue: any,
   updateValue: (value: any) => void,
   // eslint-disable-next-line react/no-unused-prop-types
   blockStyleKey: string,
@@ -26,11 +30,11 @@ type Props = {
   blockKey: string,
 };
 
-const ReduxFormInput = ({ input, value, updateValue }: Props) => (
+const ReduxFormInput = ({ input, value, defaultValue, updateValue }: Props) => (
   <FormInput
     inputKey={input.key}
     name={input.name}
-    defaultValue={input.defaultValue}
+    defaultValue={defaultValue}
     value={value}
     updateValue={updateValue}
     inactive={!value}
@@ -43,13 +47,26 @@ const mapStateToProps = (
   { input, blockStyleKey, styleStateKey, reduxType, componentKey, blockKey }: Props
 ) => {
   let value;
+  // eslint-disable-next-line prefer-destructuring
+  let defaultValue = input.defaultValue;
   if (reduxType === EDITOR_FORM_REDUX_TYPES.style) {
     value = getReduxStyleStyleValue(state, input, styleStateKey, blockStyleKey);
   } else {
     value = getReduxComponentBlockPropValue(state.editor, componentKey, blockKey, input.key);
+    const fetchedDefaultValue = getReduxComponentBlockPropDefaultValue(
+      state.editor,
+      componentKey,
+      blockKey,
+      input.key
+    );
+    console.log('fetchedDefaultValue', fetchedDefaultValue);
+    if (fetchedDefaultValue !== null) {
+      defaultValue = fetchedDefaultValue;
+    }
   }
   return {
     value,
+    defaultValue,
   };
 };
 

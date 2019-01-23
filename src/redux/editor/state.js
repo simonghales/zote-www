@@ -5,7 +5,12 @@ import type { ComponentsModels } from '../../data/component/model';
 import type { EditorReduxState } from './reducer';
 import type { BlockModel } from '../../data/block/model';
 import { getBlockFromComponent, getComponentFromComponents } from '../../data/component/state';
-import { getPropFromBlock } from '../../data/block/state';
+import {
+  getMergedPropConfigFromBlock,
+  getPropConfigFromBlock,
+  getPropFromBlock,
+} from '../../data/block/state';
+import { isValueDefined } from '../../utils/validation';
 
 export function getReduxEditorComponents(state: ReduxState): ComponentsModels {
   return state.editor.components;
@@ -39,4 +44,16 @@ export function getReduxComponentBlockPropValue(
   const prop = getPropFromBlock(propKey, block);
   if (!prop) return null;
   return prop.value;
+}
+
+export function getReduxComponentBlockPropDefaultValue(
+  state: EditorReduxState,
+  componentKey: string,
+  blockKey: string,
+  propKey: string
+): any {
+  const block = getComponentBlockFromReduxEditorState(state, componentKey, blockKey);
+  const propConfig = getMergedPropConfigFromBlock(propKey, block);
+  if (!propConfig || !isValueDefined(propConfig.defaultValue)) return null;
+  return propConfig.defaultValue;
 }
