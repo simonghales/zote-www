@@ -14,6 +14,7 @@ const ContainerBlock: BlockTypeModel = {
   propsEnabled: true,
   stylesEnabled: true,
   htmlEnabled: true,
+  addPropsEnabled: false,
   icon: <FaRegSquare size={8} />,
 };
 

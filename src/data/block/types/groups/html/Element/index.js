@@ -14,6 +14,7 @@ const HtmlElementBlock: BlockTypeModel = {
   propsEnabled: true,
   stylesEnabled: true,
   htmlEnabled: true,
+  addPropsEnabled: false,
   icon: <FaCode size={9} />,
 };
 

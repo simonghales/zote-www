@@ -14,6 +14,7 @@ const TextBlock: BlockTypeModel = {
   propsEnabled: true,
   stylesEnabled: true,
   htmlEnabled: true,
+  addPropsEnabled: false,
   icon: <FaParagraph size={8} />,
 };
 

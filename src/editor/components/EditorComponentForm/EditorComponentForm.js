@@ -14,7 +14,13 @@ import {
   getComponentFromComponents,
   getRootBlockKeyFromComponent,
 } from '../../../data/component/state';
-import { getStyleKeyFromBlock } from '../../../data/block/state';
+import {
+  getAddPropsEnabledFromBlock,
+  getHtmlEnabledFromBlock,
+  getPropsEnabledFromBlock,
+  getStyleKeyFromBlock,
+  getStylesEnabledFromBlock,
+} from '../../../data/block/state';
 import { STYLE_STATES } from '../../../data/styles/model';
 import type { EditorFormSectionsVisibility } from '../../../redux/ui/reducer';
 import { setEditorFormSectionVisibilityRedux } from '../../../redux/ui/reducer';
@@ -29,6 +35,7 @@ import {
   STYLES_NAV_OPTION,
 } from '../EditorSection/components/EditorSectionNav/EditorSectionNav';
 import StylesFormView from './views/StylesFormView/StylesFormView';
+import DisabledFormView from './views/DisabledFormView/DisabledFormView';
 
 export function getFormSectionVisibility(
   sectionKey: string,
@@ -47,6 +54,10 @@ type Props = {
   formSectionsVisibility: EditorFormSectionsVisibility,
   setFormSectionVisibility: (sectionKey: string, visible: boolean) => void,
   selectedTab: string,
+  propsEnabled: boolean,
+  stylesEnabled: boolean,
+  htmlEnabled: boolean,
+  addPropsEnabled: boolean,
 };
 
 class EditorComponentForm extends React.Component<Props> {
@@ -57,8 +68,15 @@ class EditorComponentForm extends React.Component<Props> {
       formSectionsVisibility,
       setFormSectionVisibility,
       selectedTab,
+      propsEnabled,
+      stylesEnabled,
+      htmlEnabled,
+      addPropsEnabled,
     } = this.props;
     if (selectedTab === STYLES_NAV_OPTION.key) {
+      if (!stylesEnabled) {
+        return <DisabledFormView message="This block cannot be styled." />;
+      }
       return (
         <StylesFormView
           formSectionsVisibility={formSectionsVisibility}
@@ -73,9 +91,15 @@ class EditorComponentForm extends React.Component<Props> {
       setFormSectionVisibility,
     };
     if (selectedTab === HTML_NAV_OPTION.key) {
+      if (!htmlEnabled) {
+        return <DisabledFormView message="HTML cannot be modified for this block." />;
+      }
       return <HtmlFormView {...sharedProps} />;
     }
-    return <ContentFormView {...sharedProps} />;
+    if (!propsEnabled) {
+      return <DisabledFormView message="Content cannot be modified for this block." />;
+    }
+    return <ContentFormView {...sharedProps} addPropsEnabled={addPropsEnabled} />;
   }
 
   render() {
@@ -101,11 +125,19 @@ const mapStateToProps = (state: ReduxState) => {
   const block = getBlockFromComponent(component, blockKey);
   const blockStyleKey = getStyleKeyFromBlock(block);
   const formSectionsVisibility = getEditorFormSectionsVisibility(state.ui);
+  const propsEnabled = getPropsEnabledFromBlock(block);
+  const stylesEnabled = getStylesEnabledFromBlock(block);
+  const htmlEnabled = getHtmlEnabledFromBlock(block);
+  const addPropsEnabled = getAddPropsEnabledFromBlock(block);
   return {
     componentKey,
     blockKey,
     blockStyleKey,
     formSectionsVisibility,
+    propsEnabled,
+    stylesEnabled,
+    htmlEnabled,
+    addPropsEnabled,
   };
 };
 

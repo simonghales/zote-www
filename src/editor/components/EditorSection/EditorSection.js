@@ -17,8 +17,7 @@ class EditorSection extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      // selectedTab: CONTENT_NAV_OPTION.key,
-      selectedTab: HTML_NAV_OPTION.key,
+      selectedTab: CONTENT_NAV_OPTION.key,
     };
   }
 

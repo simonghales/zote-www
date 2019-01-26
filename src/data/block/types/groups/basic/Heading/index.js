@@ -14,6 +14,7 @@ const HeadingBlock: BlockTypeModel = {
   propsEnabled: true,
   stylesEnabled: true,
   htmlEnabled: true,
+  addPropsEnabled: false,
   icon: <FaHeading size={8} />,
 };
 

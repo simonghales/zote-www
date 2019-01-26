@@ -11,9 +11,10 @@ const ComponentBlock: BlockTypeModel = {
   name: config.name,
   component: ComponentComponent,
   propsConfig: componentPropsConfig,
-  propsEnabled: false,
+  propsEnabled: true,
   stylesEnabled: false,
   htmlEnabled: false,
+  addPropsEnabled: true,
   icon: <FaCube size={8} />,
 };
 

@@ -28,16 +28,17 @@ type Props = {
   componentKey: string,
   // eslint-disable-next-line react/no-unused-prop-types
   blockKey: string,
+  inactive: boolean,
 };
 
-const ReduxFormInput = ({ input, value, defaultValue, updateValue }: Props) => (
+const ReduxFormInput = ({ input, value, inactive, defaultValue, updateValue }: Props) => (
   <FormInput
     inputKey={input.key}
     name={input.name}
     defaultValue={defaultValue}
     value={value}
     updateValue={updateValue}
-    inactive={!value}
+    inactive={inactive}
     inputType={input.inputType}
   />
 );
@@ -64,9 +65,11 @@ const mapStateToProps = (
       defaultValue = fetchedDefaultValue;
     }
   }
+  const inactive = !value;
   return {
     value,
     defaultValue,
+    inactive,
   };
 };
 

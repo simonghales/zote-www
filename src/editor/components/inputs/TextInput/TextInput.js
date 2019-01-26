@@ -3,13 +3,19 @@ import React, { Component } from 'react';
 import { PlainInput } from '../../Input/Input';
 import type { DefaultFormInputProps } from '../../EditorComponentForm/components/FormInput/FormInput';
 
-type Props = DefaultFormInputProps;
+type Props = DefaultFormInputProps & {
+  autoFocus?: boolean,
+};
 
 type State = {
   value: string,
 };
 
 class TextInput extends Component<Props, State> {
+  static defaultProps = {
+    autoFocus: false,
+  };
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -28,9 +34,14 @@ class TextInput extends Component<Props, State> {
 
   render() {
     const { value } = this.state;
-    const { defaultValue, inputId } = this.props;
+    const { defaultValue, inputId, autoFocus } = this.props;
     return (
-      <PlainInput value={value || defaultValue} onChange={this.handleOnChange} inputId={inputId} />
+      <PlainInput
+        value={value || defaultValue}
+        onChange={this.handleOnChange}
+        inputId={inputId}
+        autoFocus={autoFocus}
+      />
     );
   }
 }

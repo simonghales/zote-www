@@ -1,10 +1,11 @@
 // @flow
 
 import type { BlockModel } from './model';
-import { getPropsFromBlock } from './state';
+import { getPropsConfigFromBlock, getPropsFromBlock } from './state';
 import { updatePropValue } from './props/modifiers';
 import { getPropFromProps } from './props/state';
-import { generateDefaultPropObject } from './props/generators';
+import { generateDefaultPropObject, generateNewPropConfig } from './props/generators';
+import type { BlockPropsConfigTypes } from './props/model';
 
 export function updateBlockPropValue(
   block: BlockModel,
@@ -21,6 +22,22 @@ export function updateBlockPropValue(
     props: {
       ...props,
       [propKey]: updatePropValue(prop, propValue),
+    },
+  };
+}
+
+export function addNewPropToBlock(
+  block: BlockModel,
+  propKey: string,
+  propType: BlockPropsConfigTypes,
+  propLabel: string
+): BlockModel {
+  const propsConfig = getPropsConfigFromBlock(block);
+  return {
+    ...block,
+    propsConfig: {
+      ...propsConfig,
+      [propKey]: generateNewPropConfig(propKey, propType, propLabel),
     },
   };
 }

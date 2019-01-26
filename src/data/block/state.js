@@ -10,7 +10,13 @@ import { BLOCK_PROPS_CONFIG_TYPES, BLOCK_PROPS_DISPLAY_SECTIONS } from './props/
 import { CHILDREN_PROP_CONFIG, ELEMENT_PROP_CONFIG } from './props/data';
 import type { BlockTypeModel } from './types/model';
 import { BLOCK_TYPES } from './types/data';
-import { getPropsConfigFromBlockType } from './types/state';
+import {
+  getAddPropsEnabledFromBlockType,
+  getHtmlEnabledFromBlockType,
+  getPropsConfigFromBlockType,
+  getPropsEnabledFromBlockType,
+  getStylesEnabledFromBlockType,
+} from './types/state';
 import {
   getPropConfigFromPropsConfig,
   getSortingPriorityFromPropConfig,
@@ -227,4 +233,29 @@ export function sortBlockPropsConfig(
     const configBSortingPriority = getSortingPriorityFromPropConfig(configB);
     return configBSortingPriority - configASortingPriority;
   });
+}
+
+export function getPropsEnabledFromBlock(block: BlockModel): boolean {
+  const blockType = getBlockTypeFromBlock(block);
+  return getPropsEnabledFromBlockType(blockType);
+}
+
+export function getStylesEnabledFromBlock(block: BlockModel): boolean {
+  const blockType = getBlockTypeFromBlock(block);
+  return getStylesEnabledFromBlockType(blockType);
+}
+
+export function getHtmlEnabledFromBlock(block: BlockModel): boolean {
+  const blockType = getBlockTypeFromBlock(block);
+  return getHtmlEnabledFromBlockType(blockType);
+}
+
+export function getAddPropsEnabledFromBlock(block: BlockModel): boolean {
+  const blockType = getBlockTypeFromBlock(block);
+  return getAddPropsEnabledFromBlockType(blockType);
+}
+
+export function getBlockPropsConfigKeys(block: BlockModel): Array<string> {
+  const blockPropsConfig = getMergedPropsConfigFromBlock(block);
+  return Object.keys(blockPropsConfig);
 }

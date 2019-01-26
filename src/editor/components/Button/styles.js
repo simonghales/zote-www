@@ -36,7 +36,7 @@ const slimIconButtonClass = css`
   align-items: center;
   font-size: ${slimIconButtonFontSize}px;
   font-weight: ${fontWeights.bold};
-  background-color: ${colors.lightBlue};
+  background-color: rgba(189, 200, 224, 0.33);
   color: ${colors.darkLightBlue};
   padding: ${getEm(3, slimIconButtonFontSize)} ${getEm(9, slimIconButtonFontSize)};
   border-radius: ${getEm(18, slimIconButtonFontSize)};
@@ -48,7 +48,7 @@ const slimIconButtonClass = css`
   }
 
   &:hover {
-    background-color: ${colors.lightBlueDarkened};
+    background-color: rgba(189, 200, 224, 0.66);
   }
 `;
 

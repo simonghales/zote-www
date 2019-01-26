@@ -6,7 +6,8 @@ import type { BlocksOrder } from '../../editor/components/ComponentSortable/Comp
 import { getComponentsFromReduxEditorState } from './state';
 import { getBlockFromComponent, getComponentFromComponents } from '../../data/component/state';
 import { updateComponentBlocksOrder } from '../../data/component/modifiers';
-import { updateBlockPropValue } from '../../data/block/modifiers';
+import { addNewPropToBlock, updateBlockPropValue } from '../../data/block/modifiers';
+import type { BlockPropsConfigTypes } from '../../data/block/props/model';
 
 export type EditorReduxState = {
   components: ComponentsModels,
@@ -21,6 +22,63 @@ export type GenericAction = {
   type: string,
   payload: {},
 };
+
+const ADD_NEW_PROP_TO_BLOCK = 'ADD_NEW_PROP_TO_BLOCK';
+
+type AddNewPropToBlockPayload = {
+  componentKey: string,
+  blockKey: string,
+  propKey: string,
+  propType: BlockPropsConfigTypes,
+  propLabel: string,
+};
+
+type AddNewPropToBlockAction = {
+  type: string,
+  payload: AddNewPropToBlockPayload,
+};
+
+export function addNewPropToBlockRedux(
+  componentKey: string,
+  blockKey: string,
+  propKey: string,
+  propType: BlockPropsConfigTypes,
+  propLabel: string
+): AddNewPropToBlockAction {
+  console.log('addNewPropToBlockRedux', componentKey, blockKey, propKey, propType, propLabel);
+  return {
+    type: ADD_NEW_PROP_TO_BLOCK,
+    payload: {
+      componentKey,
+      blockKey,
+      propKey,
+      propType,
+      propLabel,
+    },
+  };
+}
+
+function handleAddNewPropToBlock(
+  state: EditorReduxState,
+  { componentKey, blockKey, propKey, propType, propLabel }: AddNewPropToBlockPayload
+): EditorReduxState {
+  const components = getComponentsFromReduxEditorState(state);
+  const component = getComponentFromComponents(componentKey, components);
+  const block = getBlockFromComponent(component, blockKey);
+  return {
+    ...state,
+    components: {
+      ...components,
+      [componentKey]: {
+        ...component,
+        blocks: {
+          ...component.blocks,
+          [blockKey]: addNewPropToBlock(block, propKey, propType, propLabel),
+        },
+      },
+    },
+  };
+}
 
 const SET_BLOCK_PROP_VALUE = 'SET_BLOCK_PROP_VALUE';
 
@@ -119,6 +177,7 @@ function handleUpdateComponentBlocksOrder(
 }
 
 const ACTION_HANDLERS = {
+  [ADD_NEW_PROP_TO_BLOCK]: handleAddNewPropToBlock,
   [UPDATE_COMPONENT_BLOCKS_ORDER]: handleUpdateComponentBlocksOrder,
   [SET_BLOCK_PROP_VALUE]: handleSetBlockPropValue,
 };

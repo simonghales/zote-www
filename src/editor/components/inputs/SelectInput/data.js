@@ -1,6 +1,7 @@
 // @flow
 
 import type { SelectOptionType } from '../../DropdownSelect/DropdownSelect';
+import { BLOCK_PROPS_CONFIG_TYPES } from '../../../../data/block/props/model';
 
 export const FONT_FAMILY_OPTIONS: Array<SelectOptionType> = [
   {
@@ -36,5 +37,12 @@ export const FONT_STYLE_OPTIONS: Array<SelectOptionType> = [
   {
     value: 'italic',
     label: 'italic',
+  },
+];
+
+export const PROP_TYPES_OPTIONS: Array<SelectOptionType> = [
+  {
+    value: BLOCK_PROPS_CONFIG_TYPES.string,
+    label: BLOCK_PROPS_CONFIG_TYPES.string,
   },
 ];

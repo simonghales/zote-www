@@ -7,7 +7,7 @@ import spacing from 'styles/config/spacing';
 import { getRem } from '../../../../../styles/utils/measurements';
 
 const containerClass = css`
-  margin-top: ${getRem(spacing.mediumLess)};
+  margin-bottom: ${getRem(spacing.mediumLess)};
 `;
 
 const headerClass = css`

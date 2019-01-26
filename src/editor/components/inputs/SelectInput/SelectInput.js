@@ -3,7 +3,12 @@ import htmlTags from 'html-tags';
 import React, { Component } from 'react';
 import type { DefaultFormInputProps } from '../../EditorComponentForm/components/FormInput/FormInput';
 import { PlainDropdownSelect } from '../../DropdownSelect/DropdownSelect';
-import { FONT_FAMILY_OPTIONS, FONT_STYLE_OPTIONS, FONT_WEIGHT_OPTIONS } from './data';
+import {
+  FONT_FAMILY_OPTIONS,
+  FONT_STYLE_OPTIONS,
+  FONT_WEIGHT_OPTIONS,
+  PROP_TYPES_OPTIONS,
+} from './data';
 import type { SelectOptionType } from '../../DropdownSelect/DropdownSelect';
 
 const getSelectInputValue = (values: string): Array<SelectOptionType> | null => {
@@ -101,4 +106,8 @@ export const HtmlContainerInput = (props: DefaultFormInputProps) => (
 
 export const HtmlHeadingInput = (props: DefaultFormInputProps) => (
   <SelectInput {...props} isCreatable={false} isMulti={false} options={headingHtmlTags} />
+);
+
+export const PropTypeInput = (props: DefaultFormInputProps) => (
+  <SelectInput {...props} isCreatable={false} isMulti={false} options={PROP_TYPES_OPTIONS} />
 );

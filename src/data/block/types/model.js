@@ -10,6 +10,7 @@ export type BlockTypeModel = {
   propsEnabled: boolean,
   stylesEnabled: boolean,
   htmlEnabled: boolean,
+  addPropsEnabled: boolean,
   icon: Node,
 };
 

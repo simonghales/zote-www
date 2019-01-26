@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import styles from './styles';
 import { STYLES_FORM_DATA } from '../../data/styles';
 import { getFormSectionVisibility } from '../../EditorComponentForm';
 import type { EditorFormSectionsVisibility } from '../../../../../redux/ui/reducer';
@@ -11,7 +12,7 @@ type Props = {
 };
 
 const StylesFormView = ({ formSectionsVisibility, setFormSectionVisibility }: Props) => (
-  <React.Fragment>
+  <div className={styles.containerClass}>
     {STYLES_FORM_DATA.sections.map(section => (
       <FormSection
         heading={section.heading}
@@ -23,7 +24,7 @@ const StylesFormView = ({ formSectionsVisibility, setFormSectionVisibility }: Pr
         }}
       />
     ))}
-  </React.Fragment>
+  </div>
 );
 
 export default StylesFormView;

@@ -10,6 +10,7 @@ import ComponentBlock from '../block/types/groups/component/Component';
 import HeadingBlock from '../block/types/groups/basic/Heading';
 import TextBlock from '../block/types/groups/basic/Text';
 import HtmlElementBlock from '../block/types/groups/html/Element';
+import { BLOCK_PROPS_CONFIG_TYPES } from '../block/props/model';
 
 export const DUMMY_BLOCK_STYLES: StyleModel = {
   key: getBlockStyleKeyFormat('DUMMY_CONTAINER_BLOCK'),
@@ -53,10 +54,6 @@ export const DUMMY_HTML_ELEMENT_BLOCK: BlockModel = {
       key: 'htmlAttributes',
       value: [
         {
-          key: 'style',
-          value: 'background-color:red;',
-        },
-        {
           key: 'class',
           value: 'boop-woop',
         },
@@ -97,6 +94,16 @@ export const DUMMY_BLOCK: BlockModel = {
     children: {
       key: 'children',
       value: [DUMMY_CONTAINER_BLOCK.key],
+    },
+    test: {
+      key: 'test',
+      value: 'Hello World!',
+    },
+  },
+  propsConfig: {
+    test: {
+      key: 'test',
+      type: BLOCK_PROPS_CONFIG_TYPES.string,
     },
   },
   styles: {
