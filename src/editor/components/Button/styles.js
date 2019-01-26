@@ -2,7 +2,13 @@
 
 import { css } from 'emotion';
 import { darken } from 'polished';
-import { buttonResetCss, solidButtonCss } from '../../../styles/button';
+import {
+  buttonResetCss,
+  roundIconActiveButtonCss,
+  roundIconButtonCss,
+  slimSolidButtonCss,
+  solidButtonCss,
+} from '../../../styles/button';
 import fontWeights from '../../../styles/config/fontWeights';
 import colors from '../../../styles/config/colors';
 import { getEm } from '../../../styles/utils/measurements';
@@ -17,6 +23,10 @@ const buttonClass = css`
 
 const solidButtonClass = css`
   ${solidButtonCss};
+`;
+
+const slimSolidButtonClass = css`
+  ${slimSolidButtonCss};
 `;
 
 const slimIconButtonFontSize = 11;
@@ -53,10 +63,21 @@ const slimIconDarkerButtonClass = css`
   }
 `;
 
+const roundIconButtonClass = css`
+  ${roundIconButtonCss};
+`;
+
+const roundIconActiveButtonClass = css`
+  ${roundIconActiveButtonCss};
+`;
+
 export default {
   classNames,
   buttonClass,
   solidButtonClass,
+  slimSolidButtonClass,
   slimIconButtonClass,
   slimIconDarkerButtonClass,
+  roundIconButtonClass,
+  roundIconActiveButtonClass,
 };

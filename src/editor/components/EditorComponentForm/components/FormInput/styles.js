@@ -14,6 +14,7 @@ const labelClass = css`
   font-size: 11px;
   color: ${colors.darkBlue};
   padding-left: ${getRem(5)};
+  display: block;
 `;
 
 const labelInactiveClass = css`

@@ -8,6 +8,7 @@ import type {
   BlockPropsModel,
 } from './model';
 import { BLOCK_PROPS_CONFIG_TYPES } from './model';
+import { isValueDefined } from '../../../utils/validation';
 
 export function getPropConfigFromPropsConfig(
   propKey: string,
@@ -42,4 +43,8 @@ export function parsePropValue(
 
 export function getPropFromProps(propKey: string, props: BlockPropsModel): BlockPropModel | null {
   return props[propKey] ? props[propKey] : null;
+}
+
+export function getSortingPriorityFromPropConfig(propConfig: BlockPropConfigModel): number {
+  return propConfig.sortingPriority ? propConfig.sortingPriority : 0;
 }

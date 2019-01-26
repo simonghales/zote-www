@@ -60,3 +60,8 @@ export const plainInputCss = css`
     border-color: ${plainInputStyles.focusBorderColor};
   }
 `;
+
+export const slimPlainInputCss = css`
+  ${plainInputCss};
+  padding: ${plainInputStyles.paddingHorizontal}px;
+`;

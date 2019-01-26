@@ -15,8 +15,11 @@ import { BLOCK_PROPS_CONFIG_TYPES } from '../data/block/props/model';
 export function parseMappedBlockProp(prop: MappedBlockPropModel): any {
   switch (prop.type) {
     case BLOCK_PROPS_CONFIG_TYPES.blocks:
-      // eslint-disable-next-line
-      return parseMappedBlocks(prop.value);
+      if (prop.value) {
+        // eslint-disable-next-line
+        return parseMappedBlocks(prop.value);
+      }
+      return [];
     default:
       return prop.value;
   }

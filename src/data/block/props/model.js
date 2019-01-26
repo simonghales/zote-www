@@ -1,9 +1,5 @@
 // @flow
 
-export const COMMON_PROPS = {
-  children: 'children',
-};
-
 export type BlockPropModel = {
   key: string,
   value: any,
@@ -25,7 +21,7 @@ export const BLOCK_PROPS_CONFIG_TYPES = {
   html: 'html',
   module: 'module',
   blocks: 'blocks',
-  htmlAttribute: 'htmlAttribute',
+  htmlAttributes: 'htmlAttributes',
   propReference: 'propReference',
   repeaterData: 'repeaterData',
 };
@@ -46,6 +42,7 @@ export type BlockPropConfigModel = {
   hidden?: boolean,
   displaySection?: BlockPropsDisplaySections,
   defaultValue?: any,
+  sortingPriority?: number,
 };
 
 export type BlockPropsConfigModel = {

@@ -8,7 +8,7 @@ import type {
 import { getBlocksFromComponent } from './state';
 import type { BlockModel } from '../block/model';
 import { updateBlockPropValue } from '../block/modifiers';
-import { COMMON_PROPS } from '../block/props/model';
+import { CHILDREN_PROP_CONFIG } from '../block/props/data';
 
 export function updateBlockOrder(
   block: BlockModel,
@@ -17,7 +17,7 @@ export function updateBlockOrder(
 ): BlockModel {
   const blockChildrenKeys =
     block.isRootBlock && !blockOrder ? rootBlocksKeysOrder : blockOrder.children;
-  return updateBlockPropValue(block, COMMON_PROPS.children, blockChildrenKeys);
+  return updateBlockPropValue(block, CHILDREN_PROP_CONFIG.key, blockChildrenKeys);
 }
 
 export function updateComponentBlocksOrder(

@@ -11,7 +11,11 @@ import {
   getBlockFromComponent,
   getComponentFromComponents,
 } from '../../../../../data/component/state';
-import { getBlockContentProps, getBlockHtmlProps } from '../../../../../data/block/state';
+import {
+  getBlockContentProps,
+  getBlockHtmlProps,
+  sortBlockPropsConfig,
+} from '../../../../../data/block/state';
 import { mapBlockPropConfigsToEditorFormInputModel } from '../../data/state';
 
 export const CONTENT_FORM_VIEW_TYPES = {
@@ -57,7 +61,8 @@ const mapStateToProps = (state: ReduxState, { blockKey, componentKey, viewType }
     viewType === CONTENT_FORM_VIEW_TYPES.content
       ? getBlockContentProps(block)
       : getBlockHtmlProps(block);
-  const inputs = mapBlockPropConfigsToEditorFormInputModel(propsConfig, block);
+  const sortedPropsConfig = sortBlockPropsConfig(propsConfig);
+  const inputs = mapBlockPropConfigsToEditorFormInputModel(sortedPropsConfig, block);
   const sections = [
     {
       heading: '',

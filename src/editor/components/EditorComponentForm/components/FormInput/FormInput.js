@@ -13,12 +13,13 @@ import {
 } from '../../../inputs/SelectInput/SelectInput';
 import ColorInput from '../../../inputs/ColorInput/ColorInput';
 import { TextAlignInput } from '../../../inputs/RadioInput/RadioInput';
+import ArrayKeyValueInput from '../../../inputs/ArrayKeyValueInput/ArrayKeyValueInput';
 
 export type DefaultFormInputProps = {
   inputId: string,
   defaultValue: string,
   value: string,
-  updateValue: (value: string) => void,
+  updateValue: (value: any) => void,
 };
 
 export const FORM_INPUT_TYPES = {
@@ -31,6 +32,7 @@ export const FORM_INPUT_TYPES = {
   html: 'html',
   htmlContainer: 'htmlContainer',
   htmlHeading: 'htmlHeading',
+  htmlAttributes: 'htmlAttributes',
 };
 
 export type FormInputTypes = $Keys<typeof FORM_INPUT_TYPES>;
@@ -45,6 +47,7 @@ const MAPPED_FORM_INPUT_TYPES = {
   [FORM_INPUT_TYPES.html]: HtmlInput,
   [FORM_INPUT_TYPES.htmlContainer]: HtmlContainerInput,
   [FORM_INPUT_TYPES.htmlHeading]: HtmlHeadingInput,
+  [FORM_INPUT_TYPES.htmlAttributes]: ArrayKeyValueInput,
 };
 
 function getMappedFormInput(inputType: FormInputTypes) {

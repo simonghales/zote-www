@@ -5,18 +5,16 @@ import { cx } from 'emotion';
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import styles from './styles';
 import FormInput from '../FormInput/FormInput';
-import type {
-  EditorFormInputModel,
-  EditorFormSectionColumnModel,
-  EditorFormSectionRowModel,
-} from '../../data/models';
+import type { EditorFormInputModel, EditorFormSectionColumnModel } from '../../data/models';
 import ReduxFormInput from '../ReduxFormInput/ReduxFormInput';
 import { EditorComponentFormContext } from '../../context';
 import type { EditorComponentFormContextState } from '../../context';
 
 const Column = ({ children, columns }: { children: Node, columns: number }) => (
   <div
-    className={styles.columnClass}
+    className={cx(styles.columnClass, {
+      [styles.sharedRowColumnClass]: columns < 4, // 4 is full
+    })}
     style={{
       gridColumn: `span ${columns}`,
     }}

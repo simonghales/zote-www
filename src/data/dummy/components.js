@@ -9,6 +9,7 @@ import { getBlockStyleKeyFormat } from '../block/state';
 import ComponentBlock from '../block/types/groups/component/Component';
 import HeadingBlock from '../block/types/groups/basic/Heading';
 import TextBlock from '../block/types/groups/basic/Text';
+import HtmlElementBlock from '../block/types/groups/html/Element';
 
 export const DUMMY_BLOCK_STYLES: StyleModel = {
   key: getBlockStyleKeyFormat('DUMMY_CONTAINER_BLOCK'),
@@ -39,6 +40,31 @@ export const DUMMY_TEXT_BLOCK: BlockModel = {
   },
 };
 
+export const DUMMY_HTML_ELEMENT_BLOCK: BlockModel = {
+  key: 'DUMMY_HTML_ELEMENT_BLOCK',
+  blockTypeKey: HtmlElementBlock.key,
+  name: 'Dummy HTML Block',
+  props: {
+    content: {
+      key: 'content',
+      value: 'Testing...',
+    },
+    htmlAttributes: {
+      key: 'htmlAttributes',
+      value: [
+        {
+          key: 'style',
+          value: 'background-color:red;',
+        },
+        {
+          key: 'class',
+          value: 'boop-woop',
+        },
+      ],
+    },
+  },
+};
+
 export const DUMMY_HEADING_BLOCK: BlockModel = {
   key: 'DUMMY_HEADING_BLOCK',
   blockTypeKey: HeadingBlock.key,
@@ -58,7 +84,7 @@ export const DUMMY_CONTAINER_BLOCK: BlockModel = {
   props: {
     children: {
       key: 'children',
-      value: [DUMMY_HEADING_BLOCK.key, DUMMY_TEXT_BLOCK.key],
+      value: [DUMMY_HEADING_BLOCK.key, DUMMY_TEXT_BLOCK.key, DUMMY_HTML_ELEMENT_BLOCK.key],
     },
   },
 };
@@ -86,6 +112,7 @@ export const DUMMY_TEST_COMPONENT: ComponentModel = {
     [DUMMY_TEXT_BLOCK.key]: DUMMY_TEXT_BLOCK,
     [DUMMY_HEADING_BLOCK.key]: DUMMY_HEADING_BLOCK,
     [DUMMY_CONTAINER_BLOCK.key]: DUMMY_CONTAINER_BLOCK,
+    [DUMMY_HTML_ELEMENT_BLOCK.key]: DUMMY_HTML_ELEMENT_BLOCK,
   },
   rootBlockKey: DUMMY_BLOCK.key,
 };

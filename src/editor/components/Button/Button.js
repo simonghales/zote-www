@@ -7,8 +7,11 @@ import styles from './styles';
 export const BUTTON_THEMES = {
   default: 'default',
   solid: 'solid',
+  slimSolid: 'slimSolid',
   slimIcon: 'slimIcon',
   slimIconDarker: 'slimIconDarker',
+  roundIcon: 'roundIcon',
+  roundIconActive: 'roundIconActive',
 };
 
 export type buttonThemes = $Keys<typeof BUTTON_THEMES>;
@@ -19,16 +22,27 @@ type Props = {
   icon?: Node,
   // eslint-disable-next-line react/require-default-props
   theme?: buttonThemes,
+  // eslint-disable-next-line react/require-default-props
+  disabled?: boolean,
+  // eslint-disable-next-line react/require-default-props
+  type?: string,
+  // eslint-disable-next-line react/require-default-props
+  onClick?: () => void,
 };
 
-const Button = ({ children, icon, theme }: Props) => (
+const Button = ({ children, icon, theme, disabled, onClick, type }: Props) => (
   <button
     className={cx(styles.buttonClass, {
       [styles.solidButtonClass]: theme === BUTTON_THEMES.solid,
+      [styles.slimSolidButtonClass]: theme === BUTTON_THEMES.slimSolid,
       [styles.slimIconButtonClass]: theme === BUTTON_THEMES.slimIcon,
       [styles.slimIconDarkerButtonClass]: theme === BUTTON_THEMES.slimIconDarker,
+      [styles.roundIconButtonClass]: theme === BUTTON_THEMES.roundIcon,
+      [styles.roundIconActiveButtonClass]: theme === BUTTON_THEMES.roundIconActive,
     })}
-    type="button"
+    type={type}
+    disabled={!!disabled}
+    onClick={onClick}
   >
     {icon && <div className={styles.classNames.buttonIcon}>{icon}</div>}
     {children}
@@ -38,11 +52,18 @@ const Button = ({ children, icon, theme }: Props) => (
 Button.defaultProps = {
   icon: null,
   theme: BUTTON_THEMES.default,
+  disabled: false,
+  type: 'button',
+  onClick: () => {},
 };
 
 export default Button;
 
 export const SolidButton = (props: Props) => <Button {...props} theme={BUTTON_THEMES.solid} />;
+
+export const SlimSolidButton = (props: Props) => (
+  <Button {...props} theme={BUTTON_THEMES.slimSolid} />
+);
 
 export const SlimIconButton = (props: Props) => (
   <Button {...props} theme={BUTTON_THEMES.slimIcon} />
@@ -50,4 +71,12 @@ export const SlimIconButton = (props: Props) => (
 
 export const SlimIconDarkerButton = (props: Props) => (
   <Button {...props} theme={BUTTON_THEMES.slimIconDarker} />
+);
+
+export const RoundIconButton = (props: Props) => (
+  <Button {...props} theme={BUTTON_THEMES.roundIcon} />
+);
+
+export const RoundIconActiveButton = (props: Props) => (
+  <Button {...props} theme={BUTTON_THEMES.roundIconActive} />
 );

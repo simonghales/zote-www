@@ -13,6 +13,7 @@ const containerClass = css`
 const headerClass = css`
   border-bottom: 1px solid ${colors.lightFaintShade};
   padding-bottom: ${getRem(2)};
+  margin-bottom: ${getRem(5)};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -57,13 +58,10 @@ const rowGridClass = css`
 `;
 
 const columnClass = css`
-  margin-top: ${getRem(2)};
-
-  &:nth-of-type(1),
-  &:nth-of-type(2) {
-    margin-top: 0;
-  }
+  margin-bottom: ${getRem(5)};
 `;
+
+const sharedRowColumnClass = css``;
 
 export default {
   containerClass,
@@ -73,5 +71,6 @@ export default {
   rowClass,
   rowGridClass,
   columnClass,
+  sharedRowColumnClass,
   hiddenBodyClass,
 };

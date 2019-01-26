@@ -6,16 +6,19 @@ import type {
   BlockPropsConfigModel,
   BlockPropsModel,
 } from './props/model';
-import {
-  BLOCK_PROPS_CONFIG_TYPES,
-  BLOCK_PROPS_DISPLAY_SECTIONS,
-  COMMON_PROPS,
-} from './props/model';
+import { BLOCK_PROPS_CONFIG_TYPES, BLOCK_PROPS_DISPLAY_SECTIONS } from './props/model';
+import { CHILDREN_PROP_CONFIG, ELEMENT_PROP_CONFIG } from './props/data';
 import type { BlockTypeModel } from './types/model';
 import { BLOCK_TYPES } from './types/data';
 import { getPropsConfigFromBlockType } from './types/state';
-import { getPropConfigFromPropsConfig, parsePropValue } from './props/state';
+import {
+  getPropConfigFromPropsConfig,
+  getSortingPriorityFromPropConfig,
+  parsePropValue,
+} from './props/state';
 import type { ParsedPropBlocksValue } from './props/state';
+import { isValueDefined } from '../../utils/validation';
+import { isHtmlElementVoid } from '../../utils/html';
 
 export function getBlockStyleKeyFormat(blockKey: string): string {
   return `block::${blockKey}`;
@@ -123,12 +126,24 @@ export function getPropValueFromBlock(propKey: string, block: BlockModel): any {
   return prop ? prop.value : null;
 }
 
+export function getPropValueFromBlockWithDefaultFallback(propKey: string, block: BlockModel): any {
+  const propValue = getPropValueFromBlock(propKey, block);
+  if (isValueDefined(propValue)) {
+    return propValue;
+  }
+  const propConfig = getMergedPropConfigFromBlock(propKey, block);
+  if (propConfig && isValueDefined(propConfig.defaultValue)) {
+    return propConfig.defaultValue;
+  }
+  return null;
+}
+
 export function getBlockChildrenKeysFromBlock(block: BlockModel): Array<string> {
-  const childrenProp = getPropFromBlock(COMMON_PROPS.children, block);
+  const childrenProp = getPropFromBlock(CHILDREN_PROP_CONFIG.key, block);
   if (!childrenProp) {
     return [];
   }
-  const childrenPropConfig = getMergedPropConfigFromBlock(COMMON_PROPS.children, block);
+  const childrenPropConfig = getMergedPropConfigFromBlock(CHILDREN_PROP_CONFIG.key, block);
   if (!childrenPropConfig) {
     return [];
   }
@@ -148,8 +163,17 @@ export function getBlockFromBlocks(blockKey: string, blocks: BlocksModel): Block
 }
 
 export function doesBlockAllowChildBlocks(block: BlockModel): boolean {
-  const childrenPropConfig = getMergedPropConfigFromBlock(COMMON_PROPS.children, block);
-  return !!childrenPropConfig && childrenPropConfig.type === BLOCK_PROPS_CONFIG_TYPES.blocks;
+  const childrenPropConfig = getMergedPropConfigFromBlock(CHILDREN_PROP_CONFIG.key, block);
+  const childrenAllowed =
+    !!childrenPropConfig && childrenPropConfig.type === BLOCK_PROPS_CONFIG_TYPES.blocks;
+  if (childrenAllowed) {
+    const elementPropConfig = getMergedPropConfigFromBlock(ELEMENT_PROP_CONFIG.key, block);
+    if (elementPropConfig && elementPropConfig.type === BLOCK_PROPS_CONFIG_TYPES.html) {
+      const elementValue = getPropValueFromBlockWithDefaultFallback(ELEMENT_PROP_CONFIG.key, block);
+      return !isHtmlElementVoid(elementValue); // todo - might not be stable
+    }
+  }
+  return childrenAllowed;
 }
 
 export function getNameFromBlock(block: BlockModel): string {
@@ -193,4 +217,14 @@ export function getBlockHtmlProps(block: BlockModel): Array<BlockPropConfigModel
     propConfig =>
       propConfig.displaySection && propConfig.displaySection === BLOCK_PROPS_DISPLAY_SECTIONS.html
   );
+}
+
+export function sortBlockPropsConfig(
+  propsConfig: Array<BlockPropConfigModel>
+): Array<BlockPropConfigModel> {
+  return propsConfig.sort((configA, configB) => {
+    const configASortingPriority = getSortingPriorityFromPropConfig(configA);
+    const configBSortingPriority = getSortingPriorityFromPropConfig(configB);
+    return configBSortingPriority - configASortingPriority;
+  });
 }
