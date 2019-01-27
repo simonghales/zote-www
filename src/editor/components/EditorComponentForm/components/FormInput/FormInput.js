@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import type { Node } from 'react';
 import { cx } from 'emotion';
 import { FaCaretDown } from 'react-icons/fa';
 import styles from './styles';
@@ -15,6 +16,8 @@ import {
 import ColorInput from '../../../inputs/ColorInput/ColorInput';
 import { TextAlignInput } from '../../../inputs/RadioInput/RadioInput';
 import ArrayKeyValueInput from '../../../inputs/ArrayKeyValueInput/ArrayKeyValueInput';
+import DropdownMenu from '../../../DropdownMenu/DropdownMenu';
+import DropdownMenuList from '../../../DropdownMenuList/DropdownMenuList';
 
 export type DefaultFormInputProps = {
   inputId: string,
@@ -67,52 +70,102 @@ type Props = {
   inactive?: boolean,
   updateValue: (value: any) => void,
   inputType: FormInputTypes,
+  dropDownComponent?: Node,
+};
+
+type State = {
+  dropDownVisible: boolean,
 };
 
 export function getFormInputId(key: string) {
   return `form-input-${key}`;
 }
 
-const FormInput = ({
-  inputKey,
-  name,
-  inactive,
-  defaultValue,
-  value,
-  updateValue,
-  inputType,
-}: Props) => {
-  const inputId = getFormInputId(inputKey);
-  const Input = getMappedFormInput(inputType);
-  return (
-    <div>
-      <header className={styles.headerClass}>
-        <label
-          className={cx(styles.labelClass, {
-            [styles.labelInactiveClass]: inactive,
-          })}
-          htmlFor={inputId}
-        >
-          {name}
-        </label>
-        <div>
-          <FaCaretDown size={11} />
-        </div>
-      </header>
-      <div>
-        <Input
-          inputId={inputId}
-          value={value}
-          defaultValue={defaultValue}
-          updateValue={updateValue}
-        />
-      </div>
-    </div>
-  );
-};
+class FormInput extends React.Component<Props, State> {
+  static defaultProps = {
+    inactive: false,
+    dropDownComponent: undefined,
+  };
 
-FormInput.defaultProps = {
-  inactive: false,
-};
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      dropDownVisible: false,
+    };
+  }
+
+  handleDisplayDropdown = () => {
+    this.setState({
+      dropDownVisible: true,
+    });
+  };
+
+  handleHideDropdown = () => {
+    this.setState({
+      dropDownVisible: false,
+    });
+  };
+
+  render() {
+    const {
+      inputKey,
+      name,
+      inactive,
+      defaultValue,
+      value,
+      updateValue,
+      inputType,
+      dropDownComponent,
+    } = this.props;
+    const { dropDownVisible } = this.state;
+    const inputId = getFormInputId(inputKey);
+    const Input = getMappedFormInput(inputType);
+    return (
+      <div>
+        <div className={styles.headerWrapperClass}>
+          <header className={styles.headerClass}>
+            <label
+              className={cx(styles.labelClass, {
+                [styles.labelInactiveClass]: inactive,
+              })}
+              htmlFor={inputId}
+            >
+              {name}
+            </label>
+            {/* {dropDownComponent && ( */}
+            <div className={styles.dropdownClass} onClick={this.handleDisplayDropdown}>
+              <FaCaretDown size={11} />
+            </div>
+            {/* )} */}
+          </header>
+          {dropDownVisible && (
+            <DropdownMenu close={this.handleHideDropdown}>
+              <DropdownMenuList
+                options={[
+                  {
+                    label: 'Edit Prop',
+                    onClick: () => {},
+                  },
+                  {
+                    label: 'Delete Prop',
+                    onClick: () => {},
+                  },
+                ]}
+              />
+            </DropdownMenu>
+          )}
+        </div>
+        <div>
+          <Input
+            inputId={inputId}
+            value={value}
+            defaultValue={defaultValue}
+            updateValue={updateValue}
+          />
+        </div>
+      </div>
+    );
+  }
+}
 
 export default FormInput;
