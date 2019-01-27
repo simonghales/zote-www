@@ -6,6 +6,8 @@ import { getRem } from '../../../../../styles/utils/measurements';
 import { inactiveLabelClass, labelCss } from '../../../../../styles/shared/typography';
 
 const headerClass = css`
+  display: flex;
+  align-items: center;
   margin-bottom: ${getRem(1)};
 `;
 

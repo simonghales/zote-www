@@ -43,6 +43,8 @@ export type BlockPropConfigModel = {
   displaySection?: BlockPropsDisplaySections,
   defaultValue?: any,
   sortingPriority?: number,
+  customProp?: boolean,
+  editable?: boolean,
 };
 
 export type BlockPropsConfigModel = {

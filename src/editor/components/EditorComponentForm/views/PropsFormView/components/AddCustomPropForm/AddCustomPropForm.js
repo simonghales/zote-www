@@ -1,12 +1,9 @@
 // @flow
 import React from 'react';
-import { FaCheck, FaPlus, FaTimes } from 'react-icons/fa';
-import { cx } from 'emotion';
+import { FaPlus, FaTimes } from 'react-icons/fa';
 import { connect } from 'react-redux';
-import { RoundIconActiveButton, SlimIconButton } from '../../../../../Button/Button';
+import { SlimIconButton } from '../../../../../Button/Button';
 import styles from './styles';
-import TextInput from '../../../../../inputs/TextInput/TextInput';
-import { PropTypeInput } from '../../../../../inputs/SelectInput/SelectInput';
 import { PROP_TYPES_OPTIONS } from '../../../../../inputs/SelectInput/data';
 import type { ReduxState } from '../../../../../../../redux/store';
 import { getBlockPropsConfigKeys } from '../../../../../../../data/block/state';
@@ -14,6 +11,7 @@ import { getComponentBlockFromReduxEditorState } from '../../../../../../../redu
 import { getPropKey } from '../../../../../../../utils/string';
 import type { BlockPropsConfigTypes } from '../../../../../../../data/block/props/model';
 import { addNewPropToBlockRedux } from '../../../../../../../redux/editor/reducer';
+import EditFormInput from '../../../../components/EditFormInput/EditFormInput';
 
 type Props = {
   componentKey: string,
@@ -37,7 +35,7 @@ type State = {
 const defaultPropType = PROP_TYPES_OPTIONS[0].value;
 
 const defaultState: State = {
-  addingCustomProp: true,
+  addingCustomProp: false,
   propNameInput: '',
   propTypeInput: defaultPropType,
 };
@@ -66,26 +64,6 @@ class AddCustomPropForm extends React.Component<Props, State> {
     });
   };
 
-  isValidPropName() {
-    const { propKeys } = this.props;
-    const { propNameInput } = this.state;
-    const propKey = getPropKey(propNameInput);
-    return !!propNameInput && !propKeys.includes(propKey);
-  }
-
-  handleUpdatePropName = (value: string) => {
-    this.setState({
-      propNameInput: value,
-    });
-  };
-
-  handleUpdatePropType = (value: string) => {
-    const propType: BlockPropsConfigTypes = (value: any);
-    this.setState({
-      propTypeInput: propType,
-    });
-  };
-
   handleToggleAddingProp = () => {
     this.setState((state: State) => ({
       addingCustomProp: !state.addingCustomProp,
@@ -97,19 +75,19 @@ class AddCustomPropForm extends React.Component<Props, State> {
     return addingCustomProp;
   }
 
-  isValidProp() {
-    return this.isValidPropName();
-  }
-
-  handleSubmitForm = (event: any) => {
-    event.preventDefault();
-    this.handleAddProp();
+  handleSubmitForm = (propName: string, propType: BlockPropsConfigTypes) => {
+    this.setState(
+      {
+        propNameInput: propName,
+        propTypeInput: propType,
+      },
+      this.handleAddProp
+    );
   };
 
   render() {
     const { propNameInput, propTypeInput } = this.state;
-    const propNameId = 'add-custom-prop-name';
-    const propTypeId = 'add-custom-prop-type';
+    const { propKeys } = this.props;
     const addingProp = this.isAddingProp();
     return (
       <div className={styles.containerClass}>
@@ -122,48 +100,12 @@ class AddCustomPropForm extends React.Component<Props, State> {
           </SlimIconButton>
         </div>
         {addingProp && (
-          <form className={styles.formClass} onSubmit={this.handleSubmitForm}>
-            <div className={styles.formInputWrapperClass}>
-              <label
-                className={cx(styles.formLabelClass, {
-                  [styles.formLabelInactiveClass]: !this.isValidPropName(),
-                })}
-                htmlFor={propNameId}
-              >
-                Prop Name
-              </label>
-              <div>
-                <TextInput
-                  inputId={propNameId}
-                  value={propNameInput}
-                  defaultValue=""
-                  updateValue={this.handleUpdatePropName}
-                  autoFocus
-                />
-              </div>
-            </div>
-            <div className={styles.formInputWrapperClass}>
-              <label className={styles.formLabelClass} htmlFor={propTypeId}>
-                Prop Type
-              </label>
-              <div>
-                <PropTypeInput
-                  inputId={propTypeId}
-                  value={propTypeInput}
-                  defaultValue={defaultPropType}
-                  updateValue={this.handleUpdatePropType}
-                />
-              </div>
-            </div>
-            <div>
-              <div className={styles.formLabelClass}>Save</div>
-              <div className={styles.formSaveWrapperClass}>
-                <RoundIconActiveButton disabled={!this.isValidProp()} type="submit">
-                  <FaCheck size={12} />
-                </RoundIconActiveButton>
-              </div>
-            </div>
-          </form>
+          <EditFormInput
+            onSubmit={this.handleSubmitForm}
+            propKeys={propKeys}
+            propName={propNameInput}
+            propType={propTypeInput}
+          />
         )}
       </div>
     );

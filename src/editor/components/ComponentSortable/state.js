@@ -1,5 +1,6 @@
 // @flow
 
+import { cx } from 'emotion';
 import type { ComponentModel } from '../../../data/component/model';
 import type { SortableBlockModel } from './models';
 import {
@@ -12,6 +13,7 @@ import {
   getBlockFromBlocks,
 } from '../../../data/block/state';
 import type { BlocksModel } from '../../../data/block/model';
+import { nestListClassNames } from './components/NestList/styles';
 
 export function mapComponentBlockToSortableBlock(
   blockKey: string,
@@ -20,6 +22,7 @@ export function mapComponentBlockToSortableBlock(
 ): SortableBlockModel {
   const block = getBlockFromBlocks(blockKey, blocks);
   const blockChildrenKeys = getBlockChildrenKeysFromBlock(block);
+  const selected = blockKey === selectedBlockKey;
   return {
     id: blockKey,
     blockKey,
@@ -27,8 +30,10 @@ export function mapComponentBlockToSortableBlock(
       mapComponentBlockToSortableBlock(blockChildKey, blocks, selectedBlockKey)
     ),
     childrenEnabled: doesBlockAllowChildBlocks(block),
-    classes: '',
-    selected: blockKey === selectedBlockKey,
+    classes: cx({
+      [nestListClassNames.nestItemSelected]: selected,
+    }),
+    selected,
   };
 }
 

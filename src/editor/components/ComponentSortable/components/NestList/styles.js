@@ -6,12 +6,12 @@ import colors from '../../../../../styles/config/colors';
 import { plainInputStyles } from '../../../../../styles/input';
 import { blockItemClassNames } from '../BlockItem/styles';
 
-const classNames = {
+export const nestListClassNames = {
   selectedBlock: 'selectedBlock',
   nestItemSelected: 'nestItemSelected',
 };
 
-const blackBlue = darken(0.05, colors.lightBlueDarkened);
+const blackBlue = colors.lightBlueDarkened;
 // const blackBlue = 'red';
 const blackInactiveBlue = darken(0.05, blackBlue);
 const brightBlue = plainInputStyles.focusBorderColor;
@@ -27,7 +27,7 @@ const containerClass = css`
 
   .nestItemSelected {
     .nestable-item {
-      background-color: red; // todo - work out what this controls
+      background-color: ${blackBlue};
     }
   }
 
@@ -57,9 +57,9 @@ const containerClass = css`
   }
 
   .nestable-drag-layer
-    .nestable-item-copy.${classNames.nestItemSelected},
+    .nestable-item-copy.${nestListClassNames.nestItemSelected},
     .nestable-item.is-hovered,
-  .${classNames.nestItemSelected} > .nestable-list {
+  .${nestListClassNames.nestItemSelected} > .nestable-list {
     background-color: ${blackBlue};
 
     .block {
@@ -67,17 +67,17 @@ const containerClass = css`
     }
   }
 
-  .${classNames.nestItemSelected} > .nestable-list {
-    &::after {
-      content: '';
-      pointer-events: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: 3px;
-      background-color: ${brightBlue};
-    }
+  .${nestListClassNames.nestItemSelected} > .nestable-list {
+    // &::after {
+    //   content: '';
+    //   pointer-events: none;
+    //   position: absolute;
+    //   top: 0;
+    //   left: 0;
+    //   bottom: 0;
+    //   width: 3px;
+    //   background-color: ${brightBlue};
+    // }
   }
 
   .nestable-item.is-dragging:before {
@@ -87,6 +87,6 @@ const containerClass = css`
 `;
 
 export default {
-  classNames,
+  classNames: nestListClassNames,
   containerClass,
 };

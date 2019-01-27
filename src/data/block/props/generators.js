@@ -18,5 +18,7 @@ export function generateNewPropConfig(
     key: propKey,
     type: propType,
     label: propLabel,
+    customProp: true,
+    editable: true,
   };
 }

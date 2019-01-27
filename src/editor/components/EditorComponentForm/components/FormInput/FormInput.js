@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { cx } from 'emotion';
+import { FaCaretDown } from 'react-icons/fa';
 import styles from './styles';
 import TextInput from '../../../inputs/TextInput/TextInput';
 import {
@@ -94,6 +95,9 @@ const FormInput = ({
         >
           {name}
         </label>
+        <div>
+          <FaCaretDown size={11} />
+        </div>
       </header>
       <div>
         <Input
