@@ -14,11 +14,13 @@ export type EmbeddedPreviewConfigContextState = {
   width: number,
   height: number,
   zoom: number,
+  preferredZoom: number,
   lastCause: EmbeddedPreviewConfigLastCause,
   setPreset: (preset: string) => void,
   setWidth: (width: number, auto?: boolean) => void,
   setHeight: (height: number, auto?: boolean) => void,
   setZoom: (zoom: number, auto?: boolean) => void,
+  setPreferredZoom: (zoom: number, auto?: boolean) => void,
   data: any,
 };
 
@@ -27,11 +29,13 @@ const defaultState: EmbeddedPreviewConfigContextState = {
   width: EMBEDDED_PREVIEW_CONFIG_PRESETS.largeDesktop.width,
   height: EMBEDDED_PREVIEW_CONFIG_PRESETS.largeDesktop.height,
   zoom: 100,
+  preferredZoom: 100,
   lastCause: null,
   setPreset: () => {},
   setWidth: () => {},
   setHeight: () => {},
   setZoom: () => {},
+  setPreferredZoom: () => {},
   data: null,
 };
 

@@ -71,6 +71,7 @@ type Props = {
   desiredWidth: number,
   desiredHeight: number,
   desiredZoom: number,
+  preferredZoom: number,
   availableWidth: number,
   availableHeight: number,
   // eslint-disable-next-line react/no-unused-prop-types
@@ -104,15 +105,28 @@ class EmbeddedPreviewBodyContent extends Component<Props, State> {
   }
 
   calculateZoom(props: $ReadOnly<Props>) {
-    const { availableHeight, availableWidth, desiredWidth, desiredHeight, desiredZoom } = props;
+    const {
+      availableHeight,
+      availableWidth,
+      desiredWidth,
+      desiredHeight,
+      desiredZoom,
+      preferredZoom,
+      setZoom,
+    } = props;
     const itFits = doesBoxFitZoomWithinParent(
       availableHeight,
       availableWidth,
       desiredWidth,
       desiredHeight,
-      desiredZoom
+      preferredZoom
     );
-    if (itFits) return;
+    if (itFits) {
+      if (desiredZoom !== preferredZoom) {
+        setZoom(preferredZoom);
+      }
+      return;
+    }
 
     const { lastCause, setDimensions } = props;
 
@@ -128,7 +142,6 @@ class EmbeddedPreviewBodyContent extends Component<Props, State> {
       const calculatedZoom =
         calculateRatio(availableHeight, availableWidth, desiredWidth, desiredHeight) * 100;
       if (desiredZoom !== calculatedZoom) {
-        const { setZoom } = props;
         setZoom(calculatedZoom);
       }
     }
@@ -228,6 +241,7 @@ const EmbeddedPreviewBody = () => (
       width: desiredWidth,
       height: desiredHeight,
       zoom: desiredZoom,
+      preferredZoom,
       setWidth,
       setHeight,
       setZoom,
@@ -244,6 +258,7 @@ const EmbeddedPreviewBody = () => (
                 desiredHeight={desiredHeight}
                 desiredWidth={desiredWidth}
                 desiredZoom={desiredZoom}
+                preferredZoom={preferredZoom}
                 onResize={(newWidth, newHeight) => {
                   setWidth(newWidth);
                   setHeight(newHeight);

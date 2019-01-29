@@ -22,6 +22,7 @@ type State = {
     width: number,
     height: number,
     zoom: number,
+    preferredZoom: number,
     lastCause: EmbeddedPreviewConfigLastCause,
   },
 };
@@ -34,7 +35,8 @@ class EmbeddedPreview extends Component<Props, State> {
         preset: EMBEDDED_PREVIEW_CONFIG_PRESETS.largeDesktop.key,
         width: EMBEDDED_PREVIEW_CONFIG_PRESETS.largeDesktop.width,
         height: EMBEDDED_PREVIEW_CONFIG_PRESETS.largeDesktop.height,
-        zoom: 75,
+        zoom: 100,
+        preferredZoom: 100,
         lastCause: null,
       },
     };
@@ -90,6 +92,16 @@ class EmbeddedPreview extends Component<Props, State> {
     }));
   };
 
+  handleSetPreferredZoom = (zoom: number) => {
+    this.setState((state: State) => ({
+      ...state,
+      config: {
+        ...state.config,
+        preferredZoom: zoom,
+      },
+    }));
+  };
+
   getContextState() {
     const { config } = this.state;
     const { data } = this.props;
@@ -99,6 +111,7 @@ class EmbeddedPreview extends Component<Props, State> {
       setWidth: this.handleSetWidth,
       setHeight: this.handleSetHeight,
       setZoom: this.handleSetZoom,
+      setPreferredZoom: this.handleSetPreferredZoom,
       data,
     };
   }
@@ -121,8 +134,8 @@ export default EmbeddedPreview;
 
 const mapStateToProps = (state: ReduxState) => {
   const selectedComponent = getSelectedComponentSelector(state);
-  const styles = getReduxStyles(state);
-  const mappedBlocks = mapComponentBlocksToMappedBlocks(selectedComponent, styles);
+  const reduxStyles = getReduxStyles(state);
+  const mappedBlocks = mapComponentBlocksToMappedBlocks(selectedComponent, reduxStyles);
   return {
     data: mappedBlocks,
   };

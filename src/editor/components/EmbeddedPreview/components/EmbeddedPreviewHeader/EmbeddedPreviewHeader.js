@@ -21,7 +21,7 @@ const OpenInTab = () => (
 
 const EmbeddedPreviewHeader = () => (
   <EmbeddedPreviewConfigContext.Consumer>
-    {({ width, height, setWidth, setHeight, zoom, setZoom, preset, setPreset }) => (
+    {({ width, height, setWidth, setHeight, zoom, setZoom, setPreferredZoom, preset, setPreset }) => (
       <header className={styles.headerClass}>
         <div className={styles.optionClass}>
           <DeviceSelector preset={preset} setPreset={setPreset} width={width} height={height} />
@@ -35,7 +35,7 @@ const EmbeddedPreviewHeader = () => (
           />
         </div>
         <div className={styles.optionClass}>
-          <ZoomSelector zoom={zoom} setZoom={setZoom} />
+          <ZoomSelector zoom={zoom} setZoom={setZoom} setPreferredZoom={setPreferredZoom} />
         </div>
         <div className={styles.optionClass}>
           <OpenInTab />

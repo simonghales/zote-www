@@ -24,6 +24,7 @@ const options: Array<SelectOptionType> = [option50, option75, option100];
 type Props = {
   zoom: number,
   setZoom: (zoom: number) => void,
+  setPreferredZoom: (zoom: number) => void,
 };
 
 class ZoomSelector extends Component<Props> {
@@ -36,10 +37,11 @@ class ZoomSelector extends Component<Props> {
   }
 
   handleSetZoom = (option: SelectOptionType) => {
-    const { setZoom } = this.props;
+    const { setZoom, setPreferredZoom } = this.props;
     const { value = '' } = option;
     const zoom = parseInt(value, 10);
     setZoom(zoom);
+    setPreferredZoom(zoom);
   };
 
   render() {
