@@ -104,6 +104,8 @@ export const DUMMY_BLOCK: BlockModel = {
     test: {
       key: 'test',
       type: BLOCK_PROPS_CONFIG_TYPES.string,
+      customProp: true,
+      editable: true,
     },
   },
   styles: {

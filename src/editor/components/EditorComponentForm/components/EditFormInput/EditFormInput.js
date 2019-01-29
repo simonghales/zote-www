@@ -7,7 +7,6 @@ import { PropTypeInput } from '../../../inputs/SelectInput/SelectInput';
 import { RoundIconActiveButton } from '../../../Button/Button';
 import type { BlockPropsConfigTypes } from '../../../../../data/block/props/model';
 import { PROP_TYPES_OPTIONS } from '../../../inputs/SelectInput/data';
-import { getPropKey } from '../../../../../utils/string';
 import TextInput from '../../../inputs/TextInput/TextInput';
 
 type Props = {
@@ -41,10 +40,8 @@ class EditFormInput extends React.Component<Props, State> {
   };
 
   isValidPropName() {
-    const { propKeys } = this.props;
     const { propNameInput } = this.state;
-    const propKey = getPropKey(propNameInput);
-    return !!propNameInput && !propKeys.includes(propKey);
+    return !!propNameInput;
   }
 
   handleUpdatePropName = (value: string) => {

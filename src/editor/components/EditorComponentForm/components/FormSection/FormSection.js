@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { cx } from 'emotion';
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import styles from './styles';
-import FormInput from '../FormInput/FormInput';
+import FormInput, { getFormInputComponent } from '../FormInput/FormInput';
 import type { EditorFormInputModel, EditorFormSectionColumnModel } from '../../data/models';
 import ReduxFormInput from '../ReduxFormInput/ReduxFormInput';
 import { EditorComponentFormContext } from '../../context';
@@ -53,8 +53,9 @@ export function getFormInput(
       />
     );
   }
+  const FormInputComponent = getFormInputComponent(input);
   return (
-    <FormInput
+    <FormInputComponent
       inputKey={input.key}
       name={input.name}
       value={input.value}
@@ -62,6 +63,9 @@ export function getFormInput(
       inactive={input.inactive}
       updateValue={input.onChange}
       inputType={input.inputType}
+      dropDownComponent={input.dropdownMenu}
+      componentKey={componentKey}
+      blockKey={blockKey}
     />
   );
 }

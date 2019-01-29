@@ -1,5 +1,5 @@
 // @flow
-
+import type { Node } from 'react';
 import type { FormInputTypes } from '../components/FormInput/FormInput';
 
 export const EDITOR_FORM_REDUX_TYPES = {
@@ -8,6 +8,11 @@ export const EDITOR_FORM_REDUX_TYPES = {
 };
 
 export type EditorFormReduxTypes = $Keys<typeof EDITOR_FORM_REDUX_TYPES>;
+
+export type EditorFormInputPropInputModel = {
+  editable: boolean,
+  deleteable: boolean,
+};
 
 export type EditorFormInputModel = {
   name: string,
@@ -19,7 +24,9 @@ export type EditorFormInputModel = {
   reduxConnected?: {
     type: EditorFormReduxTypes,
   },
+  propInput?: EditorFormInputPropInputModel | null,
   inputType: FormInputTypes,
+  dropdownMenu?: Node,
 };
 
 export type EditorFormSectionColumnModel = {

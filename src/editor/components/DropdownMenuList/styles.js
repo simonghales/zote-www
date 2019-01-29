@@ -10,7 +10,7 @@ const optionClass = css`
   font-size: ${plainInputStyles.fontSize}px;
   font-weight: ${fontWeights.medium};
   color: ${plainInputStyles.color};
-  padding: ${getRem(5)};
+  padding: ${getRem(5)} ${getRem(10)};
   cursor: pointer;
 
   &:hover {

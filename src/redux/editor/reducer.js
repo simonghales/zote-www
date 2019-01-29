@@ -6,8 +6,14 @@ import type { BlocksOrder } from '../../editor/components/ComponentSortable/Comp
 import { getComponentsFromReduxEditorState } from './state';
 import { getBlockFromComponent, getComponentFromComponents } from '../../data/component/state';
 import { updateComponentBlocksOrder } from '../../data/component/modifiers';
-import { addNewPropToBlock, updateBlockPropValue } from '../../data/block/modifiers';
+import {
+  addNewPropToBlock,
+  updateBlockPropConfig,
+  updateBlockPropValue,
+} from '../../data/block/modifiers';
 import type { BlockPropsConfigTypes } from '../../data/block/props/model';
+import { getBlockPropsConfigKeys } from '../../data/block/state';
+import { generatePropKeyFromPropLabel } from '../../data/block/props/generators';
 
 export type EditorReduxState = {
   components: ComponentsModels,
@@ -23,12 +29,69 @@ export type GenericAction = {
   payload: {},
 };
 
+const UPDATE_BLOCK_PROP_CONFIG = 'UPDATE_BLOCK_PROP_CONFIG';
+
+type UpdateBlockPropConfigPayload = {
+  componentKey: string,
+  blockKey: string,
+  propKey: string,
+  propLabel: string,
+  propType: BlockPropsConfigTypes,
+};
+
+type UpdateBlockPropConfigAction = {
+  type: string,
+  payload: UpdateBlockPropConfigPayload,
+};
+
+export function updateBlockPropConfigRedux(
+  componentKey: string,
+  blockKey: string,
+  propKey: string,
+  propLabel: string,
+  propType: BlockPropsConfigTypes
+): UpdateBlockPropConfigAction {
+  return {
+    type: UPDATE_BLOCK_PROP_CONFIG,
+    payload: {
+      componentKey,
+      blockKey,
+      propKey,
+      propLabel,
+      propType,
+    },
+  };
+}
+
+function handleUpdateBlockPropConfig(
+  state: EditorReduxState,
+  { componentKey, blockKey, propKey, propLabel, propType }
+): EditorReduxState {
+  const components = getComponentsFromReduxEditorState(state);
+  const component = getComponentFromComponents(componentKey, components);
+  const block = getBlockFromComponent(component, blockKey);
+  const propKeys = getBlockPropsConfigKeys(block).filter(blockPropKey => blockPropKey !== propKey);
+  const updatedPropKey = generatePropKeyFromPropLabel(propLabel, propKeys);
+  return {
+    ...state,
+    components: {
+      ...components,
+      [componentKey]: {
+        ...component,
+        blocks: {
+          ...component.blocks,
+          [blockKey]: updateBlockPropConfig(block, propKey, updatedPropKey, propType, propLabel),
+        },
+      },
+    },
+  };
+}
+
 const ADD_NEW_PROP_TO_BLOCK = 'ADD_NEW_PROP_TO_BLOCK';
 
 type AddNewPropToBlockPayload = {
   componentKey: string,
   blockKey: string,
-  propKey: string,
   propType: BlockPropsConfigTypes,
   propLabel: string,
 };
@@ -41,17 +104,14 @@ type AddNewPropToBlockAction = {
 export function addNewPropToBlockRedux(
   componentKey: string,
   blockKey: string,
-  propKey: string,
   propType: BlockPropsConfigTypes,
   propLabel: string
 ): AddNewPropToBlockAction {
-  console.log('addNewPropToBlockRedux', componentKey, blockKey, propKey, propType, propLabel);
   return {
     type: ADD_NEW_PROP_TO_BLOCK,
     payload: {
       componentKey,
       blockKey,
-      propKey,
       propType,
       propLabel,
     },
@@ -60,11 +120,13 @@ export function addNewPropToBlockRedux(
 
 function handleAddNewPropToBlock(
   state: EditorReduxState,
-  { componentKey, blockKey, propKey, propType, propLabel }: AddNewPropToBlockPayload
+  { componentKey, blockKey, propType, propLabel }: AddNewPropToBlockPayload
 ): EditorReduxState {
   const components = getComponentsFromReduxEditorState(state);
   const component = getComponentFromComponents(componentKey, components);
   const block = getBlockFromComponent(component, blockKey);
+  const propKeys = getBlockPropsConfigKeys(block);
+  const propKey = generatePropKeyFromPropLabel(propLabel, propKeys);
   return {
     ...state,
     components: {
@@ -177,6 +239,7 @@ function handleUpdateComponentBlocksOrder(
 }
 
 const ACTION_HANDLERS = {
+  [UPDATE_BLOCK_PROP_CONFIG]: handleUpdateBlockPropConfig,
   [ADD_NEW_PROP_TO_BLOCK]: handleAddNewPropToBlock,
   [UPDATE_COMPONENT_BLOCKS_ORDER]: handleUpdateComponentBlocksOrder,
   [SET_BLOCK_PROP_VALUE]: handleSetBlockPropValue,

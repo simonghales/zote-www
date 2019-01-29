@@ -26,6 +26,8 @@ export const BLOCK_PROPS_CONFIG_TYPES = {
   repeaterData: 'repeaterData',
 };
 
+export const DEFAULT_PROP_CONFIG_TYPE = BLOCK_PROPS_CONFIG_TYPES.string;
+
 export type BlockPropsConfigTypes = $Keys<typeof BLOCK_PROPS_CONFIG_TYPES>;
 
 export const BLOCK_PROPS_DISPLAY_SECTIONS = {
@@ -45,6 +47,7 @@ export type BlockPropConfigModel = {
   sortingPriority?: number,
   customProp?: boolean,
   editable?: boolean,
+  deletable?: boolean,
 };
 
 export type BlockPropsConfigModel = {

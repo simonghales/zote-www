@@ -41,3 +41,26 @@ export function addNewPropToBlock(
     },
   };
 }
+
+export function updateBlockPropConfig(
+  block: BlockModel,
+  propKey: string,
+  updatedPropKey: string,
+  updatedPropType: BlockPropsConfigTypes,
+  updatedPropLabel: string
+): BlockModel {
+  const propsConfig = getPropsConfigFromBlock(block);
+  const propConfig = propsConfig[propKey];
+  // todo - maybe use updatedPropKey in the future
+  return {
+    ...block,
+    propsConfig: {
+      ...propsConfig,
+      [propKey]: {
+        ...propConfig,
+        label: updatedPropLabel,
+        type: updatedPropType,
+      },
+    },
+  };
+}

@@ -8,7 +8,9 @@ export type DropdownMenuListOptionModel = {
 };
 
 const Option = ({ label, onClick }: DropdownMenuListOptionModel) => (
-  <div className={styles.optionClass}>{label}</div>
+  <div className={styles.optionClass} onClick={onClick}>
+    {label}
+  </div>
 );
 
 type Props = {
@@ -18,7 +20,7 @@ type Props = {
 const DropdownMenuList = ({ options }: Props) => (
   <React.Fragment>
     {options.map(option => (
-      <Option {...option} />
+      <Option {...option} key={option.label} />
     ))}
   </React.Fragment>
 );

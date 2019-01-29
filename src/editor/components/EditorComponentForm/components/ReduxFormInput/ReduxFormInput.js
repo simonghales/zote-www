@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import type { EditorFormInputModel, EditorFormReduxTypes } from '../../data/models';
 import type { ReduxState } from '../../../../../redux/store';
-import FormInput from '../FormInput/FormInput';
+import FormInput, { getFormInputComponent } from '../FormInput/FormInput';
 import { getReduxStyleStyleValue } from '../../../../../redux/styles/state';
 import { setModuleStyleValueRedux } from '../../../../../redux/styles/reducer';
 import { EDITOR_FORM_REDUX_TYPES } from '../../data/models';
@@ -31,17 +31,31 @@ type Props = {
   inactive: boolean,
 };
 
-const ReduxFormInput = ({ input, value, inactive, defaultValue, updateValue }: Props) => (
-  <FormInput
-    inputKey={input.key}
-    name={input.name}
-    defaultValue={defaultValue}
-    value={value}
-    updateValue={updateValue}
-    inactive={inactive}
-    inputType={input.inputType}
-  />
-);
+const ReduxFormInput = ({
+  input,
+  value,
+  inactive,
+  defaultValue,
+  updateValue,
+  componentKey,
+  blockKey,
+}: Props) => {
+  const FormInputComponent = getFormInputComponent(input);
+  return (
+    <FormInputComponent
+      inputKey={input.key}
+      name={input.name}
+      defaultValue={defaultValue}
+      value={value}
+      updateValue={updateValue}
+      inactive={inactive}
+      inputType={input.inputType}
+      dropDownComponent={input.dropdownMenu}
+      componentKey={componentKey}
+      blockKey={blockKey}
+    />
+  );
+};
 
 const mapStateToProps = (
   state: ReduxState,
@@ -60,7 +74,6 @@ const mapStateToProps = (
       blockKey,
       input.key
     );
-    console.log('fetchedDefaultValue', fetchedDefaultValue);
     if (fetchedDefaultValue !== null) {
       defaultValue = fetchedDefaultValue;
     }

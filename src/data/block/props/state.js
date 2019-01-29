@@ -48,3 +48,23 @@ export function getPropFromProps(propKey: string, props: BlockPropsModel): Block
 export function getSortingPriorityFromPropConfig(propConfig: BlockPropConfigModel): number {
   return propConfig.sortingPriority ? propConfig.sortingPriority : 0;
 }
+
+export function isPropCustom(propConfig: BlockPropConfigModel): boolean {
+  return !!propConfig.customProp;
+}
+
+export function isPropEditable(propConfig: BlockPropConfigModel): boolean {
+  return !!propConfig.customProp && !!propConfig.editable;
+}
+
+export function isPropDeletable(propConfig: BlockPropConfigModel): boolean {
+  return !!propConfig.customProp && !!propConfig.deletable;
+}
+
+export function getNameFromPropConfig(propConfig: BlockPropConfigModel): string {
+  return propConfig.label ? propConfig.label : propConfig.key;
+}
+
+export function getTypeFromPropConfig(propConfig: BlockPropConfigModel): string {
+  return propConfig.type;
+}

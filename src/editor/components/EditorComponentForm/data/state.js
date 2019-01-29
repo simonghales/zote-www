@@ -1,17 +1,19 @@
 // @flow
-
+import React from 'react';
+import type { Node } from 'react';
 import type {
   BlockPropConfigModel,
   BlockPropsConfigTypes,
 } from '../../../../data/block/props/model';
 import { FORM_INPUT_TYPES } from '../components/FormInput/FormInput';
 import { EDITOR_FORM_REDUX_TYPES } from './models';
-import type { EditorFormInputModel } from './models';
+import type { EditorFormInputModel, EditorFormInputPropInputModel } from './models';
 import { BLOCK_PROPS_CONFIG_TYPES } from '../../../../data/block/props/model';
 import type { FormInputTypes } from '../components/FormInput/FormInput';
 import type { BlockModel } from '../../../../data/block/model';
 import HeadingBlock from '../../../../data/block/types/groups/basic/Heading';
 import ContainerBlock from '../../../../data/block/types/groups/basic/Container';
+import { isPropCustom, isPropDeletable, isPropEditable } from '../../../../data/block/props/state';
 
 const MAPPED_PROP_TYPE_TO_FORM_INPUT_TYPE: {
   [string]: FormInputTypes,
@@ -52,6 +54,18 @@ export function getBlockPropEditorInputType(
   return getMappedPropTypeToFormInputType(blockPropConfig.type);
 }
 
+export function getBlockPropInputConfig(
+  blockPropConfig: BlockPropConfigModel
+): EditorFormInputPropInputModel | null {
+  if (!isPropCustom(blockPropConfig)) {
+    return null;
+  }
+  return {
+    editable: isPropEditable(blockPropConfig),
+    deleteable: isPropDeletable(blockPropConfig),
+  };
+}
+
 export function mapBlockPropConfigsToEditorFormInputModel(
   blockPropConfigs: Array<BlockPropConfigModel>,
   block: BlockModel
@@ -63,6 +77,7 @@ export function mapBlockPropConfigsToEditorFormInputModel(
     defaultValue: '',
     value: '',
     onChange: () => {},
+    propInput: getBlockPropInputConfig(blockPropConfig),
     reduxConnected: {
       type: EDITOR_FORM_REDUX_TYPES.prop,
     },

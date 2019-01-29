@@ -8,7 +8,6 @@ import { PROP_TYPES_OPTIONS } from '../../../../../inputs/SelectInput/data';
 import type { ReduxState } from '../../../../../../../redux/store';
 import { getBlockPropsConfigKeys } from '../../../../../../../data/block/state';
 import { getComponentBlockFromReduxEditorState } from '../../../../../../../redux/editor/state';
-import { getPropKey } from '../../../../../../../utils/string';
 import type { BlockPropsConfigTypes } from '../../../../../../../data/block/props/model';
 import { addNewPropToBlockRedux } from '../../../../../../../redux/editor/reducer';
 import EditFormInput from '../../../../components/EditFormInput/EditFormInput';
@@ -20,7 +19,6 @@ type Props = {
   addNewPropToBlock: (
     componentKey: string,
     blockKey: string,
-    propKey: string,
     propType: BlockPropsConfigTypes,
     propLabel: string
   ) => void,
@@ -51,13 +49,7 @@ class AddCustomPropForm extends React.Component<Props, State> {
   handleAddProp = () => {
     const { componentKey, blockKey, addNewPropToBlock } = this.props;
     const { propNameInput, propTypeInput } = this.state;
-    addNewPropToBlock(
-      componentKey,
-      blockKey,
-      getPropKey(propNameInput),
-      propTypeInput,
-      propNameInput
-    );
+    addNewPropToBlock(componentKey, blockKey, propTypeInput, propNameInput);
     this.setState({
       ...defaultState,
       addingCustomProp: false,
@@ -124,10 +116,9 @@ const mapDispatchToProps = {
   addNewPropToBlock: (
     componentKey: string,
     blockKey: string,
-    propKey: string,
     propType: BlockPropsConfigTypes,
     propLabel: string
-  ) => addNewPropToBlockRedux(componentKey, blockKey, propKey, propType, propLabel),
+  ) => addNewPropToBlockRedux(componentKey, blockKey, propType, propLabel),
 };
 
 export default connect(

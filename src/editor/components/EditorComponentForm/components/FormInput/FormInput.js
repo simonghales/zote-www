@@ -18,6 +18,8 @@ import { TextAlignInput } from '../../../inputs/RadioInput/RadioInput';
 import ArrayKeyValueInput from '../../../inputs/ArrayKeyValueInput/ArrayKeyValueInput';
 import DropdownMenu from '../../../DropdownMenu/DropdownMenu';
 import DropdownMenuList from '../../../DropdownMenuList/DropdownMenuList';
+import type { EditorFormInputModel } from '../../data/models';
+import EditFormPropInput from '../EditFormPropInput/EditFormPropInput';
 
 export type DefaultFormInputProps = {
   inputId: string,
@@ -70,27 +72,123 @@ type Props = {
   inactive?: boolean,
   updateValue: (value: any) => void,
   inputType: FormInputTypes,
-  dropDownComponent?: Node,
-};
-
-type State = {
-  dropDownVisible: boolean,
+  componentKey: string,
+  blockKey: string,
 };
 
 export function getFormInputId(key: string) {
   return `form-input-${key}`;
 }
 
-class FormInput extends React.Component<Props, State> {
+const FormInputHeader = ({
+  inputId,
+  name,
+  inactive,
+  children,
+  displayDropdown,
+}: {
+  inputId: string,
+  name: string,
+  inactive: boolean,
+  children?: Node,
+  displayDropdown?: () => void,
+}) => (
+  <div className={styles.headerWrapperClass}>
+    <header className={styles.headerClass}>
+      <label
+        className={cx(styles.labelClass, {
+          [styles.labelInactiveClass]: inactive,
+        })}
+        htmlFor={inputId}
+      >
+        {name}
+      </label>
+      {displayDropdown && (
+        <div className={styles.dropdownClass} onClick={displayDropdown}>
+          <FaCaretDown size={11} />
+        </div>
+      )}
+    </header>
+    {children}
+  </div>
+);
+
+FormInputHeader.defaultProps = {
+  children: undefined,
+  displayDropdown: undefined,
+};
+
+const FormInputBody = ({
+  inputId,
+  value,
+  defaultValue,
+  updateValue,
+  inputType,
+}: {
+  inputId: string,
+  value: any,
+  defaultValue: any,
+  updateValue: (value: any) => void,
+  inputType: FormInputTypes,
+}) => {
+  const Input = getMappedFormInput(inputType);
+  return (
+    <div>
+      <Input
+        inputId={inputId}
+        value={value}
+        defaultValue={defaultValue}
+        updateValue={updateValue}
+      />
+    </div>
+  );
+};
+
+const FormInput = ({
+  inputKey,
+  name,
+  inactive = false,
+  defaultValue,
+  value,
+  updateValue,
+  inputType,
+}: Props) => {
+  const inputId = getFormInputId(inputKey);
+  return (
+    <div>
+      <FormInputHeader inactive={inactive} inputId={inputId} name={name} />
+      <FormInputBody
+        updateValue={updateValue}
+        value={value}
+        defaultValue={defaultValue}
+        inputType={inputType}
+        inputId={inputId}
+      />
+    </div>
+  );
+};
+
+FormInput.defaultProps = {
+  inactive: false,
+};
+
+export default FormInput;
+
+type State = {
+  dropDownVisible: boolean,
+  editing: boolean,
+};
+
+export class PropFormInput extends React.Component<Props, State> {
   static defaultProps = {
     inactive: false,
-    dropDownComponent: undefined,
   };
 
   constructor(props: Props) {
     super(props);
     this.state = {
       dropDownVisible: false,
+      editing: false,
     };
   }
 
@@ -106,66 +204,81 @@ class FormInput extends React.Component<Props, State> {
     });
   };
 
+  handleEditProp = () => {
+    this.setState({
+      editing: true,
+    });
+    this.handleHideDropdown();
+  };
+
+  handleStopEditingProp = () => {
+    this.setState({
+      editing: false,
+    });
+  };
+
+  getDropdownMenuListOptions() {
+    return [
+      {
+        label: 'Edit Prop',
+        onClick: this.handleEditProp,
+      },
+    ];
+  }
+
   render() {
     const {
       inputKey,
       name,
-      inactive,
+      inactive = false,
       defaultValue,
       value,
       updateValue,
       inputType,
-      dropDownComponent,
+      componentKey,
+      blockKey,
     } = this.props;
-    const { dropDownVisible } = this.state;
+    const { dropDownVisible, editing } = this.state;
     const inputId = getFormInputId(inputKey);
-    const Input = getMappedFormInput(inputType);
+    if (editing) {
+      return (
+        <EditFormPropInput
+          componentKey={componentKey}
+          blockKey={blockKey}
+          propKey={inputKey}
+          onSubmit={this.handleStopEditingProp}
+        />
+      );
+    }
     return (
       <div>
-        <div className={styles.headerWrapperClass}>
-          <header className={styles.headerClass}>
-            <label
-              className={cx(styles.labelClass, {
-                [styles.labelInactiveClass]: inactive,
-              })}
-              htmlFor={inputId}
-            >
-              {name}
-            </label>
-            {/* {dropDownComponent && ( */}
-            <div className={styles.dropdownClass} onClick={this.handleDisplayDropdown}>
-              <FaCaretDown size={11} />
-            </div>
-            {/* )} */}
-          </header>
+        <FormInputHeader
+          displayDropdown={this.handleDisplayDropdown}
+          inactive={inactive}
+          inputId={inputId}
+          name={name}
+        >
           {dropDownVisible && (
             <DropdownMenu close={this.handleHideDropdown}>
-              <DropdownMenuList
-                options={[
-                  {
-                    label: 'Edit Prop',
-                    onClick: () => {},
-                  },
-                  {
-                    label: 'Delete Prop',
-                    onClick: () => {},
-                  },
-                ]}
-              />
+              <DropdownMenuList options={this.getDropdownMenuListOptions()} />
             </DropdownMenu>
           )}
-        </div>
-        <div>
-          <Input
-            inputId={inputId}
-            value={value}
-            defaultValue={defaultValue}
-            updateValue={updateValue}
-          />
-        </div>
+        </FormInputHeader>
+        <FormInputBody
+          updateValue={updateValue}
+          value={value}
+          defaultValue={defaultValue}
+          inputType={inputType}
+          inputId={inputId}
+        />
       </div>
     );
   }
 }
 
-export default FormInput;
+export function getFormInputComponent(input: EditorFormInputModel) {
+  if (input.propInput) {
+    return PropFormInput;
+  }
+  return FormInput;
+}
