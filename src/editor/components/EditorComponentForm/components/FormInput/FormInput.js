@@ -18,8 +18,9 @@ import { TextAlignInput } from '../../../inputs/RadioInput/RadioInput';
 import ArrayKeyValueInput from '../../../inputs/ArrayKeyValueInput/ArrayKeyValueInput';
 import DropdownMenu from '../../../DropdownMenu/DropdownMenu';
 import DropdownMenuList from '../../../DropdownMenuList/DropdownMenuList';
-import type { EditorFormInputModel } from '../../data/models';
+import type { EditorFormInputModel, EditorFormInputPropInputModel } from '../../data/models';
 import EditFormPropInput from '../EditFormPropInput/EditFormPropInput';
+import PropLinkMenu from '../../../PropLinkMenu/PropLinkMenu';
 
 export type DefaultFormInputProps = {
   inputId: string,
@@ -74,6 +75,7 @@ type Props = {
   inputType: FormInputTypes,
   componentKey: string,
   blockKey: string,
+  propInput?: EditorFormInputPropInputModel | null,
 };
 
 export function getFormInputId(key: string) {
@@ -176,6 +178,7 @@ export default FormInput;
 
 type State = {
   dropDownVisible: boolean,
+  linkMenuVisible: boolean,
   editing: boolean,
 };
 
@@ -188,6 +191,7 @@ export class PropFormInput extends React.Component<Props, State> {
     super(props);
     this.state = {
       dropDownVisible: false,
+      linkMenuVisible: false,
       editing: false,
     };
   }
@@ -217,13 +221,36 @@ export class PropFormInput extends React.Component<Props, State> {
     });
   };
 
+  handleShowLinkPropMenu = () => {
+    this.setState({
+      linkMenuVisible: true,
+    });
+  };
+
+  handleHideLinkPropMenu = () => {
+    this.setState({
+      linkMenuVisible: false,
+    });
+  };
+
   getDropdownMenuListOptions() {
-    return [
-      {
-        label: 'Edit Prop',
-        onClick: this.handleEditProp,
-      },
-    ];
+    const { propInput } = this.props;
+    const options = [];
+    if (propInput) {
+      if (propInput.linkable) {
+        options.push({
+          label: 'Link Prop',
+          onClick: this.handleShowLinkPropMenu,
+        });
+      }
+      if (propInput.editable) {
+        options.push({
+          label: 'Edit Prop',
+          onClick: this.handleEditProp,
+        });
+      }
+    }
+    return options;
   }
 
   render() {
@@ -238,7 +265,7 @@ export class PropFormInput extends React.Component<Props, State> {
       componentKey,
       blockKey,
     } = this.props;
-    const { dropDownVisible, editing } = this.state;
+    const { dropDownVisible, editing, linkMenuVisible } = this.state;
     const inputId = getFormInputId(inputKey);
     if (editing) {
       return (
@@ -262,6 +289,14 @@ export class PropFormInput extends React.Component<Props, State> {
             <DropdownMenu close={this.handleHideDropdown}>
               <DropdownMenuList options={this.getDropdownMenuListOptions()} />
             </DropdownMenu>
+          )}
+          {linkMenuVisible && (
+            <PropLinkMenu
+              close={this.handleHideLinkPropMenu}
+              componentKey={componentKey}
+              blockKey={blockKey}
+              propKey={inputKey}
+            />
           )}
         </FormInputHeader>
         <FormInputBody

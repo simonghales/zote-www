@@ -2,10 +2,30 @@
 
 import type { BlockModel } from './model';
 import { getPropsConfigFromBlock, getPropsFromBlock } from './state';
-import { updatePropValue } from './props/modifiers';
+import { updatePropLinked, updatePropValue } from './props/modifiers';
 import { getPropFromProps } from './props/state';
 import { generateDefaultPropObject, generateNewPropConfig } from './props/generators';
 import type { BlockPropsConfigTypes } from './props/model';
+
+export function updateBlockPropLinked(
+  block: BlockModel,
+  propKey: string,
+  selectedBlockKey: string,
+  selectedPropKey: string
+): BlockModel {
+  const props = getPropsFromBlock(block);
+  let prop = getPropFromProps(propKey, props);
+  if (!prop) {
+    prop = generateDefaultPropObject(propKey);
+  }
+  return {
+    ...block,
+    props: {
+      ...props,
+      [propKey]: updatePropLinked(prop, selectedBlockKey, selectedPropKey),
+    },
+  };
+}
 
 export function updateBlockPropValue(
   block: BlockModel,

@@ -12,6 +12,7 @@ export type EditorFormReduxTypes = $Keys<typeof EDITOR_FORM_REDUX_TYPES>;
 export type EditorFormInputPropInputModel = {
   editable: boolean,
   deleteable: boolean,
+  linkable: boolean,
 };
 
 export type EditorFormInputModel = {

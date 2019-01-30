@@ -9,6 +9,7 @@ import { updateComponentBlocksOrder } from '../../data/component/modifiers';
 import {
   addNewPropToBlock,
   updateBlockPropConfig,
+  updateBlockPropLinked,
   updateBlockPropValue,
 } from '../../data/block/modifiers';
 import type { BlockPropsConfigTypes } from '../../data/block/props/model';
@@ -142,6 +143,62 @@ function handleAddNewPropToBlock(
   };
 }
 
+const SET_BLOCK_PROP_LINKED = 'SET_BLOCK_PROP_LINKED';
+
+type SetBlockPropLinkedPayload = {
+  componentKey: string,
+  blockKey: string,
+  propKey: string,
+  selectedBlockKey: string,
+  selectedPropKey: string,
+};
+
+type SetBlockPropLinkedAction = {
+  type: string,
+  payload: SetBlockPropLinkedPayload,
+};
+
+export function setBlockPropLinkedRedux(
+  componentKey: string,
+  blockKey: string,
+  propKey: string,
+  selectedBlockKey: string,
+  selectedPropKey: string
+): SetBlockPropLinkedAction {
+  return {
+    type: SET_BLOCK_PROP_LINKED,
+    payload: {
+      componentKey,
+      blockKey,
+      propKey,
+      selectedBlockKey,
+      selectedPropKey,
+    },
+  };
+}
+
+function handleSetBlockPropLinked(
+  state: EditorReduxState,
+  { componentKey, blockKey, propKey, selectedBlockKey, selectedPropKey }: SetBlockPropLinkedPayload
+): EditorReduxState {
+  const components = getComponentsFromReduxEditorState(state);
+  const component = getComponentFromComponents(componentKey, components);
+  const block = getBlockFromComponent(component, blockKey);
+  return {
+    ...state,
+    components: {
+      ...components,
+      [componentKey]: {
+        ...component,
+        blocks: {
+          ...component.blocks,
+          [blockKey]: updateBlockPropLinked(block, propKey, selectedBlockKey, selectedPropKey),
+        },
+      },
+    },
+  };
+}
+
 const SET_BLOCK_PROP_VALUE = 'SET_BLOCK_PROP_VALUE';
 
 type SetBlockPropValuePayload = {
@@ -242,6 +299,7 @@ const ACTION_HANDLERS = {
   [UPDATE_BLOCK_PROP_CONFIG]: handleUpdateBlockPropConfig,
   [ADD_NEW_PROP_TO_BLOCK]: handleAddNewPropToBlock,
   [UPDATE_COMPONENT_BLOCKS_ORDER]: handleUpdateComponentBlocksOrder,
+  [SET_BLOCK_PROP_LINKED]: handleSetBlockPropLinked,
   [SET_BLOCK_PROP_VALUE]: handleSetBlockPropValue,
 };
 

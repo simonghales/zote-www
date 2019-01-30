@@ -48,6 +48,7 @@ export type BlockPropConfigModel = {
   customProp?: boolean,
   editable?: boolean,
   deletable?: boolean,
+  linkable?: boolean,
 };
 
 export type BlockPropsConfigModel = {

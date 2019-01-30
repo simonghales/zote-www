@@ -8,7 +8,13 @@ export type MappedBlockPropModel = {
 };
 
 export type MappedBlockPropsModel = {
+  // propKey
   [string]: MappedBlockPropModel,
+};
+
+export type MappedBlockParsedPropsModel = {
+  // blockKey
+  [string]: MappedBlockPropsModel,
 };
 
 export type MappedBlockStylesModel = {

@@ -4,6 +4,7 @@ import type {
   BlockPropConfigModel,
   BlockPropModel,
   BlockPropsConfigModel,
+  BlockPropsConfigTypes,
   BlockPropsModel,
 } from './props/model';
 import { BLOCK_PROPS_CONFIG_TYPES, BLOCK_PROPS_DISPLAY_SECTIONS } from './props/model';
@@ -17,12 +18,12 @@ import {
   getPropsEnabledFromBlockType,
   getStylesEnabledFromBlockType,
 } from './types/state';
+import type { ParsedPropBlocksValue } from './props/state';
 import {
   getPropConfigFromPropsConfig,
   getSortingPriorityFromPropConfig,
   parsePropValue,
 } from './props/state';
-import type { ParsedPropBlocksValue } from './props/state';
 import { isValueDefined } from '../../utils/validation';
 import { isHtmlElementVoid } from '../../utils/html';
 
@@ -258,4 +259,154 @@ export function getAddPropsEnabledFromBlock(block: BlockModel): boolean {
 export function getBlockPropsConfigKeys(block: BlockModel): Array<string> {
   const blockPropsConfig = getMergedPropsConfigFromBlock(block);
   return Object.keys(blockPropsConfig);
+}
+
+export function doesBlockChildrenContainBlockKey(block: BlockModel, blockKey: string): boolean {
+  const blockChildrenKeys = getBlockChildrenKeysFromBlock(block);
+  return blockChildrenKeys.includes(blockKey);
+}
+
+export function getBlockParentBlockKeyFromBlocks(
+  blockToMatchKey: string,
+  blocks: BlocksModel
+): string | null {
+  let parentKey = null;
+  Object.keys(blocks).forEach(blockKey => {
+    const block = getBlockFromBlocks(blockKey, blocks);
+    if (doesBlockChildrenContainBlockKey(block, blockToMatchKey)) {
+      parentKey = blockKey; // todo - break?
+    }
+  });
+  return parentKey;
+}
+
+export type AvailablePropModel = {
+  value: any,
+  config: BlockPropConfigModel,
+};
+export type AvailablePropsModel = {
+  [string]: AvailablePropModel,
+};
+export type BlockAvailablePropsModel = {
+  blockKey: string,
+  blockName: string,
+  props: AvailablePropsModel,
+};
+export type AllBlocksAvailablePropsModel = {
+  [string]: AvailablePropsModel,
+};
+
+export function getPropFromAllBlocksAvailableProps(
+  propKey: string,
+  blockKey: string,
+  allBlocksAvailableProps: AllBlocksAvailablePropsModel
+): AvailablePropModel | null {
+  if (allBlocksAvailableProps[blockKey]) {
+    if (
+      allBlocksAvailableProps[blockKey].props &&
+      isValueDefined(allBlocksAvailableProps[blockKey].props[propKey])
+    ) {
+      return allBlocksAvailableProps[blockKey].props[propKey];
+    }
+  }
+  return null;
+}
+
+export function getBlockPropAvailableParsedValue(
+  propKey: string,
+  propConfig: BlockPropConfigModel,
+  block: BlockModel,
+  allBlocksAvailableProps: AllBlocksAvailablePropsModel
+): any {
+  const prop = getPropFromBlock(propKey, block);
+  if (!prop) {
+    return null;
+  }
+  if (!prop.linked) {
+    return prop.value;
+  }
+  const { blockKey, propKey: linkedPropKey } = prop.linked;
+  const availableProp = getPropFromAllBlocksAvailableProps(
+    linkedPropKey,
+    blockKey,
+    allBlocksAvailableProps
+  );
+  if (!availableProp) return null;
+  return availableProp.value;
+}
+
+export function getRecursiveBlockPropAvailableProps(
+  blockKey: string,
+  finalBlockKey: string,
+  blocks: BlocksModel,
+  allBlocksAvailableProps: AllBlocksAvailablePropsModel
+): Array<BlockAvailablePropsModel> {
+  if (blockKey === finalBlockKey) return [];
+  const block = getBlockFromBlocks(blockKey, blocks);
+  const propsConfig = getMergedPropsConfigFromBlock(block);
+  const childrenTypePropsKeys = [];
+  // note - currently assuming that `children` is the only prop
+  const otherTypePropsKeys = [];
+  Object.keys(propsConfig).forEach(propKey => {
+    const propConfig = propsConfig[propKey];
+    if (propConfig.type === BLOCK_PROPS_CONFIG_TYPES.blocks) {
+      childrenTypePropsKeys.push(propKey);
+    } else {
+      otherTypePropsKeys.push(propKey);
+    }
+  });
+  const availableProps: AvailablePropsModel = {};
+  otherTypePropsKeys.forEach(propKey => {
+    const propConfig = propsConfig[propKey];
+    availableProps[propKey] = {
+      value: getBlockPropAvailableParsedValue(propKey, propConfig, block, allBlocksAvailableProps),
+      config: propConfig,
+    };
+  });
+  const mergedAllBlocksAvailableProps = {
+    ...allBlocksAvailableProps,
+    [blockKey]: availableProps,
+  };
+  const childrenBlockKeys = getBlockChildrenKeysFromBlock(block);
+  let childrenBlocksAvailableProps: Array<BlockAvailablePropsModel> = [];
+  if (!doesBlockChildrenContainBlockKey(block, finalBlockKey)) {
+    childrenBlockKeys.forEach(childBlockKey => {
+      childrenBlocksAvailableProps = childrenBlocksAvailableProps.concat(
+        getRecursiveBlockPropAvailableProps(
+          childBlockKey,
+          finalBlockKey,
+          blocks,
+          mergedAllBlocksAvailableProps
+        )
+      );
+    });
+  }
+  return [
+    {
+      blockKey,
+      blockName: block.name,
+      props: availableProps,
+    },
+  ].concat(childrenBlocksAvailableProps);
+}
+
+export function filterAvailableProps(
+  availableProps: Array<BlockAvailablePropsModel>,
+  propType: BlockPropsConfigTypes
+): Array<BlockAvailablePropsModel> {
+  return availableProps
+    .map(block => {
+      const props = {};
+      Object.keys(block.props).forEach(propKey => {
+        const prop = block.props[propKey];
+        if (prop.config.type === propType) {
+          props[propKey] = prop;
+        }
+      });
+      return {
+        ...block,
+        props,
+      };
+    })
+    .filter(block => Object.keys(block.props).length > 0);
 }

@@ -1,14 +1,21 @@
 // @flow
 
 import type { ReduxState } from '../store';
-import type { ComponentsModels } from '../../data/component/model';
+import type { ComponentModel, ComponentsModels } from '../../data/component/model';
 import type { EditorReduxState } from './reducer';
 import type { BlockModel } from '../../data/block/model';
-import { getBlockFromComponent, getComponentFromComponents } from '../../data/component/state';
 import {
+  getBlockFromComponent,
+  getBlocksFromComponent,
+  getComponentFromComponents,
+  getRootBlockKeyFromComponent,
+} from '../../data/component/state';
+import type { BlockAvailablePropsModel } from '../../data/block/state';
+import {
+  getBlockParentBlockKeyFromBlocks,
   getMergedPropConfigFromBlock,
-  getPropConfigFromBlock,
   getPropFromBlock,
+  getRecursiveBlockPropAvailableProps,
 } from '../../data/block/state';
 import { isValueDefined } from '../../utils/validation';
 
@@ -18,6 +25,18 @@ export function getReduxEditorComponents(state: ReduxState): ComponentsModels {
 
 export function getComponentsFromReduxEditorState(state: EditorReduxState): ComponentsModels {
   return state.components;
+}
+
+export function getComponentFromReduxEditorState(
+  state: EditorReduxState,
+  componentKey: string
+): ComponentModel {
+  const components = getComponentsFromReduxEditorState(state);
+  const component = getComponentFromComponents(componentKey, components);
+  if (!component) {
+    throw new Error(`Couldn't find component "${componentKey}".`);
+  }
+  return component;
 }
 
 export function getComponentBlockFromReduxEditorState(
@@ -56,4 +75,17 @@ export function getReduxComponentBlockPropDefaultValue(
   const propConfig = getMergedPropConfigFromBlock(propKey, block);
   if (!propConfig || !isValueDefined(propConfig.defaultValue)) return null;
   return propConfig.defaultValue;
+}
+
+export function getBlockPropAvailableProps(
+  componentKey: string,
+  blockKey: string,
+  state: EditorReduxState
+): Array<BlockAvailablePropsModel> {
+  const component = getComponentFromReduxEditorState(state, componentKey);
+  const blocks = getBlocksFromComponent(component);
+  const rootBlockKey = getRootBlockKeyFromComponent(component);
+  const parentBlockKey = getBlockParentBlockKeyFromBlocks(blockKey, blocks);
+  if (!parentBlockKey) return [];
+  return getRecursiveBlockPropAvailableProps(rootBlockKey, blockKey, blocks, {});
 }

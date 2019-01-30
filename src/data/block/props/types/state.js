@@ -1,6 +1,8 @@
 // @flow
 import { camelCase } from 'lodash';
 import type { HtmlAttributeEntryModel, HtmlAttributesPropValue } from './model';
+import type { BlockPropConfigModel } from '../model';
+import { BLOCK_PROPS_CONFIG_TYPES } from '../model';
 
 function cssToObj(css) {
   const obj = {};
@@ -65,4 +67,8 @@ export function getReactPropsFromHtmlAttributes(
     props[key] = value;
   });
   return props;
+}
+
+export function isPropConfigBlockType(propConfig?: BlockPropConfigModel | null): boolean {
+  return !!propConfig && propConfig.type === BLOCK_PROPS_CONFIG_TYPES.blocks;
 }

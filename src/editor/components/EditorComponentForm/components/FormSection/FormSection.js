@@ -66,6 +66,7 @@ export function getFormInput(
       dropDownComponent={input.dropdownMenu}
       componentKey={componentKey}
       blockKey={blockKey}
+      propInput={input.propInput}
     />
   );
 }

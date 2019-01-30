@@ -70,6 +70,10 @@ export const DUMMY_HEADING_BLOCK: BlockModel = {
     text: {
       key: 'text',
       value: `G'day there`,
+      linked: {
+        blockKey: 'DUMMY_CONTAINER_BLOCK',
+        propKey: 'test',
+      },
     },
   },
 };
@@ -82,6 +86,20 @@ export const DUMMY_CONTAINER_BLOCK: BlockModel = {
     children: {
       key: 'children',
       value: [DUMMY_HEADING_BLOCK.key, DUMMY_TEXT_BLOCK.key, DUMMY_HTML_ELEMENT_BLOCK.key],
+    },
+    test: {
+      key: 'test',
+      value: 'BOOP WOOP',
+    },
+  },
+  propsConfig: {
+    test: {
+      key: 'test',
+      label: 'Test',
+      type: BLOCK_PROPS_CONFIG_TYPES.string,
+      customProp: true,
+      editable: true,
+      linkable: true,
     },
   },
 };
@@ -106,6 +124,7 @@ export const DUMMY_BLOCK: BlockModel = {
       type: BLOCK_PROPS_CONFIG_TYPES.string,
       customProp: true,
       editable: true,
+      linkable: false,
     },
   },
   styles: {

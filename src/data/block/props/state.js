@@ -54,11 +54,15 @@ export function isPropCustom(propConfig: BlockPropConfigModel): boolean {
 }
 
 export function isPropEditable(propConfig: BlockPropConfigModel): boolean {
-  return !!propConfig.customProp && !!propConfig.editable;
+  return !!propConfig.editable;
 }
 
 export function isPropDeletable(propConfig: BlockPropConfigModel): boolean {
-  return !!propConfig.customProp && !!propConfig.deletable;
+  return !!propConfig.deletable;
+}
+
+export function isPropLinkable(propConfig: BlockPropConfigModel): boolean {
+  return !!propConfig.linkable;
 }
 
 export function getNameFromPropConfig(propConfig: BlockPropConfigModel): string {

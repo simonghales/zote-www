@@ -13,7 +13,12 @@ import type { FormInputTypes } from '../components/FormInput/FormInput';
 import type { BlockModel } from '../../../../data/block/model';
 import HeadingBlock from '../../../../data/block/types/groups/basic/Heading';
 import ContainerBlock from '../../../../data/block/types/groups/basic/Container';
-import { isPropCustom, isPropDeletable, isPropEditable } from '../../../../data/block/props/state';
+import {
+  isPropCustom,
+  isPropDeletable,
+  isPropEditable,
+  isPropLinkable
+} from '../../../../data/block/props/state';
 
 const MAPPED_PROP_TYPE_TO_FORM_INPUT_TYPE: {
   [string]: FormInputTypes,
@@ -57,13 +62,17 @@ export function getBlockPropEditorInputType(
 export function getBlockPropInputConfig(
   blockPropConfig: BlockPropConfigModel
 ): EditorFormInputPropInputModel | null {
-  if (!isPropCustom(blockPropConfig)) {
-    return null;
+  const propInput = {};
+  if (isPropEditable(blockPropConfig)) {
+    propInput.editable = true;
   }
-  return {
-    editable: isPropEditable(blockPropConfig),
-    deleteable: isPropDeletable(blockPropConfig),
-  };
+  if (isPropDeletable(blockPropConfig)) {
+    propInput.deleteable = true;
+  }
+  if (isPropLinkable(blockPropConfig)) {
+    propInput.linkable = true;
+  }
+  return Object.keys(propInput).length > 0 ? propInput : null;
 }
 
 export function mapBlockPropConfigsToEditorFormInputModel(
