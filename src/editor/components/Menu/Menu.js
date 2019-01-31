@@ -45,4 +45,4 @@ class Menu extends React.Component<Props> {
   }
 }
 
-export default enhanceWithClickOutside(Menu);
+export default Menu;

@@ -19,6 +19,9 @@ const containerClass = css`
 const fixedContainerClass = css`
   right: auto;
   width: 200px;
+  position: static;
+  left: auto;
+  top: auto;
 `;
 
 export default {

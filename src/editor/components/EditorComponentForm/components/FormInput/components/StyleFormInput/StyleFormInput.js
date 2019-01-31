@@ -6,7 +6,6 @@ import FormInputBody from '../FormInputBody/FormInputBody';
 import FormInputHeader from '../FormInputHeader/FormInputHeader';
 import DropdownMenu from '../../../../../DropdownMenu/DropdownMenu';
 import { MENU_LAYOUTS } from '../../../../../Menu/Menu';
-import styles from './styles';
 
 type State = {
   dropDownVisible: boolean,
@@ -53,11 +52,9 @@ class StyleFormInput extends React.Component<Props, State> {
           inputId={inputId}
           name={name}
         >
-          <div className={styles.dropdownContainerClass}>
-            <DropdownMenu layout={MENU_LAYOUTS.fixed} close={this.handleHideDropdown}>
-              testing...
-            </DropdownMenu>
-          </div>
+          <DropdownMenu layout={MENU_LAYOUTS.fixed} close={this.handleHideDropdown}>
+            testing...
+          </DropdownMenu>
         </FormInputHeader>
         <FormInputBody
           updateValue={updateValue}

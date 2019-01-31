@@ -9,6 +9,7 @@ import PropLinkMenu from '../../../../../PropLinkMenu/PropLinkMenu';
 import LinkedPropInput from '../../../LinkedPropInput/LinkedPropInput';
 import FormInputBody from '../FormInputBody/FormInputBody';
 import EditFormPropInput from '../../../EditFormPropInput/EditFormPropInput';
+import { MENU_LAYOUTS } from '../../../../../Menu/Menu';
 
 type State = {
   dropDownVisible: boolean,
@@ -66,12 +67,18 @@ export class PropFormInput extends React.Component<PropFormInputProps, State> {
     this.setState({
       linkMenuVisible: true,
     });
+    this.handleHideDropdown();
   };
 
   handleHideLinkPropMenu = () => {
     this.setState({
       linkMenuVisible: false,
     });
+  };
+
+  handleCloseMenus = () => {
+    this.handleHideDropdown();
+    this.handleHideLinkPropMenu();
   };
 
   getDropdownMenuListOptions() {
@@ -124,12 +131,13 @@ export class PropFormInput extends React.Component<PropFormInputProps, State> {
       <div>
         <FormInputHeader
           displayDropdown={this.handleDisplayDropdown}
+          onDropdownClosed={this.handleCloseMenus}
           inactive={inactive}
           inputId={inputId}
           name={name}
         >
           {dropDownVisible && (
-            <DropdownMenu close={this.handleHideDropdown}>
+            <DropdownMenu layout={MENU_LAYOUTS.fixed} close={this.handleHideDropdown}>
               <DropdownMenuList options={this.getDropdownMenuListOptions()} />
             </DropdownMenu>
           )}

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import Menu from '../Menu/Menu';
+import Menu, { MENU_LAYOUTS } from '../Menu/Menu';
 import styles from './styles';
 import Text from '../Text/Text';
 import { mapBlockPropsToPropLinkBlockModels } from './state';
@@ -67,7 +67,7 @@ type Props = {
 };
 
 const PropLinkMenu = ({ close, blocks, selectProp }: Props) => (
-  <Menu close={close} className={styles.menuClass}>
+  <Menu close={close} className={styles.menuClass} layout={MENU_LAYOUTS.fixed}>
     {blocks.length > 0 ? (
       blocks.map(block => (
         <BlockOption
