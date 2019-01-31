@@ -8,10 +8,12 @@ import { getReduxStyleStyleValue } from '../../../../../redux/styles/state';
 import { setModuleStyleValueRedux } from '../../../../../redux/styles/reducer';
 import { EDITOR_FORM_REDUX_TYPES } from '../../data/models';
 import {
+  getReduxComponentBlockProp,
   getReduxComponentBlockPropDefaultValue,
   getReduxComponentBlockPropValue,
 } from '../../../../../redux/editor/state';
 import { setBlockPropValueRedux } from '../../../../../redux/editor/reducer';
+import { getLinkedFromProp, getValueFromProp } from '../../../../../data/block/props/state';
 
 type Props = {
   input: EditorFormInputModel,
@@ -29,6 +31,8 @@ type Props = {
   // eslint-disable-next-line react/no-unused-prop-types
   blockKey: string,
   inactive: boolean,
+  linkedBlockKey: string | null,
+  linkedPropKey: string | null,
 };
 
 const ReduxFormInput = ({
@@ -39,6 +43,8 @@ const ReduxFormInput = ({
   updateValue,
   componentKey,
   blockKey,
+  linkedBlockKey,
+  linkedPropKey,
 }: Props) => {
   const FormInputComponent = getFormInputComponent(input);
   return (
@@ -54,6 +60,8 @@ const ReduxFormInput = ({
       componentKey={componentKey}
       blockKey={blockKey}
       propInput={input.propInput}
+      linkedBlockKey={linkedBlockKey}
+      linkedPropKey={linkedPropKey}
     />
   );
 };
@@ -63,12 +71,20 @@ const mapStateToProps = (
   { input, blockStyleKey, styleStateKey, reduxType, componentKey, blockKey }: Props
 ) => {
   let value;
+  let linkedBlockKey = null;
+  let linkedPropKey = null;
   // eslint-disable-next-line prefer-destructuring
   let defaultValue = input.defaultValue;
   if (reduxType === EDITOR_FORM_REDUX_TYPES.style) {
     value = getReduxStyleStyleValue(state, input, styleStateKey, blockStyleKey);
   } else {
-    value = getReduxComponentBlockPropValue(state.editor, componentKey, blockKey, input.key);
+    const prop = getReduxComponentBlockProp(state.editor, componentKey, blockKey, input.key);
+    value = prop ? getValueFromProp(prop) : null;
+    const propLinked = prop ? getLinkedFromProp(prop) : null;
+    if (propLinked) {
+      linkedBlockKey = propLinked.blockKey;
+      linkedPropKey = propLinked.propKey;
+    }
     const fetchedDefaultValue = getReduxComponentBlockPropDefaultValue(
       state.editor,
       componentKey,
@@ -84,6 +100,8 @@ const mapStateToProps = (
     value,
     defaultValue,
     inactive,
+    linkedBlockKey,
+    linkedPropKey,
   };
 };
 

@@ -2,6 +2,13 @@
 
 import type { BlockPropModel } from './model';
 
+export function removePropLinked(prop: BlockPropModel): BlockPropModel {
+  return {
+    ...prop,
+    linked: null,
+  };
+}
+
 export function updatePropLinked(
   prop: BlockPropModel,
   blockKey: string,

@@ -2,6 +2,7 @@
 
 import type {
   BlockPropConfigModel,
+  BlockPropLinkedModel,
   BlockPropModel,
   BlockPropsConfigModel,
   BlockPropsConfigTypes,
@@ -71,4 +72,16 @@ export function getNameFromPropConfig(propConfig: BlockPropConfigModel): string 
 
 export function getTypeFromPropConfig(propConfig: BlockPropConfigModel): string {
   return propConfig.type;
+}
+
+export function getValueFromProp(prop: BlockPropModel): any {
+  return prop.value;
+}
+
+export function getLinkedFromProp(prop: BlockPropModel): BlockPropLinkedModel | null {
+  return prop.linked ? prop.linked : null;
+}
+
+export function getLabelFromPropConfig(propConfig: BlockPropConfigModel): string {
+  return propConfig.label ? propConfig.label : propConfig.key;
 }

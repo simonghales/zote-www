@@ -18,6 +18,7 @@ export const htmlElementPropsConfig: BlockPropsConfigModel = {
     label: 'Content',
     type: BLOCK_PROPS_CONFIG_TYPES.string,
     defaultValue: '',
+    linkable: true,
   },
   [CHILDREN_PROP_CONFIG.key]: {
     ...CHILDREN_PROP_CONFIG,

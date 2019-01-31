@@ -1,12 +1,14 @@
 // @flow
 
+export type BlockPropLinkedModel = {
+  blockKey: string,
+  propKey: string,
+};
+
 export type BlockPropModel = {
   key: string,
   value: any,
-  linked?: {
-    blockKey: string,
-    propKey: string,
-  },
+  linked?: BlockPropLinkedModel | null,
   variable?: {
     variableKey: string,
   },

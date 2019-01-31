@@ -18,6 +18,7 @@ import {
   getRecursiveBlockPropAvailableProps,
 } from '../../data/block/state';
 import { isValueDefined } from '../../utils/validation';
+import type { BlockPropModel } from '../../data/block/props/model';
 
 export function getReduxEditorComponents(state: ReduxState): ComponentsModels {
   return state.editor.components;
@@ -63,6 +64,18 @@ export function getReduxComponentBlockPropValue(
   const prop = getPropFromBlock(propKey, block);
   if (!prop) return null;
   return prop.value;
+}
+
+export function getReduxComponentBlockProp(
+  state: EditorReduxState,
+  componentKey: string,
+  blockKey: string,
+  propKey: string
+): BlockPropModel | null {
+  const block = getComponentBlockFromReduxEditorState(state, componentKey, blockKey);
+  const prop = getPropFromBlock(propKey, block);
+  if (!prop) return null;
+  return prop;
 }
 
 export function getReduxComponentBlockPropDefaultValue(

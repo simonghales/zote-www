@@ -10,6 +10,7 @@ import {
   addNewPropToBlock,
   updateBlockPropConfig,
   updateBlockPropLinked,
+  updateBlockPropRemoveLink,
   updateBlockPropValue,
 } from '../../data/block/modifiers';
 import type { BlockPropsConfigTypes } from '../../data/block/props/model';
@@ -137,6 +138,56 @@ function handleAddNewPropToBlock(
         blocks: {
           ...component.blocks,
           [blockKey]: addNewPropToBlock(block, propKey, propType, propLabel),
+        },
+      },
+    },
+  };
+}
+
+const REMOVE_BLOCK_PROP_LINK = 'REMOVE_BLOCK_PROP_LINK';
+
+type RemoveBlockPropLinkPayload = {
+  componentKey: string,
+  blockKey: string,
+  propKey: string,
+};
+
+type RemoveBlockPropLinkAction = {
+  type: string,
+  payload: RemoveBlockPropLinkPayload,
+};
+
+export function removeBlockPropLinkRedux(
+  componentKey: string,
+  blockKey: string,
+  propKey: string
+): RemoveBlockPropLinkAction {
+  return {
+    type: REMOVE_BLOCK_PROP_LINK,
+    payload: {
+      componentKey,
+      blockKey,
+      propKey,
+    },
+  };
+}
+
+function handleRemoveBlockPropLink(
+  state: EditorReduxState,
+  { componentKey, blockKey, propKey }: RemoveBlockPropLinkPayload
+): EditorReduxState {
+  const components = getComponentsFromReduxEditorState(state);
+  const component = getComponentFromComponents(componentKey, components);
+  const block = getBlockFromComponent(component, blockKey);
+  return {
+    ...state,
+    components: {
+      ...components,
+      [componentKey]: {
+        ...component,
+        blocks: {
+          ...component.blocks,
+          [blockKey]: updateBlockPropRemoveLink(block, propKey),
         },
       },
     },
@@ -299,6 +350,7 @@ const ACTION_HANDLERS = {
   [UPDATE_BLOCK_PROP_CONFIG]: handleUpdateBlockPropConfig,
   [ADD_NEW_PROP_TO_BLOCK]: handleAddNewPropToBlock,
   [UPDATE_COMPONENT_BLOCKS_ORDER]: handleUpdateComponentBlocksOrder,
+  [REMOVE_BLOCK_PROP_LINK]: handleRemoveBlockPropLink,
   [SET_BLOCK_PROP_LINKED]: handleSetBlockPropLinked,
   [SET_BLOCK_PROP_VALUE]: handleSetBlockPropValue,
 };

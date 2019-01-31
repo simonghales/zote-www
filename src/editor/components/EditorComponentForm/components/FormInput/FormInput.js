@@ -21,6 +21,7 @@ import DropdownMenuList from '../../../DropdownMenuList/DropdownMenuList';
 import type { EditorFormInputModel, EditorFormInputPropInputModel } from '../../data/models';
 import EditFormPropInput from '../EditFormPropInput/EditFormPropInput';
 import PropLinkMenu from '../../../PropLinkMenu/PropLinkMenu';
+import LinkedPropInput from '../LinkedPropInput/LinkedPropInput';
 
 export type DefaultFormInputProps = {
   inputId: string,
@@ -75,6 +76,7 @@ type Props = {
   inputType: FormInputTypes,
   componentKey: string,
   blockKey: string,
+  // eslint-disable-next-line react/require-default-props
   propInput?: EditorFormInputPropInputModel | null,
 };
 
@@ -182,12 +184,17 @@ type State = {
   editing: boolean,
 };
 
-export class PropFormInput extends React.Component<Props, State> {
+type PropFormInputProps = Props & {
+  linkedBlockKey: string | null,
+  linkedPropKey: string | null,
+};
+
+export class PropFormInput extends React.Component<PropFormInputProps, State> {
   static defaultProps = {
     inactive: false,
   };
 
-  constructor(props: Props) {
+  constructor(props: PropFormInputProps) {
     super(props);
     this.state = {
       dropDownVisible: false,
@@ -264,6 +271,8 @@ export class PropFormInput extends React.Component<Props, State> {
       inputType,
       componentKey,
       blockKey,
+      linkedBlockKey,
+      linkedPropKey,
     } = this.props;
     const { dropDownVisible, editing, linkMenuVisible } = this.state;
     const inputId = getFormInputId(inputKey);
@@ -299,13 +308,24 @@ export class PropFormInput extends React.Component<Props, State> {
             />
           )}
         </FormInputHeader>
-        <FormInputBody
-          updateValue={updateValue}
-          value={value}
-          defaultValue={defaultValue}
-          inputType={inputType}
-          inputId={inputId}
-        />
+        {!!linkedBlockKey && !!linkedPropKey ? (
+          <LinkedPropInput
+            linkedBlockKey={linkedBlockKey}
+            linkedPropKey={linkedPropKey}
+            componentKey={componentKey}
+            blockKey={blockKey}
+            propKey={inputKey}
+            editLink={this.handleShowLinkPropMenu}
+          />
+        ) : (
+          <FormInputBody
+            updateValue={updateValue}
+            value={value}
+            defaultValue={defaultValue}
+            inputType={inputType}
+            inputId={inputId}
+          />
+        )}
       </div>
     );
   }

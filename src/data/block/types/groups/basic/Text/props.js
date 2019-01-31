@@ -15,6 +15,7 @@ export const textPropsConfig: BlockPropsConfigModel = {
     label: 'Text',
     type: BLOCK_PROPS_CONFIG_TYPES.string,
     defaultValue: '',
+    linkable: true,
   },
   [HTML_ATTRIBUTES_PROP_CONFIG.key]: {
     ...HTML_ATTRIBUTES_PROP_CONFIG,
