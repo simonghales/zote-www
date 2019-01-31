@@ -11,7 +11,7 @@ const containerClass = css`
 
 const editorContainerClass = css`
   width: 100%;
-  max-width: ${getRem(320)};
+  max-width: ${getRem(360)};
   height: 100%;
 `;
 

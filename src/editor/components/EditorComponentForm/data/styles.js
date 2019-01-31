@@ -7,7 +7,7 @@ import type {
   FormDataModel,
 } from './models';
 import { EDITOR_FORM_REDUX_TYPES } from './models';
-import { FORM_INPUT_TYPES } from '../components/FormInput/FormInput';
+import { FORM_INPUT_TYPES } from '../components/FormInput/components/FormInputBody/FormInputBody';
 
 // Text
 

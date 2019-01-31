@@ -4,6 +4,7 @@ import styles from './styles';
 import EditorSectionNav, {
   CONTENT_NAV_OPTION,
   HTML_NAV_OPTION,
+  STYLES_NAV_OPTION,
 } from './components/EditorSectionNav/EditorSectionNav';
 import EditorSectionBody from './components/EditorSectionBody/EditorSectionBody';
 
@@ -17,7 +18,8 @@ class EditorSection extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      selectedTab: CONTENT_NAV_OPTION.key,
+      // selectedTab: CONTENT_NAV_OPTION.key,
+      selectedTab: STYLES_NAV_OPTION.key,
     };
   }
 

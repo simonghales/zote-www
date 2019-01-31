@@ -23,6 +23,10 @@ const labelInactiveClass = css`
   ${inactiveLabelClass};
 `;
 
+const dropdownWrapperClass = css`
+  position: relative;
+`;
+
 const dropdownClass = css`
   width: 14px;
   height: 14px;
@@ -43,4 +47,5 @@ export default {
   labelClass,
   labelInactiveClass,
   dropdownClass,
+  dropdownWrapperClass,
 };

@@ -5,11 +5,11 @@ import type {
   BlockPropConfigModel,
   BlockPropsConfigTypes,
 } from '../../../../data/block/props/model';
-import { FORM_INPUT_TYPES } from '../components/FormInput/FormInput';
+import { FORM_INPUT_TYPES } from '../components/FormInput/components/FormInputBody/FormInputBody';
 import { EDITOR_FORM_REDUX_TYPES } from './models';
 import type { EditorFormInputModel, EditorFormInputPropInputModel } from './models';
 import { BLOCK_PROPS_CONFIG_TYPES } from '../../../../data/block/props/model';
-import type { FormInputTypes } from '../components/FormInput/FormInput';
+import type { FormInputTypes } from '../components/FormInput/components/FormInputBody/FormInputBody';
 import type { BlockModel } from '../../../../data/block/model';
 import HeadingBlock from '../../../../data/block/types/groups/basic/Heading';
 import ContainerBlock from '../../../../data/block/types/groups/basic/Container';

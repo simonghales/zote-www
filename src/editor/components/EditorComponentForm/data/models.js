@@ -1,6 +1,6 @@
 // @flow
 import type { Node } from 'react';
-import type { FormInputTypes } from '../components/FormInput/FormInput';
+import type { FormInputTypes } from '../components/FormInput/components/FormInputBody/FormInputBody';
 
 export const EDITOR_FORM_REDUX_TYPES = {
   prop: 'prop',

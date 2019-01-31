@@ -16,6 +16,12 @@ const containerClass = css`
   z-index: ${zindexes.dropdown};
 `;
 
+const fixedContainerClass = css`
+  right: auto;
+  width: 200px;
+`;
+
 export default {
   containerClass,
+  fixedContainerClass,
 };

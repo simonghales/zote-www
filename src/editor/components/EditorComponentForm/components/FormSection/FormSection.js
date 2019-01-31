@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { cx } from 'emotion';
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import styles from './styles';
-import FormInput, { getFormInputComponent } from '../FormInput/FormInput';
+import { getFormInputComponent } from '../FormInput/FormInput';
 import type { EditorFormInputModel, EditorFormSectionColumnModel } from '../../data/models';
 import ReduxFormInput from '../ReduxFormInput/ReduxFormInput';
 import { EditorComponentFormContext } from '../../context';
