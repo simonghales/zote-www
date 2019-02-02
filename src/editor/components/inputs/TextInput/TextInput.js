@@ -23,6 +23,17 @@ class TextInput extends Component<Props, State> {
     };
   }
 
+  // eslint-disable-next-line no-unused-vars
+  componentWillReceiveProps(nextProps: $ReadOnly<Props>, nextContext: any): void {
+    const { value } = nextProps;
+    const { value: stateValue } = this.state;
+    if (value !== stateValue) {
+      this.setState({
+        value,
+      });
+    }
+  }
+
   handleOnChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
     const { updateValue } = this.props;
     const { value } = event.target;

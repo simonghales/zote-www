@@ -45,7 +45,9 @@ const ReduxFormInput = ({
   blockKey,
   linkedBlockKey,
   linkedPropKey,
-                          reduxType,
+  reduxType,
+  styleStateKey,
+  blockStyleKey,
 }: Props) => {
   const FormInputComponent = getFormInputComponent(input, reduxType);
   return (
@@ -63,6 +65,8 @@ const ReduxFormInput = ({
       propInput={input.propInput}
       linkedBlockKey={linkedBlockKey}
       linkedPropKey={linkedPropKey}
+      styleStateKey={styleStateKey}
+      blockStyleKey={blockStyleKey}
     />
   );
 };

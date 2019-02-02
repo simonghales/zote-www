@@ -16,6 +16,7 @@ import {
   getMergedPropConfigFromBlock,
   getPropFromBlock,
   getRecursiveBlockPropAvailableProps,
+  getTargetBlockAncestorsKeys,
 } from '../../data/block/state';
 import { isValueDefined } from '../../utils/validation';
 import type { BlockPropModel } from '../../data/block/props/model';
@@ -100,5 +101,6 @@ export function getBlockPropAvailableProps(
   const rootBlockKey = getRootBlockKeyFromComponent(component);
   const parentBlockKey = getBlockParentBlockKeyFromBlocks(blockKey, blocks);
   if (!parentBlockKey) return [];
-  return getRecursiveBlockPropAvailableProps(rootBlockKey, blockKey, blocks, {});
+  const ancestorBlockKeys = getTargetBlockAncestorsKeys(rootBlockKey, blockKey, blocks);
+  return getRecursiveBlockPropAvailableProps(rootBlockKey, blockKey, blocks, ancestorBlockKeys, {});
 }

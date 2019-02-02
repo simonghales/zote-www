@@ -6,12 +6,16 @@ import FormInputBody from '../FormInputBody/FormInputBody';
 import FormInputHeader from '../FormInputHeader/FormInputHeader';
 import DropdownMenu from '../../../../../DropdownMenu/DropdownMenu';
 import { MENU_LAYOUTS } from '../../../../../Menu/Menu';
+import StyleFormInputOptions from './components/StyleFormInputOptions/StyleFormInputOptions';
 
 type State = {
   dropDownVisible: boolean,
 };
 
-type Props = FormInputProps;
+type Props = FormInputProps & {
+  blockStyleKey: string,
+  styleStateKey: string,
+};
 
 class StyleFormInput extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -42,6 +46,8 @@ class StyleFormInput extends React.Component<Props, State> {
       value,
       updateValue,
       inputType,
+      blockStyleKey,
+      styleStateKey,
     } = this.props;
     const inputId = getFormInputId(inputKey);
     return (
@@ -53,7 +59,11 @@ class StyleFormInput extends React.Component<Props, State> {
           name={name}
         >
           <DropdownMenu layout={MENU_LAYOUTS.fixed} close={this.handleHideDropdown}>
-            testing...
+            <StyleFormInputOptions
+              styleKey={blockStyleKey}
+              styleStateKey={styleStateKey}
+              styleValueKey={inputKey}
+            />
           </DropdownMenu>
         </FormInputHeader>
         <FormInputBody

@@ -48,6 +48,17 @@ class SelectInput extends Component<Props, State> {
     };
   }
 
+  // eslint-disable-next-line no-unused-vars
+  componentWillReceiveProps(nextProps: $ReadOnly<Props>, nextContext: any): void {
+    const { value } = nextProps;
+    const { value: stateValue } = this.state;
+    if (value !== stateValue) {
+      this.setState({
+        value,
+      });
+    }
+  }
+
   handleOnChange = (newValue: Array<SelectOptionType> | SelectOptionType) => {
     const { updateValue } = this.props;
     const parsedValue = parseSelectOptionsValue(newValue);

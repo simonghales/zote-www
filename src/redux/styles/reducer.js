@@ -11,6 +11,44 @@ export const initialStylesReduxState: StylesReduxState = {
   ...dummyStylesReduxState,
 };
 
+const CLEAR_MODULE_STYLE_VALUE = 'CLEAR_MODULE_STYLE_VALUE';
+
+type ClearModuleStyleValuePayload = {
+  styleKey: string,
+  styleStateKey: string,
+  styleValueKey: string,
+};
+
+type ClearModuleStyleValueAction = {
+  type: string,
+  payload: ClearModuleStyleValuePayload,
+};
+
+export function clearModuleStyleValueRedux(
+  styleKey: string,
+  styleStateKey: string,
+  styleValueKey: string
+): ClearModuleStyleValueAction {
+  return {
+    type: CLEAR_MODULE_STYLE_VALUE,
+    payload: {
+      styleKey,
+      styleStateKey,
+      styleValueKey,
+    },
+  };
+}
+
+function handleClearModuleStyleValue(
+  state: EditorReduxState,
+  { styleKey, styleStateKey, styleValueKey }: ClearModuleStyleValuePayload
+): EditorReduxState {
+  return {
+    ...state,
+    [styleKey]: updateStyleStyleValue(state[styleKey], styleKey, styleStateKey, styleValueKey),
+  };
+}
+
 const SET_MODULE_STYLE_VALUE = 'SET_MODULE_STYLE_VALUE';
 
 type SetModuleStyleValuePayload = {
@@ -59,6 +97,7 @@ function handleSetModuleStyleValue(
 }
 
 const ACTION_HANDLERS = {
+  [CLEAR_MODULE_STYLE_VALUE]: handleClearModuleStyleValue,
   [SET_MODULE_STYLE_VALUE]: handleSetModuleStyleValue,
 };
 

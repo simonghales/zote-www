@@ -28,6 +28,17 @@ class RadioInput extends Component<Props, State> {
     };
   }
 
+  // eslint-disable-next-line no-unused-vars
+  componentWillReceiveProps(nextProps: $ReadOnly<Props>, nextContext: any): void {
+    const { value } = nextProps;
+    const { value: stateValue } = this.state;
+    if (value !== stateValue) {
+      this.setState({
+        value,
+      });
+    }
+  }
+
   handleSelect = (newValue: string) => {
     const { value } = this.state;
     const updatedValue = value === newValue ? '' : newValue;

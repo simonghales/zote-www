@@ -46,9 +46,17 @@ export const DUMMY_HTML_ELEMENT_BLOCK: BlockModel = {
   blockTypeKey: HtmlElementBlock.key,
   name: 'Dummy HTML Block',
   props: {
+    children: {
+      key: 'children',
+      value: [DUMMY_TEXT_BLOCK.key],
+    },
     content: {
       key: 'content',
       value: 'Testing...',
+      linked: {
+        blockKey: 'DUMMY_CONTAINER_BLOCK',
+        propKey: 'test',
+      },
     },
     htmlAttributes: {
       key: 'htmlAttributes',
@@ -85,7 +93,7 @@ export const DUMMY_CONTAINER_BLOCK: BlockModel = {
   props: {
     children: {
       key: 'children',
-      value: [DUMMY_HEADING_BLOCK.key, DUMMY_TEXT_BLOCK.key, DUMMY_HTML_ELEMENT_BLOCK.key],
+      value: [DUMMY_HEADING_BLOCK.key, DUMMY_HTML_ELEMENT_BLOCK.key],
     },
     test: {
       key: 'test',

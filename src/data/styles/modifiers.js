@@ -2,18 +2,28 @@
 
 import type { StateStylesModel, StyleModel } from './model';
 import { generateEmptyStylesObject } from './generators';
+import { isValueDefined } from '../../utils/validation';
 
 export function updateStyleStateStyleValue(
   styles: StateStylesModel,
   styleValueKey: string,
-  value: any
+  value?: any
 ): StateStylesModel {
-  return {
-    ...styles,
-    [styleValueKey]: {
-      value,
-    },
-  };
+  if (isValueDefined(value)) {
+    return {
+      ...styles,
+      [styleValueKey]: {
+        value,
+      },
+    };
+  }
+  const allowedStyles = {};
+  Object.keys(styles)
+    .filter(styleKey => styleKey !== styleValueKey)
+    .forEach(styleKey => {
+      allowedStyles[styleKey] = styles[styleKey];
+    });
+  return allowedStyles;
 }
 
 export function updateStyleStyleValue(
@@ -21,7 +31,7 @@ export function updateStyleStyleValue(
   styleKey: string,
   stateKey: string,
   styleValueKey: string,
-  value: any
+  value?: any
 ): StyleModel {
   if (!style) {
     style = generateEmptyStylesObject(styleKey);

@@ -339,8 +339,10 @@ export function getRecursiveBlockPropAvailableProps(
   blockKey: string,
   finalBlockKey: string,
   blocks: BlocksModel,
+  ancestorBlockKeys: Array<string>,
   allBlocksAvailableProps: AllBlocksAvailablePropsModel
 ): Array<BlockAvailablePropsModel> {
+  if (!ancestorBlockKeys.includes(blockKey)) return [];
   if (blockKey === finalBlockKey) return [];
   const block = getBlockFromBlocks(blockKey, blocks);
   const propsConfig = getMergedPropsConfigFromBlock(block);
@@ -365,7 +367,9 @@ export function getRecursiveBlockPropAvailableProps(
   });
   const mergedAllBlocksAvailableProps = {
     ...allBlocksAvailableProps,
-    [blockKey]: availableProps,
+    [blockKey]: {
+      props: availableProps,
+    },
   };
   const childrenBlockKeys = getBlockChildrenKeysFromBlock(block);
   let childrenBlocksAvailableProps: Array<BlockAvailablePropsModel> = [];
@@ -376,6 +380,7 @@ export function getRecursiveBlockPropAvailableProps(
           childBlockKey,
           finalBlockKey,
           blocks,
+          ancestorBlockKeys,
           mergedAllBlocksAvailableProps
         )
       );
@@ -409,4 +414,28 @@ export function filterAvailableProps(
       };
     })
     .filter(block => Object.keys(block.props).length > 0);
+}
+
+export function getTargetBlockAncestorsKeys(
+  blockKey: string,
+  targetBlockKey: string,
+  blocks: BlocksModel
+): Array<string> {
+  if (blockKey === targetBlockKey) {
+    return [];
+  }
+  const block = getBlockFromBlocks(blockKey, blocks);
+  const childrenBlockKeys = getBlockChildrenKeysFromBlock(block);
+  let ancestorKeys = [];
+  childrenBlockKeys.forEach(childBlockKey => {
+    if (targetBlockKey === childBlockKey) {
+      ancestorKeys = [blockKey];
+    } else {
+      const targetAncestorKeys = getTargetBlockAncestorsKeys(childBlockKey, targetBlockKey, blocks);
+      if (targetAncestorKeys.length > 0) {
+        ancestorKeys = [blockKey].concat(targetAncestorKeys);
+      }
+    }
+  });
+  return ancestorKeys;
 }

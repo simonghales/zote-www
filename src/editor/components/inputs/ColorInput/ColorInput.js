@@ -33,6 +33,17 @@ class ColorInput extends Component<Props, State> {
     };
   }
 
+  // eslint-disable-next-line no-unused-vars
+  componentWillReceiveProps(nextProps: $ReadOnly<Props>, nextContext: any): void {
+    const { value } = nextProps;
+    const { color: stateValue } = this.state;
+    if (value !== stateValue) {
+      this.setState({
+        color: value,
+      });
+    }
+  }
+
   getDisplayColor() {
     const { color } = this.state;
     const { defaultValue } = this.props;
