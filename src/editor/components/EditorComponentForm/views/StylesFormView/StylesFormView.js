@@ -4,7 +4,8 @@ import styles from './styles';
 import { STYLES_FORM_DATA } from '../../data/styles';
 import { getFormSectionVisibility } from '../../EditorComponentForm';
 import type { EditorFormSectionsVisibility } from '../../../../../redux/ui/reducer';
-import FormSection from '../../components/FormSection/FormSection';
+import FormColumnsSection from '../../components/FormColumnsSection/FormColumnsSection';
+import CustomStylesFormSection from '../../components/CustomStylesFormSection/CustomStylesFormSection';
 
 type Props = {
   formSectionsVisibility: EditorFormSectionsVisibility,
@@ -14,7 +15,7 @@ type Props = {
 const StylesFormView = ({ formSectionsVisibility, setFormSectionVisibility }: Props) => (
   <div className={styles.containerClass}>
     {STYLES_FORM_DATA.sections.map(section => (
-      <FormSection
+      <FormColumnsSection
         heading={section.heading}
         columns={section.columns}
         key={section.key}
@@ -24,6 +25,10 @@ const StylesFormView = ({ formSectionsVisibility, setFormSectionVisibility }: Pr
         }}
       />
     ))}
+    <CustomStylesFormSection
+      formSectionsVisibility={formSectionsVisibility}
+      setFormSectionVisibility={setFormSectionVisibility}
+    />
   </div>
 );
 

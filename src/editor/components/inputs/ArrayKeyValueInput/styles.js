@@ -4,11 +4,10 @@ import { css } from 'emotion';
 import { plainInputStyles } from '../../../../styles/input';
 import { getRem } from '../../../../styles/utils/measurements';
 import { ENTRY_LABEL_WIDTH } from './components/Entry/styles';
+import { outlineContainerCss } from '../../../../styles/shared/input';
 
 const containerClass = css`
-  border: 1px solid ${plainInputStyles.backgroundColor};
-  padding: ${getRem(5)};
-  border-radius: ${plainInputStyles.borderRadius}px;
+  ${outlineContainerCss};
 `;
 
 const formClass = css`

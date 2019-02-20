@@ -127,6 +127,14 @@ const appearanceFormSection: EditorFormSectionModel = {
   columns: [],
 };
 
+// Custom
+
+export const customFormSection: EditorFormSectionModel = {
+  heading: 'Custom',
+  key: 'custom',
+  columns: [],
+};
+
 export const STYLES_FORM_DATA: FormDataModel = {
   sections: [textFormSection, appearanceFormSection],
 };

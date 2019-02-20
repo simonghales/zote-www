@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { cx } from 'emotion';
 import { getFormSectionVisibility } from '../../EditorComponentForm';
 import type { EditorFormSectionsVisibility } from '../../../../../redux/ui/reducer';
-import FormSection from '../../components/FormSection/FormSection';
 import type { ReduxState } from '../../../../../redux/store';
 import { getComponentsFromReduxEditorState } from '../../../../../redux/editor/state';
 import {
@@ -19,6 +18,7 @@ import {
 import { mapBlockPropConfigsToEditorFormInputModel } from '../../data/state';
 import AddCustomPropForm from './components/AddCustomPropForm/AddCustomPropForm';
 import styles from './styles';
+import FormColumnsSection from '../../components/FormColumnsSection/FormColumnsSection';
 
 export const CONTENT_FORM_VIEW_TYPES = {
   content: 'content',
@@ -58,7 +58,7 @@ const PropsFormView = ({
       })}
     >
       {sections.map(section => (
-        <FormSection
+        <FormColumnsSection
           heading={section.heading}
           columns={section.columns}
           key={section.key}
