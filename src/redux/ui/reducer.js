@@ -2,6 +2,7 @@
 
 import { dummyUiReduxState } from '../../data/dummy/redux';
 import type { GenericAction } from '../editor/reducer';
+import { customFormSection } from '../../editor/components/EditorComponentForm/data/styles';
 
 export type ComponentsSelectedBlockKeys = {
   [string]: string,
@@ -20,7 +21,9 @@ export type UIReduxState = {
 export const initialUiReduxState: UIReduxState = {
   selectedComponentKey: '',
   componentsSelectedBlockKeys: {},
-  editorFormSectionsVisibility: {},
+  editorFormSectionsVisibility: {
+    [customFormSection.key]: false,
+  },
   ...dummyUiReduxState,
 };
 
