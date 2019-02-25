@@ -16,6 +16,7 @@
     "react-dom": "^16.7.0",
     "react-emotion": "^10.0.0",
     "react-icons": "^3.3.0",
+    "react-input-autosize": "^2.2.1",
     "react-nestable": "simonghales/react-nestable",
     "react-redux": "^6.0.0",
     "react-resizable": "^1.7.5",

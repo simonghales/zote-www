@@ -1,7 +1,11 @@
 // @flow
 import type { ReduxState } from '../store';
 import type { EditorFormInputModel } from '../../editor/components/EditorComponentForm/data/models';
-import { getStyleFromStyles, getStyleValueFromStyle } from '../../data/styles/state';
+import {
+  getStyleFromStyles,
+  getStyleStateStyles,
+  getStyleValueFromStyle,
+} from '../../data/styles/state';
 import type { StylesModels } from '../../data/styles/model';
 
 export function getReduxStyles(state: ReduxState): StylesModels {
@@ -24,4 +28,21 @@ export function getReduxStyleStyleValue(
     return value;
   }
   return getStyleValueFromStyle(key, stateKey, style);
+}
+
+export function getReduxStyleStyles(
+  state: ReduxState,
+  stateKey: string,
+  blockStyleKey: string
+): Array<{}> {
+  const styles = getReduxStyles(state);
+  const blockStyles = getStyleFromStyles(blockStyleKey, styles);
+  if (!blockStyles) {
+    return [];
+  }
+  const stateStyles = getStyleStateStyles(stateKey, blockStyles);
+  return Object.keys(stateStyles).map((styleKey: string) => ({
+    key: styleKey,
+    value: stateStyles[styleKey].value,
+  }));
 }
