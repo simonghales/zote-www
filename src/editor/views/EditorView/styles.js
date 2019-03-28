@@ -21,6 +21,7 @@ const mainClass = css`
   flex: 1;
   height: 100%;
   overflow: hidden;
+  position: relative;
 `;
 
 export default {

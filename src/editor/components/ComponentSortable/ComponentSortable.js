@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import { cx } from 'emotion';
 import { DUMMY_SORTABLE_BLOCKS } from './models';
 import type { SortableBlockModel } from './models';
 import styles from './styles';
@@ -13,12 +14,21 @@ import { getSelectedComponentSelectedBlockKey } from '../../state/reselect/ui';
 import { getKeyFromComponent, getRootBlockKeyFromComponent } from '../../../data/component/state';
 import { setComponentSelectedBlockKeyRedux } from '../../../redux/ui/reducer';
 import { updateComponentBlocksOrderRedux } from '../../../redux/editor/reducer';
+import {
+  getReduxUiAddingBlockSelectedKey,
+  getReduxUiAddingBlockSelectedPosition,
+} from '../../../redux/ui/state';
+import type { AddBlockPositions } from './components/BlockItem/components/AddButton/AddButton';
+import { blockItemClassNames } from './components/BlockItem/styles';
 
 type Props = {
+  addingBlock: boolean,
   blocks: Array<SortableBlockModel>,
   componentKey: string,
   rootBlockKey: string,
   selectedBlockKey: string,
+  addingBlockSelectedKey: string,
+  addingBlockSelectedPosition: string,
   setComponentSelectedBlockKey: (componentKey: string, blockKey: string) => void,
   updateComponentBlocksOrder: (
     blocksOrder: BlocksOrder,
@@ -71,18 +81,37 @@ class ComponentSortable extends React.Component<Props> {
   };
 
   render() {
-    const { blocks, rootBlockKey, selectedBlockKey } = this.props;
+    const {
+      addingBlock,
+      blocks,
+      rootBlockKey,
+      selectedBlockKey,
+      addingBlockSelectedKey,
+      addingBlockSelectedPosition,
+    } = this.props;
     return (
-      <div className={styles.containerClass}>
+      <div
+        className={cx(styles.containerClass, {
+          [blockItemClassNames.addingBlock]: addingBlock,
+        })}
+      >
         <BlockItem
+          addingBlock={addingBlock}
           blockKey={rootBlockKey}
           selected={rootBlockKey === selectedBlockKey}
           onSelect={this.handleSelectBlock}
+          rootBlock
+          canContainChildren
+          addingBlockSelectedKey={addingBlockSelectedKey}
+          addingBlockSelectedPosition={addingBlockSelectedPosition}
         >
           <NestList
+            addingBlock={addingBlock}
             blocks={blocks}
             onSelect={this.handleSelectBlock}
             onOrderChange={this.handleUpdateBlocksOrder}
+            addingBlockSelectedKey={addingBlockSelectedKey}
+            addingBlockSelectedPosition={addingBlockSelectedPosition}
           />
         </BlockItem>
       </div>
@@ -98,11 +127,15 @@ const mapStateToProps = (state: ReduxState) => {
   const selectedBlockKey = getSelectedComponentSelectedBlockKey(state);
   const blocks = mapComponentBlocksToSortableBlocks(component, selectedBlockKey);
   const rootBlockKey = getRootBlockKeyFromComponent(component);
+  const addingBlockSelectedKey = getReduxUiAddingBlockSelectedKey(state);
+  const addingBlockSelectedPosition = getReduxUiAddingBlockSelectedPosition(state);
   return {
     componentKey,
     blocks,
     rootBlockKey,
     selectedBlockKey,
+    addingBlockSelectedKey,
+    addingBlockSelectedPosition,
   };
 };
 

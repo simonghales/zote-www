@@ -16,8 +16,24 @@ export const buttonResetCss = css`
   cursor: pointer;
 `;
 
-export const solidButtonCss = css`
+export const solidButtonColorsCss = css`
   background-color: ${colors.vibrant};
+  border-color: ${colors.vibrant};
+  color: ${colors.white};
+
+  &:focus {
+    border-color: ${plainInputStyles.focusBorderColor};
+  }
+
+  &:disabled {
+    background: ${colors.lightFaintShade};
+    border-color: ${colors.lightFaintShade};
+    color: ${colors.shadeBlue};
+  }
+`;
+
+export const solidButtonCss = css`
+  ${solidButtonColorsCss};
   border: 2px solid ${colors.vibrant};
   color: ${colors.white};
   display: block;
@@ -29,14 +45,7 @@ export const solidButtonCss = css`
   padding: ${getEm(10, fontSizes.small)} ${getEm(12, fontSizes.small)};
   border-radius: ${getEm(25, fontSizes.small)};
 
-  &:focus {
-    border-color: ${plainInputStyles.focusBorderColor};
-  }
-
   &:disabled {
-    background: ${colors.lightFaintShade};
-    border-color: ${colors.lightFaintShade};
-    color: ${colors.shadeBlue};
     cursor: default;
   }
 `;

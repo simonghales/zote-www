@@ -16,6 +16,8 @@ import {
 import type { BlockPropsConfigTypes } from '../../data/block/props/model';
 import { getBlockPropsConfigKeys } from '../../data/block/state';
 import { generatePropKeyFromPropLabel } from '../../data/block/props/generators';
+import type { BlockModel } from '../../data/block/model';
+import type { AddBlockPositions } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 
 export type EditorReduxState = {
   components: ComponentsModels,
@@ -30,6 +32,43 @@ export type GenericAction = {
   type: string,
   payload: {},
 };
+
+const ADD_BLOCK_TO_COMPONENT = 'ADD_BLOCK_TO_COMPONENT';
+
+type AddBlockToComponentPayload = {
+  componentKey: string,
+  block: BlockModel,
+  selectedBlockKey: string,
+  selectedPosition: AddBlockPositions,
+};
+
+type AddBlockToComponentAction = {
+  type: string,
+  payload: AddBlockToComponentPayload,
+};
+
+export function addBlockToComponentRedux(
+  componentKey: string,
+  block: BlockModel,
+  selectedBlockKey: string,
+  selectedPosition: AddBlockPositions
+): AddBlockToComponentAction {
+  return {
+    type: ADD_BLOCK_TO_COMPONENT,
+    payload: {
+      componentKey,
+      block,
+      selectedBlockKey,
+      selectedPosition,
+    },
+  };
+}
+
+function handleAddBlockToComponent(state: EditorReduxState): EditorReduxState {
+  return {
+    ...state,
+  };
+}
 
 const UPDATE_BLOCK_PROP_CONFIG = 'UPDATE_BLOCK_PROP_CONFIG';
 
@@ -347,6 +386,7 @@ function handleUpdateComponentBlocksOrder(
 }
 
 const ACTION_HANDLERS = {
+  [ADD_BLOCK_TO_COMPONENT]: handleAddBlockToComponent,
   [UPDATE_BLOCK_PROP_CONFIG]: handleUpdateBlockPropConfig,
   [ADD_NEW_PROP_TO_BLOCK]: handleAddNewPropToBlock,
   [UPDATE_COMPONENT_BLOCKS_ORDER]: handleUpdateComponentBlocksOrder,

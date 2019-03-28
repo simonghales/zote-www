@@ -9,9 +9,12 @@ import { getRem } from '../../../../../styles/utils/measurements';
 const classNames = {
   blockItemWrapperSelected: 'blockItemWrapperSelected',
   blockItemSelected: 'blockItemSelected',
+  addingBlock: 'addingBlock',
 };
 
 export const blockItemClassNames = classNames;
+
+const isAddingBlockState = `.${classNames.addingBlock} &`;
 
 const sliverCss = css`
   content: '';
@@ -111,6 +114,25 @@ const nameClass = css`
   top: 1px;
 `;
 
+const addBlockBeforeClass = css`
+  left: 6px;
+  top: -9px;
+`;
+
+const addBlockIconClass = css`
+  position: absolute;
+  z-index: 500;
+  visibility: hidden;
+
+  ${isAddingBlockState} {
+    visibility: visible;
+  }
+`;
+
+const addBlockInsideClass = css`
+  right: 5px;
+`;
+
 export default {
   classNames,
   containerClass,
@@ -118,4 +140,7 @@ export default {
   clickableClass,
   iconClass,
   nameClass,
+  addBlockBeforeClass,
+  addBlockIconClass,
+  addBlockInsideClass,
 };

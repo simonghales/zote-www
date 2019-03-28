@@ -7,6 +7,7 @@ import {
   roundIconActiveButtonCss,
   roundIconButtonCss,
   slimSolidButtonCss,
+  solidButtonColorsCss,
   solidButtonCss,
 } from '../../../styles/button';
 import fontWeights from '../../../styles/config/fontWeights';
@@ -15,6 +16,7 @@ import { getEm } from '../../../styles/utils/measurements';
 
 const classNames = {
   buttonIcon: 'buttonIcon',
+  buttonHighlighted: 'buttonHighlighted',
 };
 
 const buttonClass = css`
@@ -49,6 +51,10 @@ const slimIconButtonClass = css`
 
   &:hover {
     background-color: rgba(189, 200, 224, 0.66);
+  }
+
+  &.${classNames.buttonHighlighted} {
+    ${solidButtonColorsCss};
   }
 `;
 

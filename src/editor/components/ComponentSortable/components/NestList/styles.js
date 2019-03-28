@@ -18,7 +18,7 @@ const brightBlue = plainInputStyles.focusBorderColor;
 
 const containerClass = css`
   max-height: 100%;
-  overflow-y: auto;
+  //overflow-y: auto;
 
   .nestable .nestable-list {
     padding-left: 10px;

@@ -28,9 +28,11 @@ type Props = {
   type?: string,
   // eslint-disable-next-line react/require-default-props
   onClick?: () => void,
+  // eslint-disable-next-line react/require-default-props
+  highlighted?: boolean,
 };
 
-const Button = ({ children, icon, theme, disabled, onClick, type }: Props) => (
+const Button = ({ children, icon, theme, disabled, onClick, type, highlighted }: Props) => (
   <button
     className={cx(styles.buttonClass, {
       [styles.solidButtonClass]: theme === BUTTON_THEMES.solid,
@@ -39,6 +41,7 @@ const Button = ({ children, icon, theme, disabled, onClick, type }: Props) => (
       [styles.slimIconDarkerButtonClass]: theme === BUTTON_THEMES.slimIconDarker,
       [styles.roundIconButtonClass]: theme === BUTTON_THEMES.roundIcon,
       [styles.roundIconActiveButtonClass]: theme === BUTTON_THEMES.roundIconActive,
+      [styles.classNames.buttonHighlighted]: highlighted,
     })}
     type={type}
     disabled={!!disabled}
@@ -54,6 +57,7 @@ Button.defaultProps = {
   theme: BUTTON_THEMES.default,
   disabled: false,
   type: 'button',
+  highlighted: false,
   onClick: () => {},
 };
 

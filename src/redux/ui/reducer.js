@@ -3,6 +3,9 @@
 import { dummyUiReduxState } from '../../data/dummy/redux';
 import type { GenericAction } from '../editor/reducer';
 import { customFormSection } from '../../editor/components/EditorComponentForm/data/styles';
+import type { AddBlockPositions } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
+import { ADD_BLOCK_POSITIONS } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
+import { DUMMY_CONTAINER_BLOCK } from '../../data/dummy/components';
 
 export type ComponentsSelectedBlockKeys = {
   [string]: string,
@@ -13,12 +16,18 @@ export type EditorFormSectionsVisibility = {
 };
 
 export type UIReduxState = {
+  addingBlock: boolean,
+  addingBlockSelectedKey: string,
+  addingBlockSelectedPosition: AddBlockPositions,
   selectedComponentKey: string,
   componentsSelectedBlockKeys: ComponentsSelectedBlockKeys,
   editorFormSectionsVisibility: EditorFormSectionsVisibility,
 };
 
 export const initialUiReduxState: UIReduxState = {
+  addingBlock: true, // todo - set back to false
+  addingBlockSelectedKey: DUMMY_CONTAINER_BLOCK.key,
+  addingBlockSelectedPosition: ADD_BLOCK_POSITIONS.inside,
   selectedComponentKey: '',
   componentsSelectedBlockKeys: {},
   editorFormSectionsVisibility: {
@@ -26,6 +35,72 @@ export const initialUiReduxState: UIReduxState = {
   },
   ...dummyUiReduxState,
 };
+
+const SET_ADDING_BLOCK_SELECTED = 'SET_ADDING_BLOCK_SELECTED';
+
+type SetAddingBlockSelectedPayload = {
+  blockKey: string,
+  position: AddBlockPositions,
+};
+
+type SetAddingBlockSelectedAction = {
+  type: string,
+  payload: SetAddingBlockSelectedPayload,
+};
+
+export function setAddingBlockSelectedRedux(
+  blockKey: string,
+  position: AddBlockPositions
+): SetAddingBlockSelectedAction {
+  return {
+    type: SET_ADDING_BLOCK_SELECTED,
+    payload: {
+      blockKey,
+      position,
+    },
+  };
+}
+
+function handleSetAddingBlockSelected(
+  state: UIReduxState,
+  { blockKey, position }: SetAddingBlockSelectedPayload
+): UIReduxState {
+  return {
+    ...state,
+    addingBlockSelectedKey: blockKey,
+    addingBlockSelectedPosition: position,
+  };
+}
+
+const SET_ADDING_BLOCK = 'SET_ADDING_BLOCK';
+
+type SetAddingBlockPayload = {
+  addingBlock: boolean,
+};
+
+type SetAddingBlockAction = {
+  type: string,
+  payload: SetAddingBlockPayload,
+};
+
+export function setAddingBlockRedux(addingBlock: boolean): SetAddingBlockAction {
+  return {
+    type: SET_ADDING_BLOCK,
+    payload: {
+      addingBlock,
+    },
+  };
+}
+
+function handleSetAddingBlock(
+  state: UIReduxState,
+  { addingBlock }: SetAddingBlockPayload
+): UIReduxState {
+  return {
+    ...state,
+    addingBlock,
+  };
+}
 
 const SET_COMPONENT_SELECTED_BLOCK_KEY = 'SET_COMPONENT_SELECTED_BLOCK_KEY';
 
@@ -104,6 +179,8 @@ function handleSetEditorFormSectionVisibility(
 }
 
 const ACTION_HANDLERS = {
+  [SET_ADDING_BLOCK_SELECTED]: handleSetAddingBlockSelected,
+  [SET_ADDING_BLOCK]: handleSetAddingBlock,
   [SET_COMPONENT_SELECTED_BLOCK_KEY]: handleSetComponentSelectedBlockKey,
   [SET_EDITOR_FORM_SECTION_VISIBILITY]: handleSetEditorFormSectionVisibility,
 };

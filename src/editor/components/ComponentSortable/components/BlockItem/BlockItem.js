@@ -13,42 +13,111 @@ import {
 } from '../../../../../data/block/state';
 import type { ReduxState } from '../../../../../redux/store';
 import { getIconFromBlockType } from '../../../../../data/block/types/state';
+import AddButton, { ADD_BLOCK_POSITIONS } from './components/AddButton/AddButton';
+import type { AddBlockPositions } from './components/AddButton/AddButton';
+import { setAddingBlockSelectedRedux } from '../../../../../redux/ui/reducer';
+
+function isButtonSelected(
+  blockKey: string,
+  position: AddBlockPositions,
+  addingBlockSelectedKey: string,
+  addingBlockSelectedPosition: string
+): boolean {
+  return blockKey === addingBlockSelectedKey && position === addingBlockSelectedPosition;
+}
 
 type Props = {
+  addingBlock: boolean,
+  addingBlockSelectedKey: string,
+  addingBlockSelectedPosition: string,
   // eslint-disable-next-line react/no-unused-prop-types
   blockKey: string,
   name: string,
   selected: boolean,
+  canContainChildren?: boolean,
   children?: Node,
   onSelect: (blockKey: string) => void,
   icon: Node,
+  rootBlock?: boolean,
+  addBlockSelect: (blockKey: string, position: AddBlockPositions) => void,
 };
 
-const BlockItem = ({ icon, blockKey, name, selected, children, onSelect }: Props) => (
-  <div
-    className={cx(styles.containerClass, {
-      [styles.selectedClass]: selected,
-      [styles.classNames.blockItemWrapperSelected]: selected,
-    })}
-  >
-    <div
-      className={cx(styles.clickableClass, {
-        [styles.classNames.blockItemSelected]: selected,
-      })}
-      onClick={() => {
-        onSelect(blockKey);
-      }}
-    >
-      <div className={styles.iconClass}>{icon}</div>
-      <div className={styles.nameClass}>{name}</div>
-    </div>
-    {children && children}
-  </div>
-);
+class BlockItem extends React.Component<Props> {
+  static defaultProps = {
+    canContainChildren: false,
+    children: undefined,
+    rootBlock: false,
+  };
 
-BlockItem.defaultProps = {
-  children: undefined,
-};
+  render() {
+    const {
+      canContainChildren,
+      icon,
+      blockKey,
+      name,
+      selected,
+      children,
+      onSelect,
+      rootBlock,
+      addingBlockSelectedKey,
+      addingBlockSelectedPosition,
+      addBlockSelect,
+    } = this.props;
+    return (
+      <div
+        className={cx(styles.containerClass, {
+          [styles.selectedClass]: selected,
+          [styles.classNames.blockItemWrapperSelected]: selected,
+        })}
+      >
+        {!rootBlock && (
+          <div className={cx(styles.addBlockIconClass, styles.addBlockBeforeClass)}>
+            <AddButton
+              position={ADD_BLOCK_POSITIONS.before}
+              selected={isButtonSelected(
+                blockKey,
+                ADD_BLOCK_POSITIONS.before,
+                addingBlockSelectedKey,
+                addingBlockSelectedPosition
+              )}
+              onClick={() => {
+                addBlockSelect(blockKey, ADD_BLOCK_POSITIONS.before);
+              }}
+            />
+          </div>
+        )}
+        <div
+          className={cx(styles.clickableClass, {
+            [styles.classNames.blockItemSelected]: selected,
+          })}
+          onClick={() => {
+            onSelect(blockKey);
+          }}
+        >
+          <div className={styles.iconClass}>{icon}</div>
+          <div className={styles.nameClass}>{name}</div>
+          {canContainChildren && (
+            <div className={cx(styles.addBlockIconClass, styles.addBlockInsideClass)}>
+              <AddButton
+                position={ADD_BLOCK_POSITIONS.inside}
+                selected={isButtonSelected(
+                  blockKey,
+                  ADD_BLOCK_POSITIONS.inside,
+                  addingBlockSelectedKey,
+                  addingBlockSelectedPosition
+                )}
+                onClick={() => {
+                  addBlockSelect(blockKey, ADD_BLOCK_POSITIONS.inside);
+                }}
+              />
+            </div>
+          )}
+        </div>
+        {children && children}
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = (state: ReduxState, { blockKey }: Props) => {
   const selectedComponent = getSelectedComponentSelector(state);
@@ -62,4 +131,12 @@ const mapStateToProps = (state: ReduxState, { blockKey }: Props) => {
   };
 };
 
-export default connect(mapStateToProps)(BlockItem);
+const mapDispatchToProps = {
+  addBlockSelect: (blockKey: string, position: AddBlockPositions) =>
+    setAddingBlockSelectedRedux(blockKey, position),
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BlockItem);
