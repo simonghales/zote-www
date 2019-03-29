@@ -5,7 +5,6 @@ import type { GenericAction } from '../editor/reducer';
 import { customFormSection } from '../../editor/components/EditorComponentForm/data/styles';
 import type { AddBlockPositions } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import { ADD_BLOCK_POSITIONS } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
-import { DUMMY_CONTAINER_BLOCK } from '../../data/dummy/components';
 
 export type ComponentsSelectedBlockKeys = {
   [string]: string,
@@ -25,8 +24,8 @@ export type UIReduxState = {
 };
 
 export const initialUiReduxState: UIReduxState = {
-  addingBlock: true, // todo - set back to false
-  addingBlockSelectedKey: DUMMY_CONTAINER_BLOCK.key,
+  addingBlock: false,
+  addingBlockSelectedKey: '',
   addingBlockSelectedPosition: ADD_BLOCK_POSITIONS.inside,
   selectedComponentKey: '',
   componentsSelectedBlockKeys: {},

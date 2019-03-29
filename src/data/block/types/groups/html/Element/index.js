@@ -5,6 +5,7 @@ import type { BlockTypeModel } from '../../../model';
 import { htmlElementPropsConfig } from './props';
 import config from './config';
 import HtmlElementComponent from './component';
+import generate from './generate';
 
 const HtmlElementBlock: BlockTypeModel = {
   key: config.key,
@@ -16,6 +17,7 @@ const HtmlElementBlock: BlockTypeModel = {
   htmlEnabled: true,
   addPropsEnabled: false,
   icon: <FaCode size={9} />,
+  generate,
 };
 
 export default HtmlElementBlock;

@@ -5,6 +5,7 @@ import type { BlockTypeModel } from '../../../model';
 import { componentPropsConfig } from './props';
 import config from './config';
 import ComponentComponent from './component';
+import generate from './generate';
 
 const ComponentBlock: BlockTypeModel = {
   key: config.key,
@@ -16,6 +17,7 @@ const ComponentBlock: BlockTypeModel = {
   htmlEnabled: false,
   addPropsEnabled: true,
   icon: <FaCube size={8} />,
+  generate,
 };
 
 export default ComponentBlock;

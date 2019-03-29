@@ -5,7 +5,7 @@ import { dummyEditorReduxState } from '../../data/dummy/redux';
 import type { BlocksOrder } from '../../editor/components/ComponentSortable/ComponentSortable';
 import { getComponentsFromReduxEditorState } from './state';
 import { getBlockFromComponent, getComponentFromComponents } from '../../data/component/state';
-import { updateComponentBlocksOrder } from '../../data/component/modifiers';
+import { addBlockToComponent, updateComponentBlocksOrder } from '../../data/component/modifiers';
 import {
   addNewPropToBlock,
   updateBlockPropConfig,
@@ -64,9 +64,19 @@ export function addBlockToComponentRedux(
   };
 }
 
-function handleAddBlockToComponent(state: EditorReduxState): EditorReduxState {
+function handleAddBlockToComponent(
+  state: EditorReduxState,
+  { componentKey, block, selectedBlockKey, selectedPosition }: AddBlockToComponentPayload
+): EditorReduxState {
+  console.log('handleAddBlockToComponent', componentKey);
+  const components = getComponentsFromReduxEditorState(state);
+  const component = getComponentFromComponents(componentKey, components);
   return {
     ...state,
+    components: {
+      ...components,
+      [componentKey]: addBlockToComponent(component, block, selectedBlockKey, selectedPosition),
+    },
   };
 }
 

@@ -99,3 +99,13 @@ export function updateBlockPropConfig(
     },
   };
 }
+
+export function addBlockToBlockChildrenKeys(
+  blockKey: string,
+  blockChildrenKeys: Array<string>,
+  targetIndex: number
+): Array<string> {
+  const updatedKeys = blockChildrenKeys.slice();
+  updatedKeys.splice(targetIndex, 0, blockKey);
+  return updatedKeys;
+}

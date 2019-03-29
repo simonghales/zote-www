@@ -5,6 +5,7 @@ import type { BlockTypeModel } from '../../../model';
 import { containerPropsConfig } from './props';
 import config from './config';
 import ContainerComponent from './component';
+import generate from './generate';
 
 const ContainerBlock: BlockTypeModel = {
   key: config.key,
@@ -16,6 +17,7 @@ const ContainerBlock: BlockTypeModel = {
   htmlEnabled: true,
   addPropsEnabled: false,
   icon: <FaRegSquare size={8} />,
+  generate,
 };
 
 export default ContainerBlock;

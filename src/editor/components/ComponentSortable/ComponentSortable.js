@@ -15,6 +15,7 @@ import { getKeyFromComponent, getRootBlockKeyFromComponent } from '../../../data
 import { setComponentSelectedBlockKeyRedux } from '../../../redux/ui/reducer';
 import { updateComponentBlocksOrderRedux } from '../../../redux/editor/reducer';
 import {
+  getReduxSafeAddingBlockSelectedKeyAndPosition,
   getReduxUiAddingBlockSelectedKey,
   getReduxUiAddingBlockSelectedPosition,
 } from '../../../redux/ui/state';
@@ -127,8 +128,11 @@ const mapStateToProps = (state: ReduxState) => {
   const selectedBlockKey = getSelectedComponentSelectedBlockKey(state);
   const blocks = mapComponentBlocksToSortableBlocks(component, selectedBlockKey);
   const rootBlockKey = getRootBlockKeyFromComponent(component);
-  const addingBlockSelectedKey = getReduxUiAddingBlockSelectedKey(state);
-  const addingBlockSelectedPosition = getReduxUiAddingBlockSelectedPosition(state);
+
+  const [
+    addingBlockSelectedKey,
+    addingBlockSelectedPosition,
+  ] = getReduxSafeAddingBlockSelectedKeyAndPosition(state);
   return {
     componentKey,
     blocks,

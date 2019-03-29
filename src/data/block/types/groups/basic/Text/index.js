@@ -5,6 +5,7 @@ import type { BlockTypeModel } from '../../../model';
 import { textPropsConfig } from './props';
 import config from './config';
 import TextComponent from './component';
+import generate from './generate';
 
 const TextBlock: BlockTypeModel = {
   key: config.key,
@@ -16,6 +17,7 @@ const TextBlock: BlockTypeModel = {
   htmlEnabled: true,
   addPropsEnabled: false,
   icon: <FaParagraph size={8} />,
+  generate,
 };
 
 export default TextBlock;

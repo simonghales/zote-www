@@ -26,3 +26,8 @@ export function getBlocksFromComponent(component: ComponentModel): BlocksModel {
 export function getKeyFromComponent(component: ComponentModel): string {
   return component.key;
 }
+
+export function isBlockInComponent(component: ComponentModel, blockKey: string): boolean {
+  const block = getBlockFromComponent(component, blockKey);
+  return !!block;
+}

@@ -77,7 +77,7 @@ class PreviewView extends Component<Props, State> {
       console.warn(`No detail provided`);
       return;
     }
-    console.log('handleContentUpdateEvent', detail);
+    // console.log('handleContentUpdateEvent', detail);
     this.setState({
       data: detail,
     });

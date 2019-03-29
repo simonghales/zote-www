@@ -439,3 +439,8 @@ export function getTargetBlockAncestorsKeys(
   });
   return ancestorKeys;
 }
+
+export function getBlockIndexInParentChildren(blockKey: string, parentBlock: BlockModel) {
+  const children = getBlockChildrenKeysFromBlock(parentBlock);
+  return children.indexOf(blockKey);
+}

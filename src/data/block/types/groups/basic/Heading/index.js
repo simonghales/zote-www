@@ -5,6 +5,7 @@ import type { BlockTypeModel } from '../../../model';
 import { headingPropsConfig } from './props';
 import config from './config';
 import HeadingComponent from './component';
+import generate from './generate';
 
 const HeadingBlock: BlockTypeModel = {
   key: config.key,
@@ -16,6 +17,7 @@ const HeadingBlock: BlockTypeModel = {
   htmlEnabled: true,
   addPropsEnabled: false,
   icon: <FaHeading size={8} />,
+  generate,
 };
 
 export default HeadingBlock;
