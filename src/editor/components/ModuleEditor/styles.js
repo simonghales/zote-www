@@ -19,21 +19,6 @@ const containerClass = css`
   flex-direction: column;
 `;
 
-const headerClass = css`
-  ${selectHeaderCss};
-  height: ${commonHeaderHeight};
-  border-bottom: 1px solid #e3e5f0;
-  padding: 0 ${padding};
-`;
-
-const headerTextClass = css`
-  ${selectHeaderTextCss};
-`;
-
-const headerIconClass = css`
-  ${selectHeaderIconCss};
-`;
-
 const bodyClass = css`
   margin-top: ${padding};
   flex: 1;
@@ -41,8 +26,5 @@ const bodyClass = css`
 
 export default {
   containerClass,
-  headerClass,
-  headerTextClass,
-  headerIconClass,
   bodyClass,
 };

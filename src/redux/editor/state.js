@@ -20,6 +20,8 @@ import {
 } from '../../data/block/state';
 import { isValueDefined } from '../../utils/validation';
 import type { BlockPropModel } from '../../data/block/props/model';
+import { getSelectedComponentKeySelector } from '../../editor/state/reselect/component';
+import { getReduxUiComponentSelectedBlockKey } from '../ui/state';
 
 export function getReduxEditorComponents(state: ReduxState): ComponentsModels {
   return state.editor.components;
@@ -103,4 +105,16 @@ export function getBlockPropAvailableProps(
   if (!parentBlockKey) return [];
   const ancestorBlockKeys = getTargetBlockAncestorsKeys(rootBlockKey, blockKey, blocks);
   return getRecursiveBlockPropAvailableProps(rootBlockKey, blockKey, blocks, ancestorBlockKeys, {});
+}
+
+export function getSelectedComponentSelectedBlock(state: ReduxState): BlockModel {
+  const componentKey = getSelectedComponentKeySelector(state);
+  const components = getReduxEditorComponents(state);
+  const component = getComponentFromComponents(componentKey, components);
+  let blockKey = getReduxUiComponentSelectedBlockKey(state.ui, componentKey);
+  if (!blockKey) {
+    blockKey = getRootBlockKeyFromComponent(component);
+  }
+  const block = getBlockFromComponent(component, blockKey);
+  return block;
 }

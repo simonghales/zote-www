@@ -8,7 +8,10 @@ import {
   getEditorFormSectionsVisibility,
   getReduxUiComponentSelectedBlockKey,
 } from '../../../redux/ui/state';
-import { getReduxEditorComponents } from '../../../redux/editor/state';
+import {
+  getReduxEditorComponents,
+  getSelectedComponentSelectedBlock,
+} from '../../../redux/editor/state';
 import {
   getBlockFromComponent,
   getComponentFromComponents,
@@ -116,13 +119,7 @@ class EditorComponentForm extends React.Component<Props> {
 
 const mapStateToProps = (state: ReduxState) => {
   const componentKey = getSelectedComponentKeySelector(state);
-  const components = getReduxEditorComponents(state);
-  const component = getComponentFromComponents(componentKey, components);
-  let blockKey = getReduxUiComponentSelectedBlockKey(state.ui, componentKey);
-  if (!blockKey) {
-    blockKey = getRootBlockKeyFromComponent(component);
-  }
-  const block = getBlockFromComponent(component, blockKey);
+  const block = getSelectedComponentSelectedBlock(state);
   const blockStyleKey = getStyleKeyFromBlock(block);
   const formSectionsVisibility = getEditorFormSectionsVisibility(state.ui);
   const propsEnabled = getPropsEnabledFromBlock(block);
@@ -131,7 +128,7 @@ const mapStateToProps = (state: ReduxState) => {
   const addPropsEnabled = getAddPropsEnabledFromBlock(block);
   return {
     componentKey,
-    blockKey,
+    blockKey: block.key,
     blockStyleKey,
     formSectionsVisibility,
     propsEnabled,
