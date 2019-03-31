@@ -5,7 +5,11 @@ import { dummyEditorReduxState } from '../../data/dummy/redux';
 import type { BlocksOrder } from '../../editor/components/ComponentSortable/ComponentSortable';
 import { getComponentsFromReduxEditorState } from './state';
 import { getBlockFromComponent, getComponentFromComponents } from '../../data/component/state';
-import { addBlockToComponent, updateComponentBlocksOrder } from '../../data/component/modifiers';
+import {
+  addBlockToComponent,
+  removeBlockFromComponent,
+  updateComponentBlocksOrder,
+} from '../../data/component/modifiers';
 import {
   addNewPropToBlock,
   updateBlockPropConfig,
@@ -32,6 +36,49 @@ export type GenericAction = {
   type: string,
   payload: {},
 };
+
+const DELETE_BLOCK_FROM_COMPONENT = 'DELETE_BLOCK_FROM_COMPONENT';
+
+type DeleteBlockFromComponentPayload = {
+  componentKey: string,
+  blockKey: string,
+  deleteChildren: boolean,
+};
+
+type DeleteBlockFromComponentAction = {
+  type: string,
+  payload: DeleteBlockFromComponentPayload,
+};
+
+export function deleteBlockFromComponentRedux(
+  componentKey: string,
+  blockKey: string,
+  deleteChildren: boolean
+): DeleteBlockFromComponentAction {
+  return {
+    type: DELETE_BLOCK_FROM_COMPONENT,
+    payload: {
+      componentKey,
+      blockKey,
+      deleteChildren,
+    },
+  };
+}
+
+function handleDeleteBlockFromComponent(
+  state: EditorReduxState,
+  { componentKey, blockKey, deleteChildren }: DeleteBlockFromComponentPayload
+): EditorReduxState {
+  const components = getComponentsFromReduxEditorState(state);
+  const component = getComponentFromComponents(componentKey, components);
+  return {
+    ...state,
+    components: {
+      ...components,
+      [componentKey]: removeBlockFromComponent(component, blockKey, deleteChildren),
+    },
+  };
+}
 
 const ADD_BLOCK_TO_COMPONENT = 'ADD_BLOCK_TO_COMPONENT';
 
@@ -68,7 +115,6 @@ function handleAddBlockToComponent(
   state: EditorReduxState,
   { componentKey, block, selectedBlockKey, selectedPosition }: AddBlockToComponentPayload
 ): EditorReduxState {
-  console.log('handleAddBlockToComponent', componentKey);
   const components = getComponentsFromReduxEditorState(state);
   const component = getComponentFromComponents(componentKey, components);
   return {
@@ -396,6 +442,7 @@ function handleUpdateComponentBlocksOrder(
 }
 
 const ACTION_HANDLERS = {
+  [DELETE_BLOCK_FROM_COMPONENT]: handleDeleteBlockFromComponent,
   [ADD_BLOCK_TO_COMPONENT]: handleAddBlockToComponent,
   [UPDATE_BLOCK_PROP_CONFIG]: handleUpdateBlockPropConfig,
   [ADD_NEW_PROP_TO_BLOCK]: handleAddNewPropToBlock,

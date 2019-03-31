@@ -448,3 +448,7 @@ export function getBlockIndexInParentChildren(blockKey: string, parentBlock: Blo
 export function getBlockName(block: BlockModel): string {
   return block.name;
 }
+
+export function getBlockKey(block: BlockModel): string {
+  return block.key;
+}

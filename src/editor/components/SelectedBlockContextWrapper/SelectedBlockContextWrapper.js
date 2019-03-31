@@ -3,8 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { SelectedBlockContext } from './context';
 import type { ReduxState } from '../../../redux/store';
-import { getSelectedComponentSelectedBlock } from '../../../redux/editor/state';
 import type { BlockModel } from '../../../data/block/model';
+import { getSelectedComponentSelectedBlock } from '../../state/reselect/ui';
 
 type Props = {
   block: BlockModel,

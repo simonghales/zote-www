@@ -15,12 +15,12 @@ import { getKeyFromComponent, getRootBlockKeyFromComponent } from '../../../data
 import { setComponentSelectedBlockKeyRedux } from '../../../redux/ui/reducer';
 import { updateComponentBlocksOrderRedux } from '../../../redux/editor/reducer';
 import {
-  getReduxSafeAddingBlockSelectedKeyAndPosition,
   getReduxUiAddingBlockSelectedKey,
   getReduxUiAddingBlockSelectedPosition,
 } from '../../../redux/ui/state';
 import type { AddBlockPositions } from './components/BlockItem/components/AddButton/AddButton';
 import { blockItemClassNames } from './components/BlockItem/styles';
+import {getReduxSafeAddingBlockSelectedKeyAndPosition} from '../../../redux/shared/state';
 
 type Props = {
   addingBlock: boolean,

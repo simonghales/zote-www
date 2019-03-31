@@ -10,7 +10,6 @@ import {
 } from '../../../redux/ui/state';
 import {
   getReduxEditorComponents,
-  getSelectedComponentSelectedBlock,
 } from '../../../redux/editor/state';
 import {
   getBlockFromComponent,
@@ -39,6 +38,7 @@ import {
 } from '../EditorSection/components/EditorSectionNav/EditorSectionNav';
 import StylesFormView from './views/StylesFormView/StylesFormView';
 import DisabledFormView from './views/DisabledFormView/DisabledFormView';
+import {getSelectedComponentSelectedBlock} from '../../state/reselect/ui';
 
 export function getFormSectionVisibility(
   sectionKey: string,

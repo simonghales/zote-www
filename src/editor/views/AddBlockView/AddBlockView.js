@@ -7,7 +7,6 @@ import AddBlockFilter from './components/AddBlockFilter/AddBlockFilter';
 import BlocksList from './components/BlocksList/BlocksList';
 import type { ReduxState } from '../../../redux/store';
 import {
-  getReduxSafeAddingBlockSelectedKeyAndPosition,
   getReduxUiAddingBlockSelectedKey,
   getReduxUiAddingBlockSelectedPosition,
 } from '../../../redux/ui/state';
@@ -16,6 +15,7 @@ import { addBlockToComponentRedux } from '../../../redux/editor/reducer';
 import type { BlockModel } from '../../../data/block/model';
 import type { AddBlockPositions } from '../../components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import { getSelectedComponentKeySelector } from '../../state/reselect/component';
+import {getReduxSafeAddingBlockSelectedKeyAndPosition} from '../../../redux/shared/state';
 
 type Props = {
   componentKey: string,

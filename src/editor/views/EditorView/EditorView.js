@@ -8,21 +8,24 @@ import ModuleView from './views/ModuleView/ModuleView';
 import AddBlockView from '../AddBlockView/AddBlockView';
 import type { ReduxState } from '../../../redux/store';
 import { getReduxUiAddingBlock } from '../../../redux/ui/state';
+import SelectedComponentContextWrapper from '../../components/SelectedComponentContextWrapper/SelectedComponentContextWrapper';
 
 type Props = {
   addingBlock: boolean,
 };
 
 const EditorView = ({ addingBlock }: Props) => (
-  <div className={styles.containerClass}>
-    <div className={styles.sidebarClass}>
-      <EditorSidebar />
+  <SelectedComponentContextWrapper>
+    <div className={styles.containerClass}>
+      <div className={styles.sidebarClass}>
+        <EditorSidebar />
+      </div>
+      <div className={styles.mainClass}>
+        <ModuleView />
+        {addingBlock && <AddBlockView />}
+      </div>
     </div>
-    <div className={styles.mainClass}>
-      <ModuleView />
-      {addingBlock && <AddBlockView />}
-    </div>
-  </div>
+  </SelectedComponentContextWrapper>
 );
 
 const mapStateToProps = (state: ReduxState) => ({

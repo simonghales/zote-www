@@ -137,7 +137,7 @@ export class PropFormInput extends React.Component<PropFormInputProps, State> {
           name={name}
         >
           {dropDownVisible && (
-            <DropdownMenu layout={MENU_LAYOUTS.fixed} close={this.handleHideDropdown}>
+            <DropdownMenu layout={MENU_LAYOUTS.fixed}>
               <DropdownMenuList options={this.getDropdownMenuListOptions()} />
             </DropdownMenu>
           )}

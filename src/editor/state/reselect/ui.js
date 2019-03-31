@@ -3,7 +3,12 @@
 import { createSelector } from 'reselect';
 import { getSelectedComponentSelector } from './component';
 import type { ComponentModel } from '../../../data/component/model';
-import { getKeyFromComponent, getRootBlockKeyFromComponent } from '../../../data/component/state';
+import {
+  getBlockFromComponent,
+  getKeyFromComponent,
+  getRootBlockKeyFromComponent,
+  isBlockInComponent,
+} from '../../../data/component/state';
 import {
   getComponentSelectedBlockKey,
   getReduxUiComponentsSelectedBlockKeys,
@@ -21,9 +26,19 @@ export const getSelectedComponentSelectedBlockKey = createSelector(
       componentKey,
       componentsSelectedBlockKeys
     );
-    if (selectedBlockKey) {
+    if (selectedBlockKey && isBlockInComponent(component, selectedBlockKey)) {
       return selectedBlockKey;
     }
     return getRootBlockKeyFromComponent(component);
+  }
+);
+
+export const getSelectedComponentSelectedBlock = createSelector(
+  [getSelectedComponentSelector, getSelectedComponentSelectedBlockKey],
+  (component: ComponentModel | null, blockKey: string) => {
+    if (!component) {
+      throw new Error(`No selected component.`);
+    }
+    return getBlockFromComponent(component, blockKey);
   }
 );

@@ -7,7 +7,11 @@ import type {
 } from '../../editor/components/ComponentSortable/ComponentSortable';
 import { getBlocksFromComponent, getRootBlockKeyFromComponent } from './state';
 import type { BlockModel } from '../block/model';
-import { addBlockToBlockChildrenKeys, updateBlockPropValue } from '../block/modifiers';
+import {
+  addBlockToBlockChildrenKeys,
+  removeBlockFromBlockChildren,
+  updateBlockPropValue,
+} from '../block/modifiers';
 import { CHILDREN_PROP_CONFIG } from '../block/props/data';
 import type { AddBlockPositions } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import { ADD_BLOCK_POSITIONS } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
@@ -18,7 +22,7 @@ import {
   getBlockParentBlockKeyFromBlocks,
 } from '../block/state';
 
-export function updateBlockChildrenOrder(
+export function updateBlockChildrenKeys(
   block: BlockModel,
   blockChildrenKeys: Array<string>
 ): BlockModel {
@@ -32,7 +36,7 @@ export function updateBlockOrder(
 ): BlockModel {
   const blockChildrenKeys =
     block.isRootBlock && !blockOrder ? rootBlocksKeysOrder : blockOrder.children;
-  return updateBlockChildrenOrder(block, blockChildrenKeys);
+  return updateBlockChildrenKeys(block, blockChildrenKeys);
 }
 
 export function updateComponentBlocksOrder(
@@ -88,8 +92,43 @@ export function addBlockToComponent(
     ...component,
     blocks: {
       ...blocks,
-      [targetBlock.key]: updateBlockChildrenOrder(targetBlock, targetBlockUpdatedChildrenKeys),
+      [targetBlock.key]: updateBlockChildrenKeys(targetBlock, targetBlockUpdatedChildrenKeys),
       [block.key]: block,
+    },
+  };
+}
+
+export function removeBlockFromComponent(
+  component: ComponentModel,
+  blockToDeleteKey: string,
+  deleteChildren: boolean
+): ComponentModel {
+  const blocks = getBlocksFromComponent(component);
+  let blocksToDelete = [blockToDeleteKey];
+  if (deleteChildren) {
+    const block = getBlockFromBlocks(blockToDeleteKey, blocks);
+    if (!block) {
+      throw new Error(`Block ${blockToDeleteKey} not found within blocks`);
+    }
+    blocksToDelete = blocksToDelete.concat(getBlockChildrenKeysFromBlock(block));
+  }
+  const parentBlockKey = getBlockParentBlockKeyFromBlocks(blockToDeleteKey, blocks);
+  console.log('parentBlockKey', parentBlockKey);
+  const finalBlocks = {};
+  Object.keys(blocks).forEach(blockKey => {
+    if (!blocksToDelete.includes(blockKey)) {
+      if (blockKey === parentBlockKey) {
+        finalBlocks[blockKey] = removeBlockFromBlockChildren(blocks[blockKey], blockToDeleteKey);
+      } else {
+        finalBlocks[blockKey] = blocks[blockKey];
+      }
+    }
+  });
+  console.log('finalBlocks', finalBlocks);
+  return {
+    ...component,
+    blocks: {
+      ...finalBlocks,
     },
   };
 }
