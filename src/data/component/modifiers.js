@@ -8,6 +8,7 @@ import type {
 import { getBlocksFromComponent, getRootBlockKeyFromComponent } from './state';
 import type { BlockModel } from '../block/model';
 import {
+  addBlocksToBlockChildren,
   addBlockToBlockChildrenKeys,
   removeBlockFromBlockChildren,
   updateBlockPropValue,
@@ -105,26 +106,33 @@ export function removeBlockFromComponent(
 ): ComponentModel {
   const blocks = getBlocksFromComponent(component);
   let blocksToDelete = [blockToDeleteKey];
+  const block = getBlockFromBlocks(blockToDeleteKey, blocks);
+  const childrenBlockKeys = getBlockChildrenKeysFromBlock(block);
+  const parentBlockKey = getBlockParentBlockKeyFromBlocks(blockToDeleteKey, blocks);
+  if (!parentBlockKey) {
+    throw new Error(`No parent block key found.`);
+  }
+  let parentBlock = blocks[parentBlockKey];
+  const blockIndex = getBlockIndexInParentChildren(blockToDeleteKey, parentBlock);
+  parentBlock = removeBlockFromBlockChildren(parentBlock, blockToDeleteKey);
   if (deleteChildren) {
-    const block = getBlockFromBlocks(blockToDeleteKey, blocks);
     if (!block) {
       throw new Error(`Block ${blockToDeleteKey} not found within blocks`);
     }
-    blocksToDelete = blocksToDelete.concat(getBlockChildrenKeysFromBlock(block));
+    blocksToDelete = blocksToDelete.concat(childrenBlockKeys);
+  } else {
+    parentBlock = addBlocksToBlockChildren(parentBlock, childrenBlockKeys, blockIndex);
   }
-  const parentBlockKey = getBlockParentBlockKeyFromBlocks(blockToDeleteKey, blocks);
-  console.log('parentBlockKey', parentBlockKey);
   const finalBlocks = {};
   Object.keys(blocks).forEach(blockKey => {
     if (!blocksToDelete.includes(blockKey)) {
       if (blockKey === parentBlockKey) {
-        finalBlocks[blockKey] = removeBlockFromBlockChildren(blocks[blockKey], blockToDeleteKey);
+        finalBlocks[blockKey] = parentBlock;
       } else {
         finalBlocks[blockKey] = blocks[blockKey];
       }
     }
   });
-  console.log('finalBlocks', finalBlocks);
   return {
     ...component,
     blocks: {

@@ -111,6 +111,16 @@ export function addBlockToBlockChildrenKeys(
   return updatedKeys;
 }
 
+export function addBlockKeysToBlockChildrenKeys(
+  blockKeys: Array<string>,
+  blockChildrenKeys: Array<string>,
+  targetIndex: number
+): Array<string> {
+  const updatedKeys = blockChildrenKeys.slice();
+  updatedKeys.splice(targetIndex, 0, ...blockKeys);
+  return updatedKeys;
+}
+
 export function removeBlockFromBlockChildren(block: BlockModel, blockKey: string): BlockModel {
   const childrenKeys = getBlockChildrenKeysFromBlock(block).slice();
   const blockIndex = childrenKeys.indexOf(blockKey);
@@ -119,4 +129,16 @@ export function removeBlockFromBlockChildren(block: BlockModel, blockKey: string
   }
   childrenKeys.splice(blockIndex, 1);
   return updateBlockChildrenKeys(block, childrenKeys);
+}
+
+export function addBlocksToBlockChildren(
+  block: BlockModel,
+  blockKeys: Array<string>,
+  targetIndex: number
+): BlockModel {
+  const childrenKeys = getBlockChildrenKeysFromBlock(block).slice();
+  return updateBlockChildrenKeys(
+    block,
+    addBlockKeysToBlockChildrenKeys(childrenKeys, blockKeys, targetIndex)
+  );
 }
