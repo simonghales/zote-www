@@ -11,9 +11,11 @@ import type { ReduxState } from '../../../redux/store';
 import { getSelectedComponentSelector } from '../../state/reselect/component';
 import { mapComponentBlocksToMappedBlocks } from '../../../preview/data/block/state';
 import { getReduxStyles } from '../../../redux/styles/state';
+import { getReduxUiHoveredBlockKey } from '../../../redux/ui/state';
 
 type Props = {
   data: any,
+  hoveredBlockKey: string,
 };
 
 type State = {
@@ -104,7 +106,7 @@ class EmbeddedPreview extends Component<Props, State> {
 
   getContextState() {
     const { config } = this.state;
-    const { data } = this.props;
+    const { data, hoveredBlockKey } = this.props;
     return {
       ...config,
       setPreset: this.handleSetPreset,
@@ -113,6 +115,7 @@ class EmbeddedPreview extends Component<Props, State> {
       setZoom: this.handleSetZoom,
       setPreferredZoom: this.handleSetPreferredZoom,
       data,
+      hoveredBlockKey,
     };
   }
 
@@ -138,6 +141,7 @@ const mapStateToProps = (state: ReduxState) => {
   const mappedBlocks = mapComponentBlocksToMappedBlocks(selectedComponent, reduxStyles);
   return {
     data: mappedBlocks,
+    hoveredBlockKey: getReduxUiHoveredBlockKey(state),
   };
 };
 

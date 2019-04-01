@@ -12,7 +12,10 @@ import { getSelectedComponentSelector } from '../../state/reselect/component';
 import { mapComponentBlocksToSortableBlocks } from './state';
 import { getSelectedComponentSelectedBlockKey } from '../../state/reselect/ui';
 import { getKeyFromComponent, getRootBlockKeyFromComponent } from '../../../data/component/state';
-import { setComponentSelectedBlockKeyRedux } from '../../../redux/ui/reducer';
+import {
+  setComponentSelectedBlockKeyRedux,
+  setHoveredBlockKeyRedux,
+} from '../../../redux/ui/reducer';
 import { updateComponentBlocksOrderRedux } from '../../../redux/editor/reducer';
 import {
   getReduxUiAddingBlockSelectedKey,
@@ -20,7 +23,7 @@ import {
 } from '../../../redux/ui/state';
 import type { AddBlockPositions } from './components/BlockItem/components/AddButton/AddButton';
 import { blockItemClassNames } from './components/BlockItem/styles';
-import {getReduxSafeAddingBlockSelectedKeyAndPosition} from '../../../redux/shared/state';
+import { getReduxSafeAddingBlockSelectedKeyAndPosition } from '../../../redux/shared/state';
 
 type Props = {
   addingBlock: boolean,
@@ -36,6 +39,7 @@ type Props = {
     rootBlocksKeysOrder: Array<string>,
     componentKey: string
   ) => void,
+  clearHovered: () => void,
 };
 
 export type BlockOrder = {
@@ -81,6 +85,11 @@ class ComponentSortable extends React.Component<Props> {
     updateComponentBlocksOrder(blocksOrder, rootBlocksKeysOrder, componentKey);
   };
 
+  handleMouseLeave = () => {
+    const { clearHovered } = this.props;
+    clearHovered();
+  };
+
   render() {
     const {
       addingBlock,
@@ -95,6 +104,7 @@ class ComponentSortable extends React.Component<Props> {
         className={cx(styles.containerClass, {
           [blockItemClassNames.addingBlock]: addingBlock,
         })}
+        onMouseLeave={this.handleMouseLeave}
       >
         <BlockItem
           addingBlock={addingBlock}
@@ -151,6 +161,7 @@ const mapDispatchToProps = {
     rootBlocksKeysOrder: Array<string>,
     componentKey: string
   ) => updateComponentBlocksOrderRedux(blocksOrder, rootBlocksKeysOrder, componentKey),
+  clearHovered: () => setHoveredBlockKeyRedux(''),
 };
 
 export const ReduxComponentSortable = connect(

@@ -6,6 +6,8 @@ import type { ParsedStylesModel } from '../../../../../../parser/models';
 import { isHtmlElementVoid } from '../../../../../../utils/html';
 import type { HtmlAttributesPropValue } from '../../../../props/types/model';
 import { getReactPropsFromHtmlAttributes } from '../../../../props/types/state';
+import type { DefaultBlockProps } from '../../../props';
+import { withBlockHighlighter } from '../../../../../../preview/components/BlockHighlighterWrapper/BlockHighlighterWrapper';
 
 function renderChildren(content, children) {
   return (
@@ -16,7 +18,7 @@ function renderChildren(content, children) {
   );
 }
 
-export type HtmlElementParsedProps = {
+export type HtmlElementParsedProps = DefaultBlockProps & {
   children: any,
   element: string,
   content: Node,
@@ -40,4 +42,4 @@ class HtmlElementComponent extends PureComponent<HtmlElementParsedProps> {
   }
 }
 
-export default HtmlElementComponent;
+export default withBlockHighlighter(HtmlElementComponent);

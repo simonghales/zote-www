@@ -15,7 +15,10 @@ import type { ReduxState } from '../../../../../redux/store';
 import { getIconFromBlockType } from '../../../../../data/block/types/state';
 import AddButton, { ADD_BLOCK_POSITIONS } from './components/AddButton/AddButton';
 import type { AddBlockPositions } from './components/AddButton/AddButton';
-import { setAddingBlockSelectedRedux } from '../../../../../redux/ui/reducer';
+import {
+  setAddingBlockSelectedRedux,
+  setHoveredBlockKeyRedux,
+} from '../../../../../redux/ui/reducer';
 
 function isButtonSelected(
   blockKey: string,
@@ -40,6 +43,7 @@ type Props = {
   icon: Node,
   rootBlock?: boolean,
   addBlockSelect: (blockKey: string, position: AddBlockPositions) => void,
+  setHovered: (blockKey: string) => void,
 };
 
 class BlockItem extends React.Component<Props> {
@@ -47,6 +51,16 @@ class BlockItem extends React.Component<Props> {
     canContainChildren: false,
     children: undefined,
     rootBlock: false,
+  };
+
+  handleMouseEnter = () => {
+    const { blockKey, setHovered } = this.props;
+    setHovered(blockKey);
+  };
+
+  handleOnClick = () => {
+    const { blockKey, onSelect } = this.props;
+    onSelect(blockKey);
   };
 
   render() {
@@ -57,7 +71,6 @@ class BlockItem extends React.Component<Props> {
       name,
       selected,
       children,
-      onSelect,
       rootBlock,
       addingBlockSelectedKey,
       addingBlockSelectedPosition,
@@ -90,9 +103,8 @@ class BlockItem extends React.Component<Props> {
           className={cx(styles.clickableClass, {
             [styles.classNames.blockItemSelected]: selected,
           })}
-          onClick={() => {
-            onSelect(blockKey);
-          }}
+          onClick={this.handleOnClick}
+          onMouseEnter={this.handleMouseEnter}
         >
           <div className={styles.iconClass}>{icon}</div>
           <div className={styles.nameClass}>{name}</div>
@@ -134,6 +146,7 @@ const mapStateToProps = (state: ReduxState, { blockKey }: Props) => {
 const mapDispatchToProps = {
   addBlockSelect: (blockKey: string, position: AddBlockPositions) =>
     setAddingBlockSelectedRedux(blockKey, position),
+  setHovered: (blockKey: string) => setHoveredBlockKeyRedux(blockKey),
 };
 
 export default connect(

@@ -1,8 +1,9 @@
 // @flow
 import React, { PureComponent } from 'react';
 import type { Node } from 'react';
+import type { DefaultBlockProps } from '../../../props';
 
-export type ComponentParsedProps = {
+export type ComponentParsedProps = DefaultBlockProps & {
   children: Node,
 };
 

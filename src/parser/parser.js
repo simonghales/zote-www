@@ -60,7 +60,10 @@ export function parseMappedBlock(mappedBlock: MappedBlockModel) {
   const BlockComponent: any = getComponentFromMappedBlock(mappedBlock);
   const mappedStyles = getMappedStylesFromMappedBlock(mappedBlock);
   const parsedStyles = parseMappedStyles(mappedStyles);
-  return <BlockComponent {...props} key={mappedBlock.key} zoteStyles={parsedStyles} />;
+  const blockKey = mappedBlock.key;
+  return (
+    <BlockComponent {...props} zoteBlockKey={blockKey} key={blockKey} zoteStyles={parsedStyles} />
+  );
 }
 
 export function parseMappedBlocks(mappedBlocks: Array<MappedBlockModel>): Array<Node> {

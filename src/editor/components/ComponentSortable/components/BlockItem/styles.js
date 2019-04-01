@@ -29,7 +29,6 @@ const sliverCss = css`
 const highlightColor = colors.lightBlueDarkened;
 
 const containerClass = css`
-  cursor: pointer;
   position: relative;
 
   &::after {
@@ -47,6 +46,7 @@ const selectedClass = css`
 `;
 
 const clickableClass = css`
+  cursor: pointer;
   display: flex;
   align-items: center;
   padding: ${getRem(7)};

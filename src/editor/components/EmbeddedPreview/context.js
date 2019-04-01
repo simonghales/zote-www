@@ -22,6 +22,7 @@ export type EmbeddedPreviewConfigContextState = {
   setZoom: (zoom: number, auto?: boolean) => void,
   setPreferredZoom: (zoom: number, auto?: boolean) => void,
   data: any,
+  hoveredBlockKey: string,
 };
 
 const defaultState: EmbeddedPreviewConfigContextState = {
@@ -37,6 +38,7 @@ const defaultState: EmbeddedPreviewConfigContextState = {
   setZoom: () => {},
   setPreferredZoom: () => {},
   data: null,
+  hoveredBlockKey: '',
 };
 
 export const EmbeddedPreviewConfigContext = React.createContext(defaultState);

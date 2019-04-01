@@ -9,6 +9,8 @@ import {
 } from '../../event';
 import type { MappedBlockModel } from '../../data/block/model';
 import ModulePreview from '../../components/ModulePreview/ModulePreview';
+import { PreviewViewContext } from './context';
+import BlockHighlighter from '../../components/BlockHighlighter/BlockHighlighter';
 
 type Props = {};
 
@@ -77,9 +79,11 @@ class PreviewView extends Component<Props, State> {
       console.warn(`No detail provided`);
       return;
     }
+    const { data, hoveredBlockKey } = detail;
     // console.log('handleContentUpdateEvent', detail);
     this.setState({
-      data: detail,
+      data,
+      hoveredBlockKey,
     });
   };
 
@@ -90,7 +94,16 @@ class PreviewView extends Component<Props, State> {
   render() {
     const { data, hoveredBlockKey } = this.state;
     if (!data) return null;
-    return <ModulePreview data={data} />;
+    return (
+      <PreviewViewContext.Provider
+        value={{
+          hoveredBlockKey,
+        }}
+      >
+        <ModulePreview data={data} />
+        <BlockHighlighter hoveredBlockKey={hoveredBlockKey} />
+      </PreviewViewContext.Provider>
+    );
   }
 }
 

@@ -47,3 +47,7 @@ export function getReduxUiAddingBlockSelectedKey(state: ReduxState): string {
 export function getReduxUiAddingBlockSelectedPosition(state: ReduxState): AddBlockPositions {
   return state.ui.addingBlockSelectedPosition;
 }
+
+export function getReduxUiHoveredBlockKey(state: ReduxState): string {
+  return state.ui.hoveredBlockKey;
+}

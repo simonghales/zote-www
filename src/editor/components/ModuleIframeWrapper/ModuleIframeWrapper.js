@@ -13,6 +13,7 @@ type Props = {
   height: number,
   zoom: number,
   data: any,
+  hoveredBlockKey: string,
 };
 
 type State = {
@@ -94,9 +95,12 @@ class ModuleIframeWrapper extends Component<Props, State> {
   updateIframeData() {
     const iframe = this.getIframe();
     if (!iframe) return;
-    const { data } = this.props;
+    const { data, hoveredBlockKey } = this.props;
     const dispatchEvent = new CustomEvent(PREVIEW_CONTENT_UPDATE_EVENT, {
-      detail: data,
+      detail: {
+        data,
+        hoveredBlockKey,
+      },
     });
     iframe.contentWindow.dispatchEvent(dispatchEvent);
     if (this.previewTabReference) {

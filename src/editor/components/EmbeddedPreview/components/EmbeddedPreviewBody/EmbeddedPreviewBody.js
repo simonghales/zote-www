@@ -68,6 +68,7 @@ function doesBoxFitZoomWithinParent(
 
 type Props = {
   data: any,
+  hoveredBlockKey: string,
   desiredWidth: number,
   desiredHeight: number,
   desiredZoom: number,
@@ -205,6 +206,7 @@ class EmbeddedPreviewBodyContent extends Component<Props, State> {
       desiredHeight,
       desiredZoom,
       data,
+      hoveredBlockKey,
     } = this.props;
     const [width, height] = this.getBoxDimensions();
     const { resizing } = this.state;
@@ -227,6 +229,7 @@ class EmbeddedPreviewBodyContent extends Component<Props, State> {
               height={desiredHeight}
               zoom={desiredZoom}
               data={data}
+              hoveredBlockKey={hoveredBlockKey}
             />
           </div>
         </div>
@@ -247,6 +250,7 @@ const EmbeddedPreviewBody = () => (
       setZoom,
       lastCause,
       data,
+      hoveredBlockKey,
     }) => (
       <div className={styles.containerClass}>
         <div className={styles.availableSpaceClass}>
@@ -270,6 +274,7 @@ const EmbeddedPreviewBody = () => (
                 }}
                 lastCause={lastCause}
                 data={data}
+                hoveredBlockKey={hoveredBlockKey}
               />
             )}
           </ContainerDimensions>

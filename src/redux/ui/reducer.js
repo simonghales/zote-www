@@ -15,6 +15,7 @@ export type EditorFormSectionsVisibility = {
 };
 
 export type UIReduxState = {
+  hoveredBlockKey: string,
   addingBlock: boolean,
   addingBlockSelectedKey: string,
   addingBlockSelectedPosition: AddBlockPositions,
@@ -24,6 +25,7 @@ export type UIReduxState = {
 };
 
 export const initialUiReduxState: UIReduxState = {
+  hoveredBlockKey: '',
   addingBlock: false,
   addingBlockSelectedKey: '',
   addingBlockSelectedPosition: ADD_BLOCK_POSITIONS.inside,
@@ -34,6 +36,36 @@ export const initialUiReduxState: UIReduxState = {
   },
   ...dummyUiReduxState,
 };
+
+const SET_HOVERED_BLOCK_KEY = 'SET_HOVERED_BLOCK_KEY';
+
+type SetHoveredBlockKeyPayload = {
+  blockKey: string,
+};
+
+type SetHoveredBlockKeyAction = {
+  type: string,
+  payload: SetHoveredBlockKeyPayload,
+};
+
+export function setHoveredBlockKeyRedux(blockKey: string): SetHoveredBlockKeyAction {
+  return {
+    type: SET_HOVERED_BLOCK_KEY,
+    payload: {
+      blockKey,
+    },
+  };
+}
+
+function handleSetHoveredBlockKey(
+  state: UIReduxState,
+  { blockKey }: SetHoveredBlockKeyPayload
+): UIReduxState {
+  return {
+    ...state,
+    hoveredBlockKey: blockKey,
+  };
+}
 
 const SET_ADDING_BLOCK_SELECTED = 'SET_ADDING_BLOCK_SELECTED';
 
@@ -178,6 +210,7 @@ function handleSetEditorFormSectionVisibility(
 }
 
 const ACTION_HANDLERS = {
+  [SET_HOVERED_BLOCK_KEY]: handleSetHoveredBlockKey,
   [SET_ADDING_BLOCK_SELECTED]: handleSetAddingBlockSelected,
   [SET_ADDING_BLOCK]: handleSetAddingBlock,
   [SET_COMPONENT_SELECTED_BLOCK_KEY]: handleSetComponentSelectedBlockKey,

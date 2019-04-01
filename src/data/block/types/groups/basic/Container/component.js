@@ -3,8 +3,10 @@ import type { Node } from 'react';
 import React, { PureComponent } from 'react';
 import { css } from 'emotion';
 import type { ParsedStylesModel } from '../../../../../../parser/models';
+import { withBlockHighlighter } from '../../../../../../preview/components/BlockHighlighterWrapper/BlockHighlighterWrapper';
+import type { DefaultBlockProps } from '../../../props';
 
-export type ContainerParsedProps = {
+export type ContainerParsedProps = DefaultBlockProps & {
   element: string,
   children: Node,
   zoteStyles: ParsedStylesModel,
@@ -24,4 +26,4 @@ class ContainerComponent extends PureComponent<ContainerParsedProps> {
   }
 }
 
-export default ContainerComponent;
+export default withBlockHighlighter(ContainerComponent);
