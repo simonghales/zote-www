@@ -13,36 +13,54 @@ import { getKeyFromComponent } from '../../../../../../../data/component/state';
 import { deleteBlockFromComponentRedux } from '../../../../../../../redux/editor/reducer';
 
 type Props = {
+  editName: () => void,
+  setTooltipVisible: (visible: boolean) => void,
   deleteBlock: (componentKey: string, blockKey: string, deleteChildren: boolean) => void,
 };
 
-const BlockEditOptions = ({ deleteBlock }: Props) => {
+const BlockEditOptions = ({ deleteBlock, editName, setTooltipVisible }: Props) => {
   const block: BlockModel = useGetSelectedBlock();
   const blockKey = getBlockKey(block);
   const component: ComponentModel = useGetSelectedComponent();
   const componentKey = getKeyFromComponent(component);
   const deleteHandler = () => {
     deleteBlock(componentKey, blockKey, false);
+    setTooltipVisible(false);
     // todo - clean up styles
   };
   const deleteHandlerWithChildren = () => {
     deleteBlock(componentKey, blockKey, true);
+    setTooltipVisible(false);
     // todo - clean up styles
   };
+  const renameHandler = () => {
+    editName();
+    setTooltipVisible(false);
+  };
+
+  let options = [
+    {
+      label: 'Rename',
+      onClick: renameHandler,
+    },
+  ];
+
+  if (!block.isRootBlock) {
+    options = options.concat([
+      {
+        label: 'Delete',
+        onClick: deleteHandler,
+      },
+      {
+        label: 'Delete (with children)',
+        onClick: deleteHandlerWithChildren,
+      },
+    ]);
+  }
+
   return (
     <DropdownMenu layout={MENU_LAYOUTS.fixed}>
-      <DropdownMenuList
-        options={[
-          {
-            label: 'Delete',
-            onClick: deleteHandler,
-          },
-          {
-            label: 'Delete (with children)',
-            onClick: deleteHandlerWithChildren,
-          },
-        ]}
-      />
+      <DropdownMenuList options={options} />
     </DropdownMenu>
   );
 };

@@ -58,6 +58,11 @@ class BlockItem extends React.Component<Props> {
     setHovered(blockKey);
   };
 
+  handleMouseLeave = () => {
+    const { setHovered } = this.props;
+    setHovered('');
+  };
+
   handleOnClick = () => {
     const { blockKey, onSelect } = this.props;
     onSelect(blockKey);
@@ -105,6 +110,7 @@ class BlockItem extends React.Component<Props> {
           })}
           onClick={this.handleOnClick}
           onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
         >
           <div className={styles.iconClass}>{icon}</div>
           <div className={styles.nameClass}>{name}</div>
