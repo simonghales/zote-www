@@ -142,3 +142,10 @@ export function addBlocksToBlockChildren(
     addBlockKeysToBlockChildrenKeys(childrenKeys, blockKeys, targetIndex)
   );
 }
+
+export function updateBlockName(block: BlockModel, name: string): BlockModel {
+  return {
+    ...block,
+    name,
+  };
+}

@@ -12,6 +12,7 @@ import {
 } from '../../data/component/modifiers';
 import {
   addNewPropToBlock,
+  updateBlockName,
   updateBlockPropConfig,
   updateBlockPropLinked,
   updateBlockPropRemoveLink,
@@ -36,6 +37,56 @@ export type GenericAction = {
   type: string,
   payload: {},
 };
+
+const SET_BLOCK_NAME = 'SET_BLOCK_NAME';
+
+type SetBlockNamePayload = {
+  componentKey: string,
+  blockKey: string,
+  name: string,
+};
+
+type SetBlockNameAction = {
+  type: string,
+  payload: SetBlockNamePayload,
+};
+
+export function setBlockNameRedux(
+  componentKey: string,
+  blockKey: string,
+  name: string
+): SetBlockNameAction {
+  return {
+    type: SET_BLOCK_NAME,
+    payload: {
+      componentKey,
+      blockKey,
+      name,
+    },
+  };
+}
+
+function handleSetBlockName(
+  state: EditorReduxState,
+  { componentKey, blockKey, name }: SetBlockNamePayload
+): EditorReduxState {
+  const components = getComponentsFromReduxEditorState(state);
+  const component = getComponentFromComponents(componentKey, components);
+  const block = getBlockFromComponent(component, blockKey);
+  return {
+    ...state,
+    components: {
+      ...components,
+      [componentKey]: {
+        ...component,
+        blocks: {
+          ...component.blocks,
+          [blockKey]: updateBlockName(block, name),
+        },
+      },
+    },
+  };
+}
 
 const DELETE_BLOCK_FROM_COMPONENT = 'DELETE_BLOCK_FROM_COMPONENT';
 
@@ -442,6 +493,7 @@ function handleUpdateComponentBlocksOrder(
 }
 
 const ACTION_HANDLERS = {
+  [SET_BLOCK_NAME]: handleSetBlockName,
   [DELETE_BLOCK_FROM_COMPONENT]: handleDeleteBlockFromComponent,
   [ADD_BLOCK_TO_COMPONENT]: handleAddBlockToComponent,
   [UPDATE_BLOCK_PROP_CONFIG]: handleUpdateBlockPropConfig,

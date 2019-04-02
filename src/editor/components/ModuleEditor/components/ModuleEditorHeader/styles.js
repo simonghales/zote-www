@@ -9,6 +9,7 @@ import {
 } from '../../../../../styles/shared/misc';
 import { getRem } from '../../../../../styles/utils/measurements';
 import spacing from '../../../../../styles/config/spacing';
+import { inputResetCss } from '../../../../../styles/input';
 
 const padding = getRem(spacing.medium);
 
@@ -21,6 +22,13 @@ export const headerClass = css`
 
 export const headerTextClass = css`
   ${selectHeaderTextCss};
+
+  input {
+    ${inputResetCss};
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
 `;
 
 export const headerIconClass = css`
