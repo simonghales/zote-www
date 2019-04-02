@@ -30,6 +30,10 @@ const ModuleEditorHeader = ({ renameBlock }: Props) => {
     setLocalName(value);
   };
 
+  const handleFocus = () => {
+    setLocalName(name);
+  };
+
   const handleBlur = () => {
     setEditingName(false);
     if (localName) {
@@ -46,7 +50,6 @@ const ModuleEditorHeader = ({ renameBlock }: Props) => {
   };
 
   const editName = () => {
-    setLocalName(name);
     setEditingName(true);
     if (textInput) {
       textInput.focus();
@@ -70,6 +73,7 @@ const ModuleEditorHeader = ({ renameBlock }: Props) => {
             value={editingName ? localName : name}
             inputRef={setTextInput}
             onChange={handleNameChange}
+            onFocus={handleFocus}
             onBlur={handleBlur}
             onKeyPress={handleKeyPress}
             readOnly={!editingName}
