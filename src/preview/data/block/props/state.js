@@ -83,7 +83,7 @@ export function parsePropValue(
   switch (propType) {
     case BLOCK_PROPS_CONFIG_TYPES.blocks:
       return parseMappedBlockPropBlocksValue(propValue, blocks, styles, parsedProps, components);
-    case BLOCK_PROPS_CONFIG_TYPES.componentImport:
+    case BLOCK_PROPS_CONFIG_TYPES.componentReference:
       return parseMappedBlockPropComponentImportValue(propValue, styles, components);
     default:
       return propValue;

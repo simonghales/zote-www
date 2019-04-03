@@ -15,6 +15,7 @@ import { BLOCK_PROPS_CONFIG_TYPES } from '../data/block/props/model';
 export function parseMappedBlockProp(prop: MappedBlockPropModel): any {
   switch (prop.type) {
     case BLOCK_PROPS_CONFIG_TYPES.blocks:
+    case BLOCK_PROPS_CONFIG_TYPES.componentReference:
       if (prop.value) {
         // eslint-disable-next-line
         return parseMappedBlocks(prop.value);

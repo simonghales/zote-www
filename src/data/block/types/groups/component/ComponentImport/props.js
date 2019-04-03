@@ -8,7 +8,7 @@ export const componentImportPropsConfig: BlockPropsConfigModel = {
     key: 'componentReference',
     label: '',
     hidden: true,
-    type: BLOCK_PROPS_CONFIG_TYPES.componentImport,
+    type: BLOCK_PROPS_CONFIG_TYPES.componentReference,
     defaultValue: '',
   },
 };
