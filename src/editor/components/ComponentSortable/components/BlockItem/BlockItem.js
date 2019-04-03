@@ -7,6 +7,7 @@ import styles from './styles';
 import { getSelectedComponentSelector } from '../../../../state/reselect/component';
 import { getBlocksFromComponent } from '../../../../../data/component/state';
 import {
+  getBlockComponentImportKey,
   getBlockFromBlocks,
   getBlockTypeFromBlock,
   getNameFromBlock,
@@ -19,6 +20,7 @@ import {
   setAddingBlockSelectedRedux,
   setHoveredBlockKeyRedux,
 } from '../../../../../redux/ui/reducer';
+import OpenComponentButton from './components/OpenComponentButton/OpenComponentButton';
 
 function isButtonSelected(
   blockKey: string,
@@ -38,6 +40,7 @@ type Props = {
   name: string,
   selected: boolean,
   canContainChildren?: boolean,
+  componentKey?: string,
   children?: Node,
   onSelect: (blockKey: string) => void,
   icon: Node,
@@ -51,6 +54,7 @@ class BlockItem extends React.Component<Props> {
     canContainChildren: false,
     children: undefined,
     rootBlock: false,
+    componentKey: '',
   };
 
   handleMouseEnter = () => {
@@ -80,6 +84,7 @@ class BlockItem extends React.Component<Props> {
       addingBlockSelectedKey,
       addingBlockSelectedPosition,
       addBlockSelect,
+      componentKey,
     } = this.props;
     return (
       <div
@@ -114,6 +119,7 @@ class BlockItem extends React.Component<Props> {
         >
           <div className={styles.iconClass}>{icon}</div>
           <div className={styles.nameClass}>{name}</div>
+          {componentKey && <OpenComponentButton componentKey={componentKey} />}
           {canContainChildren && (
             <div className={cx(styles.addBlockIconClass, styles.addBlockInsideClass)}>
               <AddButton
@@ -143,9 +149,11 @@ const mapStateToProps = (state: ReduxState, { blockKey }: Props) => {
   const block = getBlockFromBlocks(blockKey, blocks);
   const blockType = getBlockTypeFromBlock(block);
   const icon = getIconFromBlockType(blockType);
+  const blockComponentImportKey = getBlockComponentImportKey(block);
   return {
     icon,
     name: getNameFromBlock(block),
+    componentKey: blockComponentImportKey,
   };
 };
 

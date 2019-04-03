@@ -37,6 +37,36 @@ export const initialUiReduxState: UIReduxState = {
   ...dummyUiReduxState,
 };
 
+const SET_SELECTED_COMPONENT_KEY = 'SET_SELECTED_COMPONENT_KEY';
+
+type SetSelectedComponentKeyPayload = {
+  componentKey: string,
+};
+
+type SetSelectedComponentKeyAction = {
+  type: string,
+  payload: SetSelectedComponentKeyPayload,
+};
+
+export function setSelectedComponentKeyRedux(componentKey: string): SetSelectedComponentKeyAction {
+  return {
+    type: SET_SELECTED_COMPONENT_KEY,
+    payload: {
+      componentKey,
+    },
+  };
+}
+
+function handleSetSelectedComponentKey(
+  state: UIReduxState,
+  { componentKey }: SetSelectedComponentKeyPayload
+): UIReduxState {
+  return {
+    ...state,
+    selectedComponentKey: componentKey,
+  };
+}
+
 const SET_HOVERED_BLOCK_KEY = 'SET_HOVERED_BLOCK_KEY';
 
 type SetHoveredBlockKeyPayload = {
@@ -215,6 +245,7 @@ const ACTION_HANDLERS = {
   [SET_ADDING_BLOCK]: handleSetAddingBlock,
   [SET_COMPONENT_SELECTED_BLOCK_KEY]: handleSetComponentSelectedBlockKey,
   [SET_EDITOR_FORM_SECTION_VISIBILITY]: handleSetEditorFormSectionVisibility,
+  [SET_SELECTED_COMPONENT_KEY]: handleSetSelectedComponentKey,
 };
 
 export default function uiReducer(

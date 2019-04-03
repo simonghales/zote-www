@@ -112,6 +112,10 @@ const nameClass = css`
   font-size: 11px;
   position: relative;
   top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
 `;
 
 const addBlockBeforeClass = css`
