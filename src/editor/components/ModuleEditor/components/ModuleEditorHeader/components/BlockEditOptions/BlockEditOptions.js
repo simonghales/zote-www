@@ -37,6 +37,7 @@ const BlockEditOptions = ({ deleteBlock, editName, setTooltipVisible }: Props) =
     editName();
     setTooltipVisible(false);
   };
+  const convertIntoComponentHandler = () => {};
 
   let options = [
     {
@@ -47,6 +48,10 @@ const BlockEditOptions = ({ deleteBlock, editName, setTooltipVisible }: Props) =
 
   if (!block.isRootBlock) {
     options = options.concat([
+      {
+        label: 'Convert into Component',
+        onClick: convertIntoComponentHandler,
+      },
       {
         label: 'Delete',
         onClick: deleteHandler,

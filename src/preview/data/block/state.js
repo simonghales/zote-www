@@ -5,7 +5,7 @@ import type {
   MappedBlockParsedPropsModel,
   MappedBlockStylesModel,
 } from './model';
-import type { ComponentModel } from '../../../data/component/model';
+import type { ComponentModel, ComponentsModels } from '../../../data/component/model';
 import type { BlockModel, BlocksModel } from '../../../data/block/model';
 import {
   getBlocksFromComponent,
@@ -39,13 +39,14 @@ export function mapBlockToMappedBlock(
   block: BlockModel,
   blocks: BlocksModel,
   styles: StylesModels,
-  parsedProps: MappedBlockParsedPropsModel
+  parsedProps: MappedBlockParsedPropsModel,
+  components: ComponentsModels
 ): MappedBlockModel {
   const styleKey = getStyleKeyFromBlock(block);
   return {
     key: block.key,
     blockTypeKey: block.blockTypeKey,
-    props: parseMappedBlockPropsValues(block, blocks, styles, parsedProps),
+    props: parseMappedBlockPropsValues(block, blocks, styles, parsedProps, components),
     styles: getMappedBlockStyles(styleKey, styles),
   };
 }
@@ -54,19 +55,21 @@ export function mapBlocksToMappedBlocks(
   blocks: BlocksModel,
   blockKeys: Array<string>,
   styles: StylesModels,
-  parsedProps: MappedBlockParsedPropsModel
+  parsedProps: MappedBlockParsedPropsModel,
+  components: ComponentsModels
 ): Array<MappedBlockModel> {
   return blockKeys.map(blockKey => {
     const block = getBlockFromBlocks(blockKey, blocks);
-    return mapBlockToMappedBlock(block, blocks, styles, parsedProps);
+    return mapBlockToMappedBlock(block, blocks, styles, parsedProps, components);
   });
 }
 
 export function mapComponentBlocksToMappedBlocks(
   component: ComponentModel,
-  styles: StylesModels
+  styles: StylesModels,
+  components: ComponentsModels
 ): Array<MappedBlockModel> {
   const blocks = getBlocksFromComponent(component);
   const rootBlockKey = getRootBlockKeyFromComponent(component);
-  return mapBlocksToMappedBlocks(blocks, [rootBlockKey], styles, {});
+  return mapBlocksToMappedBlocks(blocks, [rootBlockKey], styles, {}, components);
 }

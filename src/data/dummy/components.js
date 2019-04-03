@@ -7,6 +7,7 @@ import { STYLE_STATES } from '../styles/model';
 import ContainerBlock from '../block/types/groups/basic/Container';
 import { getBlockStyleKeyFormat } from '../block/state';
 import ComponentBlock from '../block/types/groups/component/Component';
+import ComponentImportBlock from '../block/types/groups/component/ComponentImport';
 import HeadingBlock from '../block/types/groups/basic/Heading';
 import TextBlock from '../block/types/groups/basic/Text';
 import HtmlElementBlock from '../block/types/groups/html/Element';
@@ -112,6 +113,18 @@ export const DUMMY_CONTAINER_BLOCK: BlockModel = {
   },
 };
 
+const DUMMY_COMPONENT_IMPORT_BLOCK: BlockModel = {
+  key: 'DUMMY_COMPONENT_IMPORT_BLOCK',
+  blockTypeKey: ComponentImportBlock.key,
+  name: 'Testing Import',
+  props: {
+    componentReference: {
+      key: 'componentReference',
+      value: 'DUMMY_SECOND_COMPONENT',
+    },
+  },
+};
+
 export const DUMMY_BLOCK: BlockModel = {
   key: 'DUMMY_BLOCK',
   blockTypeKey: ComponentBlock.key,
@@ -119,7 +132,7 @@ export const DUMMY_BLOCK: BlockModel = {
   props: {
     children: {
       key: 'children',
-      value: [DUMMY_CONTAINER_BLOCK.key],
+      value: [DUMMY_CONTAINER_BLOCK.key, DUMMY_COMPONENT_IMPORT_BLOCK.key],
     },
     test: {
       key: 'test',
@@ -149,6 +162,40 @@ export const DUMMY_TEST_COMPONENT: ComponentModel = {
     [DUMMY_HEADING_BLOCK.key]: DUMMY_HEADING_BLOCK,
     [DUMMY_CONTAINER_BLOCK.key]: DUMMY_CONTAINER_BLOCK,
     [DUMMY_HTML_ELEMENT_BLOCK.key]: DUMMY_HTML_ELEMENT_BLOCK,
+    [DUMMY_COMPONENT_IMPORT_BLOCK.key]: DUMMY_COMPONENT_IMPORT_BLOCK,
   },
   rootBlockKey: DUMMY_BLOCK.key,
+};
+
+const DUMMY_SECOND_COMPONENT_HEADING: BlockModel = {
+  key: 'DUMMY_SECOND_COMPONENT_HEADING',
+  blockTypeKey: HeadingBlock.key,
+  name: 'Dummy Heading Block',
+  props: {
+    text: {
+      key: 'text',
+      value: `G'day there`,
+    },
+  },
+};
+
+const DUMMY_SECOND_COMPONENT_BLOCK: BlockModel = {
+  key: 'DUMMY_SECOND_COMPONENT_BLOCK',
+  blockTypeKey: ComponentBlock.key,
+  name: 'Second Component',
+  props: {
+    children: {
+      key: 'children',
+      value: [DUMMY_SECOND_COMPONENT_HEADING.key],
+    },
+  },
+};
+
+export const DUMMY_SECOND_COMPONENT: ComponentModel = {
+  key: 'DUMMY_SECOND_COMPONENT',
+  blocks: {
+    [DUMMY_SECOND_COMPONENT_HEADING.key]: DUMMY_SECOND_COMPONENT_HEADING,
+    [DUMMY_SECOND_COMPONENT_BLOCK.key]: DUMMY_SECOND_COMPONENT_BLOCK,
+  },
+  rootBlockKey: DUMMY_SECOND_COMPONENT_BLOCK.key,
 };

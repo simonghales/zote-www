@@ -7,6 +7,7 @@ import { getComponentsFromReduxEditorState } from './state';
 import { getBlockFromComponent, getComponentFromComponents } from '../../data/component/state';
 import {
   addBlockToComponent,
+  createNewComponentFromComponentBlock,
   removeBlockFromComponent,
   updateComponentBlocksOrder,
 } from '../../data/component/modifiers';
@@ -37,6 +38,51 @@ export type GenericAction = {
   type: string,
   payload: {},
 };
+
+const CONVERT_BLOCK_INTO_COMPONENT = 'CONVERT_BLOCK_INTO_COMPONENT';
+
+type ConvertBlockIntoComponentPayload = {
+  componentKey: string,
+  blockKey: string,
+};
+
+type ConvertBlockIntoComponentAction = {
+  type: string,
+  payload: ConvertBlockIntoComponentPayload,
+};
+
+export function convertBlockIntoComponentRedux(
+  componentKey: string,
+  blockKey: string
+): ConvertBlockIntoComponentAction {
+  return {
+    type: CONVERT_BLOCK_INTO_COMPONENT,
+    payload: {
+      componentKey,
+      blockKey,
+    },
+  };
+}
+
+function handleConvertBlockIntoComponent(
+  state: EditorReduxState,
+  { componentKey, blockKey }: ConvertBlockIntoComponentPayload
+): EditorReduxState {
+  const components = getComponentsFromReduxEditorState(state);
+  const component = getComponentFromComponents(componentKey, components);
+  const newComponent = createNewComponentFromComponentBlock(component, blockKey);
+  const newComponentBlock = null; // todo
+  const updatedComponent = removeBlockFromComponent(component, blockKey, true);
+  // todo - add newComponentBlock to updatedComponent
+  return {
+    ...state,
+    components: {
+      ...components,
+      [componentKey]: updatedComponent,
+      [newComponent.key]: newComponent,
+    },
+  };
+}
 
 const SET_BLOCK_NAME = 'SET_BLOCK_NAME';
 
@@ -493,6 +539,7 @@ function handleUpdateComponentBlocksOrder(
 }
 
 const ACTION_HANDLERS = {
+  [CONVERT_BLOCK_INTO_COMPONENT]: handleConvertBlockIntoComponent,
   [SET_BLOCK_NAME]: handleSetBlockName,
   [DELETE_BLOCK_FROM_COMPONENT]: handleDeleteBlockFromComponent,
   [ADD_BLOCK_TO_COMPONENT]: handleAddBlockToComponent,

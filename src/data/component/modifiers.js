@@ -6,7 +6,7 @@ import type {
   BlocksOrder,
 } from '../../editor/components/ComponentSortable/ComponentSortable';
 import { getBlocksFromComponent, getRootBlockKeyFromComponent } from './state';
-import type { BlockModel } from '../block/model';
+import type { BlockModel, BlocksModel } from '../block/model';
 import {
   addBlocksToBlockChildren,
   addBlockToBlockChildrenKeys,
@@ -22,6 +22,8 @@ import {
   getBlockIndexInParentChildren,
   getBlockParentBlockKeyFromBlocks,
 } from '../block/state';
+import ComponentBlock from '../block/types/groups/component/Component';
+import { generateComponentKey } from '../block/keys';
 
 export function updateBlockChildrenKeys(
   block: BlockModel,
@@ -139,4 +141,39 @@ export function removeBlockFromComponent(
       ...finalBlocks,
     },
   };
+}
+
+export function createNewComponent(
+  initialBlocks: BlocksModel,
+  rootBlockChildrenKeys: Array<string>
+): ComponentModel {
+  let rootBlock = ComponentBlock.generate();
+  if (rootBlockChildrenKeys && rootBlockChildrenKeys.length > 0) {
+    rootBlock = addBlocksToBlockChildren(rootBlock, rootBlockChildrenKeys, 0);
+  }
+  return {
+    key: generateComponentKey(),
+    blocks: {
+      ...initialBlocks,
+      [rootBlock.key]: rootBlock,
+    },
+    rootBlockKey: rootBlock.key,
+  };
+}
+
+export function createNewComponentFromComponentBlock(
+  originalComponent: ComponentModel,
+  blockKey: string
+): ComponentModel {
+  const originalBlocks = getBlocksFromComponent(originalComponent);
+  const block = originalBlocks[blockKey];
+  const blocksToAdd = {
+    [blockKey]: block,
+  };
+  const blockChildrenKeys = getBlockChildrenKeysFromBlock(block);
+  blockChildrenKeys.forEach(blockChildKey => {
+    blocksToAdd[blockChildKey] = originalBlocks[blockChildKey];
+  });
+  const component = createNewComponent(blocksToAdd, [blockKey]);
+  return component;
 }

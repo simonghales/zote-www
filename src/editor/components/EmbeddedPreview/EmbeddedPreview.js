@@ -12,6 +12,7 @@ import { getSelectedComponentSelector } from '../../state/reselect/component';
 import { mapComponentBlocksToMappedBlocks } from '../../../preview/data/block/state';
 import { getReduxStyles } from '../../../redux/styles/state';
 import { getReduxUiHoveredBlockKey } from '../../../redux/ui/state';
+import { getComponentsFromReduxEditorState } from '../../../redux/editor/state';
 
 type Props = {
   data: any,
@@ -137,8 +138,9 @@ export default EmbeddedPreview;
 
 const mapStateToProps = (state: ReduxState) => {
   const selectedComponent = getSelectedComponentSelector(state);
+  const components = getComponentsFromReduxEditorState(state.editor);
   const reduxStyles = getReduxStyles(state);
-  const mappedBlocks = mapComponentBlocksToMappedBlocks(selectedComponent, reduxStyles);
+  const mappedBlocks = mapComponentBlocksToMappedBlocks(selectedComponent, reduxStyles, components);
   return {
     data: mappedBlocks,
     hoveredBlockKey: getReduxUiHoveredBlockKey(state),

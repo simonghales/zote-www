@@ -26,6 +26,7 @@ export const BLOCK_PROPS_CONFIG_TYPES = {
   htmlAttributes: 'htmlAttributes',
   propReference: 'propReference',
   repeaterData: 'repeaterData',
+  componentImport: 'componentImport',
 };
 
 export const DEFAULT_PROP_CONFIG_TYPE = BLOCK_PROPS_CONFIG_TYPES.string;
