@@ -5,6 +5,13 @@ import type { GenericAction } from '../editor/reducer';
 import { customFormSection } from '../../editor/components/EditorComponentForm/data/styles';
 import type { AddBlockPositions } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import { ADD_BLOCK_POSITIONS } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
+import { getSelectedComponentKeySelector } from '../../editor/state/reselect/component';
+import {
+  getReduxSelectedComponentKey,
+  getReduxPreviousComponentKey,
+  getReduxUiSelectedComponentKey,
+  getReduxUiPreviousComponentKey,
+} from './state';
 
 export type ComponentsSelectedBlockKeys = {
   [string]: string,
@@ -36,7 +43,6 @@ export const initialUiReduxState: UIReduxState = {
   editorFormSectionsVisibility: {
     [customFormSection.key]: false,
   },
-  ...dummyUiReduxState,
 };
 
 const SET_SELECTED_COMPONENT_KEY = 'SET_SELECTED_COMPONENT_KEY';
@@ -68,10 +74,38 @@ function handleSetSelectedComponentKey(
   state: UIReduxState,
   { componentKey, previousComponentKey = '' }: SetSelectedComponentKeyPayload
 ): UIReduxState {
+  console.log('handleSetSelectedComponentKey');
+  // const currentSelectedModuleKey = getSelectedModuleKeyFromUIState(state);
+  // const currentPreviousModuleKey =
+  //   state.selectedModulesHistory.length > 0
+  //     ? state.selectedModulesHistory[state.selectedModulesHistory.length - 1]
+  //     : '';
+  // let updatedSelectedModulesHistory = state.selectedModulesHistory.slice();
+  // if (moduleKey === currentPreviousModuleKey) {
+  //   updatedSelectedModulesHistory.pop();
+  // } else if (previousModuleKey) {
+  //   updatedSelectedModulesHistory = updatedSelectedModulesHistory.concat([
+  //     currentSelectedModuleKey,
+  //   ]);
+  // }
+
+  console.log('componentKey', componentKey);
+
+  const currentSelectedComponentKey = getReduxUiSelectedComponentKey(state);
+  const currentPreviousComponentKey = getReduxUiPreviousComponentKey(state);
   const { selectedComponentKeyHistory } = state;
-  const updatedComponentKeyHistory = selectedComponentKeyHistory.slice();
-  if (previousComponentKey) {
-    updatedComponentKeyHistory.push(previousComponentKey);
+  let updatedComponentKeyHistory = selectedComponentKeyHistory.slice();
+
+  console.log('currentPreviousComponentKey', currentPreviousComponentKey);
+  console.log('currentSelectedComponentKey', currentSelectedComponentKey);
+
+  if (componentKey === currentPreviousComponentKey) {
+    updatedComponentKeyHistory.pop();
+  } else if (previousComponentKey) {
+    const update = currentSelectedComponentKey
+      ? [currentSelectedComponentKey]
+      : [previousComponentKey];
+    updatedComponentKeyHistory = updatedComponentKeyHistory.concat(update);
   }
   return {
     ...state,

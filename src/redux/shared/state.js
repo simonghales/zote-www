@@ -17,7 +17,7 @@ import { doesBlockAllowChildBlocks } from '../../data/block/state';
 import {
   getReduxUiAddingBlockSelectedKey,
   getReduxUiAddingBlockSelectedPosition,
-  getReduxUiPreviousComponentKey,
+  getReduxPreviousComponentKey,
 } from '../ui/state';
 import type { ComponentModel } from '../../data/component/model';
 
@@ -40,10 +40,15 @@ export function getReduxSafeAddingBlockSelectedKeyAndPosition(
 }
 
 export function getReduxPreviousComponent(state: ReduxState): ComponentModel | null {
-  const previousComponentKey = getReduxUiPreviousComponentKey(state);
+  const previousComponentKey = getReduxPreviousComponentKey(state);
+  console.log('previousComponentKey', previousComponentKey);
   if (previousComponentKey) {
     return getComponentFromReduxEditorState(state.editor, previousComponentKey);
   }
+  return null;
+}
+
+export function getReduxParentComponent(state: ReduxState): ComponentModel | null {
   const currentComponentKey = getSelectedComponentKeySelector(state);
   const components = getComponentsFromReduxEditorState(state.editor);
   const parentComponents = getComponentParentComponents(components, currentComponentKey);

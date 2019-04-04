@@ -8,8 +8,12 @@ import type {
 } from './reducer';
 import type { AddBlockPositions } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 
-export function getReduxUiSelectedComponentKey(state: ReduxState): string {
-  return state.ui.selectedComponentKey;
+export function getReduxUiSelectedComponentKey(state: UIReduxState): string {
+  return state.selectedComponentKey;
+}
+
+export function getReduxSelectedComponentKey(state: ReduxState): string {
+  return getReduxUiSelectedComponentKey(state.ui);
 }
 
 export function getReduxUiComponentsSelectedBlockKeys(
@@ -52,10 +56,14 @@ export function getReduxUiHoveredBlockKey(state: ReduxState): string {
   return state.ui.hoveredBlockKey;
 }
 
-export function getReduxUiPreviousComponentKey(state: ReduxState): string {
-  const { selectedComponentKeyHistory } = state.ui;
+export function getReduxUiPreviousComponentKey(state: UIReduxState): string {
+  const { selectedComponentKeyHistory } = state;
   if (selectedComponentKeyHistory.length > 0) {
     return selectedComponentKeyHistory[0];
   }
   return '';
+}
+
+export function getReduxPreviousComponentKey(state: ReduxState): string {
+  return getReduxUiPreviousComponentKey(state.ui);
 }

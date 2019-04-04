@@ -27,9 +27,9 @@ class EditorRouteHandler extends React.Component<Props> {
     );
     if (componentKey) {
       const { setSelectedComponent } = this.props;
+      console.log('setModule');
       setSelectedComponent(componentKey, previousComponentKey);
       // setInitialHistory(moduleKey, previousModuleKey);
-      console.log('setModule');
     }
   }
 
