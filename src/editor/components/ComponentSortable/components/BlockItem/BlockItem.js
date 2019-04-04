@@ -9,6 +9,7 @@ import { getBlocksFromComponent } from '../../../../../data/component/state';
 import {
   getBlockComponentImportKey,
   getBlockFromBlocks,
+  getBlockNameWithComponents,
   getBlockTypeFromBlock,
   getNameFromBlock,
 } from '../../../../../data/block/state';
@@ -21,6 +22,7 @@ import {
   setHoveredBlockKeyRedux,
 } from '../../../../../redux/ui/reducer';
 import OpenComponentButton from './components/OpenComponentButton/OpenComponentButton';
+import { getComponentsFromReduxEditorState } from '../../../../../redux/editor/state';
 
 function isButtonSelected(
   blockKey: string,
@@ -144,6 +146,7 @@ class BlockItem extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: ReduxState, { blockKey }: Props) => {
+  const components = getComponentsFromReduxEditorState(state.editor);
   const selectedComponent = getSelectedComponentSelector(state);
   const blocks = getBlocksFromComponent(selectedComponent);
   const block = getBlockFromBlocks(blockKey, blocks);
@@ -152,7 +155,7 @@ const mapStateToProps = (state: ReduxState, { blockKey }: Props) => {
   const blockComponentImportKey = getBlockComponentImportKey(block);
   return {
     icon,
-    name: getNameFromBlock(block),
+    name: getBlockNameWithComponents(block, components),
     componentKey: blockComponentImportKey,
   };
 };

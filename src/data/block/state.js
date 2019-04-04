@@ -27,6 +27,8 @@ import {
 import { isValueDefined } from '../../utils/validation';
 import { isHtmlElementVoid } from '../../utils/html';
 import ComponentImport from './types/groups/component/ComponentImport';
+import type { ComponentsModels } from '../component/model';
+import { getComponentFromComponents, getComponentName } from '../component/state';
 
 export function getBlockStyleKeyFormat(blockKey: string): string {
   return `block::${blockKey}`;
@@ -459,4 +461,16 @@ export function getBlockComponentImportKey(block: BlockModel): string {
     return '';
   }
   return getPropValueFromBlock(ComponentImport.propsConfig.componentReference.key, block);
+}
+
+export function getBlockNameWithComponents(
+  block: BlockModel,
+  components: ComponentsModels
+): string {
+  const componentImportKey = getBlockComponentImportKey(block);
+  if (componentImportKey) {
+    const component = getComponentFromComponents(componentImportKey, components);
+    return getComponentName(component);
+  }
+  return getBlockName(block);
 }
