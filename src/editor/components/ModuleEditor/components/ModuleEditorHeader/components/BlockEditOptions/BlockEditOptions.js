@@ -10,15 +10,24 @@ import { getBlockKey } from '../../../../../../../data/block/state';
 import type { ComponentModel } from '../../../../../../../data/component/model';
 import { useGetSelectedComponent } from '../../../../../SelectedComponentContextWrapper/context';
 import { getKeyFromComponent } from '../../../../../../../data/component/state';
-import { deleteBlockFromComponentRedux } from '../../../../../../../redux/editor/reducer';
+import {
+  convertBlockIntoComponentRedux,
+  deleteBlockFromComponentRedux,
+} from '../../../../../../../redux/editor/reducer';
 
 type Props = {
   editName: () => void,
   setTooltipVisible: (visible: boolean) => void,
+  convertIntoComponent: (componentKey: string, blockKey: string) => void,
   deleteBlock: (componentKey: string, blockKey: string, deleteChildren: boolean) => void,
 };
 
-const BlockEditOptions = ({ deleteBlock, editName, setTooltipVisible }: Props) => {
+const BlockEditOptions = ({
+  convertIntoComponent,
+  deleteBlock,
+  editName,
+  setTooltipVisible,
+}: Props) => {
   const block: BlockModel = useGetSelectedBlock();
   const blockKey = getBlockKey(block);
   const component: ComponentModel = useGetSelectedComponent();
@@ -37,7 +46,9 @@ const BlockEditOptions = ({ deleteBlock, editName, setTooltipVisible }: Props) =
     editName();
     setTooltipVisible(false);
   };
-  const convertIntoComponentHandler = () => {};
+  const convertIntoComponentHandler = () => {
+    convertIntoComponent(componentKey, blockKey);
+  };
 
   let options = [
     {
@@ -71,6 +82,8 @@ const BlockEditOptions = ({ deleteBlock, editName, setTooltipVisible }: Props) =
 };
 
 const mapDispatchToProps = {
+  convertIntoComponent: (componentKey: string, blockKey: string) =>
+    convertBlockIntoComponentRedux(componentKey, blockKey),
   deleteBlock: (componentKey: string, blockKey: string, deleteChildren: boolean) =>
     deleteBlockFromComponentRedux(componentKey, blockKey, deleteChildren),
 };

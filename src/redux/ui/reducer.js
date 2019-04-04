@@ -74,30 +74,10 @@ function handleSetSelectedComponentKey(
   state: UIReduxState,
   { componentKey, previousComponentKey = '' }: SetSelectedComponentKeyPayload
 ): UIReduxState {
-  console.log('handleSetSelectedComponentKey');
-  // const currentSelectedModuleKey = getSelectedModuleKeyFromUIState(state);
-  // const currentPreviousModuleKey =
-  //   state.selectedModulesHistory.length > 0
-  //     ? state.selectedModulesHistory[state.selectedModulesHistory.length - 1]
-  //     : '';
-  // let updatedSelectedModulesHistory = state.selectedModulesHistory.slice();
-  // if (moduleKey === currentPreviousModuleKey) {
-  //   updatedSelectedModulesHistory.pop();
-  // } else if (previousModuleKey) {
-  //   updatedSelectedModulesHistory = updatedSelectedModulesHistory.concat([
-  //     currentSelectedModuleKey,
-  //   ]);
-  // }
-
-  console.log('componentKey', componentKey);
-
   const currentSelectedComponentKey = getReduxUiSelectedComponentKey(state);
   const currentPreviousComponentKey = getReduxUiPreviousComponentKey(state);
   const { selectedComponentKeyHistory } = state;
   let updatedComponentKeyHistory = selectedComponentKeyHistory.slice();
-
-  console.log('currentPreviousComponentKey', currentPreviousComponentKey);
-  console.log('currentSelectedComponentKey', currentSelectedComponentKey);
 
   if (componentKey === currentPreviousComponentKey) {
     updatedComponentKeyHistory.pop();

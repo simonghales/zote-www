@@ -4,7 +4,13 @@ import type { ComponentsModels } from '../../data/component/model';
 import { dummyEditorReduxState } from '../../data/dummy/redux';
 import type { BlocksOrder } from '../../editor/components/ComponentSortable/ComponentSortable';
 import { getComponentsFromReduxEditorState } from './state';
-import { getBlockFromComponent, getComponentFromComponents } from '../../data/component/state';
+import {
+  getBlockFromComponent,
+  getBlocksFromComponent,
+  getComponentFromComponents,
+  getComponentName,
+  getRootBlockKeyFromComponent,
+} from '../../data/component/state';
 import {
   addBlockToComponent,
   createNewComponentFromComponentBlock,
@@ -20,10 +26,12 @@ import {
   updateBlockPropValue,
 } from '../../data/block/modifiers';
 import type { BlockPropsConfigTypes } from '../../data/block/props/model';
-import { getBlockPropsConfigKeys } from '../../data/block/state';
+import { getBlockParentBlockKeyFromBlocks, getBlockPropsConfigKeys } from '../../data/block/state';
 import { generatePropKeyFromPropLabel } from '../../data/block/props/generators';
 import type { BlockModel } from '../../data/block/model';
 import type { AddBlockPositions } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
+import { ADD_BLOCK_POSITIONS } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
+import { generateComponentImportBlock } from '../../data/block/types/groups/component/ComponentImport/generate';
 
 export type EditorReduxState = {
   components: ComponentsModels,
@@ -71,9 +79,22 @@ function handleConvertBlockIntoComponent(
   const components = getComponentsFromReduxEditorState(state);
   const component = getComponentFromComponents(componentKey, components);
   const newComponent = createNewComponentFromComponentBlock(component, blockKey);
-  const newComponentBlock = null; // todo
-  const updatedComponent = removeBlockFromComponent(component, blockKey, true);
-  // todo - add newComponentBlock to updatedComponent
+  const newComponentBlock = generateComponentImportBlock(
+    newComponent.key,
+    getComponentName(newComponent)
+  );
+  const blocks = getBlocksFromComponent(component);
+  let parentBlockKey = getBlockParentBlockKeyFromBlocks(blockKey, blocks);
+  if (!parentBlockKey) {
+    parentBlockKey = getRootBlockKeyFromComponent(component);
+  }
+  let updatedComponent = removeBlockFromComponent(component, blockKey, true);
+  updatedComponent = addBlockToComponent(
+    updatedComponent,
+    newComponentBlock,
+    parentBlockKey,
+    ADD_BLOCK_POSITIONS.inside
+  ); // todo - add in exact position
   return {
     ...state,
     components: {
