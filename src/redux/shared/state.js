@@ -41,7 +41,6 @@ export function getReduxSafeAddingBlockSelectedKeyAndPosition(
 
 export function getReduxPreviousComponent(state: ReduxState): ComponentModel | null {
   const previousComponentKey = getReduxPreviousComponentKey(state);
-  console.log('previousComponentKey', previousComponentKey);
   if (previousComponentKey) {
     return getComponentFromReduxEditorState(state.editor, previousComponentKey);
   }
@@ -53,6 +52,13 @@ export function getReduxParentComponent(state: ReduxState): ComponentModel | nul
   const components = getComponentsFromReduxEditorState(state.editor);
   const parentComponents = getComponentParentComponents(components, currentComponentKey);
   if (parentComponents.length > 0) {
+    const previousComponentKey = getReduxPreviousComponentKey(state);
+    const previousParentComponent = parentComponents.find(
+      component => component.key === previousComponentKey
+    );
+    if (previousParentComponent) {
+      return previousParentComponent;
+    }
     return parentComponents[0];
   }
   return null;

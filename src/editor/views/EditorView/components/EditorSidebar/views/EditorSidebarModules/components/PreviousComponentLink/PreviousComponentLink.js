@@ -13,14 +13,11 @@ import { getComponentName } from '../../../../../../../../../data/component/stat
 import { useGetEditorNavigateToComponent } from '../../../../../../../../context/context';
 
 type Props = {
-  previousComponent: ComponentModel | null,
   parentComponent: ComponentModel | null,
 };
 
-const PreviousComponentLink = ({ previousComponent, parentComponent }: Props) => {
-  const component = previousComponent || parentComponent;
-
-  console.log('previousComponent', previousComponent);
+const PreviousComponentLink = ({ parentComponent }: Props) => {
+  const component = parentComponent;
 
   if (!component) return null;
   const navigate = useGetEditorNavigateToComponent();
@@ -38,10 +35,8 @@ const PreviousComponentLink = ({ previousComponent, parentComponent }: Props) =>
 };
 
 const mapStateToProps = (state: ReduxState) => {
-  const previousComponent = getReduxPreviousComponent(state);
   const parentComponent = getReduxParentComponent(state);
   return {
-    previousComponent,
     parentComponent,
   };
 };
