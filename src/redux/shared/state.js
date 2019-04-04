@@ -2,15 +2,24 @@
 import type { ReduxState } from '../store';
 import type { AddBlockPositions } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import { ADD_BLOCK_POSITIONS } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
-import { getSelectedComponentSelector } from '../../editor/state/reselect/component';
-import { isBlockInComponent } from '../../data/component/state';
+import {
+  getSelectedComponentKeySelector,
+  getSelectedComponentSelector,
+} from '../../editor/state/reselect/component';
+import { getComponentParentComponents, isBlockInComponent } from '../../data/component/state';
 import { getSelectedComponentSelectedBlockKey } from '../../editor/state/reselect/ui';
-import { getComponentBlockFromReduxEditorState } from '../editor/state';
+import {
+  getComponentBlockFromReduxEditorState,
+  getComponentFromReduxEditorState,
+  getComponentsFromReduxEditorState,
+} from '../editor/state';
 import { doesBlockAllowChildBlocks } from '../../data/block/state';
 import {
   getReduxUiAddingBlockSelectedKey,
   getReduxUiAddingBlockSelectedPosition,
+  getReduxUiPreviousComponentKey,
 } from '../ui/state';
+import type { ComponentModel } from '../../data/component/model';
 
 export function getReduxSafeAddingBlockSelectedKeyAndPosition(
   state: ReduxState
@@ -28,4 +37,18 @@ export function getReduxSafeAddingBlockSelectedKeyAndPosition(
     }
   }
   return [blockKey, position];
+}
+
+export function getReduxPreviousComponent(state: ReduxState): ComponentModel | null {
+  const previousComponentKey = getReduxUiPreviousComponentKey(state);
+  if (previousComponentKey) {
+    return getComponentFromReduxEditorState(state.editor, previousComponentKey);
+  }
+  const currentComponentKey = getSelectedComponentKeySelector(state);
+  const components = getComponentsFromReduxEditorState(state.editor);
+  const parentComponents = getComponentParentComponents(components, currentComponentKey);
+  if (parentComponents.length > 0) {
+    return parentComponents[0];
+  }
+  return null;
 }

@@ -21,7 +21,7 @@ const EditorSidebar = () => (
       <div className={styles.logoClass}>
         <SiteLogo />
       </div>
-      <NavSelector />
+      {/* <NavSelector /> */}
     </div>
     <div className={styles.middleClass}>
       <EditorSidebarModules />

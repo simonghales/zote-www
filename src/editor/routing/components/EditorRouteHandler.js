@@ -10,10 +10,29 @@ type Props = {
   children: any,
   history: any,
   match: EditorRoutingMatch,
-  setSelectedComponent: (componentKey: string, previousComponentKey: string) => void,
+  setSelectedComponent: (componentKey: string, previousComponentKey?: string) => void,
 };
 
 class EditorRouteHandler extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props);
+    this.checkUrlParams(props);
+  }
+
+  checkUrlParams(props: Props = this.props) {
+    const componentKey = getEditorRoutingMatchParam(EDITOR_ROUTE_PARAMS.componentKey, props.match);
+    const previousComponentKey = getEditorRoutingMatchParam(
+      EDITOR_ROUTE_PARAMS.previousComponentKey,
+      props.match
+    );
+    if (componentKey) {
+      const { setSelectedComponent } = this.props;
+      setSelectedComponent(componentKey, previousComponentKey);
+      // setInitialHistory(moduleKey, previousModuleKey);
+      console.log('setModule');
+    }
+  }
+
   componentWillReceiveProps(nextProps: Props): void {
     const nextComponentKey = getEditorRoutingMatchParam(
       EDITOR_ROUTE_PARAMS.componentKey,
@@ -23,7 +42,7 @@ class EditorRouteHandler extends React.Component<Props> {
       EDITOR_ROUTE_PARAMS.componentKey,
       this.props.match
     );
-    if (nextComponentKey !== componentKey) {
+    if (nextComponentKey && nextComponentKey !== componentKey) {
       const nextPreviousComponentKey = getEditorRoutingMatchParam(
         EDITOR_ROUTE_PARAMS.previousComponentKey,
         nextProps.match
@@ -39,8 +58,8 @@ class EditorRouteHandler extends React.Component<Props> {
 }
 
 const mapDispatchToProps = {
-  setSelectedComponent: (componentKey: string, previousComponentKey: string) =>
-    setSelectedComponentKeyRedux(componentKey),
+  setSelectedComponent: (componentKey: string, previousComponentKey?: string) =>
+    setSelectedComponentKeyRedux(componentKey, previousComponentKey),
 };
 
 export default withRouter(

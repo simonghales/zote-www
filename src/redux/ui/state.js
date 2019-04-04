@@ -51,3 +51,11 @@ export function getReduxUiAddingBlockSelectedPosition(state: ReduxState): AddBlo
 export function getReduxUiHoveredBlockKey(state: ReduxState): string {
   return state.ui.hoveredBlockKey;
 }
+
+export function getReduxUiPreviousComponentKey(state: ReduxState): string {
+  const { selectedComponentKeyHistory } = state.ui;
+  if (selectedComponentKeyHistory.length > 0) {
+    return selectedComponentKeyHistory[0];
+  }
+  return '';
+}

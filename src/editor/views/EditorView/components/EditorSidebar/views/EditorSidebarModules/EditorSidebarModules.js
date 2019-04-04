@@ -9,6 +9,7 @@ import { setAddingBlockRedux } from '../../../../../../../redux/ui/reducer';
 import type { ReduxState } from '../../../../../../../redux/store';
 import { getReduxUiAddingBlock } from '../../../../../../../redux/ui/state';
 import AddBlockStateWrapper from './components/AddBlockStateWrapper/AddBlockStateWrapper';
+import PreviousComponentLink from './components/PreviousComponentLink/PreviousComponentLink';
 
 type Props = {
   addingBlock: boolean,
@@ -17,20 +18,25 @@ type Props = {
 
 const EditorSidebarModules = ({ addingBlock, setAddingBlock }: Props) => (
   <div className={styles.containerClass}>
-    <div className={styles.addBlockWrapperClass}>
-      {addingBlock ? (
-        <SlimIconButton
-          highlighted
-          icon={<FaTimes size={9} />}
-          onClick={() => setAddingBlock(false)}
-        >
-          Cancel
-        </SlimIconButton>
-      ) : (
-        <SlimIconButton icon={<FaPlus size={9} />} onClick={() => setAddingBlock(true)}>
-          Add Block
-        </SlimIconButton>
-      )}
+    <div className={styles.optionsWrapperClass}>
+      <div className={styles.previousComponentWrapperClass}>
+        <PreviousComponentLink />
+      </div>
+      <div className={styles.addBlockWrapperClass}>
+        {addingBlock ? (
+          <SlimIconButton
+            highlighted
+            icon={<FaTimes size={9} />}
+            onClick={() => setAddingBlock(false)}
+          >
+            Cancel
+          </SlimIconButton>
+        ) : (
+          <SlimIconButton icon={<FaPlus size={9} />} onClick={() => setAddingBlock(true)}>
+            Add Block
+          </SlimIconButton>
+        )}
+      </div>
     </div>
     <div className={styles.contentWrapperClass}>
       <ReduxComponentSortable addingBlock={addingBlock} />

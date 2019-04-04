@@ -20,6 +20,7 @@ export type UIReduxState = {
   addingBlockSelectedKey: string,
   addingBlockSelectedPosition: AddBlockPositions,
   selectedComponentKey: string,
+  selectedComponentKeyHistory: Array<string>,
   componentsSelectedBlockKeys: ComponentsSelectedBlockKeys,
   editorFormSectionsVisibility: EditorFormSectionsVisibility,
 };
@@ -30,6 +31,7 @@ export const initialUiReduxState: UIReduxState = {
   addingBlockSelectedKey: '',
   addingBlockSelectedPosition: ADD_BLOCK_POSITIONS.inside,
   selectedComponentKey: '',
+  selectedComponentKeyHistory: [],
   componentsSelectedBlockKeys: {},
   editorFormSectionsVisibility: {
     [customFormSection.key]: false,
@@ -41,6 +43,7 @@ const SET_SELECTED_COMPONENT_KEY = 'SET_SELECTED_COMPONENT_KEY';
 
 type SetSelectedComponentKeyPayload = {
   componentKey: string,
+  previousComponentKey?: string,
 };
 
 type SetSelectedComponentKeyAction = {
@@ -48,22 +51,32 @@ type SetSelectedComponentKeyAction = {
   payload: SetSelectedComponentKeyPayload,
 };
 
-export function setSelectedComponentKeyRedux(componentKey: string): SetSelectedComponentKeyAction {
+export function setSelectedComponentKeyRedux(
+  componentKey: string,
+  previousComponentKey?: string
+): SetSelectedComponentKeyAction {
   return {
     type: SET_SELECTED_COMPONENT_KEY,
     payload: {
       componentKey,
+      previousComponentKey,
     },
   };
 }
 
 function handleSetSelectedComponentKey(
   state: UIReduxState,
-  { componentKey }: SetSelectedComponentKeyPayload
+  { componentKey, previousComponentKey = '' }: SetSelectedComponentKeyPayload
 ): UIReduxState {
+  const { selectedComponentKeyHistory } = state;
+  const updatedComponentKeyHistory = selectedComponentKeyHistory.slice();
+  if (previousComponentKey) {
+    updatedComponentKeyHistory.push(previousComponentKey);
+  }
   return {
     ...state,
     selectedComponentKey: componentKey,
+    selectedComponentKeyHistory: updatedComponentKeyHistory,
   };
 }
 

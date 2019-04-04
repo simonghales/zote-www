@@ -10,11 +10,23 @@ const containerClass = css`
   flex-direction: column;
 `;
 
-const addBlockWrapperClass = css`
-  padding: 0 ${getRem(spacing.medium)};
+const optionsWrapperClass = css`
+  padding: 0 ${getRem(7)};
   margin: ${getRem(7)} 0;
-  margin-left: ${getRem(-8)};
+  //margin-left: ${getRem(-8)};
+  display: flex;
+  justify-content: space-between;
 `;
+
+const previousComponentWrapperClass = css`
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+`;
+
+const addBlockWrapperClass = css``;
 
 const contentWrapperClass = css`
   flex: 1;
@@ -22,6 +34,8 @@ const contentWrapperClass = css`
 
 export default {
   containerClass,
+  optionsWrapperClass,
+  previousComponentWrapperClass,
   addBlockWrapperClass,
   contentWrapperClass,
 };
