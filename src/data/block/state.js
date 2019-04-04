@@ -172,6 +172,22 @@ export function getBlockFromBlocks(blockKey: string, blocks: BlocksModel): Block
   return block;
 }
 
+export function getBlockDescendantKeysFromBlock(
+  block: BlockModel,
+  blocks: BlocksModel
+): Array<string> {
+  const childrenKeys = getBlockChildrenKeysFromBlock(block);
+  const descendantKeys = {};
+  childrenKeys.forEach(blockKey => {
+    const childBlock = getBlockFromBlocks(blockKey, blocks);
+    const childBlockChildrenKeys = getBlockChildrenKeysFromBlock(childBlock);
+    childBlockChildrenKeys.forEach(childBlockKey => {
+      descendantKeys[childBlockKey] = true;
+    });
+  });
+  return childrenKeys.concat(Object.keys(descendantKeys));
+}
+
 export function doesBlockAllowChildBlocks(block: BlockModel): boolean {
   const childrenPropConfig = getMergedPropConfigFromBlock(CHILDREN_PROP_CONFIG.key, block);
   const childrenAllowed =

@@ -11,6 +11,7 @@ import {
   addBlocksToBlockChildren,
   addBlockToBlockChildrenKeys,
   removeBlockFromBlockChildren,
+  updateBlockName,
   updateBlockPropValue,
 } from '../block/modifiers';
 import { CHILDREN_PROP_CONFIG } from '../block/props/data';
@@ -18,8 +19,10 @@ import type { AddBlockPositions } from '../../editor/components/ComponentSortabl
 import { ADD_BLOCK_POSITIONS } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import {
   getBlockChildrenKeysFromBlock,
+  getBlockDescendantKeysFromBlock,
   getBlockFromBlocks,
   getBlockIndexInParentChildren,
+  getBlockName,
   getBlockParentBlockKeyFromBlocks,
 } from '../block/state';
 import ComponentBlock from '../block/types/groups/component/Component';
@@ -109,7 +112,7 @@ export function removeBlockFromComponent(
   const blocks = getBlocksFromComponent(component);
   let blocksToDelete = [blockToDeleteKey];
   const block = getBlockFromBlocks(blockToDeleteKey, blocks);
-  const childrenBlockKeys = getBlockChildrenKeysFromBlock(block);
+  const descendantBlockKeys = getBlockDescendantKeysFromBlock(block, blocks);
   const parentBlockKey = getBlockParentBlockKeyFromBlocks(blockToDeleteKey, blocks);
   if (!parentBlockKey) {
     throw new Error(`No parent block key found.`);
@@ -121,9 +124,9 @@ export function removeBlockFromComponent(
     if (!block) {
       throw new Error(`Block ${blockToDeleteKey} not found within blocks`);
     }
-    blocksToDelete = blocksToDelete.concat(childrenBlockKeys);
+    blocksToDelete = blocksToDelete.concat(descendantBlockKeys);
   } else {
-    parentBlock = addBlocksToBlockChildren(parentBlock, childrenBlockKeys, blockIndex);
+    parentBlock = addBlocksToBlockChildren(parentBlock, descendantBlockKeys, blockIndex);
   }
   const finalBlocks = {};
   Object.keys(blocks).forEach(blockKey => {
@@ -150,6 +153,8 @@ export function createNewComponent(
   let rootBlock = ComponentBlock.generate();
   if (rootBlockChildrenKeys && rootBlockChildrenKeys.length > 0) {
     rootBlock = addBlocksToBlockChildren(rootBlock, rootBlockChildrenKeys, 0);
+    const firstBlock = getBlockFromBlocks(rootBlockChildrenKeys[0], initialBlocks);
+    rootBlock = updateBlockName(rootBlock, getBlockName(firstBlock));
   }
   return {
     key: generateComponentKey(),
@@ -170,8 +175,8 @@ export function createNewComponentFromComponentBlock(
   const blocksToAdd = {
     [blockKey]: block,
   };
-  const blockChildrenKeys = getBlockChildrenKeysFromBlock(block);
-  blockChildrenKeys.forEach(blockChildKey => {
+  const blockDescendantKeys = getBlockDescendantKeysFromBlock(block, originalBlocks);
+  blockDescendantKeys.forEach(blockChildKey => {
     blocksToAdd[blockChildKey] = originalBlocks[blockChildKey];
   });
   const component = createNewComponent(blocksToAdd, [blockKey]);

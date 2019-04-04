@@ -95,6 +95,8 @@ function handleConvertBlockIntoComponent(
     parentBlockKey,
     ADD_BLOCK_POSITIONS.inside
   ); // todo - add in exact position
+  console.log('updatedComponent', updatedComponent);
+  console.log('newComponent', newComponent);
   return {
     ...state,
     components: {
