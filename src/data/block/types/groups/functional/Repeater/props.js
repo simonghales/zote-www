@@ -10,7 +10,7 @@ export const repeaterPropsConfig: BlockPropsConfigModel = {
   },
   repeaterData: {
     key: 'repeaterData',
-    label: 'Data',
+    label: 'Repeater',
     type: BLOCK_PROPS_CONFIG_TYPES.repeaterData,
     defaultValue: null,
   },

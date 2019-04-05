@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { FaCube } from 'react-icons/fa';
+import { FaRetweet } from 'react-icons/fa';
 import type { BlockTypeModel } from '../../../model';
 import config from './config';
 import { repeaterPropsConfig } from './props';
@@ -16,7 +16,7 @@ const RepeaterBlock: BlockTypeModel = {
   stylesEnabled: false,
   htmlEnabled: false,
   addPropsEnabled: false,
-  icon: <FaCube size={8} />,
+  icon: <FaRetweet size={9} />,
   generate,
 };
 

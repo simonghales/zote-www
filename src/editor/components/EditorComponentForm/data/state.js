@@ -17,7 +17,7 @@ import {
   isPropCustom,
   isPropDeletable,
   isPropEditable,
-  isPropLinkable
+  isPropLinkable,
 } from '../../../../data/block/props/state';
 
 const MAPPED_PROP_TYPE_TO_FORM_INPUT_TYPE: {
@@ -28,8 +28,8 @@ const MAPPED_PROP_TYPE_TO_FORM_INPUT_TYPE: {
   [BLOCK_PROPS_CONFIG_TYPES.module]: FORM_INPUT_TYPES.string,
   [BLOCK_PROPS_CONFIG_TYPES.blocks]: FORM_INPUT_TYPES.string,
   [BLOCK_PROPS_CONFIG_TYPES.propReference]: FORM_INPUT_TYPES.string,
-  [BLOCK_PROPS_CONFIG_TYPES.repeaterData]: FORM_INPUT_TYPES.string,
   [BLOCK_PROPS_CONFIG_TYPES.htmlAttributes]: FORM_INPUT_TYPES.htmlAttributes,
+  [BLOCK_PROPS_CONFIG_TYPES.repeaterData]: FORM_INPUT_TYPES.repeaterData,
 };
 
 const MAPPED_BLOCK_TYPE_TO_FORM_INPUT_TYPE = {
