@@ -40,7 +40,15 @@ const mapStateToProps = (
   state: ReduxState,
   { componentKey, linkedBlockKey, linkedPropKey }: Props
 ) => {
-  const block = getComponentBlockFromReduxEditorState(state.editor, componentKey, linkedBlockKey);
+  let block;
+  try {
+    block = getComponentBlockFromReduxEditorState(state.editor, componentKey, linkedBlockKey);
+  } catch (e) {
+    return {
+      blockName: '',
+      propName: '',
+    };
+  }
   const propConfig = getMergedPropConfigFromBlock(linkedPropKey, block);
   const propName = propConfig ? getLabelFromPropConfig(propConfig) : linkedPropKey;
   const blockName = getNameFromBlock(block);
