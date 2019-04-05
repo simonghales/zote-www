@@ -28,7 +28,12 @@ import { isValueDefined } from '../../utils/validation';
 import { isHtmlElementVoid } from '../../utils/html';
 import ComponentImport from './types/groups/component/ComponentImport';
 import type { ComponentsModels } from '../component/model';
-import { getComponentFromComponents, getComponentName } from '../component/state';
+import {
+  getBlockFromComponent,
+  getComponentFromComponents,
+  getComponentName,
+  getRootBlockKeyFromComponent,
+} from '../component/state';
 
 export function getBlockStyleKeyFormat(blockKey: string): string {
   return `block::${blockKey}`;
@@ -489,4 +494,21 @@ export function getBlockNameWithComponents(
     return getComponentName(component);
   }
   return getBlockName(block);
+}
+
+export function getBlockComponentImportedContentProps(
+  block: BlockModel,
+  components: ComponentsModels
+): Array<BlockPropConfigModel> {
+  const componentKey = getBlockComponentImportKey(block);
+  if (!componentKey) return [];
+  const component = getComponentFromComponents(componentKey, components);
+  const componentRootBlockKey = getRootBlockKeyFromComponent(component);
+  const rootBlock = getBlockFromComponent(component, componentRootBlockKey);
+  const componentRootBlockProps = getBlockContentProps(rootBlock);
+  return componentRootBlockProps.map(blockPropConfig => ({
+    ...blockPropConfig,
+    editable: false,
+    deletable: false,
+  }));
 }

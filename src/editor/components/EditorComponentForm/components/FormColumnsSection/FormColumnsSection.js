@@ -86,6 +86,7 @@ class FormColumnsSection extends Component<Props> {
   render() {
     const { heading, columns, visible, setVisible } = this.props;
     const { componentKey, blockKey, blockStyleKey, styleStateKey } = this.context;
+    if (columns.length === 0) return null;
     return (
       <FormSection visible={visible} heading={heading} setVisible={setVisible}>
         <Row>

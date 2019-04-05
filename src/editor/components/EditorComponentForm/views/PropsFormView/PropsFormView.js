@@ -1,54 +1,24 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
 import { cx } from 'emotion';
-import { getFormSectionVisibility } from '../../EditorComponentForm';
-import type { EditorFormSectionsVisibility } from '../../../../../redux/ui/reducer';
-import type { ReduxState } from '../../../../../redux/store';
-import { getComponentsFromReduxEditorState } from '../../../../../redux/editor/state';
-import {
-  getBlockFromComponent,
-  getComponentFromComponents,
-} from '../../../../../data/component/state';
-import {
-  getBlockContentProps,
-  getBlockHtmlProps,
-  sortBlockPropsConfig,
-} from '../../../../../data/block/state';
-import { mapBlockPropConfigsToEditorFormInputModel } from '../../data/state';
 import AddCustomPropForm from './components/AddCustomPropForm/AddCustomPropForm';
 import styles from './styles';
-import FormColumnsSection from '../../components/FormColumnsSection/FormColumnsSection';
-
-export const CONTENT_FORM_VIEW_TYPES = {
-  content: 'content',
-  html: 'html',
-};
-
-export type contentFormViewTypes = $Keys<typeof CONTENT_FORM_VIEW_TYPES>;
-
-type PassedProps = {
-  blockKey: string,
-  componentKey: string,
-  formSectionsVisibility: EditorFormSectionsVisibility,
-  setFormSectionVisibility: (sectionKey: string, visible: boolean) => void,
-  // eslint-disable-next-line react/require-default-props
-  addPropsEnabled?: boolean,
-};
+import BlockProps from './components/BlockProps/BlockProps';
+import type { PassedProps } from './shared';
+import { CONTENT_FORM_VIEW_TYPES } from './shared';
+import ComponentImportBlockProps from './components/ComponentImportBlockProps/ComponentImportBlockProps';
 
 type Props = PassedProps & {
-  sections: Array<any>,
-  viewType: contentFormViewTypes,
   addPropsEnabled?: boolean,
 };
 
 const PropsFormView = ({
   addPropsEnabled,
-  sections,
-  formSectionsVisibility,
-  setFormSectionVisibility,
   blockKey,
   componentKey,
+  formSectionsVisibility,
+  setFormSectionVisibility,
+  viewType,
 }: Props) => (
   <React.Fragment>
     {addPropsEnabled && <AddCustomPropForm componentKey={componentKey} blockKey={blockKey} />}
@@ -57,17 +27,13 @@ const PropsFormView = ({
         [styles.containerNoMarginClass]: addPropsEnabled,
       })}
     >
-      {sections.map(section => (
-        <FormColumnsSection
-          heading={section.heading}
-          columns={section.columns}
-          key={section.key}
-          visible={getFormSectionVisibility(section.key, formSectionsVisibility)}
-          setVisible={(visible: boolean) => {
-            setFormSectionVisibility(section.key, visible);
-          }}
-        />
-      ))}
+      <BlockProps
+        blockKey={blockKey}
+        componentKey={componentKey}
+        formSectionsVisibility={formSectionsVisibility}
+        setFormSectionVisibility={setFormSectionVisibility}
+        viewType={viewType}
+      />
     </div>
   </React.Fragment>
 );
@@ -76,39 +42,12 @@ PropsFormView.defaultProps = {
   addPropsEnabled: false,
 };
 
-const mapStateToProps = (state: ReduxState, { blockKey, componentKey, viewType }: Props) => {
-  const components = getComponentsFromReduxEditorState(state.editor);
-  const component = getComponentFromComponents(componentKey, components);
-  const block = getBlockFromComponent(component, blockKey);
-  const propsConfig =
-    viewType === CONTENT_FORM_VIEW_TYPES.content
-      ? getBlockContentProps(block)
-      : getBlockHtmlProps(block);
-  const sortedPropsConfig = sortBlockPropsConfig(propsConfig);
-  const inputs = mapBlockPropConfigsToEditorFormInputModel(sortedPropsConfig, block);
-  const sections = [
-    {
-      heading: '',
-      key: '',
-      columns: inputs.map(input => ({
-        columns: 4,
-        input,
-      })),
-    },
-  ];
-  return {
-    sections,
-  };
-};
-
-const MappedPropsFormView = connect(mapStateToProps)(PropsFormView);
-
-export default MappedPropsFormView;
+export default PropsFormView;
 
 export const ContentFormView = (props: PassedProps) => (
-  <MappedPropsFormView {...props} viewType={CONTENT_FORM_VIEW_TYPES.content} />
+  <PropsFormView {...props} viewType={CONTENT_FORM_VIEW_TYPES.content} />
 );
 
 export const HtmlFormView = (props: PassedProps) => (
-  <MappedPropsFormView {...props} viewType={CONTENT_FORM_VIEW_TYPES.html} />
+  <PropsFormView {...props} viewType={CONTENT_FORM_VIEW_TYPES.html} />
 );

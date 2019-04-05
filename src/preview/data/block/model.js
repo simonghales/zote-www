@@ -29,3 +29,7 @@ export type MappedBlockModel = {
   props: MappedBlockPropsModel,
   styles: MappedBlockStylesModel,
 };
+
+export type MappedBlockToBlockReplacement = {
+  [string]: string,
+};

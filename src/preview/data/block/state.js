@@ -4,6 +4,7 @@ import type {
   MappedBlockModel,
   MappedBlockParsedPropsModel,
   MappedBlockStylesModel,
+  MappedBlockToBlockReplacement,
 } from './model';
 import type { ComponentModel, ComponentsModels } from '../../../data/component/model';
 import type { BlockModel, BlocksModel } from '../../../data/block/model';
@@ -40,13 +41,21 @@ export function mapBlockToMappedBlock(
   blocks: BlocksModel,
   styles: StylesModels,
   parsedProps: MappedBlockParsedPropsModel,
-  components: ComponentsModels
+  components: ComponentsModels,
+  mappedBlockToBlock: MappedBlockToBlockReplacement
 ): MappedBlockModel {
   const styleKey = getStyleKeyFromBlock(block);
   return {
     key: block.key,
     blockTypeKey: block.blockTypeKey,
-    props: parseMappedBlockPropsValues(block, blocks, styles, parsedProps, components),
+    props: parseMappedBlockPropsValues(
+      block,
+      blocks,
+      styles,
+      parsedProps,
+      components,
+      mappedBlockToBlock
+    ),
     styles: getMappedBlockStyles(styleKey, styles),
   };
 }
@@ -56,20 +65,37 @@ export function mapBlocksToMappedBlocks(
   blockKeys: Array<string>,
   styles: StylesModels,
   parsedProps: MappedBlockParsedPropsModel,
-  components: ComponentsModels
+  components: ComponentsModels,
+  mappedBlockToBlock: MappedBlockToBlockReplacement
 ): Array<MappedBlockModel> {
   return blockKeys.map(blockKey => {
     const block = getBlockFromBlocks(blockKey, blocks);
-    return mapBlockToMappedBlock(block, blocks, styles, parsedProps, components);
+    return mapBlockToMappedBlock(
+      block,
+      blocks,
+      styles,
+      parsedProps,
+      components,
+      mappedBlockToBlock
+    );
   });
 }
 
 export function mapComponentBlocksToMappedBlocks(
   component: ComponentModel,
   styles: StylesModels,
-  components: ComponentsModels
+  parsedProps: MappedBlockParsedPropsModel,
+  components: ComponentsModels,
+  mappedBlockToBlock: MappedBlockToBlockReplacement = {}
 ): Array<MappedBlockModel> {
   const blocks = getBlocksFromComponent(component);
   const rootBlockKey = getRootBlockKeyFromComponent(component);
-  return mapBlocksToMappedBlocks(blocks, [rootBlockKey], styles, {}, components);
+  return mapBlocksToMappedBlocks(
+    blocks,
+    [rootBlockKey],
+    styles,
+    parsedProps,
+    components,
+    mappedBlockToBlock
+  );
 }

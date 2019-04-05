@@ -27,7 +27,6 @@ import { STYLE_STATES } from '../../../data/styles/model';
 import type { EditorFormSectionsVisibility } from '../../../redux/ui/reducer';
 import { setEditorFormSectionVisibilityRedux } from '../../../redux/ui/reducer';
 import {
-  CONTENT_FORM_VIEW_TYPES,
   ContentFormView,
   HtmlFormView,
 } from './views/PropsFormView/PropsFormView';
@@ -39,6 +38,7 @@ import {
 import StylesFormView from './views/StylesFormView/StylesFormView';
 import DisabledFormView from './views/DisabledFormView/DisabledFormView';
 import {getSelectedComponentSelectedBlock} from '../../state/reselect/ui';
+import {CONTENT_FORM_VIEW_TYPES} from './views/PropsFormView/shared';
 
 export function getFormSectionVisibility(
   sectionKey: string,

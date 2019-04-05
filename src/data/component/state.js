@@ -63,3 +63,7 @@ export function getComponentName(component: ComponentModel): string {
   const rootBlock = getBlockFromComponent(component, rootBlockKey);
   return getBlockName(rootBlock);
 }
+
+export function getComponentKey(component: ComponentModel): string {
+  return component.key;
+}

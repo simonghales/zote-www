@@ -43,6 +43,7 @@ export const initialUiReduxState: UIReduxState = {
   editorFormSectionsVisibility: {
     [customFormSection.key]: false,
   },
+  ...dummyUiReduxState,
 };
 
 const SET_SELECTED_COMPONENT_KEY = 'SET_SELECTED_COMPONENT_KEY';

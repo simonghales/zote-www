@@ -5,9 +5,11 @@ import type {
   MappedBlockModel,
   MappedBlockParsedPropsModel,
   MappedBlockPropsModel,
+  MappedBlockToBlockReplacement,
 } from '../model';
 import {
   getAvailablePropKeysFromBlock,
+  getBlockKey,
   getMergedPropConfigFromBlock,
   getPropsFromBlock,
 } from '../../../../data/block/state';
@@ -20,48 +22,83 @@ import { BLOCK_PROPS_CONFIG_TYPES } from '../../../../data/block/props/model';
 import { parsePropBlocksValue } from '../../../../data/block/props/state';
 import { mapBlocksToMappedBlocks, mapComponentBlocksToMappedBlocks } from '../state';
 import type { StylesModels } from '../../../../data/styles/model';
-import { isPropConfigBlockType } from '../../../../data/block/props/types/state';
+import {
+  isPropConfigBlockType,
+  isPropConfigComponentReferenceType,
+} from '../../../../data/block/props/types/state';
 import type { ComponentsModels } from '../../../../data/component/model';
+import { getComponentKey, getRootBlockKeyFromComponent } from '../../../../data/component/state';
+import { isValueDefined } from '../../../../utils/validation';
 
 export function parseMappedBlockPropBlocksValue(
   propValue: any,
   blocks: BlocksModel,
   styles: StylesModels,
   parsedProps: MappedBlockParsedPropsModel,
-  components: ComponentsModels
+  components: ComponentsModels,
+  mappedBlockToBlock: MappedBlockToBlockReplacement
 ): Array<MappedBlockModel> {
   if (!propValue) {
     return [];
   }
   const blockKeys = parsePropBlocksValue(propValue);
-  return mapBlocksToMappedBlocks(blocks, blockKeys, styles, parsedProps, components);
+  return mapBlocksToMappedBlocks(
+    blocks,
+    blockKeys,
+    styles,
+    parsedProps,
+    components,
+    mappedBlockToBlock
+  );
 }
 
 export function parseMappedBlockPropComponentImportValue(
   propValue: any,
   styles: StylesModels,
-  components: ComponentsModels
+  parsedProps: MappedBlockParsedPropsModel,
+  components: ComponentsModels,
+  mappedBlockToBlock: MappedBlockToBlockReplacement,
+  blockKey: string
 ): Array<MappedBlockModel> {
   if (!propValue) return [];
   const component = components[propValue];
   if (!component) return [];
-  return mapComponentBlocksToMappedBlocks(component, styles, components);
+  return mapComponentBlocksToMappedBlocks(component, styles, parsedProps, components, {
+    ...mappedBlockToBlock,
+    [getRootBlockKeyFromComponent(component)]: blockKey,
+  });
 }
 
 export function getPropValueAndTypeFromParsedProps(
   blockKey: string,
   propKey: string,
-  parsedProps: MappedBlockParsedPropsModel
+  parsedProps: MappedBlockParsedPropsModel,
+  mappedBlockToBlock: MappedBlockToBlockReplacement
 ): {
   propValue: any,
   propType: BlockPropsConfigTypes,
 } | null {
-  const blockProps = parsedProps[blockKey];
-  if (!blockProps) {
-    console.warn(`No props matched for block "${blockKey}".`);
-    return null;
+  const mappedBlockKey = mappedBlockToBlock[blockKey];
+
+  let prop;
+
+  if (mappedBlockKey) {
+    const mappedBlockParsedProps = parsedProps[mappedBlockKey];
+    if (mappedBlockParsedProps) {
+      if (mappedBlockParsedProps[propKey]) {
+        prop = mappedBlockParsedProps[propKey];
+      }
+    }
   }
-  const prop = blockProps[propKey];
+
+  if (!prop) {
+    const blockProps = parsedProps[blockKey];
+    if (!blockProps) {
+      console.warn(`No props matched for block "${blockKey}".`);
+      return null;
+    }
+    prop = blockProps[propKey];
+  }
   if (!prop) {
     console.warn(`Could not match prop "${propKey}" within block props.`);
     return null;
@@ -78,13 +115,29 @@ export function parsePropValue(
   blocks: BlocksModel,
   styles: StylesModels,
   parsedProps: MappedBlockParsedPropsModel,
-  components: ComponentsModels
+  components: ComponentsModels,
+  mappedBlockToBlock: MappedBlockToBlockReplacement,
+  blockKey: string
 ): any {
   switch (propType) {
     case BLOCK_PROPS_CONFIG_TYPES.blocks:
-      return parseMappedBlockPropBlocksValue(propValue, blocks, styles, parsedProps, components);
+      return parseMappedBlockPropBlocksValue(
+        propValue,
+        blocks,
+        styles,
+        parsedProps,
+        components,
+        mappedBlockToBlock
+      );
     case BLOCK_PROPS_CONFIG_TYPES.componentReference:
-      return parseMappedBlockPropComponentImportValue(propValue, styles, components);
+      return parseMappedBlockPropComponentImportValue(
+        propValue,
+        styles,
+        parsedProps,
+        components,
+        mappedBlockToBlock,
+        blockKey
+      );
     default:
       return propValue;
   }
@@ -95,18 +148,34 @@ export function parseMappedBlockPropLinkedValue(
   blocks: BlocksModel,
   styles: StylesModels,
   parsedProps: MappedBlockParsedPropsModel,
-  components: ComponentsModels
+  components: ComponentsModels,
+  mappedBlockToBlock: MappedBlockToBlockReplacement,
+  originalBlockKey: string
 ): any {
   if (!prop.linked) {
     throw new Error(`This function should only be called when prop has linked values.`);
   }
   const { blockKey, propKey } = prop.linked;
-  const parsedProp = getPropValueAndTypeFromParsedProps(blockKey, propKey, parsedProps);
+  const parsedProp = getPropValueAndTypeFromParsedProps(
+    blockKey,
+    propKey,
+    parsedProps,
+    mappedBlockToBlock
+  );
   if (!parsedProp) {
     return null;
   }
   const { propValue, propType } = parsedProp;
-  return parsePropValue(propValue, propType, blocks, styles, parsedProps, components);
+  return parsePropValue(
+    propValue,
+    propType,
+    blocks,
+    styles,
+    parsedProps,
+    components,
+    mappedBlockToBlock,
+    originalBlockKey
+  );
 }
 
 export function parseMappedBlockPropValue(
@@ -115,7 +184,9 @@ export function parseMappedBlockPropValue(
   propConfig: BlockPropConfigModel | null,
   styles: StylesModels,
   parsedProps: MappedBlockParsedPropsModel,
-  components: ComponentsModels
+  components: ComponentsModels,
+  mappedBlockToBlock: MappedBlockToBlockReplacement,
+  blockKey: string
 ): any {
   if (!prop) {
     if (propConfig && propConfig.defaultValue) {
@@ -124,12 +195,29 @@ export function parseMappedBlockPropValue(
     return null;
   }
   if (prop.linked) {
-    return parseMappedBlockPropLinkedValue(prop, blocks, styles, parsedProps, components);
+    return parseMappedBlockPropLinkedValue(
+      prop,
+      blocks,
+      styles,
+      parsedProps,
+      components,
+      mappedBlockToBlock,
+      blockKey
+    );
   }
   if (!propConfig) {
     return prop.value;
   }
-  return parsePropValue(prop.value, propConfig.type, blocks, styles, parsedProps, components);
+  return parsePropValue(
+    prop.value,
+    propConfig.type,
+    blocks,
+    styles,
+    parsedProps,
+    components,
+    mappedBlockToBlock,
+    blockKey
+  );
 }
 
 export function parseMappedBlockPropsValues(
@@ -137,14 +225,16 @@ export function parseMappedBlockPropsValues(
   blocks: BlocksModel,
   styles: StylesModels,
   allParsedProps: MappedBlockParsedPropsModel,
-  components: ComponentsModels
+  components: ComponentsModels,
+  mappedBlockToBlock: MappedBlockToBlockReplacement
 ): MappedBlockPropsModel {
+  const blockKey = getBlockKey(block);
   const availablePropKeys = getAvailablePropKeysFromBlock(block);
   const availableOtherPropKeys = [];
   const availableChildrenPropKeys = [];
   availablePropKeys.forEach(propKey => {
     const propConfig = getMergedPropConfigFromBlock(propKey, block);
-    if (isPropConfigBlockType(propConfig)) {
+    if (isPropConfigBlockType(propConfig) || isPropConfigComponentReferenceType(propConfig)) {
       availableChildrenPropKeys.push(propKey);
     } else {
       availableOtherPropKeys.push(propKey);
@@ -162,7 +252,9 @@ export function parseMappedBlockPropsValues(
         propConfig,
         styles,
         allParsedProps,
-        components
+        components,
+        mappedBlockToBlock,
+        blockKey
       ),
       type: propConfig && propConfig.type ? propConfig.type : BLOCK_PROPS_CONFIG_TYPES.string,
     };
@@ -178,7 +270,16 @@ export function parseMappedBlockPropsValues(
     const prop = props[propKey];
     const propConfig = getMergedPropConfigFromBlock(propKey, block);
     parsedChildrenProps[propKey] = {
-      value: parseMappedBlockPropValue(prop, blocks, propConfig, styles, parsedProps, components),
+      value: parseMappedBlockPropValue(
+        prop,
+        blocks,
+        propConfig,
+        styles,
+        parsedProps,
+        components,
+        mappedBlockToBlock,
+        blockKey
+      ),
       type: propConfig && propConfig.type ? propConfig.type : BLOCK_PROPS_CONFIG_TYPES.string,
     };
   });

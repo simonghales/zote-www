@@ -142,7 +142,12 @@ const mapStateToProps = (state: ReduxState) => {
   const selectedComponent = getSelectedComponentSelector(state);
   const components = getComponentsFromReduxEditorState(state.editor);
   const reduxStyles = getReduxStyles(state);
-  const mappedBlocks = mapComponentBlocksToMappedBlocks(selectedComponent, reduxStyles, components);
+  const mappedBlocks = mapComponentBlocksToMappedBlocks(
+    selectedComponent,
+    reduxStyles,
+    {},
+    components
+  );
   return {
     data: mappedBlocks,
   };

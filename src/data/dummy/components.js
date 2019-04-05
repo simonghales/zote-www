@@ -122,6 +122,10 @@ const DUMMY_COMPONENT_IMPORT_BLOCK: BlockModel = {
       key: 'componentReference',
       value: 'DUMMY_SECOND_COMPONENT',
     },
+    test: {
+      key: 'test',
+      value: 'banana',
+    },
   },
 };
 
@@ -136,7 +140,7 @@ export const DUMMY_BLOCK: BlockModel = {
     },
     test: {
       key: 'test',
-      value: 'Hello World!',
+      value: `G'day World!`,
     },
   },
   propsConfig: {
@@ -175,6 +179,10 @@ const DUMMY_SECOND_COMPONENT_HEADING: BlockModel = {
     text: {
       key: 'text',
       value: `G'day there`,
+      linked: {
+        blockKey: 'DUMMY_SECOND_COMPONENT_BLOCK',
+        propKey: 'test',
+      },
     },
   },
 };
@@ -187,6 +195,20 @@ const DUMMY_SECOND_COMPONENT_BLOCK: BlockModel = {
     children: {
       key: 'children',
       value: [DUMMY_SECOND_COMPONENT_HEADING.key],
+    },
+    test: {
+      key: 'test',
+      value: 'Boop Woop',
+    },
+  },
+  propsConfig: {
+    test: {
+      key: 'test',
+      label: 'Test',
+      type: BLOCK_PROPS_CONFIG_TYPES.string,
+      customProp: true,
+      editable: true,
+      linkable: true,
     },
   },
 };

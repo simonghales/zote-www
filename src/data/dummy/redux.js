@@ -13,9 +13,8 @@ export const dummyEditorReduxState: EditorReduxState = {
 };
 
 export const dummyUiReduxState = {
-  selectedComponentKey: DUMMY_TEST_COMPONENT.key,
   componentsSelectedBlockKeys: {
-    DUMMY_TEST_COMPONENT: 'DUMMY_CONTAINER_BLOCK',
+    DUMMY_TEST_COMPONENT: 'DUMMY_COMPONENT_IMPORT_BLOCK',
   },
 };
 

@@ -72,3 +72,8 @@ export function getReactPropsFromHtmlAttributes(
 export function isPropConfigBlockType(propConfig?: BlockPropConfigModel | null): boolean {
   return !!propConfig && propConfig.type === BLOCK_PROPS_CONFIG_TYPES.blocks;
 }
+
+
+export function isPropConfigComponentReferenceType(propConfig?: BlockPropConfigModel | null): boolean {
+  return !!propConfig && propConfig.type === BLOCK_PROPS_CONFIG_TYPES.componentReference;
+}
