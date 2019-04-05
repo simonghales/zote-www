@@ -11,12 +11,11 @@ import type { ReduxState } from '../../../redux/store';
 import { getSelectedComponentSelector } from '../../state/reselect/component';
 import { mapComponentBlocksToMappedBlocks } from '../../../preview/data/block/state';
 import { getReduxStyles } from '../../../redux/styles/state';
-import { getReduxUiHoveredBlockKey } from '../../../redux/ui/state';
 import { getComponentsFromReduxEditorState } from '../../../redux/editor/state';
+import { EditorUIContext } from '../../context/components/EditorUIContextWrapper/EditorUIContextWrapper';
 
 type Props = {
   data: any,
-  hoveredBlockKey: string,
 };
 
 type State = {
@@ -31,6 +30,8 @@ type State = {
 };
 
 class EmbeddedPreview extends Component<Props, State> {
+  static contextType = EditorUIContext;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -107,7 +108,8 @@ class EmbeddedPreview extends Component<Props, State> {
 
   getContextState() {
     const { config } = this.state;
-    const { data, hoveredBlockKey } = this.props;
+    const { data } = this.props;
+    const { hoveredBlockKey } = this.context;
     return {
       ...config,
       setPreset: this.handleSetPreset,
@@ -143,7 +145,6 @@ const mapStateToProps = (state: ReduxState) => {
   const mappedBlocks = mapComponentBlocksToMappedBlocks(selectedComponent, reduxStyles, components);
   return {
     data: mappedBlocks,
-    hoveredBlockKey: getReduxUiHoveredBlockKey(state),
   };
 };
 

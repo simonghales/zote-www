@@ -23,6 +23,7 @@ import {
 } from '../../../../../redux/ui/reducer';
 import OpenComponentButton from './components/OpenComponentButton/OpenComponentButton';
 import { getComponentsFromReduxEditorState } from '../../../../../redux/editor/state';
+import { EditorUIContext } from '../../../../context/components/EditorUIContextWrapper/EditorUIContextWrapper';
 
 function isButtonSelected(
   blockKey: string,
@@ -48,10 +49,11 @@ type Props = {
   icon: Node,
   rootBlock?: boolean,
   addBlockSelect: (blockKey: string, position: AddBlockPositions) => void,
-  setHovered: (blockKey: string) => void,
 };
 
 class BlockItem extends React.Component<Props> {
+  static contextType = EditorUIContext;
+
   static defaultProps = {
     canContainChildren: false,
     children: undefined,
@@ -60,13 +62,14 @@ class BlockItem extends React.Component<Props> {
   };
 
   handleMouseEnter = () => {
-    const { blockKey, setHovered } = this.props;
-    setHovered(blockKey);
+    const { blockKey } = this.props;
+    const { setHoveredBlockKey } = this.context;
+    setHoveredBlockKey(blockKey);
   };
 
   handleMouseLeave = () => {
-    const { setHovered } = this.props;
-    setHovered('');
+    const { setHoveredBlockKey } = this.context;
+    setHoveredBlockKey('');
   };
 
   handleOnClick = () => {
@@ -163,7 +166,6 @@ const mapStateToProps = (state: ReduxState, { blockKey }: Props) => {
 const mapDispatchToProps = {
   addBlockSelect: (blockKey: string, position: AddBlockPositions) =>
     setAddingBlockSelectedRedux(blockKey, position),
-  setHovered: (blockKey: string) => setHoveredBlockKeyRedux(blockKey),
 };
 
 export default connect(
