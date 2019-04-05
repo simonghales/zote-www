@@ -11,6 +11,7 @@ import ComponentImportBlock from '../block/types/groups/component/ComponentImpor
 import HeadingBlock from '../block/types/groups/basic/Heading';
 import TextBlock from '../block/types/groups/basic/Text';
 import HtmlElementBlock from '../block/types/groups/html/Element';
+import RepeaterBlock from '../block/types/groups/functional/Repeater';
 import { BLOCK_PROPS_CONFIG_TYPES } from '../block/props/model';
 
 export const DUMMY_BLOCK_STYLES: StyleModel = {
@@ -129,6 +130,22 @@ const DUMMY_COMPONENT_IMPORT_BLOCK: BlockModel = {
   },
 };
 
+const DUMMY_REPEATER_BLOCK: BlockModel = {
+  key: 'DUMMY_REPEATER_BLOCK',
+  blockTypeKey: RepeaterBlock.key,
+  name: 'Test Repeater',
+  props: {
+    children: {
+      key: 'children',
+      value: [DUMMY_COMPONENT_IMPORT_BLOCK.key],
+    },
+    test: {
+      key: 'test',
+      value: `G'day World!`,
+    },
+  },
+};
+
 export const DUMMY_BLOCK: BlockModel = {
   key: 'DUMMY_BLOCK',
   blockTypeKey: ComponentBlock.key,
@@ -136,7 +153,7 @@ export const DUMMY_BLOCK: BlockModel = {
   props: {
     children: {
       key: 'children',
-      value: [DUMMY_CONTAINER_BLOCK.key, DUMMY_COMPONENT_IMPORT_BLOCK.key],
+      value: [DUMMY_CONTAINER_BLOCK.key, DUMMY_REPEATER_BLOCK.key],
     },
     test: {
       key: 'test',
@@ -167,6 +184,7 @@ export const DUMMY_TEST_COMPONENT: ComponentModel = {
     [DUMMY_CONTAINER_BLOCK.key]: DUMMY_CONTAINER_BLOCK,
     [DUMMY_HTML_ELEMENT_BLOCK.key]: DUMMY_HTML_ELEMENT_BLOCK,
     [DUMMY_COMPONENT_IMPORT_BLOCK.key]: DUMMY_COMPONENT_IMPORT_BLOCK,
+    [DUMMY_REPEATER_BLOCK.key]: DUMMY_REPEATER_BLOCK,
   },
   rootBlockKey: DUMMY_BLOCK.key,
 };

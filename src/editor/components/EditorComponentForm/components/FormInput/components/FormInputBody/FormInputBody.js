@@ -12,6 +12,7 @@ import {
 import ColorInput from '../../../../../inputs/ColorInput/ColorInput';
 import { TextAlignInput } from '../../../../../inputs/RadioInput/RadioInput';
 import ArrayKeyValueInput from '../../../../../inputs/ArrayKeyValueInput/ArrayKeyValueInput';
+import RepeaterInput from '../../../../../inputs/RepeaterInput/RepeaterInput';
 
 export const FORM_INPUT_TYPES = {
   string: 'string',
@@ -24,6 +25,7 @@ export const FORM_INPUT_TYPES = {
   htmlContainer: 'htmlContainer',
   htmlHeading: 'htmlHeading',
   htmlAttributes: 'htmlAttributes',
+  repeaterData: 'repeaterData',
 };
 export type FormInputTypes = $Keys<typeof FORM_INPUT_TYPES>;
 
@@ -38,6 +40,7 @@ const MAPPED_FORM_INPUT_TYPES = {
   [FORM_INPUT_TYPES.htmlContainer]: HtmlContainerInput,
   [FORM_INPUT_TYPES.htmlHeading]: HtmlHeadingInput,
   [FORM_INPUT_TYPES.htmlAttributes]: ArrayKeyValueInput,
+  [FORM_INPUT_TYPES.repeaterData]: RepeaterInput,
 };
 
 function getMappedFormInput(inputType: FormInputTypes) {
