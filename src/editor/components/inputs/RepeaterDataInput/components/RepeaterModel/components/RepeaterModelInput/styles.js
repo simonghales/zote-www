@@ -19,3 +19,8 @@ export const typeClass = css`
   flex: 1;
   margin-right: 5px;
 `;
+
+export const deleteClass = css`
+  display: flex;
+  align-items: center;
+`;

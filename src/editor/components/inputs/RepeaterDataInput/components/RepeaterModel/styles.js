@@ -7,7 +7,7 @@ import { labelCss } from '../../../../../../styles/shared/typography';
 export const containerClass = css`
   border: 1px solid ${colors.lightFaintShade};
   border-radius: 3px;
-  margin-top: 5px;
+  margin-top: 10px;
   padding: 0 5px 5px 5px;
 `;
 
