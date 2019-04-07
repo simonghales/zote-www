@@ -13,8 +13,8 @@ export const containerClass = css`
 
 export const labelClass = css`
   ${labelCss};
-  margin-left: -3px;
   margin-top: -8px;
+  text-align: center;
 
   span {
     background-color: ${colors.lightBlue};

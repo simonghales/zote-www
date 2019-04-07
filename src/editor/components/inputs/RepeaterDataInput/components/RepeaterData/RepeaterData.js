@@ -9,9 +9,9 @@ const RepeaterData = () => (
       <span>Data</span>
     </div>
     <div className={styles.itemsClass}>
-      <DataItem />
-      <DataItem />
-      <DataItem />
+      {Array.from({ length: 3 }).map((item, index) => (
+        <DataItem key={index.toString()} index={index} />
+      ))}
     </div>
   </div>
 );
