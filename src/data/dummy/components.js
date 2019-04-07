@@ -139,9 +139,40 @@ const DUMMY_REPEATER_BLOCK: BlockModel = {
       key: 'children',
       value: [DUMMY_COMPONENT_IMPORT_BLOCK.key],
     },
-    test: {
-      key: 'test',
-      value: `G'day World!`,
+    repeaterData: {
+      key: 'repeaterData',
+      value: {
+        model: {
+          fields: {
+            label: {
+              key: 'label',
+              label: 'Label',
+              type: BLOCK_PROPS_CONFIG_TYPES.string,
+            },
+            url: {
+              key: 'url',
+              label: 'URL',
+              type: BLOCK_PROPS_CONFIG_TYPES.string,
+            },
+          },
+        },
+        data: {
+          order: ['1'],
+          items: {
+            '1': {
+              key: '1',
+              values: {
+                label: {
+                  value: 'Cool Website',
+                },
+                url: {
+                  value: 'hello.world',
+                },
+              },
+            },
+          },
+        },
+      },
     },
   },
 };

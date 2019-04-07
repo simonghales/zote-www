@@ -9,14 +9,19 @@ import { RoundIconButton } from '../../../../../../Button/Button';
 
 const defaultPropType = PROP_TYPES_OPTIONS[0].value;
 
-const RepeaterModelInput = () => (
+type Props = {
+  label: string,
+  type: string,
+};
+
+const RepeaterModelInput = ({ label, type }: Props) => (
   <div className={styles.containerClass}>
     <div className={styles.labelClass}>
-      <Input value="Label" theme={INPUT_THEMES.plain} />
+      <Input value={label} theme={INPUT_THEMES.plain} />
     </div>
     <div className={styles.typeClass}>
       <SelectInput
-        value={defaultPropType}
+        value={type}
         options={PROP_TYPES_OPTIONS}
         defaultValue={defaultPropType}
         updateValue={() => {}}
