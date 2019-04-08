@@ -22,6 +22,7 @@ export function generateNewPropConfig(
     customProp: true,
     editable: true,
     deletable: true,
+    linkable: true,
   };
 }
 
