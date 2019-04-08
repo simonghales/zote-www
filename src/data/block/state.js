@@ -22,7 +22,7 @@ import type { ParsedPropBlocksValue } from './props/state';
 import {
   getPropConfigFromPropsConfig,
   getSortingPriorityFromPropConfig,
-  parsePropValue,
+  parseBlockPropValue,
 } from './props/state';
 import { isValueDefined } from '../../utils/validation';
 import { isHtmlElementVoid } from '../../utils/html';
@@ -36,6 +36,7 @@ import {
 } from '../component/state';
 import type { RepeaterDataPropModel } from './props/types/model';
 import { getRepeaterDataFields } from './props/types/state';
+import RepeaterBlock from './types/groups/functional/Repeater';
 
 export function getBlockStyleKeyFormat(blockKey: string): string {
   return `block::${blockKey}`;
@@ -165,7 +166,7 @@ export function getBlockChildrenKeysFromBlock(block: BlockModel): Array<string> 
     return [];
   }
   if (childrenPropConfig.type === BLOCK_PROPS_CONFIG_TYPES.blocks) {
-    const value: any = parsePropValue(childrenProp, childrenPropConfig.type);
+    const value: any = parseBlockPropValue(childrenProp, childrenPropConfig.type);
     return (value: ParsedPropBlocksValue);
   }
   return [];
@@ -539,4 +540,8 @@ export function getBlockComponentImportedContentProps(
     editable: false,
     deletable: false,
   }));
+}
+
+export function isBlockRepeater(block: BlockModel): boolean {
+  return block.blockTypeKey === RepeaterBlock.key;
 }

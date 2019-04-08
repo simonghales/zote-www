@@ -31,7 +31,7 @@ export function parsePropBlocksValue(value: any): ParsedPropBlocksValue {
 
 export type ParsedPropValues = string | ParsedPropBlocksValue | null;
 
-export function parsePropValue(
+export function parseBlockPropValue(
   prop: BlockPropModel,
   propType: BlockPropsConfigTypes
 ): ParsedPropValues {

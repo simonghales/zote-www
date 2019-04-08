@@ -19,6 +19,7 @@ import { BLOCK_TYPES } from '../../../data/block/types/data';
 import { getComponentFromBlockType } from '../../../data/block/types/state';
 import { getMappedBlockStyles } from './styles/state';
 import type { StylesModels } from '../../../data/styles/model';
+import type { RepeaterIndexes } from './props/state';
 
 export function getBlockTypeFromMappedBlock(mappedBlock: MappedBlockModel): BlockTypeModel {
   return BLOCK_TYPES[mappedBlock.blockTypeKey];
@@ -32,6 +33,7 @@ export function getMappedStylesFromMappedBlock(
 }
 
 export function getComponentFromMappedBlock(mappedBlock: MappedBlockModel) {
+  console.log('mappedBlock', mappedBlock);
   const blockType = getBlockTypeFromMappedBlock(mappedBlock);
   return getComponentFromBlockType(blockType);
 }
@@ -42,7 +44,8 @@ export function mapBlockToMappedBlock(
   styles: StylesModels,
   parsedProps: MappedBlockParsedPropsModel,
   components: ComponentsModels,
-  mappedBlockToBlock: MappedBlockToBlockReplacement
+  mappedBlockToBlock: MappedBlockToBlockReplacement,
+  repeaterIndexes: RepeaterIndexes
 ): MappedBlockModel {
   const styleKey = getStyleKeyFromBlock(block);
   return {
@@ -54,7 +57,8 @@ export function mapBlockToMappedBlock(
       styles,
       parsedProps,
       components,
-      mappedBlockToBlock
+      mappedBlockToBlock,
+      repeaterIndexes
     ),
     styles: getMappedBlockStyles(styleKey, styles),
   };
@@ -66,7 +70,8 @@ export function mapBlocksToMappedBlocks(
   styles: StylesModels,
   parsedProps: MappedBlockParsedPropsModel,
   components: ComponentsModels,
-  mappedBlockToBlock: MappedBlockToBlockReplacement
+  mappedBlockToBlock: MappedBlockToBlockReplacement,
+  repeaterIndexes: RepeaterIndexes
 ): Array<MappedBlockModel> {
   return blockKeys.map(blockKey => {
     const block = getBlockFromBlocks(blockKey, blocks);
@@ -76,7 +81,8 @@ export function mapBlocksToMappedBlocks(
       styles,
       parsedProps,
       components,
-      mappedBlockToBlock
+      mappedBlockToBlock,
+      repeaterIndexes
     );
   });
 }
@@ -86,7 +92,8 @@ export function mapComponentBlocksToMappedBlocks(
   styles: StylesModels,
   parsedProps: MappedBlockParsedPropsModel,
   components: ComponentsModels,
-  mappedBlockToBlock: MappedBlockToBlockReplacement = {}
+  mappedBlockToBlock: MappedBlockToBlockReplacement = {},
+  repeaterIndexes: RepeaterIndexes = {}
 ): Array<MappedBlockModel> {
   const blocks = getBlocksFromComponent(component);
   const rootBlockKey = getRootBlockKeyFromComponent(component);
@@ -96,6 +103,7 @@ export function mapComponentBlocksToMappedBlocks(
     styles,
     parsedProps,
     components,
-    mappedBlockToBlock
+    mappedBlockToBlock,
+    repeaterIndexes
   );
 }

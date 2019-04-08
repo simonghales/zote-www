@@ -3,6 +3,7 @@ import { camelCase } from 'lodash';
 import type {
   HtmlAttributeEntryModel,
   HtmlAttributesPropValue,
+  RepeaterDataPropDataItemModel,
   RepeaterDataPropModel,
   RepeaterDataPropModelFieldModel,
 } from './model';
@@ -78,6 +79,10 @@ export function isPropConfigBlockType(propConfig?: BlockPropConfigModel | null):
   return !!propConfig && propConfig.type === BLOCK_PROPS_CONFIG_TYPES.blocks;
 }
 
+export function isPropConfigRepeaterDataType(propConfig?: BlockPropConfigModel | null): boolean {
+  return !!propConfig && propConfig.type === BLOCK_PROPS_CONFIG_TYPES.repeaterData;
+}
+
 export function isPropConfigComponentReferenceType(
   propConfig?: BlockPropConfigModel | null
 ): boolean {
@@ -90,4 +95,12 @@ export function getRepeaterDataFields(
   const { model } = prop;
   const { fields = {} } = model;
   return Object.keys(fields).map(fieldKey => fields[fieldKey]);
+}
+
+export function getRepeaterDataItems(
+  prop: RepeaterDataPropModel
+): Array<RepeaterDataPropDataItemModel> {
+  const { data } = prop;
+  const { items = {}, order = [] } = data;
+  return order.map(itemKey => items[itemKey]);
 }

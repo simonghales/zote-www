@@ -11,12 +11,20 @@ import {
   getMappedStylesFromMappedBlock,
 } from '../preview/data/block/state';
 import { BLOCK_PROPS_CONFIG_TYPES } from '../data/block/props/model';
+import RepeaterBlock from '../data/block/types/groups/functional/Repeater';
 
-export function parseMappedBlockProp(prop: MappedBlockPropModel): any {
+export function parseMappedBlockProp(
+  prop: MappedBlockPropModel,
+  mappedBlock: MappedBlockModel
+): any {
   switch (prop.type) {
     case BLOCK_PROPS_CONFIG_TYPES.blocks:
     case BLOCK_PROPS_CONFIG_TYPES.componentReference:
       if (prop.value) {
+        if (mappedBlock.blockTypeKey === RepeaterBlock.key) {
+          // eslint-disable-next-line
+          return prop.value.map(parseMappedBlocks);
+        }
         // eslint-disable-next-line
         return parseMappedBlocks(prop.value);
       }
@@ -34,7 +42,7 @@ export function parseMappedBlockProps(
   const { props = {} } = mappedBlock;
   const parsedProps = {};
   Object.keys(props).forEach(propKey => {
-    parsedProps[propKey] = parseMappedBlockProp(props[propKey]);
+    parsedProps[propKey] = parseMappedBlockProp(props[propKey], mappedBlock);
   });
   return parsedProps;
 }

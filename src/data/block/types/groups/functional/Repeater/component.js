@@ -9,7 +9,7 @@ export type RepeaterParsedProps = DefaultBlockProps & {
 class RepeaterComponent extends React.PureComponent<RepeaterParsedProps> {
   render() {
     const { children } = this.props;
-    return children;
+    return <React.Fragment>{children}</React.Fragment>;
   }
 }
 
