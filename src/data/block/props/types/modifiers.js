@@ -1,5 +1,6 @@
 // @flow
 
+import move from 'lodash-move';
 import type {
   RepeaterDataPropDataItemModel,
   RepeaterDataPropModel,
@@ -202,6 +203,26 @@ export function addNewDataItemToRepeaterData(
         ...items,
         [newItem.key]: newItem,
       },
+    },
+  };
+}
+
+export function updateDataItemPositionInRepeaterData(
+  repeaterData: RepeaterDataPropModel,
+  itemKey: string,
+  newPosition: number
+): RepeaterDataPropModel {
+  const { data } = repeaterData;
+  const { order } = data;
+  let updatedOrder = order.slice();
+  const originalPosition = updatedOrder.indexOf(itemKey);
+  newPosition = newPosition >= 0 ? newPosition : updatedOrder.length;
+  updatedOrder = move(updatedOrder, originalPosition, newPosition);
+  return {
+    ...repeaterData,
+    data: {
+      ...data,
+      order: updatedOrder,
     },
   };
 }

@@ -10,6 +10,7 @@ import {
   removeDataItemFromRepeaterData,
   removeFieldFromRepeaterDataModel,
   updateDataItemInRepeaterData,
+  updateDataItemPositionInRepeaterData,
   updateRepeaterDataModelField,
 } from '../../../../data/block/props/types/modifiers';
 
@@ -51,6 +52,11 @@ const RepeaterDataInput = ({ value, defaultValue, updateValue }: Props) => {
     updateValue(updatedValue);
   };
 
+  const updateDataItemPosition = (itemKey: string, position: number) => {
+    const updatedValue = updateDataItemPositionInRepeaterData(usedValue, itemKey, position);
+    updateValue(updatedValue);
+  };
+
   return (
     <section>
       <RepeaterModel
@@ -64,6 +70,7 @@ const RepeaterDataInput = ({ value, defaultValue, updateValue }: Props) => {
         model={usedValue.model}
         updateDataItem={updateDataItem}
         removeDataItem={removeDataItem}
+        updateDataItemPosition={updateDataItemPosition}
         addDataItem={addDataItem}
       />
     </section>

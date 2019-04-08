@@ -18,9 +18,17 @@ type Props = {
   addDataItem: (position: number) => void,
   updateDataItem: (itemKey: string, fieldKey: string, newValue: any) => void,
   removeDataItem: (itemKey: string) => void,
+  updateDataItemPosition: (itemKey: string, position: number) => void,
 };
 
-const RepeaterData = ({ data, model, addDataItem, updateDataItem, removeDataItem }: Props) => (
+const RepeaterData = ({
+  data,
+  model,
+  addDataItem,
+  updateDataItem,
+  removeDataItem,
+  updateDataItemPosition,
+}: Props) => (
   <div className={styles.containerClass}>
     <div className={styles.labelClass}>
       <span>Data</span>
@@ -49,6 +57,12 @@ const RepeaterData = ({ data, model, addDataItem, updateDataItem, removeDataItem
               removeDataItem(itemKey);
             }}
             addDataItem={addDataItem}
+            moveUp={() => {
+              updateDataItemPosition(itemKey, index - 1);
+            }}
+            moveDown={() => {
+              updateDataItemPosition(itemKey, index + 1);
+            }}
           />
         );
       })}

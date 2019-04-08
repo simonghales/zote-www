@@ -48,9 +48,20 @@ type Props = {
   update: (fieldKey: string, newValue: any) => void,
   remove: () => void,
   addDataItem: (position: number) => void,
+  moveUp: () => void,
+  moveDown: () => void,
 };
 
-const DataItem = ({ index, values, model, update, remove, addDataItem }: Props) => (
+const DataItem = ({
+  index,
+  values,
+  model,
+  update,
+  remove,
+  addDataItem,
+  moveUp,
+  moveDown,
+}: Props) => (
   <div className={styles.containerClass}>
     {Object.keys(model.fields).map(fieldKey => (
       <DataItemInput
@@ -64,10 +75,10 @@ const DataItem = ({ index, values, model, update, remove, addDataItem }: Props) 
     ))}
     <div className={styles.optionsClass}>
       <div className={styles.directionOptionsClass}>
-        <RoundIconButton onClick={() => {}}>
+        <RoundIconButton onClick={moveUp}>
           <FaArrowUp size={11} />
         </RoundIconButton>
-        <RoundIconButton onClick={() => {}}>
+        <RoundIconButton onClick={moveDown}>
           <FaArrowDown size={11} />
         </RoundIconButton>
       </div>
