@@ -126,6 +126,11 @@ const DUMMY_COMPONENT_IMPORT_BLOCK: BlockModel = {
     test: {
       key: 'test',
       value: 'banana',
+      linked: {
+        blockKey: 'DUMMY_REPEATER_BLOCK',
+        propKey: 'repeaterData',
+        repeaterFieldKey: 'label',
+      },
     },
   },
 };

@@ -12,13 +12,15 @@ export function removePropLinked(prop: BlockPropModel): BlockPropModel {
 export function updatePropLinked(
   prop: BlockPropModel,
   blockKey: string,
-  propKey: string
+  propKey: string,
+  fieldKey?: string
 ): BlockPropModel {
   return {
     ...prop,
     linked: {
       blockKey,
       propKey,
+      repeaterFieldKey: fieldKey,
     },
   };
 }

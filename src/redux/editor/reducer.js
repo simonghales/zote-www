@@ -417,6 +417,7 @@ type SetBlockPropLinkedPayload = {
   propKey: string,
   selectedBlockKey: string,
   selectedPropKey: string,
+  fieldKey?: string,
 };
 
 type SetBlockPropLinkedAction = {
@@ -429,7 +430,8 @@ export function setBlockPropLinkedRedux(
   blockKey: string,
   propKey: string,
   selectedBlockKey: string,
-  selectedPropKey: string
+  selectedPropKey: string,
+  fieldKey?: string
 ): SetBlockPropLinkedAction {
   return {
     type: SET_BLOCK_PROP_LINKED,
@@ -439,13 +441,21 @@ export function setBlockPropLinkedRedux(
       propKey,
       selectedBlockKey,
       selectedPropKey,
+      fieldKey,
     },
   };
 }
 
 function handleSetBlockPropLinked(
   state: EditorReduxState,
-  { componentKey, blockKey, propKey, selectedBlockKey, selectedPropKey }: SetBlockPropLinkedPayload
+  {
+    componentKey,
+    blockKey,
+    propKey,
+    selectedBlockKey,
+    selectedPropKey,
+    fieldKey,
+  }: SetBlockPropLinkedPayload
 ): EditorReduxState {
   const components = getComponentsFromReduxEditorState(state);
   const component = getComponentFromComponents(componentKey, components);
@@ -458,7 +468,13 @@ function handleSetBlockPropLinked(
         ...component,
         blocks: {
           ...component.blocks,
-          [blockKey]: updateBlockPropLinked(block, propKey, selectedBlockKey, selectedPropKey),
+          [blockKey]: updateBlockPropLinked(
+            block,
+            propKey,
+            selectedBlockKey,
+            selectedPropKey,
+            fieldKey
+          ),
         },
       },
     },

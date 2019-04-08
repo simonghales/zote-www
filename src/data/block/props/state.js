@@ -1,5 +1,5 @@
 // @flow
-
+import { get } from 'lodash';
 import type {
   BlockPropConfigModel,
   BlockPropLinkedModel,
@@ -10,6 +10,7 @@ import type {
 } from './model';
 import { BLOCK_PROPS_CONFIG_TYPES } from './model';
 import { isValueDefined } from '../../../utils/validation';
+import type { RepeaterDataPropModel } from './types/model';
 
 export function getPropConfigFromPropsConfig(
   propKey: string,
@@ -82,6 +83,18 @@ export function getLinkedFromProp(prop: BlockPropModel): BlockPropLinkedModel | 
   return prop.linked ? prop.linked : null;
 }
 
-export function getLabelFromPropConfig(propConfig: BlockPropConfigModel): string {
+export function getRepeaterDataFieldLabel(data: RepeaterDataPropModel, fieldKey: string): string {
+  return get(data, `model.fields[${fieldKey}].label`, '');
+}
+
+export function getLabelFromPropConfig(
+  propConfig: BlockPropConfigModel,
+  propValue: any,
+  fieldKey?: string
+): string {
+  console.log('propConfig', propConfig, fieldKey);
+  if (propConfig.type === BLOCK_PROPS_CONFIG_TYPES.repeaterData && fieldKey) {
+    return getRepeaterDataFieldLabel(propValue, fieldKey);
+  }
   return propConfig.label ? propConfig.label : propConfig.key;
 }

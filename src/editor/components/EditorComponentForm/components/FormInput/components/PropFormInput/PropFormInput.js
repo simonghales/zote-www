@@ -20,6 +20,7 @@ type State = {
 type PropFormInputProps = FormInputProps & {
   linkedBlockKey?: string | null,
   linkedPropKey?: string | null,
+  linkedFieldKey?: string | null,
 };
 
 export class PropFormInput extends React.Component<PropFormInputProps, State> {
@@ -114,6 +115,7 @@ export class PropFormInput extends React.Component<PropFormInputProps, State> {
       blockKey,
       linkedBlockKey,
       linkedPropKey,
+      linkedFieldKey,
     } = this.props;
     const { dropDownVisible, editing, linkMenuVisible } = this.state;
     const inputId = getFormInputId(inputKey);
@@ -154,6 +156,7 @@ export class PropFormInput extends React.Component<PropFormInputProps, State> {
           <LinkedPropInput
             linkedBlockKey={linkedBlockKey}
             linkedPropKey={linkedPropKey}
+            linkedFieldKey={linkedFieldKey}
             componentKey={componentKey}
             blockKey={blockKey}
             propKey={inputKey}

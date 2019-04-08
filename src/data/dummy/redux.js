@@ -14,7 +14,7 @@ export const dummyEditorReduxState: EditorReduxState = {
 
 export const dummyUiReduxState = {
   componentsSelectedBlockKeys: {
-    DUMMY_TEST_COMPONENT: 'DUMMY_REPEATER_BLOCK',
+    DUMMY_TEST_COMPONENT: 'DUMMY_COMPONENT_IMPORT_BLOCK',
   },
 };
 

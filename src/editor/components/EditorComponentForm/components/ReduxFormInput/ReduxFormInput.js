@@ -33,6 +33,7 @@ type Props = {
   inactive: boolean,
   linkedBlockKey: string | null,
   linkedPropKey: string | null,
+  linkedFieldKey: string | null,
 };
 
 const ReduxFormInput = ({
@@ -45,6 +46,7 @@ const ReduxFormInput = ({
   blockKey,
   linkedBlockKey,
   linkedPropKey,
+  linkedFieldKey,
   reduxType,
   styleStateKey,
   blockStyleKey,
@@ -65,6 +67,7 @@ const ReduxFormInput = ({
       propInput={input.propInput}
       linkedBlockKey={linkedBlockKey}
       linkedPropKey={linkedPropKey}
+      linkedFieldKey={linkedFieldKey}
       styleStateKey={styleStateKey}
       blockStyleKey={blockStyleKey}
     />
@@ -78,6 +81,7 @@ const mapStateToProps = (
   let value;
   let linkedBlockKey = null;
   let linkedPropKey = null;
+  let linkedFieldKey = null;
   // eslint-disable-next-line prefer-destructuring
   let defaultValue = input.defaultValue;
   if (reduxType === EDITOR_FORM_REDUX_TYPES.style) {
@@ -89,6 +93,7 @@ const mapStateToProps = (
     if (propLinked) {
       linkedBlockKey = propLinked.blockKey;
       linkedPropKey = propLinked.propKey;
+      linkedFieldKey = propLinked.repeaterFieldKey;
     }
     const fetchedDefaultValue = getReduxComponentBlockPropDefaultValue(
       state.editor,
@@ -107,6 +112,7 @@ const mapStateToProps = (
     inactive,
     linkedBlockKey,
     linkedPropKey,
+    linkedFieldKey,
   };
 };
 

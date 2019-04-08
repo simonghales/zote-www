@@ -1,6 +1,11 @@
 // @flow
 import { camelCase } from 'lodash';
-import type { HtmlAttributeEntryModel, HtmlAttributesPropValue } from './model';
+import type {
+  HtmlAttributeEntryModel,
+  HtmlAttributesPropValue,
+  RepeaterDataPropModel,
+  RepeaterDataPropModelFieldModel,
+} from './model';
 import type { BlockPropConfigModel } from '../model';
 import { BLOCK_PROPS_CONFIG_TYPES } from '../model';
 
@@ -73,7 +78,16 @@ export function isPropConfigBlockType(propConfig?: BlockPropConfigModel | null):
   return !!propConfig && propConfig.type === BLOCK_PROPS_CONFIG_TYPES.blocks;
 }
 
-
-export function isPropConfigComponentReferenceType(propConfig?: BlockPropConfigModel | null): boolean {
+export function isPropConfigComponentReferenceType(
+  propConfig?: BlockPropConfigModel | null
+): boolean {
   return !!propConfig && propConfig.type === BLOCK_PROPS_CONFIG_TYPES.componentReference;
+}
+
+export function getRepeaterDataFields(
+  prop: RepeaterDataPropModel
+): Array<RepeaterDataPropModelFieldModel> {
+  const { model } = prop;
+  const { fields = {} } = model;
+  return Object.keys(fields).map(fieldKey => fields[fieldKey]);
 }

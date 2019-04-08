@@ -34,6 +34,8 @@ import {
   getComponentName,
   getRootBlockKeyFromComponent,
 } from '../component/state';
+import type { RepeaterDataPropModel } from './props/types/model';
+import { getRepeaterDataFields } from './props/types/state';
 
 export function getBlockStyleKeyFormat(blockKey: string): string {
   return `block::${blockKey}`;
@@ -419,19 +421,45 @@ export function getRecursiveBlockPropAvailableProps(
   ].concat(childrenBlocksAvailableProps);
 }
 
+export function getRepeaterDataProps(
+  propKey: string,
+  prop: AvailablePropModel,
+  propType: BlockPropsConfigTypes
+): AvailablePropsModel {
+  const props = {};
+  const propValue: RepeaterDataPropModel = prop.value;
+  const repeaterFields = getRepeaterDataFields(propValue);
+  repeaterFields.forEach(field => {
+    if (field.type === propType) {
+      props[`${propKey}::${field.key}`] = {
+        value: field.label,
+        config: prop.config,
+      };
+    }
+  });
+  return props;
+}
+
 export function filterAvailableProps(
   availableProps: Array<BlockAvailablePropsModel>,
   propType: BlockPropsConfigTypes
 ): Array<BlockAvailablePropsModel> {
   return availableProps
     .map(block => {
-      const props = {};
+      let props = {};
       Object.keys(block.props).forEach(propKey => {
         const prop = block.props[propKey];
         if (prop.config.type === propType) {
           props[propKey] = prop;
+        } else if (prop.config.type === BLOCK_PROPS_CONFIG_TYPES.repeaterData) {
+          const repeaterProps = getRepeaterDataProps(propKey, prop, propType);
+          props = {
+            ...props,
+            ...repeaterProps,
+          };
         }
       });
+      console.log('props', props);
       return {
         ...block,
         props,

@@ -1,5 +1,5 @@
 // @flow
-
+import { get } from 'lodash';
 import type { BlockModel, BlocksModel } from '../../../../data/block/model';
 import type {
   MappedBlockModel,
@@ -29,6 +29,7 @@ import {
 import type { ComponentsModels } from '../../../../data/component/model';
 import { getComponentKey, getRootBlockKeyFromComponent } from '../../../../data/component/state';
 import { isValueDefined } from '../../../../utils/validation';
+import type { RepeaterDataPropModel } from '../../../../data/block/props/types/model';
 
 export function parseMappedBlockPropBlocksValue(
   propValue: any,
@@ -143,6 +144,12 @@ export function parsePropValue(
   }
 }
 
+export function getPropValueFromRepeaterData(prop: RepeaterDataPropModel, fieldKey: string): any {
+  const index = 0;
+  const itemKey = get(prop, `data.order[${index}]`, '');
+  return get(prop, `data.items[${itemKey}].values[${fieldKey}].value`, '');
+}
+
 export function parseMappedBlockPropLinkedValue(
   prop: BlockPropModel,
   blocks: BlocksModel,
@@ -155,7 +162,7 @@ export function parseMappedBlockPropLinkedValue(
   if (!prop.linked) {
     throw new Error(`This function should only be called when prop has linked values.`);
   }
-  const { blockKey, propKey } = prop.linked;
+  const { blockKey, propKey, repeaterFieldKey = '' } = prop.linked;
   const parsedProp = getPropValueAndTypeFromParsedProps(
     blockKey,
     propKey,
@@ -166,8 +173,12 @@ export function parseMappedBlockPropLinkedValue(
     return null;
   }
   const { propValue, propType } = parsedProp;
+  let finalPropValue = propValue;
+  if (propType === BLOCK_PROPS_CONFIG_TYPES.repeaterData) {
+    finalPropValue = getPropValueFromRepeaterData(propValue, repeaterFieldKey);
+  }
   return parsePropValue(
-    propValue,
+    finalPropValue,
     propType,
     blocks,
     styles,

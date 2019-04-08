@@ -27,7 +27,8 @@ export function updateBlockPropLinked(
   block: BlockModel,
   propKey: string,
   selectedBlockKey: string,
-  selectedPropKey: string
+  selectedPropKey: string,
+  fieldKey?: string
 ): BlockModel {
   const props = getPropsFromBlock(block);
   let prop = getPropFromProps(propKey, props);
@@ -38,7 +39,7 @@ export function updateBlockPropLinked(
     ...block,
     props: {
       ...props,
-      [propKey]: updatePropLinked(prop, selectedBlockKey, selectedPropKey),
+      [propKey]: updatePropLinked(prop, selectedBlockKey, selectedPropKey, fieldKey),
     },
   };
 }

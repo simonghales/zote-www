@@ -5,7 +5,12 @@ import { connect } from 'react-redux';
 import styles from './styles';
 import type { ReduxState } from '../../../../../redux/store';
 import { getComponentBlockFromReduxEditorState } from '../../../../../redux/editor/state';
-import { getMergedPropConfigFromBlock, getNameFromBlock } from '../../../../../data/block/state';
+import {
+  getMergedPropConfigFromBlock,
+  getNameFromBlock,
+  getPropFromBlock,
+  getPropValueFromBlock,
+} from '../../../../../data/block/state';
 import { getLabelFromPropConfig } from '../../../../../data/block/props/state';
 import { removeBlockPropLinkRedux } from '../../../../../redux/editor/reducer';
 
@@ -15,6 +20,7 @@ type Props = {
   propKey: string,
   linkedBlockKey: string,
   linkedPropKey: string,
+  linkedFieldKey?: string,
   blockName: string,
   propName: string,
   removePropLink: () => void,
@@ -38,7 +44,7 @@ const LinkedPropInput = ({ blockName, propName, removePropLink, editLink }: Prop
 
 const mapStateToProps = (
   state: ReduxState,
-  { componentKey, linkedBlockKey, linkedPropKey }: Props
+  { componentKey, linkedBlockKey, linkedPropKey, linkedFieldKey = '' }: Props
 ) => {
   let block;
   try {
@@ -49,8 +55,11 @@ const mapStateToProps = (
       propName: '',
     };
   }
+  const propValue = getPropValueFromBlock(linkedPropKey, block);
   const propConfig = getMergedPropConfigFromBlock(linkedPropKey, block);
-  const propName = propConfig ? getLabelFromPropConfig(propConfig) : linkedPropKey;
+  const propName = propConfig
+    ? getLabelFromPropConfig(propConfig, propValue, linkedFieldKey)
+    : linkedPropKey;
   const blockName = getNameFromBlock(block);
   return {
     blockName,

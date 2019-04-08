@@ -17,6 +17,8 @@ import { setBlockPropLinkedRedux } from '../../../redux/editor/reducer';
 
 export type PropLinkOptionModel = {
   key: string,
+  propKey: string,
+  fieldKey?: string,
   title: string,
   subtitle: string,
 };
@@ -39,7 +41,7 @@ const BlockOption = ({
   selectProp,
 }: {
   block: PropLinkBlockModel,
-  selectProp: (propKey: string) => void,
+  selectProp: (propKey: string, fieldKey?: string) => void,
 }) => (
   <div className={styles.blockOptionClass}>
     <header className={styles.blockOptionHeaderClass}>{block.label}</header>
@@ -49,7 +51,7 @@ const BlockOption = ({
           option={option}
           key={option.key}
           onClick={() => {
-            selectProp(option.key);
+            selectProp(option.propKey, option.fieldKey);
           }}
         />
       ))}
@@ -63,7 +65,7 @@ type Props = {
   componentKey: string,
   blockKey: string,
   propKey: string,
-  selectProp: (blockKey: string, propKey: string) => void,
+  selectProp: (blockKey: string, propKey: string, fieldKey?: string) => void,
 };
 
 const PropLinkMenu = ({ close, blocks, selectProp }: Props) => (
@@ -73,8 +75,8 @@ const PropLinkMenu = ({ close, blocks, selectProp }: Props) => (
         <BlockOption
           key={block.key}
           block={block}
-          selectProp={(propKey: string) => {
-            selectProp(block.key, propKey);
+          selectProp={(propKey: string, fieldKey?: string) => {
+            selectProp(block.key, propKey, fieldKey);
           }}
         />
       ))
@@ -98,9 +100,16 @@ const mapStateToProps = (state: ReduxState, { componentKey, blockKey, propKey }:
 };
 
 const mapDispatchToProps = (dispatch: any, { close, componentKey, blockKey, propKey }: Props) => ({
-  selectProp: (selectedBlockKey: string, selectedPropKey: string) => {
+  selectProp: (selectedBlockKey: string, selectedPropKey: string, fieldKey?: string) => {
     dispatch(
-      setBlockPropLinkedRedux(componentKey, blockKey, propKey, selectedBlockKey, selectedPropKey)
+      setBlockPropLinkedRedux(
+        componentKey,
+        blockKey,
+        propKey,
+        selectedBlockKey,
+        selectedPropKey,
+        fieldKey
+      )
     );
     close();
   },

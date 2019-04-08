@@ -3,6 +3,7 @@
 export type BlockPropLinkedModel = {
   blockKey: string,
   propKey: string,
+  repeaterFieldKey?: string,
 };
 
 export type BlockPropModel = {
