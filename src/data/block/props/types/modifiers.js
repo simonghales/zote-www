@@ -216,8 +216,13 @@ export function updateDataItemPositionInRepeaterData(
   const { order } = data;
   let updatedOrder = order.slice();
   const originalPosition = updatedOrder.indexOf(itemKey);
-  newPosition = newPosition >= 0 ? newPosition : updatedOrder.length;
-  updatedOrder = move(updatedOrder, originalPosition, newPosition);
+  let finalPosition = newPosition;
+  if (finalPosition < 0) {
+    finalPosition = updatedOrder.length;
+  } else if (finalPosition > updatedOrder.length - 1) {
+    finalPosition = 0;
+  }
+  updatedOrder = move(updatedOrder, originalPosition, finalPosition);
   return {
     ...repeaterData,
     data: {
