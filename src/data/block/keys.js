@@ -8,3 +8,7 @@ export function generateComponentKey(): string {
 export function generateBlockKey(): string {
   return uniqueId(`block_`);
 }
+
+export function generateRepeaterDataModelFieldKey(): string {
+  return uniqueId(`field_`);
+}

@@ -154,6 +154,11 @@ const DUMMY_REPEATER_BLOCK: BlockModel = {
               label: 'URL',
               type: BLOCK_PROPS_CONFIG_TYPES.string,
             },
+            abc: {
+              key: 'abc',
+              label: 'Test',
+              type: BLOCK_PROPS_CONFIG_TYPES.string,
+            },
           },
         },
         data: {

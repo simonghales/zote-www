@@ -6,23 +6,27 @@ import * as styles from './styles';
 import Input, { INPUT_THEMES } from '../../../../../../Input/Input';
 import { RoundIconButton, SlimIconButton } from '../../../../../../Button/Button';
 import type {
-  RepeaterDataPropDataItemValueModel,
   RepeaterDataPropDataItemValuesModel,
   RepeaterDataPropModelModel,
 } from '../../../../../../../../data/block/props/types/model';
 
+export const AddDataItemButton = () => (
+  <SlimIconButton icon={<FaPlus size={9} />} onClick={() => {}}>
+    Add Item
+  </SlimIconButton>
+);
+
 type DataItemInputProps = {
   label: string,
   value: any,
+  update: (value: any) => void,
 };
 
-const getValue = (value: RepeaterDataPropDataItemValueModel): any => get(value, 'value', '');
-
-const DataItemInput = ({ label, value }: DataItemInputProps) => (
+const DataItemInput = ({ label, value, update }: DataItemInputProps) => (
   <div className={styles.inputContainerClass}>
     <label className={styles.inputLabelClass}>{label}</label>
     <div>
-      <Input value={value} theme={INPUT_THEMES.plain} />
+      <Input value={value} theme={INPUT_THEMES.plain} onChangeString={update} />
     </div>
   </div>
 );
@@ -30,56 +34,47 @@ const DataItemInput = ({ label, value }: DataItemInputProps) => (
 const getLabelFromModel = (fieldKey: string, model: RepeaterDataPropModelModel): string =>
   get(model, `fields[${fieldKey}].label`, fieldKey);
 
+const getValueFromValues = (fieldKey: string, values: RepeaterDataPropDataItemValuesModel): any =>
+  get(values, `${fieldKey}.value`, '');
+
 type Props = {
-  index: number,
   values: RepeaterDataPropDataItemValuesModel,
   model: RepeaterDataPropModelModel,
+  update: (fieldKey: string, newValue: any) => void,
+  remove: () => void,
 };
 
-const DataItem = ({ index, values, model }: Props) => {
-  const AddButton = () => (
-    <SlimIconButton icon={<FaPlus size={9} />} onClick={() => {}}>
-      Add Item
-    </SlimIconButton>
-  );
-
-  return (
-    <div className={styles.containerClass}>
-      {index === 0 && (
-        <header className={styles.headerClass}>
-          <AddButton />
-        </header>
-      )}
-      {Object.keys(values).map(valueKey => {
-        const value = values[valueKey];
-        return (
-          <DataItemInput
-            label={getLabelFromModel(valueKey, model)}
-            value={getValue(value)}
-            key={valueKey}
-          />
-        );
-      })}
-      <div className={styles.optionsClass}>
-        <div className={styles.directionOptionsClass}>
-          <RoundIconButton onClick={() => {}}>
-            <FaArrowUp size={11} />
-          </RoundIconButton>
-          <RoundIconButton onClick={() => {}}>
-            <FaArrowDown size={11} />
-          </RoundIconButton>
-        </div>
-        <div>
-          <RoundIconButton onClick={() => {}}>
-            <FaTrash size={11} />
-          </RoundIconButton>
-        </div>
+const DataItem = ({ values, model, update, remove }: Props) => (
+  <div className={styles.containerClass}>
+    {Object.keys(model.fields).map(fieldKey => (
+      <DataItemInput
+        label={getLabelFromModel(fieldKey, model)}
+        value={getValueFromValues(fieldKey, values)}
+        key={fieldKey}
+        update={(value: any) => {
+          update(fieldKey, value);
+        }}
+      />
+    ))}
+    <div className={styles.optionsClass}>
+      <div className={styles.directionOptionsClass}>
+        <RoundIconButton onClick={() => {}}>
+          <FaArrowUp size={11} />
+        </RoundIconButton>
+        <RoundIconButton onClick={() => {}}>
+          <FaArrowDown size={11} />
+        </RoundIconButton>
       </div>
-      <footer className={styles.footerClass}>
-        <AddButton />
-      </footer>
+      <div>
+        <RoundIconButton onClick={remove}>
+          <FaTrash size={11} />
+        </RoundIconButton>
+      </div>
     </div>
-  );
-};
+    <footer className={styles.footerClass}>
+      <AddDataItemButton />
+    </footer>
+  </div>
+);
 
 export default DataItem;

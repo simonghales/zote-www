@@ -21,3 +21,9 @@ export const labelClass = css`
     padding: 1px 2px;
   }
 `;
+
+export const footerClass = css`
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+`;
