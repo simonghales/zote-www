@@ -12,3 +12,7 @@ export function generateBlockKey(): string {
 export function generateRepeaterDataModelFieldKey(): string {
   return uniqueId(`field_`);
 }
+
+export function generateRepeaterDataItem(): string {
+  return uniqueId(`item_`);
+}

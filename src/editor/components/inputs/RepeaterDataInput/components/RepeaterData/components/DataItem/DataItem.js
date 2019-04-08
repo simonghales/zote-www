@@ -10,8 +10,12 @@ import type {
   RepeaterDataPropModelModel,
 } from '../../../../../../../../data/block/props/types/model';
 
-export const AddDataItemButton = () => (
-  <SlimIconButton icon={<FaPlus size={9} />} onClick={() => {}}>
+type AddDataItemButtonProps = {
+  add: () => void,
+};
+
+export const AddDataItemButton = ({ add }: AddDataItemButtonProps) => (
+  <SlimIconButton icon={<FaPlus size={9} />} onClick={add}>
     Add Item
   </SlimIconButton>
 );
@@ -38,13 +42,15 @@ const getValueFromValues = (fieldKey: string, values: RepeaterDataPropDataItemVa
   get(values, `${fieldKey}.value`, '');
 
 type Props = {
+  index: number,
   values: RepeaterDataPropDataItemValuesModel,
   model: RepeaterDataPropModelModel,
   update: (fieldKey: string, newValue: any) => void,
   remove: () => void,
+  addDataItem: (position: number) => void,
 };
 
-const DataItem = ({ values, model, update, remove }: Props) => (
+const DataItem = ({ index, values, model, update, remove, addDataItem }: Props) => (
   <div className={styles.containerClass}>
     {Object.keys(model.fields).map(fieldKey => (
       <DataItemInput
@@ -72,7 +78,11 @@ const DataItem = ({ values, model, update, remove }: Props) => (
       </div>
     </div>
     <footer className={styles.footerClass}>
-      <AddDataItemButton />
+      <AddDataItemButton
+        add={() => {
+          addDataItem(index + 1);
+        }}
+      />
     </footer>
   </div>
 );

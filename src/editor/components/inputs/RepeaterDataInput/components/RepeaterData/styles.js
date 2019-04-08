@@ -17,3 +17,9 @@ export const itemsClass = css`
   max-height: 300px;
   overflow-y: auto;
 `;
+
+export const addItemClass = css`
+  display: flex;
+  justify-content: center;
+  margin: 5px 0;
+`;

@@ -5,7 +5,7 @@ import type {
   RepeaterDataPropModel,
   RepeaterDataPropModelFieldModel,
 } from './model';
-import { generateRepeaterDataModelFieldKey } from '../../keys';
+import { generateRepeaterDataItem, generateRepeaterDataModelFieldKey } from '../../keys';
 import { BLOCK_PROPS_CONFIG_TYPES } from '../model';
 
 function updateRepeaterModelField(
@@ -157,18 +157,51 @@ export function removeDataItemFromRepeaterData(
   itemToRemoveKey: string
 ): RepeaterDataPropModel {
   const { data } = repeaterData;
-  const { items } = data;
+  const { items, order } = data;
   const updatedItems = {};
   Object.keys(items).forEach(itemKey => {
     if (itemKey !== itemToRemoveKey) {
       updatedItems[itemKey] = items[itemKey];
     }
   });
+  const orderIndex = order.indexOf(itemToRemoveKey);
+  const updatedOrder = order.slice();
+  updatedOrder.splice(orderIndex, 1);
   return {
     ...repeaterData,
     data: {
       ...data,
+      order: updatedOrder,
       items: updatedItems,
+    },
+  };
+}
+
+function generateNewDataItem(): RepeaterDataPropDataItemModel {
+  return {
+    key: generateRepeaterDataItem(),
+    values: {},
+  };
+}
+
+export function addNewDataItemToRepeaterData(
+  repeaterData: RepeaterDataPropModel,
+  position: number
+): RepeaterDataPropModel {
+  const { data } = repeaterData;
+  const { items, order } = data;
+  const newItem = generateNewDataItem();
+  const updatedOrder = order.slice();
+  updatedOrder.splice(position, 0, newItem.key);
+  return {
+    ...repeaterData,
+    data: {
+      ...data,
+      order: updatedOrder,
+      items: {
+        ...items,
+        [newItem.key]: newItem,
+      },
     },
   };
 }

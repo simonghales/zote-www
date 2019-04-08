@@ -5,6 +5,7 @@ import RepeaterData from './components/RepeaterData/RepeaterData';
 import type { DefaultFormInputProps } from '../../EditorComponentForm/components/FormInput/FormInput';
 import type { RepeaterDataPropModel } from '../../../../data/block/props/types/model';
 import {
+  addNewDataItemToRepeaterData,
   addNewFieldToRepeaterDataModel,
   removeDataItemFromRepeaterData,
   removeFieldFromRepeaterDataModel,
@@ -45,6 +46,11 @@ const RepeaterDataInput = ({ value, defaultValue, updateValue }: Props) => {
     updateValue(updatedValue);
   };
 
+  const addDataItem = (position: number) => {
+    const updatedValue = addNewDataItemToRepeaterData(usedValue, position);
+    updateValue(updatedValue);
+  };
+
   return (
     <section>
       <RepeaterModel
@@ -58,6 +64,7 @@ const RepeaterDataInput = ({ value, defaultValue, updateValue }: Props) => {
         model={usedValue.model}
         updateDataItem={updateDataItem}
         removeDataItem={removeDataItem}
+        addDataItem={addDataItem}
       />
     </section>
   );

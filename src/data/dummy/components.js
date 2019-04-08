@@ -162,7 +162,7 @@ const DUMMY_REPEATER_BLOCK: BlockModel = {
           },
         },
         data: {
-          order: ['1'],
+          order: ['z', '1'],
           items: {
             '1': {
               key: '1',
@@ -172,6 +172,17 @@ const DUMMY_REPEATER_BLOCK: BlockModel = {
                 },
                 url: {
                   value: 'hello.world',
+                },
+              },
+            },
+            z: {
+              key: 'z',
+              values: {
+                label: {
+                  value: 'Something',
+                },
+                url: {
+                  value: 'blah.blah',
                 },
               },
             },

@@ -34,11 +34,13 @@ export type RepeaterDataPropDataItemModel = {
   },
 };
 
+export type RepeaterDataPropDataItemsModel = {
+  [string]: RepeaterDataPropDataItemModel,
+};
+
 export type RepeaterDataPropDataModel = {
   order: Array<string>,
-  items: {
-    [string]: RepeaterDataPropDataItemModel,
-  },
+  items: RepeaterDataPropDataItemsModel,
 };
 
 export type RepeaterDataPropModel = {
