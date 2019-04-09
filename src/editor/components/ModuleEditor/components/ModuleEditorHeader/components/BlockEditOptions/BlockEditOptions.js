@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { FaRetweet, FaTrash, FaEdit, FaCube } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { MENU_LAYOUTS } from '../../../../../Menu/Menu';
 import DropdownMenuList from '../../../../../DropdownMenuList/DropdownMenuList';
@@ -13,6 +14,7 @@ import { getKeyFromComponent } from '../../../../../../../data/component/state';
 import {
   convertBlockIntoComponentRedux,
   deleteBlockFromComponentRedux,
+  wrapBlockWithRepeaterRedux,
 } from '../../../../../../../redux/editor/reducer';
 
 type Props = {
@@ -20,6 +22,7 @@ type Props = {
   setTooltipVisible: (visible: boolean) => void,
   convertIntoComponent: (componentKey: string, blockKey: string) => void,
   deleteBlock: (componentKey: string, blockKey: string, deleteChildren: boolean) => void,
+  wrapBlockWithRepeater: (componentKey: string, blockKey: string) => void,
 };
 
 const BlockEditOptions = ({
@@ -27,6 +30,7 @@ const BlockEditOptions = ({
   deleteBlock,
   editName,
   setTooltipVisible,
+  wrapBlockWithRepeater,
 }: Props) => {
   const block: BlockModel = useGetSelectedBlock();
   const blockKey = getBlockKey(block);
@@ -48,11 +52,18 @@ const BlockEditOptions = ({
   };
   const convertIntoComponentHandler = () => {
     convertIntoComponent(componentKey, blockKey);
+    setTooltipVisible(false);
+  };
+
+  const wrapBlockWithRepeaterHandler = () => {
+    wrapBlockWithRepeater(componentKey, blockKey);
+    setTooltipVisible(false);
   };
 
   let options = [
     {
       label: 'Rename',
+      icon: <FaEdit />,
       onClick: renameHandler,
     },
   ];
@@ -61,14 +72,22 @@ const BlockEditOptions = ({
     options = options.concat([
       {
         label: 'Convert into Component',
+        icon: <FaCube />,
         onClick: convertIntoComponentHandler,
       },
       {
+        label: 'Wrap Block with Repeater',
+        icon: <FaRetweet />,
+        onClick: wrapBlockWithRepeaterHandler,
+      },
+      {
         label: 'Delete',
+        icon: <FaTrash />,
         onClick: deleteHandler,
       },
       {
         label: 'Delete (with children)',
+        icon: <FaTrash />,
         onClick: deleteHandlerWithChildren,
       },
     ]);
@@ -82,6 +101,8 @@ const BlockEditOptions = ({
 };
 
 const mapDispatchToProps = {
+  wrapBlockWithRepeater: (componentKey: string, blockKey: string) =>
+    wrapBlockWithRepeaterRedux(componentKey, blockKey),
   convertIntoComponent: (componentKey: string, blockKey: string) =>
     convertBlockIntoComponentRedux(componentKey, blockKey),
   deleteBlock: (componentKey: string, blockKey: string, deleteChildren: boolean) =>

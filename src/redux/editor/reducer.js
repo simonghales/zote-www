@@ -47,6 +47,37 @@ export type GenericAction = {
   payload: {},
 };
 
+const WRAP_BLOCK_WITH_REPEATER = 'WRAP_BLOCK_WITH_REPEATER';
+
+type WrapBlockWithRepeaterPayload = {
+  componentKey: string,
+  blockKey: string,
+};
+
+type WrapBlockWithRepeaterAction = {
+  type: string,
+  payload: WrapBlockWithRepeaterPayload,
+};
+
+export function wrapBlockWithRepeaterRedux(
+  componentKey: string,
+  blockKey: string
+): WrapBlockWithRepeaterAction {
+  return {
+    type: WRAP_BLOCK_WITH_REPEATER,
+    payload: {
+      componentKey,
+      blockKey,
+    },
+  };
+}
+
+function handleWrapBlockWithRepeater(state: EditorReduxState): EditorReduxState {
+  return {
+    ...state,
+  };
+}
+
 const CONVERT_BLOCK_INTO_COMPONENT = 'CONVERT_BLOCK_INTO_COMPONENT';
 
 type ConvertBlockIntoComponentPayload = {
@@ -578,6 +609,7 @@ function handleUpdateComponentBlocksOrder(
 }
 
 const ACTION_HANDLERS = {
+  [WRAP_BLOCK_WITH_REPEATER]: handleWrapBlockWithRepeater,
   [CONVERT_BLOCK_INTO_COMPONENT]: handleConvertBlockIntoComponent,
   [SET_BLOCK_NAME]: handleSetBlockName,
   [DELETE_BLOCK_FROM_COMPONENT]: handleDeleteBlockFromComponent,
