@@ -11,6 +11,7 @@ import {
   addBlocksToBlockChildren,
   addBlockToBlockChildrenKeys,
   removeBlockFromBlockChildren,
+  replaceBlockChildBlock,
   updateBlockName,
   updateBlockPropValue,
 } from '../block/modifiers';
@@ -181,4 +182,28 @@ export function createNewComponentFromComponentBlock(
   });
   const component = createNewComponent(blocksToAdd, [blockKey]);
   return component;
+}
+
+export function wrapBlockInComponentWithNewBlock(
+  component: ComponentModel,
+  blockKey: string,
+  newBlock: BlockModel
+): ComponentModel {
+  const blocks = getBlocksFromComponent(component);
+  newBlock = addBlocksToBlockChildren(newBlock, [blockKey], 0);
+  let originalBlockParentKey = getBlockParentBlockKeyFromBlocks(blockKey, blocks);
+  if (!originalBlockParentKey) {
+    originalBlockParentKey = getRootBlockKeyFromComponent(component);
+  }
+  let originalBlockParent = getBlockFromBlocks(originalBlockParentKey, blocks);
+  originalBlockParent = replaceBlockChildBlock(originalBlockParent, blockKey, newBlock.key);
+  const updatedBlocks = {
+    ...blocks,
+    [newBlock.key]: newBlock,
+    [originalBlockParent.key]: originalBlockParent,
+  };
+  return {
+    ...component,
+    blocks: updatedBlocks,
+  };
 }

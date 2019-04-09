@@ -33,7 +33,6 @@ export function getMappedStylesFromMappedBlock(
 }
 
 export function getComponentFromMappedBlock(mappedBlock: MappedBlockModel) {
-  console.log('mappedBlock', mappedBlock);
   const blockType = getBlockTypeFromMappedBlock(mappedBlock);
   return getComponentFromBlockType(blockType);
 }

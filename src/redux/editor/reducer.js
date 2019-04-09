@@ -16,6 +16,7 @@ import {
   createNewComponentFromComponentBlock,
   removeBlockFromComponent,
   updateComponentBlocksOrder,
+  wrapBlockInComponentWithNewBlock,
 } from '../../data/component/modifiers';
 import {
   addNewPropToBlock,
@@ -32,6 +33,7 @@ import type { BlockModel } from '../../data/block/model';
 import type { AddBlockPositions } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import { ADD_BLOCK_POSITIONS } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import { generateComponentImportBlock } from '../../data/block/types/groups/component/ComponentImport/generate';
+import RepeaterBlock from '../../data/block/types/groups/functional/Repeater';
 
 export type EditorReduxState = {
   components: ComponentsModels,
@@ -72,9 +74,20 @@ export function wrapBlockWithRepeaterRedux(
   };
 }
 
-function handleWrapBlockWithRepeater(state: EditorReduxState): EditorReduxState {
+function handleWrapBlockWithRepeater(
+  state: EditorReduxState,
+  { componentKey, blockKey }: WrapBlockWithRepeaterPayload
+): EditorReduxState {
+  const components = getComponentsFromReduxEditorState(state);
+  const component = getComponentFromComponents(componentKey, components);
+  const repeaterBlock = RepeaterBlock.generate();
+  const updatedComponent = wrapBlockInComponentWithNewBlock(component, blockKey, repeaterBlock);
   return {
     ...state,
+    components: {
+      ...components,
+      [componentKey]: updatedComponent,
+    },
   };
 }
 
@@ -126,8 +139,6 @@ function handleConvertBlockIntoComponent(
     parentBlockKey,
     ADD_BLOCK_POSITIONS.inside
   ); // todo - add in exact position
-  console.log('updatedComponent', updatedComponent);
-  console.log('newComponent', newComponent);
   return {
     ...state,
     components: {

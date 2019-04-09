@@ -1,7 +1,12 @@
 // @flow
 
 import type { BlockModel } from './model';
-import { getBlockChildrenKeysFromBlock, getPropsConfigFromBlock, getPropsFromBlock } from './state';
+import {
+  getBlockChildrenKeysFromBlock,
+  getBlockIndexInParentChildren,
+  getPropsConfigFromBlock,
+  getPropsFromBlock,
+} from './state';
 import { removePropLinked, updatePropLinked, updatePropValue } from './props/modifiers';
 import { getPropFromProps } from './props/state';
 import { generateDefaultPropObject, generateNewPropConfig } from './props/generators';
@@ -140,7 +145,7 @@ export function addBlocksToBlockChildren(
   const childrenKeys = getBlockChildrenKeysFromBlock(block).slice();
   return updateBlockChildrenKeys(
     block,
-    addBlockKeysToBlockChildrenKeys(childrenKeys, blockKeys, targetIndex)
+    addBlockKeysToBlockChildrenKeys(blockKeys, childrenKeys, targetIndex)
   );
 }
 
@@ -149,4 +154,15 @@ export function updateBlockName(block: BlockModel, name: string): BlockModel {
     ...block,
     name,
   };
+}
+
+export function replaceBlockChildBlock(
+  block: BlockModel,
+  originalBlockKey: string,
+  replacementBlockKey: string
+): BlockModel {
+  const blockChildrenIndex = getBlockIndexInParentChildren(originalBlockKey, block);
+  block = removeBlockFromBlockChildren(block, originalBlockKey);
+  block = addBlocksToBlockChildren(block, [replacementBlockKey], blockChildrenIndex);
+  return block;
 }
