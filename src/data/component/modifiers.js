@@ -164,6 +164,7 @@ export function createNewComponent(
       [rootBlock.key]: rootBlock,
     },
     rootBlockKey: rootBlock.key,
+    isReusable: true,
   };
 }
 

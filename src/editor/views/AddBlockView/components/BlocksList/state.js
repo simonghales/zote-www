@@ -8,9 +8,11 @@ import { getComponentName } from '../../../../../data/component/state';
 export type AddBlockModel = {
   key: string,
   blockTypeKey: string,
-  componentKey?: string,
   name: string,
   icon: any,
+  generateProps?: {
+    [string]: any,
+  },
 };
 
 export function mapBlockTypesToAddBlock(blocks: Array<BlockTypeModel>): Array<AddBlockModel> {
@@ -28,5 +30,9 @@ export function mapComponentsToAddBlock(components: Array<ComponentModel>): Arra
     blockTypeKey: ComponentImportBlock.key,
     name: getComponentName(component),
     icon: ComponentImportBlock.icon,
+    generateProps: {
+      componentKey: component.key,
+      name: getComponentName(component),
+    },
   }));
 }

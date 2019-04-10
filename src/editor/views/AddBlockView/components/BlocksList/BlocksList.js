@@ -18,7 +18,12 @@ function filterBlocks(blocks: Array<AddBlockModel>, filter: string): Array<AddBl
 type Props = {
   blocks: Array<AddBlockModel>,
   filter: string,
-  addBlock: (blockKey: string, componentKey?: string) => void,
+  addBlock: (
+    blockKey: string,
+    generateProps?: {
+      [string]: any,
+    }
+  ) => void,
 };
 
 const BlocksList = ({ blocks, filter, addBlock }: Props) => (
@@ -28,7 +33,7 @@ const BlocksList = ({ blocks, filter, addBlock }: Props) => (
         <BlockItem
           name={block.name}
           icon={block.icon}
-          add={() => addBlock(block.blockTypeKey, block.componentKey)}
+          add={() => addBlock(block.blockTypeKey, block.generateProps)}
         />
       </li>
     ))}

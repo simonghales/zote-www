@@ -53,7 +53,12 @@ class AddBlockView extends React.Component<Props, State> {
     closeAddingBlock();
   };
 
-  handleAddBlock = (blockTypeKey: string, blockComponentKey?: string) => {
+  handleAddBlock = (
+    blockTypeKey: string,
+    generateProps?: {
+      [string]: any,
+    } = {}
+  ) => {
     const {
       componentKey,
       addingBlockSelectedKey,
@@ -61,7 +66,7 @@ class AddBlockView extends React.Component<Props, State> {
       addBlockToComponent,
       closeAddingBlock,
     } = this.props;
-    const block = generateBlockTypeBlock(blockTypeKey);
+    const block = generateBlockTypeBlock(blockTypeKey, generateProps);
     addBlockToComponent(componentKey, block, addingBlockSelectedKey, addingBlockSelectedPosition);
     closeAddingBlock();
   };

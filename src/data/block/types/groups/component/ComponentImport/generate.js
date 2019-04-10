@@ -6,11 +6,21 @@ import { generateBlockKey } from '../../../../keys';
 import { updateBlockName, updateBlockPropValue } from '../../../../modifiers';
 import { componentImportPropsConfig } from './props';
 
-const generateBlock = (): BlockModel => ({
+const generateBlock = ({
+  componentKey = '',
+  name = '',
+}: {
+  componentKey: string,
+  name?: string,
+}): BlockModel => ({
   key: generateBlockKey(),
   blockTypeKey: config.key,
-  name: config.name,
-  props: {},
+  name: name || config.name,
+  props: {
+    [componentImportPropsConfig.componentReference.key]: {
+      value: componentKey,
+    },
+  },
   propsConfig: {},
   isRootBlock: false,
 });
@@ -21,12 +31,9 @@ export function generateComponentImportBlock(
   componentKey: string,
   componentName: string
 ): BlockModel {
-  let block = generateBlock();
-  block = updateBlockPropValue(
-    block,
-    componentImportPropsConfig.componentReference.key,
-    componentKey
-  );
-  block = updateBlockName(block, componentName);
+  const block = generateBlock({
+    componentKey,
+    name: componentName,
+  });
   return block;
 }

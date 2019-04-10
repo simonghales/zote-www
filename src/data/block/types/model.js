@@ -13,7 +13,9 @@ export type BlockTypeModel = {
   htmlEnabled: boolean,
   addPropsEnabled: boolean,
   icon: Node,
-  generate: () => BlockModel,
+  generate: (generateProps: {
+    [string]: any,
+  }) => BlockModel,
 };
 
 export type BlockTypesGroupModel = {

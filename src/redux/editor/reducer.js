@@ -138,7 +138,7 @@ function handleConvertBlockIntoComponent(
     newComponentBlock,
     parentBlockKey,
     ADD_BLOCK_POSITIONS.inside
-  ); // todo - add in exact position
+  );
   return {
     ...state,
     components: {
