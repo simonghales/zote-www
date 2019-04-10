@@ -15,7 +15,7 @@ import { addBlockToComponentRedux } from '../../../redux/editor/reducer';
 import type { BlockModel } from '../../../data/block/model';
 import type { AddBlockPositions } from '../../components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import { getSelectedComponentKeySelector } from '../../state/reselect/component';
-import {getReduxSafeAddingBlockSelectedKeyAndPosition} from '../../../redux/shared/state';
+import { getReduxSafeAddingBlockSelectedKeyAndPosition } from '../../../redux/shared/state';
 
 type Props = {
   componentKey: string,
@@ -53,7 +53,7 @@ class AddBlockView extends React.Component<Props, State> {
     closeAddingBlock();
   };
 
-  handleAddBlock = (blockTypeKey: string) => {
+  handleAddBlock = (blockTypeKey: string, blockComponentKey?: string) => {
     const {
       componentKey,
       addingBlockSelectedKey,

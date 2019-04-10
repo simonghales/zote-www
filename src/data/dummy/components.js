@@ -239,6 +239,7 @@ export const DUMMY_TEST_COMPONENT: ComponentModel = {
     [DUMMY_REPEATER_BLOCK.key]: DUMMY_REPEATER_BLOCK,
   },
   rootBlockKey: DUMMY_BLOCK.key,
+  isReusable: true,
 };
 
 const DUMMY_SECOND_COMPONENT_HEADING: BlockModel = {
@@ -290,4 +291,5 @@ export const DUMMY_SECOND_COMPONENT: ComponentModel = {
     [DUMMY_SECOND_COMPONENT_BLOCK.key]: DUMMY_SECOND_COMPONENT_BLOCK,
   },
   rootBlockKey: DUMMY_SECOND_COMPONENT_BLOCK.key,
+  isReusable: true,
 };

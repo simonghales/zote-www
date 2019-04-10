@@ -6,6 +6,7 @@ export type ComponentModel = {
   key: string,
   blocks: BlocksModel,
   rootBlockKey: string,
+  isReusable?: boolean,
 };
 
 export type ModuleComponentModel = {

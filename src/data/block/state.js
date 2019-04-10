@@ -37,6 +37,7 @@ import {
 import type { RepeaterDataPropModel } from './props/types/model';
 import { getRepeaterDataFields } from './props/types/state';
 import RepeaterBlock from './types/groups/functional/Repeater';
+import ComponentImportBlock from './types/groups/component/ComponentImport';
 
 export function getBlockStyleKeyFormat(blockKey: string): string {
   return `block::${blockKey}`;
@@ -544,4 +545,8 @@ export function getBlockComponentImportedContentProps(
 
 export function isBlockRepeater(block: BlockModel): boolean {
   return block.blockTypeKey === RepeaterBlock.key;
+}
+
+export function isBlockComponentImport(block: BlockModel): boolean {
+  return block.blockTypeKey === ComponentImportBlock.key;
 }

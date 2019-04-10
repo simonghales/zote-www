@@ -2,7 +2,7 @@
 
 import type { ComponentModel, ComponentsModels } from './model';
 import type { BlockModel, BlocksModel } from '../block/model';
-import { getBlockComponentImportKey, getBlockName } from '../block/state';
+import { getBlockComponentImportKey, getBlockName, isBlockComponentImport } from '../block/state';
 
 export function getComponentFromComponents(
   componentKey: string,
@@ -66,4 +66,45 @@ export function getComponentName(component: ComponentModel): string {
 
 export function getComponentKey(component: ComponentModel): string {
   return component.key;
+}
+
+export function getReusableComponents(components: ComponentsModels): Array<ComponentModel> {
+  return Object.keys(components)
+    .map(componentKey => components[componentKey])
+    .filter(component => !!component.isReusable);
+}
+
+export function doesComponentRecursivelyContainComponent(
+  component: ComponentModel,
+  componentKey: string,
+  components: ComponentsModels
+): boolean {
+  if (component.key === componentKey) {
+    return true;
+  }
+  const blocks = getBlocksFromComponent(component);
+  const blocksKeys = Object.keys(blocks);
+  for (let i = 0, len = blocksKeys.length; i < len; i++) {
+    const block = blocks[blocksKeys[i]];
+    if (isBlockComponentImport(block)) {
+      const componentImportKey = getBlockComponentImportKey(block);
+      if (componentImportKey) {
+        const componentImport = getComponentFromComponents(componentImportKey, components);
+        if (doesComponentRecursivelyContainComponent(componentImport, componentKey, components)) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
+export function getAddableComponents(
+  components: ComponentsModels,
+  componentKey: string
+): Array<ComponentModel> {
+  const reusableComponents = getReusableComponents(components);
+  return reusableComponents.filter(
+    component => !doesComponentRecursivelyContainComponent(component, componentKey, components)
+  );
 }
