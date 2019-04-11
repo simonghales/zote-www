@@ -2,7 +2,7 @@
 
 import type { EditorReduxState } from '../../redux/editor/reducer';
 import { DUMMY_SECOND_COMPONENT, DUMMY_TEST_COMPONENT } from './components';
-import type { StylesReduxState } from '../../redux/styles/reducer';
+import type { StylesReduxState } from '../../redux/styles/state';
 import { DUMMY_BLOCK_STYLES, DUMMY_MIXIN_STYLES, DUMMY_MIXIN } from './styles';
 
 export const dummyEditorReduxState: EditorReduxState = {

@@ -1,15 +1,10 @@
 // @flow
 
-import type { StylesModels } from '../../data/styles/model';
-import type { EditorReduxState, GenericAction } from '../editor/reducer';
+import type { GenericAction } from '../editor/reducer';
 import { dummyStylesReduxState } from '../../data/dummy/redux';
 import { updateStyleStyleValue } from '../../data/styles/modifiers';
-import type { MixinsModel } from '../../data/mixin/model';
-
-export type StylesReduxState = {
-  styles: StylesModels,
-  mixins: MixinsModel,
-};
+import type { StylesReduxState } from './state';
+import { getStylesFromStylesReduxState } from './state';
 
 export const initialStylesReduxState: StylesReduxState = {
   ...dummyStylesReduxState,
@@ -44,12 +39,16 @@ export function clearModuleStyleValueRedux(
 }
 
 function handleClearModuleStyleValue(
-  state: EditorReduxState,
+  state: StylesReduxState,
   { styleKey, styleStateKey, styleValueKey }: ClearModuleStyleValuePayload
-): EditorReduxState {
+): StylesReduxState {
+  const styles = getStylesFromStylesReduxState(state);
   return {
     ...state,
-    [styleKey]: updateStyleStyleValue(state[styleKey], styleKey, styleStateKey, styleValueKey),
+    styles: {
+      ...styles,
+      [styleKey]: updateStyleStyleValue(styles[styleKey], styleKey, styleStateKey, styleValueKey),
+    },
   };
 }
 
@@ -85,18 +84,22 @@ export function setModuleStyleValueRedux(
 }
 
 function handleSetModuleStyleValue(
-  state: EditorReduxState,
+  state: StylesReduxState,
   { styleKey, styleStateKey, styleValueKey, value }: SetModuleStyleValuePayload
-): EditorReduxState {
+): StylesReduxState {
+  const styles = getStylesFromStylesReduxState(state);
   return {
     ...state,
-    [styleKey]: updateStyleStyleValue(
-      state[styleKey],
-      styleKey,
-      styleStateKey,
-      styleValueKey,
-      value
-    ),
+    styles: {
+      ...styles,
+      [styleKey]: updateStyleStyleValue(
+        styles[styleKey],
+        styleKey,
+        styleStateKey,
+        styleValueKey,
+        value
+      ),
+    },
   };
 }
 

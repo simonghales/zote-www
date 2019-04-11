@@ -56,6 +56,7 @@ export function getStyleValueFromStyle(
   const stateStyles = getStyleStateStyles(stateKey, style);
   const styleValue = stateStyles[styleValueKey];
   if (!styleValue) {
+    // eslint-disable-next-line no-use-before-define
     return getStyleValueFromMixins(styleValueKey, stateKey, style, mixins, styles);
   }
   const { value = '' } = styleValue;

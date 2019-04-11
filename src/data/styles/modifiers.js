@@ -33,12 +33,14 @@ export function updateStyleStyleValue(
   styleValueKey: string,
   value?: any
 ): StyleModel {
+  console.log('updateStyleStyleValue::stateKey', stateKey, value, style);
   if (!style) {
     style = generateEmptyStylesObject(styleKey);
   }
   let styleState = style.states[stateKey];
   if (!styleState) {
     styleState = {
+      mixins: {},
       styles: {},
     };
   }
@@ -47,6 +49,7 @@ export function updateStyleStyleValue(
     states: {
       ...style.states,
       [stateKey]: {
+        ...styleState,
         styles: updateStyleStateStyleValue(styleState.styles, styleValueKey, value),
       },
     },

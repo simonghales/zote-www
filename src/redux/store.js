@@ -5,7 +5,7 @@ import type { EditorReduxState } from './editor/reducer';
 import uiReducer, { initialUiReduxState } from './ui/reducer';
 import type { UIReduxState } from './ui/reducer';
 import stylesReducer, { initialStylesReduxState } from './styles/reducer';
-import type { StylesReduxState } from './styles/reducer';
+import type { StylesReduxState } from './styles/state';
 
 const rootReducer = combineReducers({
   editor: editorReducer,

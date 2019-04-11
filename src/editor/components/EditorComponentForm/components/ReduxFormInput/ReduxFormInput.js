@@ -132,6 +132,7 @@ const mapDispatchToProps = (
   let updateValue;
   if (reduxType === EDITOR_FORM_REDUX_TYPES.style) {
     updateValue = (value: any) => {
+      console.log('styleStateKey', styleStateKey);
       dispatch(setModuleStyleValueRedux(blockStyleKey, styleStateKey, key, value));
     };
   } else {
