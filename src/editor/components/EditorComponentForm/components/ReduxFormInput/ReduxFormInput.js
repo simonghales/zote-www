@@ -14,6 +14,7 @@ import {
 } from '../../../../../redux/editor/state';
 import { setBlockPropValueRedux } from '../../../../../redux/editor/reducer';
 import { getLinkedFromProp, getValueFromProp } from '../../../../../data/block/props/state';
+import { isValueDefined } from '../../../../../utils/validation';
 
 type Props = {
   input: EditorFormInputModel,
@@ -79,13 +80,19 @@ const mapStateToProps = (
   { input, blockStyleKey, styleStateKey, reduxType, componentKey, blockKey }: Props
 ) => {
   let value;
+  let valueStyleKey = '';
   let linkedBlockKey = null;
   let linkedPropKey = null;
   let linkedFieldKey = null;
+
+  const reduxIsStyle = reduxType === EDITOR_FORM_REDUX_TYPES.style;
+
   // eslint-disable-next-line prefer-destructuring
   let defaultValue = input.defaultValue;
-  if (reduxType === EDITOR_FORM_REDUX_TYPES.style) {
-    value = getReduxStyleStyleValue(state, input, styleStateKey, blockStyleKey);
+  if (reduxIsStyle) {
+    const styleValue = getReduxStyleStyleValue(state, input, styleStateKey, blockStyleKey);
+    value = styleValue.value;
+    valueStyleKey = styleValue.styleKey;
   } else {
     const prop = getReduxComponentBlockProp(state.editor, componentKey, blockKey, input.key);
     value = prop ? getValueFromProp(prop) : null;
@@ -105,7 +112,8 @@ const mapStateToProps = (
       defaultValue = fetchedDefaultValue;
     }
   }
-  const inactive = !value;
+  const valueDefined = isValueDefined(value);
+  const inactive = reduxIsStyle ? !valueDefined || valueStyleKey !== blockStyleKey : !valueDefined;
   return {
     value,
     defaultValue,

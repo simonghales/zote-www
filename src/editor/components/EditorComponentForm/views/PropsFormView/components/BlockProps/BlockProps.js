@@ -24,22 +24,17 @@ type Props = {
   blockKey: string,
   componentKey: string,
   sections: Array<any>,
-  formSectionsVisibility: EditorFormSectionsVisibility,
-  setFormSectionVisibility: (sectionKey: string, visible: boolean) => void,
   viewType: contentFormViewTypes,
 };
 
-const BlockProps = ({ sections, formSectionsVisibility, setFormSectionVisibility }: Props) => (
+const BlockProps = ({ sections }: Props) => (
   <React.Fragment>
     {sections.map(section => (
       <FormColumnsSection
         heading={section.heading}
         columns={section.columns}
         key={section.key}
-        visible={getFormSectionVisibility(section.key, formSectionsVisibility)}
-        setVisible={(visible: boolean) => {
-          setFormSectionVisibility(section.key, visible);
-        }}
+        visibilityKey={section.key}
       />
     ))}
   </React.Fragment>

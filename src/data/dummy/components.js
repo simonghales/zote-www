@@ -1,35 +1,16 @@
 // @flow
 
-import type { ComponentModel } from '../component/model';
-import type { BlockModel } from '../block/model';
-import type { StyleModel } from '../styles/model';
-import { STYLE_STATES } from '../styles/model';
+import type {ComponentModel} from '../component/model';
+import type {BlockModel} from '../block/model';
 import ContainerBlock from '../block/types/groups/basic/Container';
-import { getBlockStyleKeyFormat } from '../block/state';
+import {getBlockStyleKeyFormat} from '../block/state';
 import ComponentBlock from '../block/types/groups/component/Component';
 import ComponentImportBlock from '../block/types/groups/component/ComponentImport';
 import HeadingBlock from '../block/types/groups/basic/Heading';
 import TextBlock from '../block/types/groups/basic/Text';
 import HtmlElementBlock from '../block/types/groups/html/Element';
 import RepeaterBlock from '../block/types/groups/functional/Repeater';
-import { BLOCK_PROPS_CONFIG_TYPES } from '../block/props/model';
-
-export const DUMMY_BLOCK_STYLES: StyleModel = {
-  key: getBlockStyleKeyFormat('DUMMY_CONTAINER_BLOCK'),
-  mixins: {},
-  states: {
-    [STYLE_STATES.default]: {
-      styles: {
-        'font-family': {
-          value: 'Roboto',
-        },
-        'text-align': {
-          value: 'center',
-        },
-      },
-    },
-  },
-};
+import {BLOCK_PROPS_CONFIG_TYPES} from '../block/props/model';
 
 export const DUMMY_TEXT_BLOCK: BlockModel = {
   key: 'DUMMY_TEXT_BLOCK',

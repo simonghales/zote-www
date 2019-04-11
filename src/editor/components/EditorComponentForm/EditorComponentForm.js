@@ -3,14 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import type { ReduxState } from '../../../redux/store';
 import { getSelectedComponentKeySelector } from '../../state/reselect/component';
-import { EditorComponentFormContext } from './context';
+import { EditorComponentFormContext } from './components/EditorComponentFormContextWrapper/context';
 import {
   getEditorFormSectionsVisibility,
   getReduxUiComponentSelectedBlockKey,
 } from '../../../redux/ui/state';
-import {
-  getReduxEditorComponents,
-} from '../../../redux/editor/state';
+import { getReduxEditorComponents } from '../../../redux/editor/state';
 import {
   getBlockFromComponent,
   getComponentFromComponents,
@@ -26,10 +24,7 @@ import {
 import { STYLE_STATES } from '../../../data/styles/model';
 import type { EditorFormSectionsVisibility } from '../../../redux/ui/reducer';
 import { setEditorFormSectionVisibilityRedux } from '../../../redux/ui/reducer';
-import {
-  ContentFormView,
-  HtmlFormView,
-} from './views/PropsFormView/PropsFormView';
+import { ContentFormView, HtmlFormView } from './views/PropsFormView/PropsFormView';
 import {
   CONTENT_NAV_OPTION,
   HTML_NAV_OPTION,
@@ -37,8 +32,10 @@ import {
 } from '../EditorSection/components/EditorSectionNav/EditorSectionNav';
 import StylesFormView from './views/StylesFormView/StylesFormView';
 import DisabledFormView from './views/DisabledFormView/DisabledFormView';
-import {getSelectedComponentSelectedBlock} from '../../state/reselect/ui';
-import {CONTENT_FORM_VIEW_TYPES} from './views/PropsFormView/shared';
+import { getSelectedComponentSelectedBlock } from '../../state/reselect/ui';
+import { CONTENT_FORM_VIEW_TYPES } from './views/PropsFormView/shared';
+import EditorComponentFormContextWrapper from './components/EditorComponentFormContextWrapper/EditorComponentFormContextWrapper';
+import { getBlockStylesSelector } from './components/StylesStateFormSection/StylesStateFormSection';
 
 export function getFormSectionVisibility(
   sectionKey: string,
@@ -108,11 +105,19 @@ class EditorComponentForm extends React.Component<Props> {
   render() {
     const { componentKey, blockKey, blockStyleKey } = this.props;
     return (
-      <EditorComponentFormContext.Provider
-        value={{ componentKey, blockKey, blockStyleKey, styleStateKey: STYLE_STATES.default }}
+      <EditorComponentFormContextWrapper
+        blockKey={blockKey}
+        componentKey={componentKey}
+        blockStyleKey={blockStyleKey}
       >
-        <div key={blockKey}>{this.renderFormView()}</div>
-      </EditorComponentFormContext.Provider>
+        <EditorComponentFormContext.Consumer>
+          {({ blockStylesSelector }) => (
+            <div key={`${blockKey}:${getBlockStylesSelector(blockStylesSelector, blockKey)}`}>
+              {this.renderFormView()}
+            </div>
+          )}
+        </EditorComponentFormContext.Consumer>
+      </EditorComponentFormContextWrapper>
     );
   }
 }

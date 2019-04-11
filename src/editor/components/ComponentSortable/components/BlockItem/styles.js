@@ -137,6 +137,11 @@ const addBlockInsideClass = css`
   right: 5px;
 `;
 
+const openComponentClass = css`
+  width: 14px;
+  height: 14px;
+`;
+
 export default {
   classNames,
   containerClass,
@@ -147,4 +152,5 @@ export default {
   addBlockBeforeClass,
   addBlockIconClass,
   addBlockInsideClass,
+  openComponentClass,
 };

@@ -1,9 +1,9 @@
 // @flow
 
 import type { EditorReduxState } from '../../redux/editor/reducer';
-import { DUMMY_BLOCK_STYLES, DUMMY_SECOND_COMPONENT, DUMMY_TEST_COMPONENT } from './components';
-import type { UIReduxState } from '../../redux/ui/reducer';
+import { DUMMY_SECOND_COMPONENT, DUMMY_TEST_COMPONENT } from './components';
 import type { StylesReduxState } from '../../redux/styles/reducer';
+import { DUMMY_BLOCK_STYLES, DUMMY_MIXIN_STYLES, DUMMY_MIXIN } from './styles';
 
 export const dummyEditorReduxState: EditorReduxState = {
   components: {
@@ -14,10 +14,16 @@ export const dummyEditorReduxState: EditorReduxState = {
 
 export const dummyUiReduxState = {
   componentsSelectedBlockKeys: {
-    DUMMY_TEST_COMPONENT: 'DUMMY_COMPONENT_IMPORT_BLOCK',
+    DUMMY_TEST_COMPONENT: 'DUMMY_CONTAINER_BLOCK',
   },
 };
 
 export const dummyStylesReduxState: StylesReduxState = {
-  [DUMMY_BLOCK_STYLES.key]: DUMMY_BLOCK_STYLES,
+  styles: {
+    [DUMMY_BLOCK_STYLES.key]: DUMMY_BLOCK_STYLES,
+    [DUMMY_MIXIN_STYLES.key]: DUMMY_MIXIN_STYLES,
+  },
+  mixins: {
+    [DUMMY_MIXIN.key]: DUMMY_MIXIN,
+  },
 };

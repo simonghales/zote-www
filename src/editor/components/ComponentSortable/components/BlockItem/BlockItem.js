@@ -124,7 +124,11 @@ class BlockItem extends React.Component<Props> {
         >
           <div className={styles.iconClass}>{icon}</div>
           <div className={styles.nameClass}>{name}</div>
-          {componentKey && <OpenComponentButton componentKey={componentKey} />}
+          {componentKey && (
+            <div className={styles.openComponentClass}>
+              <OpenComponentButton componentKey={componentKey} />
+            </div>
+          )}
           {canContainChildren && (
             <div className={cx(styles.addBlockIconClass, styles.addBlockInsideClass)}>
               <AddButton

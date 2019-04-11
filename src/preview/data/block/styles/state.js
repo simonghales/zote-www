@@ -32,7 +32,7 @@ export function getMappedBlockStyles(
   const mappedBlockStyles = {};
   const blockStylesStates = getStyleStatesFromStyle(blockStyles);
   Object.keys(blockStylesStates).forEach(stateKey => {
-    const mappedStateKey = stateKey === STYLE_STATES.default ? '' : stateKey; // todo - in the future...
+    const mappedStateKey = stateKey === STYLE_STATES.default ? '' : stateKey;
     const stateStyles = getStyleStateStyles(stateKey, blockStyles);
     mappedBlockStyles[mappedStateKey] = getMappedStateStyles(stateStyles);
   });

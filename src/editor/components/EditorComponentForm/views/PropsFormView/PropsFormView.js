@@ -6,20 +6,12 @@ import styles from './styles';
 import BlockProps from './components/BlockProps/BlockProps';
 import type { PassedProps } from './shared';
 import { CONTENT_FORM_VIEW_TYPES } from './shared';
-import ComponentImportBlockProps from './components/ComponentImportBlockProps/ComponentImportBlockProps';
 
 type Props = PassedProps & {
   addPropsEnabled?: boolean,
 };
 
-const PropsFormView = ({
-  addPropsEnabled,
-  blockKey,
-  componentKey,
-  formSectionsVisibility,
-  setFormSectionVisibility,
-  viewType,
-}: Props) => (
+const PropsFormView = ({ addPropsEnabled, blockKey, componentKey, viewType }: Props) => (
   <React.Fragment>
     {addPropsEnabled && <AddCustomPropForm componentKey={componentKey} blockKey={blockKey} />}
     <div
@@ -27,13 +19,7 @@ const PropsFormView = ({
         [styles.containerNoMarginClass]: addPropsEnabled,
       })}
     >
-      <BlockProps
-        blockKey={blockKey}
-        componentKey={componentKey}
-        formSectionsVisibility={formSectionsVisibility}
-        setFormSectionVisibility={setFormSectionVisibility}
-        viewType={viewType}
-      />
+      <BlockProps blockKey={blockKey} componentKey={componentKey} viewType={viewType} />
     </div>
   </React.Fragment>
 );

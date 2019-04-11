@@ -151,7 +151,7 @@ export function createNewComponent(
   initialBlocks: BlocksModel,
   rootBlockChildrenKeys: Array<string>
 ): ComponentModel {
-  let rootBlock = ComponentBlock.generate();
+  let rootBlock = ComponentBlock.generate({});
   if (rootBlockChildrenKeys && rootBlockChildrenKeys.length > 0) {
     rootBlock = addBlocksToBlockChildren(rootBlock, rootBlockChildrenKeys, 0);
     const firstBlock = getBlockFromBlocks(rootBlockChildrenKeys[0], initialBlocks);

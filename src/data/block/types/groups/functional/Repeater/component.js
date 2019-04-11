@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import type { DefaultBlockProps } from '../../../props';
+import { withBlockHighlighter } from '../../../../../../preview/components/BlockHighlighterWrapper/BlockHighlighterWrapper';
 
 export type RepeaterParsedProps = DefaultBlockProps & {
   children: any,
@@ -9,8 +10,8 @@ export type RepeaterParsedProps = DefaultBlockProps & {
 class RepeaterComponent extends React.PureComponent<RepeaterParsedProps> {
   render() {
     const { children } = this.props;
-    return <React.Fragment>{children}</React.Fragment>;
+    return <div>{children}</div>;
   }
 }
 
-export default RepeaterComponent;
+export default withBlockHighlighter(RepeaterComponent);

@@ -12,7 +12,16 @@ export const STYLE_STATES = {
   default: 'default',
 };
 
+export type StyleStateMixinsModel = {
+  [string]: {
+    disabledStates: {
+      [string]: boolean,
+    },
+  },
+};
+
 export type StyleStateModel = {
+  mixins: StyleStateMixinsModel,
   styles: StateStylesModel,
 };
 
@@ -22,13 +31,6 @@ export type StyleStatesModel = {
 
 export type StyleModel = {
   key: string,
-  mixins: {
-    [string]: {
-      disabledStates: {
-        [string]: boolean,
-      },
-    },
-  },
   states: StyleStatesModel,
 };
 

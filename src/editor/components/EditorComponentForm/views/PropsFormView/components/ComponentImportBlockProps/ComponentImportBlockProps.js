@@ -17,16 +17,12 @@ type Props = {
   blockKey: string,
   componentImportKey: string,
   componentImportRootBlockKey: string,
-  formSectionsVisibility: EditorFormSectionsVisibility,
-  setFormSectionVisibility: (sectionKey: string, visible: boolean) => void,
   viewType: contentFormViewTypes,
 };
 
 const ComponentImportBlockProps = ({
   componentImportKey,
   componentImportRootBlockKey,
-  formSectionsVisibility,
-  setFormSectionVisibility,
   viewType,
 }: Props) => {
   if (!componentImportKey || !componentImportRootBlockKey) return null;
@@ -34,8 +30,6 @@ const ComponentImportBlockProps = ({
     <BlockProps
       componentKey={componentImportKey}
       blockKey={componentImportRootBlockKey}
-      formSectionsVisibility={formSectionsVisibility}
-      setFormSectionVisibility={setFormSectionVisibility}
       viewType={viewType}
     />
   );

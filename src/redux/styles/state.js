@@ -7,9 +7,16 @@ import {
   getStyleValueFromStyle,
 } from '../../data/styles/state';
 import type { StylesModels } from '../../data/styles/model';
+import { isValueDefined } from '../../utils/validation';
+import type { MixinsModel } from '../../data/mixin/model';
+import type { StyleValueWrapper } from '../../data/styles/state';
 
 export function getReduxStyles(state: ReduxState): StylesModels {
-  return state.styles;
+  return state.styles.styles;
+}
+
+export function getReduxMixins(state: ReduxState): MixinsModel {
+  return state.styles.mixins;
 }
 
 export function getReduxStyleStyleValue(
@@ -17,17 +24,31 @@ export function getReduxStyleStyleValue(
   input: EditorFormInputModel,
   stateKey: string,
   blockStyleKey: string
-): any {
+): StyleValueWrapper {
   const { key, reduxConnected, value } = input;
   if (!reduxConnected) {
-    return value;
+    return {
+      value,
+      styleKey: blockStyleKey,
+    };
   }
   const styles = getReduxStyles(state);
   const style = getStyleFromStyles(blockStyleKey, styles);
   if (!style) {
-    return value;
+    return {
+      value,
+      styleKey: blockStyleKey,
+    };
   }
-  return getStyleValueFromStyle(key, stateKey, style);
+  const mixins = getReduxMixins(state);
+  const styleValue = getStyleValueFromStyle(key, stateKey, style, mixins, styles);
+  if (isValueDefined(styleValue)) {
+    return styleValue;
+  }
+  return {
+    value: '',
+    styleKey: '',
+  };
 }
 
 export function getReduxStyleStyles(

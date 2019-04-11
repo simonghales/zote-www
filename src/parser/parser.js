@@ -52,14 +52,18 @@ export function parseMappedStyles(
 ): {
   [string]: string,
 } {
-  const parsedStyles = {};
+  let parsedStyles = {};
   Object.keys(mappedStyles).forEach(stateKey => {
     const state = mappedStyles[stateKey];
+    const stateStyles = {};
     Object.keys(state).forEach(styleKey => {
-      // todo handle states...
       const style = state[styleKey];
-      parsedStyles[styleKey] = style;
+      stateStyles[styleKey] = style;
     });
+    parsedStyles = {
+      ...parsedStyles,
+      [stateKey]: stateStyles,
+    };
   });
   return parsedStyles;
 }

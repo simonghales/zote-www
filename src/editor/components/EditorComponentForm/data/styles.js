@@ -135,6 +135,22 @@ export const customFormSection: EditorFormSectionModel = {
   columns: [],
 };
 
+// State
+
+export const stylesStateFormSection: EditorFormSectionModel = {
+  heading: 'Selector',
+  key: 'stylesState',
+  columns: [],
+};
+
+// Mixins
+
+export const stylesMixinsFormSection: EditorFormSectionModel = {
+  heading: 'Mixins',
+  key: 'mixinsState',
+  columns: [],
+};
+
 export const STYLES_FORM_DATA: FormDataModel = {
   sections: [textFormSection, appearanceFormSection],
 };

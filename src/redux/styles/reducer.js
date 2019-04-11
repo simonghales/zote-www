@@ -4,8 +4,12 @@ import type { StylesModels } from '../../data/styles/model';
 import type { EditorReduxState, GenericAction } from '../editor/reducer';
 import { dummyStylesReduxState } from '../../data/dummy/redux';
 import { updateStyleStyleValue } from '../../data/styles/modifiers';
+import type { MixinsModel } from '../../data/mixin/model';
 
-export type StylesReduxState = StylesModels;
+export type StylesReduxState = {
+  styles: StylesModels,
+  mixins: MixinsModel,
+};
 
 export const initialStylesReduxState: StylesReduxState = {
   ...dummyStylesReduxState,
