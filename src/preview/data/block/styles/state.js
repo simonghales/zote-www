@@ -4,11 +4,14 @@ import type { MappedBlockStylesModel } from '../model';
 import type { StateStylesModel, StylesModels } from '../../../../data/styles/model';
 import {
   getStyleFromStyles,
+  getStyleStateMixins,
   getStyleStatesFromStyle,
   getStyleStateStyles,
   getValueFromRawStyle,
 } from '../../../../data/styles/state';
 import { STYLE_STATES } from '../../../../data/styles/model';
+import type { MixinsModel } from '../../../../data/mixin/model';
+import { getMixinFromMixins, getMixinStylesKey } from '../../../../data/mixin/state';
 
 export function getMappedStateStyles(
   stateStyle: StateStylesModel
@@ -25,7 +28,8 @@ export function getMappedStateStyles(
 
 export function getMappedBlockStyles(
   styleKey: string,
-  styles: StylesModels
+  styles: StylesModels,
+  mixins: MixinsModel
 ): MappedBlockStylesModel {
   const blockStyles = getStyleFromStyles(styleKey, styles);
   if (!blockStyles) return {};
@@ -33,8 +37,31 @@ export function getMappedBlockStyles(
   const blockStylesStates = getStyleStatesFromStyle(blockStyles);
   Object.keys(blockStylesStates).forEach(stateKey => {
     const mappedStateKey = stateKey === STYLE_STATES.default ? '' : stateKey;
+    const stateMixins = getStyleStateMixins(stateKey, blockStyles);
+    mappedBlockStyles[mappedStateKey] = mappedBlockStyles[mappedStateKey]
+      ? mappedBlockStyles[mappedStateKey]
+      : {};
+    Object.keys(stateMixins).forEach(mixinKey => {
+      const mixin = getMixinFromMixins(mixins, mixinKey);
+      const mixinStylesKey = getMixinStylesKey(mixin);
+      const mixinMappedStyles = getMappedBlockStyles(mixinStylesKey, styles, mixins);
+      Object.keys(mixinMappedStyles).forEach(mixinMappedStateKey => {
+        const existingStyles = mappedBlockStyles[mixinMappedStateKey]
+          ? mappedBlockStyles[mixinMappedStateKey]
+          : {};
+        mappedBlockStyles[mixinMappedStateKey] = {
+          ...existingStyles,
+          ...mixinMappedStyles[mixinMappedStateKey],
+        };
+      });
+    });
+
     const stateStyles = getStyleStateStyles(stateKey, blockStyles);
-    mappedBlockStyles[mappedStateKey] = getMappedStateStyles(stateStyles);
+    const mappedStateStyles = mappedBlockStyles[mappedStateKey];
+    mappedBlockStyles[mappedStateKey] = {
+      ...mappedStateStyles,
+      ...getMappedStateStyles(stateStyles),
+    };
   });
   return mappedBlockStyles;
 }

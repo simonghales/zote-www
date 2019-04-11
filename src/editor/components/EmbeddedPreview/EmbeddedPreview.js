@@ -10,7 +10,7 @@ import type { EmbeddedPreviewConfigLastCause } from './context';
 import type { ReduxState } from '../../../redux/store';
 import { getSelectedComponentSelector } from '../../state/reselect/component';
 import { mapComponentBlocksToMappedBlocks } from '../../../preview/data/block/state';
-import { getReduxStyles } from '../../../redux/styles/state';
+import { getReduxMixins, getReduxStyles } from '../../../redux/styles/state';
 import { getComponentsFromReduxEditorState } from '../../../redux/editor/state';
 import { EditorUIContext } from '../../context/components/EditorUIContextWrapper/EditorUIContextWrapper';
 
@@ -142,9 +142,11 @@ const mapStateToProps = (state: ReduxState) => {
   const selectedComponent = getSelectedComponentSelector(state);
   const components = getComponentsFromReduxEditorState(state.editor);
   const reduxStyles = getReduxStyles(state);
+  const reduxMixins = getReduxMixins(state);
   const mappedBlocks = mapComponentBlocksToMappedBlocks(
     selectedComponent,
     reduxStyles,
+    reduxMixins,
     {},
     components
   );

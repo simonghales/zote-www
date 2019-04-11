@@ -13,6 +13,7 @@ import type { MixinsModel } from '../mixin/model';
 import { getMixinFromMixins, getMixinStylesKey } from '../mixin/state';
 import { getReduxMixins } from '../../redux/styles/state';
 import { isValueDefined } from '../../utils/validation';
+import { STYLE_STATES } from './model';
 
 export type StyleValueWrapper = {
   value: any,
@@ -80,6 +81,21 @@ export function getStyleStateMixins(stateKey: string, style: StyleModel): StyleS
   return getMixinsFromStyleState(state);
 }
 
+export function getStyleStateMixinsAndDefaultStateMixins(
+  stateKey: string,
+  style: StyleModel
+): StyleStateMixinsModel {
+  const styleStateMixins = getStyleStateMixins(stateKey, style);
+  let defaultStateMixins = {};
+  if (stateKey !== STYLE_STATES.default) {
+    defaultStateMixins = getStyleStateMixins(STYLE_STATES.default, style);
+  }
+  return {
+    ...styleStateMixins,
+    ...defaultStateMixins,
+  };
+}
+
 export function getStyleValueFromMixins(
   styleValueKey: string,
   stateKey: string,
@@ -87,7 +103,7 @@ export function getStyleValueFromMixins(
   mixins: MixinsModel,
   styles: StylesModels
 ): StyleValueWrapper {
-  const stateMixins = getStyleStateMixins(stateKey, style);
+  const stateMixins = getStyleStateMixinsAndDefaultStateMixins(stateKey, style);
   const mixinsKeys = Object.keys(stateMixins);
   for (let i = 0, len = mixinsKeys.length; i < len; i++) {
     const mixinKey = mixinsKeys[i];

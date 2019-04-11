@@ -20,6 +20,7 @@ import { getComponentFromBlockType } from '../../../data/block/types/state';
 import { getMappedBlockStyles } from './styles/state';
 import type { StylesModels } from '../../../data/styles/model';
 import type { RepeaterIndexes } from './props/state';
+import type { MixinsModel } from '../../../data/mixin/model';
 
 export function getBlockTypeFromMappedBlock(mappedBlock: MappedBlockModel): BlockTypeModel {
   return BLOCK_TYPES[mappedBlock.blockTypeKey];
@@ -41,6 +42,7 @@ export function mapBlockToMappedBlock(
   block: BlockModel,
   blocks: BlocksModel,
   styles: StylesModels,
+  mixins: MixinsModel,
   parsedProps: MappedBlockParsedPropsModel,
   components: ComponentsModels,
   mappedBlockToBlock: MappedBlockToBlockReplacement,
@@ -54,12 +56,13 @@ export function mapBlockToMappedBlock(
       block,
       blocks,
       styles,
+      mixins,
       parsedProps,
       components,
       mappedBlockToBlock,
       repeaterIndexes
     ),
-    styles: getMappedBlockStyles(styleKey, styles),
+    styles: getMappedBlockStyles(styleKey, styles, mixins),
   };
 }
 
@@ -67,6 +70,7 @@ export function mapBlocksToMappedBlocks(
   blocks: BlocksModel,
   blockKeys: Array<string>,
   styles: StylesModels,
+  mixins: MixinsModel,
   parsedProps: MappedBlockParsedPropsModel,
   components: ComponentsModels,
   mappedBlockToBlock: MappedBlockToBlockReplacement,
@@ -78,6 +82,7 @@ export function mapBlocksToMappedBlocks(
       block,
       blocks,
       styles,
+      mixins,
       parsedProps,
       components,
       mappedBlockToBlock,
@@ -89,6 +94,7 @@ export function mapBlocksToMappedBlocks(
 export function mapComponentBlocksToMappedBlocks(
   component: ComponentModel,
   styles: StylesModels,
+  mixins: MixinsModel,
   parsedProps: MappedBlockParsedPropsModel,
   components: ComponentsModels,
   mappedBlockToBlock: MappedBlockToBlockReplacement = {},
@@ -100,6 +106,7 @@ export function mapComponentBlocksToMappedBlocks(
     blocks,
     [rootBlockKey],
     styles,
+    mixins,
     parsedProps,
     components,
     mappedBlockToBlock,
