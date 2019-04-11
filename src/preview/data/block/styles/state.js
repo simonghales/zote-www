@@ -26,6 +26,11 @@ export function getMappedStateStyles(
   return mappedStyles;
 }
 
+function getCombinedStateKey(parentKey: string, childKey: string): string {
+  const seperator = childKey.startsWith('&') ? '' : '';
+  return `${parentKey}${seperator}${childKey}`;
+}
+
 export function getMappedBlockStyles(
   styleKey: string,
   styles: StylesModels,
@@ -46,10 +51,11 @@ export function getMappedBlockStyles(
       const mixinStylesKey = getMixinStylesKey(mixin);
       const mixinMappedStyles = getMappedBlockStyles(mixinStylesKey, styles, mixins);
       Object.keys(mixinMappedStyles).forEach(mixinMappedStateKey => {
-        const existingStyles = mappedBlockStyles[mixinMappedStateKey]
-          ? mappedBlockStyles[mixinMappedStateKey]
+        const combinedStateKey = getCombinedStateKey(mappedStateKey, mixinMappedStateKey);
+        const existingStyles = mappedBlockStyles[combinedStateKey]
+          ? mappedBlockStyles[combinedStateKey]
           : {};
-        mappedBlockStyles[mixinMappedStateKey] = {
+        mappedBlockStyles[combinedStateKey] = {
           ...existingStyles,
           ...mixinMappedStyles[mixinMappedStateKey],
         };
