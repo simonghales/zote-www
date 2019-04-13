@@ -9,8 +9,8 @@ import type {
   StyleStateModel,
   StyleStatesModel,
 } from './model';
-import type { MixinsModel } from '../mixin/model';
-import { getMixinFromMixins, getMixinStylesKey } from '../mixin/state';
+import type { MixinModel, MixinsModel } from '../mixin/model';
+import { getMixinFromMixins, getMixinStylesKey, getStyleFromMixin } from '../mixin/state';
 import { getReduxMixins } from '../../redux/styles/state';
 import { isValueDefined } from '../../utils/validation';
 import { STYLE_STATES } from './model';
@@ -56,19 +56,28 @@ export function getStyleStateStyles(stateKey: string, style: StyleModel): StateS
 export function getStyleValueFromStyle(
   styleValueKey: string,
   stateKey: string,
+  style: StyleModel
+): any {
+  const stateStyles = getStyleStateStyles(stateKey, style);
+  const styleValue = stateStyles[styleValueKey];
+  if (!styleValue) return undefined;
+  return styleValue.value;
+}
+
+export function getStyleValueFromStyleWithMixins(
+  styleValueKey: string,
+  stateKey: string,
   style: StyleModel,
   mixins: MixinsModel,
   styles: StylesModels
 ): StyleValueWrapper {
-  const stateStyles = getStyleStateStyles(stateKey, style);
-  const styleValue = stateStyles[styleValueKey];
-  if (!styleValue) {
+  const styleValue = getStyleValueFromStyle(styleValueKey, stateKey, style);
+  if (!isValueDefined(styleValue)) {
     // eslint-disable-next-line no-use-before-define
     return getStyleValueFromMixins(styleValueKey, stateKey, style, mixins, styles);
   }
-  const { value = '' } = styleValue;
   return {
-    value,
+    value: styleValue,
     styleKey: style.key,
   };
 }
@@ -176,6 +185,114 @@ export function getMatchedStylesWithStyleState(
   });
 }
 
+/*
+
+  TODO
+
+  Need to take a different approach. Need to iterate through the mixins, and see if any of the states match the stateKey
+  If not, iterate through deeper mixins (with an expanding stateKey passed down each time.)
+
+ */
+
+// function getMixinStyleValue(
+//   styleValueKey: string,
+//   stateKey: string,
+//   parentStateKey: string,
+//   mixin: MixinModel,
+//   mixins: MixinsModel,
+//   styles: StylesModels
+// ): any {
+//   const mixinStyleKey = getMixinStylesKey(mixin);
+//   const mixinStyle = getStyleFromStyles(mixinStyleKey, styles);
+//   if (!mixinStyle) {
+//     return undefined;
+//   }
+//   const states = getStyleStatesFromStyle(mixinStyle);
+//   const statesKeys = Object.keys(states);
+//   for (let i = 0, len = statesKeys.length; i < len; i++) {
+//     const styleStateKey = statesKeys[i];
+//     const mappedStateKey = getMappedStateKey(styleStateKey);
+//     const combinedStateKey = getCombinedStateKey(parentStateKey, mappedStateKey);
+//     if (combinedStateKey === stateKey) {
+//       const mixinValue = getStyleValueFromStyleWithMixins(
+//         styleValueKey,
+//         styleStateKey,
+//         mixinStyle,
+//         mixins,
+//         styles
+//       );
+//       if (isValueDefined(mixinValue)) {
+//         return mixinValue;
+//       }
+//     }
+//     const styleStateMixins = getMixinsFromStyleState(states[styleStateKey]);
+//     const styleStateMixinsKeys = Object.keys(styleStateMixins);
+//     for (let j = 0, jLen = styleStateMixinsKeys.length; j < jLen; j++) {
+//       const stateMixinKey = styleStateMixinsKeys[j];
+//       const stateMixin = getMixinFromMixins(mixins, stateMixinKey);
+//       const stateMixinStyleValue = getMixinStyleValue(
+//         styleValueKey,
+//         stateKey,
+//         combinedStateKey,
+//         stateMixin,
+//         mixins,
+//         styles
+//       );
+//       if (isValueDefined(stateMixinStyleValue)) {
+//         return stateMixinStyleValue;
+//       }
+//     }
+//   }
+//   return undefined;
+// }
+
+function getMixinStyleValue(
+  styleValueKey: string,
+  stateKey: string,
+  parentStateKey: string,
+  style: StyleModel,
+  mixins: MixinsModel,
+  styles: StylesModels
+): StyleValueWrapper | typeof undefined {
+  const states = getStyleStatesFromStyle(style);
+  const statesKeys = Object.keys(states);
+  for (let i = 0, len = statesKeys.length; i < len; i++) {
+    const styleStateKey = statesKeys[i];
+    const mappedStateKey = getMappedStateKey(styleStateKey);
+    const combinedStateKey = getCombinedStateKey(parentStateKey, mappedStateKey);
+    if (combinedStateKey === stateKey) {
+      const mixinValue = getStyleValueFromStyle(styleValueKey, styleStateKey, style);
+      if (isValueDefined(mixinValue)) {
+        return {
+          value: mixinValue,
+          styleKey: style.key,
+        };
+      }
+    }
+    const styleStateMixins = getMixinsFromStyleState(states[styleStateKey]);
+    const styleStateMixinsKeys = Object.keys(styleStateMixins);
+    for (let j = 0, jLen = styleStateMixinsKeys.length; j < jLen; j++) {
+      const stateMixinKey = styleStateMixinsKeys[j];
+      const stateMixin = getMixinFromMixins(mixins, stateMixinKey);
+      const stateMixinStyle = getStyleFromMixin(stateMixin, styles);
+      if (stateMixinStyle) {
+        const stateMixinStyleValue = getMixinStyleValue(
+          styleValueKey,
+          stateKey,
+          combinedStateKey,
+          stateMixinStyle,
+          mixins,
+          styles
+        );
+        if (stateMixinStyleValue) {
+          return stateMixinStyleValue;
+        }
+      }
+    }
+  }
+  return undefined;
+}
+
 export function getStyleValueFromMixins(
   styleValueKey: string,
   stateKey: string,
@@ -183,51 +300,10 @@ export function getStyleValueFromMixins(
   mixins: MixinsModel,
   styles: StylesModels
 ): StyleValueWrapper {
-  const matchedStyles = getMatchedStylesWithStyleState(stateKey, style, mixins, styles);
-  console.log('matchedStyles', matchedStyles);
-  // const stateMixins = getStyleStateMixinsAndDefaultStateMixins(stateKey, style);
-  // const mixinsKeys = Object.keys(stateMixins);
-  for (let i = 0, len = matchedStyles.length; i < len; i++) {
-    const matchedStyle = getStyleFromStyles(matchedStyles[i], styles);
-    console.log('matchedStyle', matchedStyle);
-    if (matchedStyle) {
-      const mixinValue = getStyleValueFromStyle(
-        styleValueKey,
-        stateKey,
-        matchedStyle,
-        mixins,
-        styles
-      );
-      console.log('mixinValue', mixinValue);
-      if (isValueDefined(mixinValue)) {
-        return {
-          ...mixinValue,
-          styleKey: matchedStyle.key,
-        };
-      }
-    }
+  const styleValue = getMixinStyleValue(styleValueKey, stateKey, '', style, mixins, styles);
+  if (typeof styleValue !== 'undefined') {
+    return styleValue;
   }
-  // for (let i = 0, len = mixinsKeys.length; i < len; i++) {
-  //   const mixinKey = mixinsKeys[i];
-  //   const mixin = getMixinFromMixins(mixins, mixinKey);
-  //   const mixinStylesKey = getMixinStylesKey(mixin);
-  //   const mixinStyles = getStyleFromStyles(mixinStylesKey, styles);
-  //   if (mixinStyles) {
-  //     const mixinValue = getStyleValueFromStyle(
-  //       styleValueKey,
-  //       stateKey,
-  //       mixinStyles,
-  //       mixins,
-  //       styles
-  //     );
-  //     if (isValueDefined(mixinValue)) {
-  //       return {
-  //         ...mixinValue,
-  //         styleKey: mixinStylesKey,
-  //       };
-  //     }
-  //   }
-  // }
   return {
     value: '',
     styleKey: '',

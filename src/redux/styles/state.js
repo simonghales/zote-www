@@ -5,7 +5,7 @@ import type { StyleValueWrapper } from '../../data/styles/state';
 import {
   getStyleFromStyles,
   getStyleStateStyles,
-  getStyleValueFromStyle,
+  getStyleValueFromStyleWithMixins,
 } from '../../data/styles/state';
 import type { StylesModels } from '../../data/styles/model';
 import { isValueDefined } from '../../utils/validation';
@@ -50,14 +50,8 @@ export function getReduxStyleStyleValue(
     };
   }
   const mixins = getReduxMixins(state);
-  const styleValue = getStyleValueFromStyle(key, stateKey, style, mixins, styles);
-  if (isValueDefined(styleValue)) {
-    return styleValue;
-  }
-  return {
-    value: '',
-    styleKey: '',
-  };
+  const styleValue = getStyleValueFromStyleWithMixins(key, stateKey, style, mixins, styles);
+  return styleValue;
 }
 
 export function getReduxStyleStyles(
