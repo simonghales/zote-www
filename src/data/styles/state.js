@@ -166,8 +166,6 @@ export function getRecursiveStyleStates(
     mappedMixins[style.key] = styleStateKeys;
   }
 
-  console.log('mappedMixins', mappedMixins);
-
   return mappedMixins;
 }
 
@@ -184,67 +182,6 @@ export function getMatchedStylesWithStyleState(
     return Object.keys(styleToCheck).includes(mappedStateKey);
   });
 }
-
-/*
-
-  TODO
-
-  Need to take a different approach. Need to iterate through the mixins, and see if any of the states match the stateKey
-  If not, iterate through deeper mixins (with an expanding stateKey passed down each time.)
-
- */
-
-// function getMixinStyleValue(
-//   styleValueKey: string,
-//   stateKey: string,
-//   parentStateKey: string,
-//   mixin: MixinModel,
-//   mixins: MixinsModel,
-//   styles: StylesModels
-// ): any {
-//   const mixinStyleKey = getMixinStylesKey(mixin);
-//   const mixinStyle = getStyleFromStyles(mixinStyleKey, styles);
-//   if (!mixinStyle) {
-//     return undefined;
-//   }
-//   const states = getStyleStatesFromStyle(mixinStyle);
-//   const statesKeys = Object.keys(states);
-//   for (let i = 0, len = statesKeys.length; i < len; i++) {
-//     const styleStateKey = statesKeys[i];
-//     const mappedStateKey = getMappedStateKey(styleStateKey);
-//     const combinedStateKey = getCombinedStateKey(parentStateKey, mappedStateKey);
-//     if (combinedStateKey === stateKey) {
-//       const mixinValue = getStyleValueFromStyleWithMixins(
-//         styleValueKey,
-//         styleStateKey,
-//         mixinStyle,
-//         mixins,
-//         styles
-//       );
-//       if (isValueDefined(mixinValue)) {
-//         return mixinValue;
-//       }
-//     }
-//     const styleStateMixins = getMixinsFromStyleState(states[styleStateKey]);
-//     const styleStateMixinsKeys = Object.keys(styleStateMixins);
-//     for (let j = 0, jLen = styleStateMixinsKeys.length; j < jLen; j++) {
-//       const stateMixinKey = styleStateMixinsKeys[j];
-//       const stateMixin = getMixinFromMixins(mixins, stateMixinKey);
-//       const stateMixinStyleValue = getMixinStyleValue(
-//         styleValueKey,
-//         stateKey,
-//         combinedStateKey,
-//         stateMixin,
-//         mixins,
-//         styles
-//       );
-//       if (isValueDefined(stateMixinStyleValue)) {
-//         return stateMixinStyleValue;
-//       }
-//     }
-//   }
-//   return undefined;
-// }
 
 function getMixinStyleValue(
   styleValueKey: string,
