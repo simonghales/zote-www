@@ -42,11 +42,13 @@ export const DUMMY_MIXIN_TEXT_STYLES: StyleModel = {
 
 export const DUMMY_MIXIN: MixinModel = {
   key: 'DUMMY_MIXIN',
+  name: 'Large Text',
   stylesKey: 'DUMMY_MIXIN_STYLES',
 };
 
 export const DUMMY_MIXIN_TEXT: MixinModel = {
   key: 'DUMMY_MIXIN_TEXT',
+  name: 'Weird',
   stylesKey: 'DUMMY_MIXIN_TEXT_STYLES',
 };
 

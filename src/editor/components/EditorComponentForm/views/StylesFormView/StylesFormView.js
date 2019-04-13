@@ -20,7 +20,7 @@ const StylesFormView = ({ formSectionsVisibility, setFormSectionVisibility }: Pr
   return (
     <div className={styles.containerClass}>
       <StylesStateFormSection styleKey={blockStyleKey} />
-      <StylesMixinsFormSection />
+      <StylesMixinsFormSection styleKey={blockStyleKey} />
       {STYLES_FORM_DATA.sections.map(section => (
         <FormColumnsSection
           heading={section.heading}

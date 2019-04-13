@@ -2,6 +2,7 @@
 
 export type MixinModel = {
   key: string,
+  name: string,
   stylesKey: string,
 };
 
