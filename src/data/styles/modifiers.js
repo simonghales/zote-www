@@ -3,6 +3,7 @@
 import type { StateStylesModel, StyleModel } from './model';
 import { generateEmptyStylesObject } from './generators';
 import { isValueDefined } from '../../utils/validation';
+import { getStyleStatesFromStyle } from './state';
 
 export function updateStyleStateStyleValue(
   styles: StateStylesModel,
@@ -53,5 +54,19 @@ export function updateStyleStyleValue(
         styles: updateStyleStateStyleValue(styleState.styles, styleValueKey, value),
       },
     },
+  };
+}
+
+export function clearStyleStyleState(style: StyleModel, stateKey: string) {
+  const states = getStyleStatesFromStyle(style);
+  const updatedStates = {};
+  Object.keys(states).forEach(styleStateKey => {
+    if (styleStateKey !== stateKey) {
+      updatedStates[styleStateKey] = states[styleStateKey];
+    }
+  });
+  return {
+    ...style,
+    states: updatedStates,
   };
 }

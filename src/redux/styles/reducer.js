@@ -2,13 +2,52 @@
 
 import type { GenericAction } from '../editor/reducer';
 import { dummyStylesReduxState } from '../../data/dummy/redux';
-import { updateStyleStyleValue } from '../../data/styles/modifiers';
+import { clearStyleStyleState, updateStyleStyleValue } from '../../data/styles/modifiers';
 import type { StylesReduxState } from './state';
 import { getStylesFromStylesReduxState } from './state';
 
 export const initialStylesReduxState: StylesReduxState = {
   ...dummyStylesReduxState,
 };
+
+const CLEAR_STYLE_STATE = 'CLEAR_STYLE_STATE';
+
+type ClearStyleStatePayload = {
+  styleKey: string,
+  styleStateKey: string,
+};
+
+type ClearStyleStateAction = {
+  type: string,
+  payload: ClearStyleStatePayload,
+};
+
+export function clearStyleStateRedux(
+  styleKey: string,
+  styleStateKey: string
+): ClearStyleStateAction {
+  return {
+    type: CLEAR_STYLE_STATE,
+    payload: {
+      styleKey,
+      styleStateKey,
+    },
+  };
+}
+
+function handleClearStyleState(
+  state: StylesReduxState,
+  { styleKey, styleStateKey }: ClearStyleStatePayload
+): StylesReduxState {
+  const styles = getStylesFromStylesReduxState(state);
+  return {
+    ...state,
+    styles: {
+      ...styles,
+      [styleKey]: clearStyleStyleState(styles[styleKey], styleStateKey),
+    },
+  };
+}
 
 const CLEAR_MODULE_STYLE_VALUE = 'CLEAR_MODULE_STYLE_VALUE';
 
@@ -104,6 +143,7 @@ function handleSetModuleStyleValue(
 }
 
 const ACTION_HANDLERS = {
+  [CLEAR_STYLE_STATE]: handleClearStyleState,
   [CLEAR_MODULE_STYLE_VALUE]: handleClearModuleStyleValue,
   [SET_MODULE_STYLE_VALUE]: handleSetModuleStyleValue,
 };

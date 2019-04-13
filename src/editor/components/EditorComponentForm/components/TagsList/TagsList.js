@@ -19,7 +19,7 @@ type TagProps = {
   onRemove: () => void,
 };
 
-const Tag = ({ active, label, removable, onSelect }: TagProps) => (
+const Tag = ({ active, label, removable, onSelect, onRemove }: TagProps) => (
   <div
     className={cx(styles.tagClass, {
       [styles.tagActiveClass]: active,
@@ -29,16 +29,27 @@ const Tag = ({ active, label, removable, onSelect }: TagProps) => (
     onClick={onSelect}
   >
     <div className={styles.tagLabelClass}>{label}</div>
-    {removable && <div className={styles.tagButtonClass}>{<FaTimes size={10} />}</div>}
+    {removable && (
+      <div
+        className={styles.tagButtonClass}
+        onClick={(event: any) => {
+          event.preventDefault();
+          onRemove();
+        }}
+      >
+        {<FaTimes size={10} />}
+      </div>
+    )}
   </div>
 );
 
 type Props = {
   tags: Array<TagModel>,
   onSelect: (key: string) => void,
+  onRemove: (key: string) => void,
 };
 
-const TagsList = ({ tags, onSelect }: Props) => (
+const TagsList = ({ tags, onSelect, onRemove }: Props) => (
   <div className={styles.listClass}>
     {tags.map((tag, index) => (
       <Tag
@@ -49,7 +60,9 @@ const TagsList = ({ tags, onSelect }: Props) => (
         onSelect={() => {
           onSelect(tag.key);
         }}
-        onRemove={() => {}}
+        onRemove={() => {
+          onRemove(tag.key);
+        }}
       />
     ))}
     <div className={styles.addTagClass}>

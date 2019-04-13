@@ -1,11 +1,9 @@
 // @flow
 
-import { Styles } from 'polished/lib/types/style';
 import type { ReduxState } from '../../../../../redux/store';
 import type { StyleModel, StylesModels } from '../../../../../data/styles/model';
 import { getReduxMixins, getStylesFromStylesReduxState } from '../../../../../redux/styles/state';
 import {
-  getMixinsFromStyleState,
   getStyleFromStyles,
   getStyleStateMixins,
   getStyleStatesFromStyle,
@@ -64,7 +62,8 @@ function getStyleStateSelectors(
   styles: StylesModels,
   mixins: MixinsModel,
   parentStateKey: string,
-  root: boolean
+  root: boolean,
+  recursiveEnabled: boolean
 ): RawStateSelectors {
   let styleStateSelectors = {};
   const styleStates = getStyleStatesFromStyle(style);
@@ -74,16 +73,25 @@ function getStyleStateSelectors(
       key: mergedMappedStateKey,
       removable: root,
     };
-    const stateMixins = getStyleStateMixins(stateKey, style);
-    Object.keys(stateMixins).forEach(mixinKey => {
-      const mixinStyle = getMixinStyle(mixinKey, mixins, styles);
-      if (mixinStyle) {
-        styleStateSelectors = {
-          ...styleStateSelectors,
-          ...getStyleStateSelectors(mixinStyle, styles, mixins, mergedMappedStateKey, false),
-        };
-      }
-    });
+    if (recursiveEnabled) {
+      const stateMixins = getStyleStateMixins(stateKey, style);
+      Object.keys(stateMixins).forEach(mixinKey => {
+        const mixinStyle = getMixinStyle(mixinKey, mixins, styles);
+        if (mixinStyle) {
+          styleStateSelectors = {
+            ...styleStateSelectors,
+            ...getStyleStateSelectors(
+              mixinStyle,
+              styles,
+              mixins,
+              mergedMappedStateKey,
+              false,
+              recursiveEnabled
+            ),
+          };
+        }
+      });
+    }
   });
   return styleStateSelectors;
 }
@@ -107,6 +115,6 @@ export function getStateSelectorsFromRedux(
   }
   const styles = getStylesFromRedux(state);
   const mixins = getReduxMixins(state);
-  const styleStateSelectors = getStyleStateSelectors(style, styles, mixins, '', true);
+  const styleStateSelectors = getStyleStateSelectors(style, styles, mixins, '', true, false);
   return mapSelectors(styleStateSelectors);
 }

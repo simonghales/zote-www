@@ -50,8 +50,8 @@ export const tagButtonClass = css`
   align-items: center;
   justify-content: center;
   margin-left: 2px;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 2px;
 
   &:hover {

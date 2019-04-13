@@ -7,9 +7,7 @@ const defaultEditorFormSectionsVisibility = {
   [customFormSection.key]: false,
 };
 
-const defaultBlockStylesSelector = {
-  DUMMY_CONTAINER_BLOCK: '&:hover',
-};
+const defaultBlockStylesSelector = {};
 
 type Props = {
   children: any,

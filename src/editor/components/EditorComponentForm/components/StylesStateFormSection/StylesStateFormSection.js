@@ -12,6 +12,7 @@ import type { ReduxState } from '../../../../../redux/store';
 import { getStateSelectorsFromRedux } from './state';
 import type { StateSelector } from './state';
 import type { TagModel } from '../TagsList/TagsList';
+import { clearStyleStateRedux } from '../../../../../redux/styles/reducer';
 
 export function getBlockStylesSelector(
   blockStylesSelector: BlockStylesSelector,
@@ -33,9 +34,10 @@ function mapSelectorsToTags(selectors: Array<StateSelector>, selectorKey: string
 type Props = {
   styleKey: string,
   selectors: Array<StateSelector>,
+  clearStyleState: (stateKey: string) => void,
 };
 
-const StylesStateFormSection = ({ selectors }: Props) => {
+const StylesStateFormSection = ({ selectors, clearStyleState }: Props) => {
   const { blockKey, blockStylesSelector, setBlockStylesSelector } = useContext(
     EditorComponentFormContext
   );
@@ -47,13 +49,17 @@ const StylesStateFormSection = ({ selectors }: Props) => {
     setBlockStylesSelector(blockKey, key);
   };
 
+  const handleOnRemove = (key: string) => {
+    clearStyleState(key);
+  };
+
   return (
     <FormSection
       heading={stylesStateFormSection.heading}
       columns={stylesStateFormSection.columns}
       visibilityKey={stylesStateFormSection.key}
     >
-      <TagsList tags={tags} onSelect={handleOnSelect} />
+      <TagsList tags={tags} onSelect={handleOnSelect} onRemove={handleOnRemove} />
     </FormSection>
   );
 };
@@ -65,4 +71,11 @@ const mapStateToProps = (state: ReduxState, { styleKey }: Props) => {
   };
 };
 
-export default connect(mapStateToProps)(StylesStateFormSection);
+const mapDispatchToProps = (dispatch: any, { styleKey }: Props) => ({
+  clearStyleState: (stateKey: string) => dispatch(clearStyleStateRedux(styleKey, stateKey)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StylesStateFormSection);
