@@ -196,7 +196,7 @@ function getMixinStyleValue(
   for (let i = 0, len = statesKeys.length; i < len; i++) {
     const styleStateKey = statesKeys[i];
     const mappedStateKey = getMappedStateKey(styleStateKey);
-    const combinedStateKey = getCombinedStateKey(parentStateKey, mappedStateKey);
+    const combinedStateKey = getCombinedStateKey(parentStateKey, mappedStateKey, stateKey);
     if (combinedStateKey === stateKey) {
       const mixinValue = getStyleValueFromStyle(styleValueKey, styleStateKey, style);
       if (isValueDefined(mixinValue)) {

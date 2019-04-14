@@ -9,7 +9,7 @@ export type StateStylesModel = {
 };
 
 export const STYLE_STATES = {
-  default: 'default',
+  default: '',
 };
 
 export type StyleStateMixinsModel = {

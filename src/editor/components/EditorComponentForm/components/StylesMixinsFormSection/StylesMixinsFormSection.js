@@ -1,18 +1,33 @@
 // @flow
-import React from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { stylesMixinsFormSection } from '../../data/styles';
 import FormSection from '../FormSection/FormSection';
 import TagsList from '../TagsList/TagsList';
 import type { ReduxState } from '../../../../../redux/store';
 import { getStyleMixinsFromRedux } from './state';
+import type { StyleMixinTag } from './state';
+import type { TagModel } from '../TagsList/TagsList';
+import { getBlockStylesSelector } from '../StylesStateFormSection/StylesStateFormSection';
+import { EditorComponentFormContext } from '../EditorComponentFormContextWrapper/context';
 
 type Props = {
   styleKey: string,
+  mixins: Array<StyleMixinTag>,
 };
 
-const StylesMixinsFormSection = () => {
-  const tags = [];
+const mapMixinsToTags = (mixins: Array<StyleMixinTag>, stateKey: string): Array<TagModel> =>
+  mixins.map(mixin => ({
+    key: mixin.key,
+    label: mixin.label,
+    active: mixin.states.includes(stateKey),
+    removable: true,
+  }));
+
+const StylesMixinsFormSection = ({ mixins }: Props) => {
+  const { blockKey, blockStylesSelector } = useContext(EditorComponentFormContext);
+  const selector = getBlockStylesSelector(blockStylesSelector, blockKey);
+  const tags = mapMixinsToTags(mixins, selector);
   const handleOnSelect = () => {};
   const handleOnRemove = () => {};
   return (
@@ -28,8 +43,9 @@ const StylesMixinsFormSection = () => {
 
 const mapStateToProps = (state: ReduxState, { styleKey }: Props) => {
   const mixins = getStyleMixinsFromRedux(state, styleKey);
-  console.log('mixins', mixins);
-  return {};
+  return {
+    mixins,
+  };
 };
 
 export default connect(mapStateToProps)(StylesMixinsFormSection);

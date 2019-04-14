@@ -14,6 +14,7 @@ import {
   getMappedStateKey,
 } from '../../../../../preview/data/block/styles/state';
 import { getMixinFromMixins, getMixinStylesKey } from '../../../../../data/mixin/state';
+import { STYLE_STATES } from '../../../../../data/styles/model';
 
 export function getStyleFromRedux(styleKey: string, state: ReduxState): StyleModel | null {
   const styles = getStylesFromStylesReduxState(state.styles);
@@ -34,17 +35,17 @@ type RawStateSelectors = {
 
 function mapSelectors(selectors: RawStateSelectors): Array<StateSelector> {
   return Object.keys(selectors).map(stateKey => {
-    const isDefault = stateKey === '';
+    const isDefault = stateKey === STYLE_STATES.default;
     return {
       label: isDefault ? 'Default' : stateKey,
-      key: isDefault ? 'default' : stateKey,
+      key: stateKey,
       removable: isDefault ? false : selectors[stateKey].removable,
     };
   });
 }
 
 export function getMergedMappedStateKey(stateKey: string, parentStateKey: string): string {
-  return getCombinedStateKey(parentStateKey, getMappedStateKey(stateKey));
+  return getCombinedStateKey(parentStateKey, getMappedStateKey(stateKey), stateKey);
 }
 
 export function getMixinStyle(
