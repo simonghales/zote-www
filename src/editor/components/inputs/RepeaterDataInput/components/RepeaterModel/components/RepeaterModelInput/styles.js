@@ -5,7 +5,7 @@ import { css } from 'emotion';
 export const containerClass = css`
   display: flex;
 
-  &:not(:first-child) {
+  &:not(:first-of-type) {
     margin-top: 5px;
   }
 `;

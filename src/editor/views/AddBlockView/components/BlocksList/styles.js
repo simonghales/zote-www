@@ -9,7 +9,7 @@ export const containerClass = css`
 `;
 
 export const itemClass = css`
-  &:not(:first-child) {
+  &:not(:first-of-type) {
     margin-top: ${spacing.smallLess}px;
   }
 `;

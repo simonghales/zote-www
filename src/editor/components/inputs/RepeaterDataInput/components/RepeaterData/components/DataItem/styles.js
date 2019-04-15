@@ -5,7 +5,7 @@ import colors from 'styles/config/colors';
 import { labelCss } from '../../../../../../../../styles/shared/typography';
 
 export const containerClass = css`
-  // &:not(:first-child) {
+  // &:not(:first-of-type) {
   //   margin-top: 10px;
   //   border-top: 1px solid ${colors.lightFaintShade};
   //   padding-top: 5px;
@@ -15,7 +15,7 @@ export const containerClass = css`
 `;
 
 export const inputContainerClass = css`
-  &:not(:first-child) {
+  &:not(:first-of-type) {
     margin-top: 5px;
   }
 `;
