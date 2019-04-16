@@ -27,13 +27,13 @@ const mapMixinsToTags = (mixins: Array<StyleMixinTag>, stateKey: string): Array<
       removable: true,
     }));
 
-const StylesMixinsFormSection = ({ mixins }: Props) => {
+const StylesMixinsFormSection = ({ mixins, styleKey }: Props) => {
   const { blockKey, blockStylesSelector } = useContext(EditorComponentFormContext);
   const selector = getBlockStylesSelector(blockStylesSelector, blockKey);
   const tags = mapMixinsToTags(mixins, selector);
   const handleOnSelect = () => {};
   const handleOnRemove = () => {};
-  const [addingMixin, setAddingMixin] = useState(true);
+  const [addingMixin, setAddingMixin] = useState(false);
   const handleAdd = () => {
     setAddingMixin(true);
   };
@@ -56,6 +56,8 @@ const StylesMixinsFormSection = ({ mixins }: Props) => {
         onClose={() => {
           setAddingMixin(false);
         }}
+        styleKey={styleKey}
+        styleStateKey={selector}
       />
     </React.Fragment>
   );

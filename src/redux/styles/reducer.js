@@ -2,13 +2,59 @@
 
 import type { GenericAction } from '../editor/reducer';
 import { dummyStylesReduxState } from '../../data/dummy/redux';
-import { clearStyleStyleState, updateStyleStyleValue } from '../../data/styles/modifiers';
+import {
+  addMixinToStyle,
+  clearStyleStyleState,
+  updateStyleStyleValue,
+} from '../../data/styles/modifiers';
 import type { StylesReduxState } from './state';
 import { getStylesFromStylesReduxState } from './state';
 
 export const initialStylesReduxState: StylesReduxState = {
   ...dummyStylesReduxState,
 };
+
+const ADD_MIXIN_TO_STYLE = 'ADD_MIXIN_TO_STYLE';
+
+type AddMixinToStylePayload = {
+  styleKey: string,
+  styleStateKey: string,
+  mixinKey: string,
+};
+
+type AddMixinToStyleAction = {
+  type: string,
+  payload: AddMixinToStylePayload,
+};
+
+export function addMixinToStyleRedux(
+  styleKey: string,
+  styleStateKey: string,
+  mixinKey: string
+): AddMixinToStyleAction {
+  return {
+    type: ADD_MIXIN_TO_STYLE,
+    payload: {
+      styleKey,
+      styleStateKey,
+      mixinKey,
+    },
+  };
+}
+
+function handleAddMixinToStyle(
+  state: StylesReduxState,
+  { styleKey, styleStateKey, mixinKey }: AddMixinToStylePayload
+): StylesReduxState {
+  const styles = getStylesFromStylesReduxState(state);
+  return {
+    ...state,
+    styles: {
+      ...styles,
+      [styleKey]: addMixinToStyle(styles[styleKey], styleKey, styleStateKey, mixinKey),
+    },
+  };
+}
 
 const CLEAR_STYLE_STATE = 'CLEAR_STYLE_STATE';
 
@@ -143,6 +189,7 @@ function handleSetModuleStyleValue(
 }
 
 const ACTION_HANDLERS = {
+  [ADD_MIXIN_TO_STYLE]: handleAddMixinToStyle,
   [CLEAR_STYLE_STATE]: handleClearStyleState,
   [CLEAR_MODULE_STYLE_VALUE]: handleClearModuleStyleValue,
   [SET_MODULE_STYLE_VALUE]: handleSetModuleStyleValue,

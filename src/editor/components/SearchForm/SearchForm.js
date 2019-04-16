@@ -9,14 +9,15 @@ const NoResults = () => <div>No results found.</div>;
 
 type SearchFormItemProps = {
   onClick: () => void,
+  label: string,
 };
 
-export const SearchFormItem = ({ onClick }: SearchFormItemProps) => (
+export const SearchFormItem = ({ onClick, label }: SearchFormItemProps) => (
   <div className={styles.itemClass} onClick={onClick}>
     <div className={styles.itemIconClass}>
       <FaPaintBrush size={10} />
     </div>
-    <div>THING</div>
+    <div>{label}</div>
   </div>
 );
 

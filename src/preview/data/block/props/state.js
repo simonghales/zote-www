@@ -124,7 +124,6 @@ export function getPropValueAndTypeFromParsedProps(
 
   if (!prop) {
     const blockProps = parsedProps[blockKey];
-    console.log('blockProps', blockProps);
     if (!blockProps) {
       console.warn(`No props matched for block "${blockKey}".`);
       return null;

@@ -1,6 +1,6 @@
 // @flow
 
-import type { StateStylesModel, StyleModel } from './model';
+import type { StateStylesModel, StyleModel, StyleStateMixinsModel } from './model';
 import { generateEmptyStylesObject } from './generators';
 import { isValueDefined } from '../../utils/validation';
 import { getStyleStatesFromStyle } from './state';
@@ -52,6 +52,46 @@ export function updateStyleStyleValue(
       [stateKey]: {
         ...styleState,
         styles: updateStyleStateStyleValue(styleState.styles, styleValueKey, value),
+      },
+    },
+  };
+}
+
+export function updateStyleStateMixins(
+  mixins: StyleStateMixinsModel,
+  mixinKey: string
+): StyleStateMixinsModel {
+  return {
+    ...mixins,
+    [mixinKey]: {
+      disabledStates: {},
+    },
+  };
+}
+
+export function addMixinToStyle(
+  style: StyleModel,
+  styleKey: string,
+  stateKey: string,
+  mixinKey: string
+): StyleModel {
+  if (!style) {
+    style = generateEmptyStylesObject(styleKey);
+  }
+  let styleState = style.states[stateKey];
+  if (!styleState) {
+    styleState = {
+      mixins: {},
+      styles: {},
+    };
+  }
+  return {
+    ...style,
+    states: {
+      ...style.states,
+      [stateKey]: {
+        ...styleState,
+        mixins: updateStyleStateMixins(styleState.mixins, mixinKey),
       },
     },
   };
