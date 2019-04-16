@@ -1,5 +1,5 @@
 // @flow
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { connect } from 'react-redux';
 import { stylesMixinsFormSection } from '../../data/styles';
 import FormSection from '../FormSection/FormSection';
@@ -10,6 +10,7 @@ import type { StyleMixinTag } from './state';
 import type { TagModel } from '../TagsList/TagsList';
 import { getBlockStylesSelector } from '../StylesStateFormSection/StylesStateFormSection';
 import { EditorComponentFormContext } from '../EditorComponentFormContextWrapper/context';
+import AddMixinModal from './components/AddMixinModal/AddMixinModal';
 
 type Props = {
   styleKey: string,
@@ -17,12 +18,14 @@ type Props = {
 };
 
 const mapMixinsToTags = (mixins: Array<StyleMixinTag>, stateKey: string): Array<TagModel> =>
-  mixins.map(mixin => ({
-    key: mixin.key,
-    label: mixin.label,
-    active: mixin.states.includes(stateKey),
-    removable: true,
-  }));
+  mixins
+    .filter(mixin => mixin.states.includes(stateKey))
+    .map(mixin => ({
+      key: mixin.key,
+      label: mixin.label,
+      active: true,
+      removable: true,
+    }));
 
 const StylesMixinsFormSection = ({ mixins }: Props) => {
   const { blockKey, blockStylesSelector } = useContext(EditorComponentFormContext);
@@ -30,14 +33,31 @@ const StylesMixinsFormSection = ({ mixins }: Props) => {
   const tags = mapMixinsToTags(mixins, selector);
   const handleOnSelect = () => {};
   const handleOnRemove = () => {};
+  const [addingMixin, setAddingMixin] = useState(true);
+  const handleAdd = () => {
+    setAddingMixin(true);
+  };
   return (
-    <FormSection
-      heading={stylesMixinsFormSection.heading}
-      columns={stylesMixinsFormSection.columns}
-      visibilityKey={stylesMixinsFormSection.key}
-    >
-      <TagsList tags={tags} onSelect={handleOnSelect} onRemove={handleOnRemove} />
-    </FormSection>
+    <React.Fragment>
+      <FormSection
+        heading={stylesMixinsFormSection.heading}
+        columns={stylesMixinsFormSection.columns}
+        visibilityKey={stylesMixinsFormSection.key}
+      >
+        <TagsList
+          tags={tags}
+          onSelect={handleOnSelect}
+          onRemove={handleOnRemove}
+          onAdd={handleAdd}
+        />
+      </FormSection>
+      <AddMixinModal
+        isOpen={addingMixin}
+        onClose={() => {
+          setAddingMixin(false);
+        }}
+      />
+    </React.Fragment>
   );
 };
 

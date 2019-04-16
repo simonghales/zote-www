@@ -47,9 +47,10 @@ type Props = {
   tags: Array<TagModel>,
   onSelect: (key: string) => void,
   onRemove: (key: string) => void,
+  onAdd?: () => void,
 };
 
-const TagsList = ({ tags, onSelect, onRemove }: Props) => (
+const TagsList = ({ tags, onSelect, onRemove, onAdd }: Props) => (
   <div className={styles.listClass}>
     {tags.map((tag, index) => (
       <Tag
@@ -65,10 +66,12 @@ const TagsList = ({ tags, onSelect, onRemove }: Props) => (
         }}
       />
     ))}
-    <div className={styles.addTagClass}>
-      Add
-      <FaPlus size={10} />
-    </div>
+    {onAdd && (
+      <div className={styles.addTagClass} onClick={onAdd}>
+        Add
+        <FaPlus size={10} />
+      </div>
+    )}
   </div>
 );
 
