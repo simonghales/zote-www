@@ -6,9 +6,8 @@ import spacing from 'styles/config/spacing';
 import fontWeights from '../../../../../styles/config/fontWeights';
 
 export const containerClass = css`
-  background-color: rgb(24, 32, 50);
-  color: rgb(77, 89, 116);
-  height: 36px;
+  background-color: #1e2431;
+  height: 34px;
   display: flex;
   align-items: center;
   padding: 0 ${spacing.medium}px;
@@ -18,7 +17,14 @@ export const containerClass = css`
   letter-spacing: 0.35px;
 
   a {
+    color: #586175;
     display: inline-block;
     margin-right: 30px;
+    text-decoration: none;
+    transition: color 200ms ease;
+
+    &:hover {
+      color: #d5dae2;
+    }
   }
 `;
