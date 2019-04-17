@@ -13,6 +13,7 @@ import type { EditorRoutingMatch } from '../../routing/routing';
 import EditorRouteHandler from '../../routing/components/EditorRouteHandler';
 import EditorContextWrapper from '../../context/components/EditorContextWrapper/EditorContextWrapper';
 import EditorUIContextWrapper from '../../context/components/EditorUIContextWrapper/EditorUIContextWrapper';
+import EditorNavBar from './components/EditorNavBar/EditorNavBar';
 
 type Props = {
   addingBlock: boolean,
@@ -29,12 +30,17 @@ class EditorView extends React.Component<Props> {
           <EditorContextWrapper>
             <SelectedComponentContextWrapper>
               <div className={styles.containerClass}>
-                <div className={styles.sidebarClass}>
-                  <EditorSidebar />
+                <div className={styles.navBarClass}>
+                  <EditorNavBar />
                 </div>
-                <div className={styles.mainClass}>
-                  <ModuleView />
-                  {addingBlock && <AddBlockView />}
+                <div className={styles.bodyClass}>
+                  <div className={styles.sidebarClass}>
+                    <EditorSidebar />
+                  </div>
+                  <div className={styles.mainClass}>
+                    <ModuleView />
+                    {addingBlock && <AddBlockView />}
+                  </div>
                 </div>
               </div>
             </SelectedComponentContextWrapper>

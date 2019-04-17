@@ -11,6 +11,7 @@ import {
   selectHeaderIconCss,
   selectHeaderTextCss,
 } from '../../../../../styles/shared/misc';
+import fontWeights from '../../../../../styles/config/fontWeights';
 
 const containerClass = css`
   background-color: ${colors.sidebarBackground};
@@ -22,13 +23,18 @@ const containerClass = css`
 `;
 
 const headerClass = css`
-  padding: 0 ${commonSidePadding} 0 ${commonSidePadding};
+  padding: 0 10px 0 ${commonSidePadding};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const logoClass = css`
   height: ${commonHeaderHeight};
   display: flex;
   align-items: center;
+  //color: ${colors.vibrant};
+  font-weight: ${fontWeights.medium};
 
   svg {
     display: block;
@@ -56,6 +62,27 @@ const navSelectorIconClass = css`
   ${selectHeaderIconCss};
 `;
 
+const quickSearchClass = css`
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  cursor: pointer;
+  color: ${colors.shadeBlue};
+  opacity: 0.5;
+  position: relative;
+  top: 1px;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
+
+const quickSearchIconClass = css`
+  position: relative;
+  top: 1px;
+  margin-left: 5px;
+`;
+
 export default {
   containerClass,
   headerClass,
@@ -65,4 +92,6 @@ export default {
   navSelectorClass,
   navSelectorTextClass,
   navSelectorIconClass,
+  quickSearchClass,
+  quickSearchIconClass,
 };

@@ -10,6 +10,15 @@ const containerClass = css`
   right: 0;
   bottom: 0;
   display: flex;
+  flex-direction: column;
+`;
+
+const navBarClass = css``;
+
+const bodyClass = css`
+  flex: 1;
+  display: flex;
+  position: relative;
 `;
 
 const sidebarClass = css`
@@ -26,6 +35,8 @@ const mainClass = css`
 
 export default {
   containerClass,
+  bodyClass,
   sidebarClass,
+  navBarClass,
   mainClass,
 };
