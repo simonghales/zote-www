@@ -1,6 +1,6 @@
 // @flow
 
-import type { StateStylesModel, StyleModel, StyleStateMixinsModel } from './model';
+import type { StateStylesModel, StyleModel, StyleStateMixinsModel, StyleStateModel } from './model';
 import { generateEmptyStylesObject } from './generators';
 import { isValueDefined } from '../../utils/validation';
 import { getStyleStatesFromStyle } from './state';
@@ -69,6 +69,23 @@ export function updateStyleStateMixins(
   };
 }
 
+export function removeStyleStateMixin(
+  styleState: StyleStateModel,
+  removeMixinKey: string
+): StyleStateMixinsModel {
+  const { mixins = {} } = styleState;
+  const finalMixins = {};
+  Object.keys(mixins).forEach(mixinKey => {
+    if (mixinKey !== removeMixinKey) {
+      finalMixins[mixinKey] = mixins[mixinKey];
+    }
+  });
+  return {
+    ...styleState,
+    mixins: finalMixins,
+  };
+}
+
 export function addMixinToStyle(
   style: StyleModel,
   styleKey: string,
@@ -93,6 +110,31 @@ export function addMixinToStyle(
         ...styleState,
         mixins: updateStyleStateMixins(styleState.mixins, mixinKey),
       },
+    },
+  };
+}
+
+export function removeMixinFromStyle(
+  style: StyleModel,
+  styleKey: string,
+  stateKey: string,
+  mixinKey: string
+): StyleModel {
+  if (!style) {
+    style = generateEmptyStylesObject(styleKey);
+  }
+  let styleState = style.states[stateKey];
+  if (!styleState) {
+    styleState = {
+      mixins: {},
+      styles: {},
+    };
+  }
+  return {
+    ...style,
+    states: {
+      ...style.states,
+      [stateKey]: removeStyleStateMixin(styleState, mixinKey),
     },
   };
 }

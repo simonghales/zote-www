@@ -9,6 +9,7 @@ import type { ReduxState } from '../../../../../../../redux/store';
 import { getMixinsFromRedux } from './state';
 import type { MixinModel } from '../../../../../../../data/mixin/model';
 import { addMixinToStyleRedux } from '../../../../../../../redux/styles/reducer';
+import type { StyleMixinTag } from '../../state';
 
 function filterMixins(input: string, items: Array<SearchResultItem>): Array<SearchResultItem> {
   if (!input) return items;
@@ -21,18 +22,22 @@ function filterMixins(input: string, items: Array<SearchResultItem>): Array<Sear
 
 function mapMixinsToItems(
   mixins: Array<MixinModel>,
+  addedMixins: Array<StyleMixinTag>,
   handleOnSelect: (key: string) => void
 ): Array<SearchResultItem> {
-  return mixins.map(mixin => ({
-    item: mixin,
-    component: (
-      <SearchFormItem
-        label={mixin.name}
-        key={mixin.key}
-        onClick={() => handleOnSelect(mixin.key)}
-      />
-    ),
-  }));
+  const addedMixinsKeys = addedMixins.map(mixin => mixin.key);
+  return mixins
+    .filter(mixin => !addedMixinsKeys.includes(mixin.key))
+    .map(mixin => ({
+      item: mixin,
+      component: (
+        <SearchFormItem
+          label={mixin.name}
+          key={mixin.key}
+          onClick={() => handleOnSelect(mixin.key)}
+        />
+      ),
+    }));
 }
 
 type Props = {
@@ -40,17 +45,18 @@ type Props = {
   styleStateKey: string,
   isOpen: boolean,
   onClose: () => void,
+  addedMixins: Array<StyleMixinTag>,
   mixins: Array<MixinModel>,
   addMixinToStyle: (mixinKey: string) => void,
 };
 
-const AddMixinModal = ({ isOpen, onClose, mixins, addMixinToStyle }: Props) => {
+const AddMixinModal = ({ isOpen, onClose, mixins, addedMixins, addMixinToStyle }: Props) => {
   const handleOnSelect = (key: string) => {
     addMixinToStyle(key);
     onClose();
   };
 
-  const items = mapMixinsToItems(mixins, handleOnSelect);
+  const items = mapMixinsToItems(mixins, addedMixins, handleOnSelect);
   return (
     <CustomModal isOpen={isOpen} onClose={onClose}>
       <div className={styles.containerClass}>

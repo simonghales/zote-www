@@ -11,28 +11,34 @@ import type { TagModel } from '../TagsList/TagsList';
 import { getBlockStylesSelector } from '../StylesStateFormSection/StylesStateFormSection';
 import { EditorComponentFormContext } from '../EditorComponentFormContextWrapper/context';
 import AddMixinModal from './components/AddMixinModal/AddMixinModal';
+import { removeMixinFromStyleRedux } from '../../../../../redux/styles/reducer';
 
 type Props = {
   styleKey: string,
   mixins: Array<StyleMixinTag>,
+  removeMixinFromStyle: (stateKey: string, mixinKey: string) => void,
 };
 
-const mapMixinsToTags = (mixins: Array<StyleMixinTag>, stateKey: string): Array<TagModel> =>
-  mixins
-    .filter(mixin => mixin.states.includes(stateKey))
-    .map(mixin => ({
-      key: mixin.key,
-      label: mixin.label,
-      active: true,
-      removable: true,
-    }));
+const filterMixins = (mixins: Array<StyleMixinTag>, stateKey: string): Array<StyleMixinTag> =>
+  mixins.filter(mixin => mixin.states.includes(stateKey));
 
-const StylesMixinsFormSection = ({ mixins, styleKey }: Props) => {
+const mapMixinsToTags = (mixins: Array<StyleMixinTag>): Array<TagModel> =>
+  mixins.map(mixin => ({
+    key: mixin.key,
+    label: mixin.label,
+    active: true,
+    removable: true,
+  }));
+
+const StylesMixinsFormSection = ({ mixins, styleKey, removeMixinFromStyle }: Props) => {
   const { blockKey, blockStylesSelector } = useContext(EditorComponentFormContext);
   const selector = getBlockStylesSelector(blockStylesSelector, blockKey);
-  const tags = mapMixinsToTags(mixins, selector);
+  const filteredMixins = filterMixins(mixins, selector);
+  const tags = mapMixinsToTags(filteredMixins);
   const handleOnSelect = () => {};
-  const handleOnRemove = () => {};
+  const handleOnRemove = (mixinKey: string) => {
+    removeMixinFromStyle(selector, mixinKey);
+  };
   const [addingMixin, setAddingMixin] = useState(false);
   const handleAdd = () => {
     setAddingMixin(true);
@@ -56,6 +62,7 @@ const StylesMixinsFormSection = ({ mixins, styleKey }: Props) => {
         onClose={() => {
           setAddingMixin(false);
         }}
+        addedMixins={filteredMixins}
         styleKey={styleKey}
         styleStateKey={selector}
       />
@@ -70,4 +77,12 @@ const mapStateToProps = (state: ReduxState, { styleKey }: Props) => {
   };
 };
 
-export default connect(mapStateToProps)(StylesMixinsFormSection);
+const mapDispatchToProps = (dispatch: any, { styleKey }: Props) => ({
+  removeMixinFromStyle: (stateKey: string, mixinKey: string) =>
+    dispatch(removeMixinFromStyleRedux(styleKey, stateKey, mixinKey)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StylesMixinsFormSection);

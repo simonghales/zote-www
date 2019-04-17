@@ -5,6 +5,7 @@ import { dummyStylesReduxState } from '../../data/dummy/redux';
 import {
   addMixinToStyle,
   clearStyleStyleState,
+  removeMixinFromStyle,
   updateStyleStyleValue,
 } from '../../data/styles/modifiers';
 import type { StylesReduxState } from './state';
@@ -13,6 +14,48 @@ import { getStylesFromStylesReduxState } from './state';
 export const initialStylesReduxState: StylesReduxState = {
   ...dummyStylesReduxState,
 };
+
+const REMOVE_MIXIN_FROM_STYLE = 'REMOVE_MIXIN_FROM_STYLE';
+
+type RemoveMixinFromStylePayload = {
+  styleKey: string,
+  styleStateKey: string,
+  mixinKey: string,
+};
+
+type RemoveMixinFromStyleAction = {
+  type: string,
+  payload: RemoveMixinFromStylePayload,
+};
+
+export function removeMixinFromStyleRedux(
+  styleKey: string,
+  styleStateKey: string,
+  mixinKey: string
+): RemoveMixinFromStyleAction {
+  return {
+    type: REMOVE_MIXIN_FROM_STYLE,
+    payload: {
+      styleKey,
+      styleStateKey,
+      mixinKey,
+    },
+  };
+}
+
+function handleRemoveMixinFromStyle(
+  state: StylesReduxState,
+  { styleKey, styleStateKey, mixinKey }: RemoveMixinFromStylePayload
+): StylesReduxState {
+  const styles = getStylesFromStylesReduxState(state);
+  return {
+    ...state,
+    styles: {
+      ...styles,
+      [styleKey]: removeMixinFromStyle(styles[styleKey], styleKey, styleStateKey, mixinKey),
+    },
+  };
+}
 
 const ADD_MIXIN_TO_STYLE = 'ADD_MIXIN_TO_STYLE';
 
@@ -189,6 +232,7 @@ function handleSetModuleStyleValue(
 }
 
 const ACTION_HANDLERS = {
+  [REMOVE_MIXIN_FROM_STYLE]: handleRemoveMixinFromStyle,
   [ADD_MIXIN_TO_STYLE]: handleAddMixinToStyle,
   [CLEAR_STYLE_STATE]: handleClearStyleState,
   [CLEAR_MODULE_STYLE_VALUE]: handleClearModuleStyleValue,
