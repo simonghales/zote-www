@@ -2,6 +2,7 @@
 import React from 'react';
 import 'styles/global';
 import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
 import styles from './styles';
 import EditorSidebar from './components/EditorSidebar/EditorSidebar';
 import ModuleView from './views/ModuleView/ModuleView';
@@ -14,6 +15,8 @@ import EditorRouteHandler from '../../routing/components/EditorRouteHandler';
 import EditorContextWrapper from '../../context/components/EditorContextWrapper/EditorContextWrapper';
 import EditorUIContextWrapper from '../../context/components/EditorUIContextWrapper/EditorUIContextWrapper';
 import EditorNavBar from './components/EditorNavBar/EditorNavBar';
+import EditorComponentView from './views/EditorComponentView/EditorComponentView';
+import { EDITOR_PATHS } from '../../routing/routing';
 
 type Props = {
   addingBlock: boolean,
@@ -25,28 +28,26 @@ class EditorView extends React.Component<Props> {
   render() {
     const { addingBlock } = this.props;
     return (
-      <EditorRouteHandler>
-        <EditorUIContextWrapper>
-          <EditorContextWrapper>
-            <SelectedComponentContextWrapper>
-              <div className={styles.containerClass}>
-                <div className={styles.navBarClass}>
-                  <EditorNavBar />
+      <EditorUIContextWrapper>
+        <EditorContextWrapper>
+          <SelectedComponentContextWrapper>
+            <div className={styles.containerClass}>
+              <div className={styles.navBarClass}>
+                <EditorNavBar />
+              </div>
+              <div className={styles.bodyClass}>
+                <div className={styles.sidebarClass}>
+                  <EditorSidebar />
                 </div>
-                <div className={styles.bodyClass}>
-                  <div className={styles.sidebarClass}>
-                    <EditorSidebar />
-                  </div>
-                  <div className={styles.mainClass}>
-                    <ModuleView />
-                    {addingBlock && <AddBlockView />}
-                  </div>
+                <div className={styles.mainClass}>
+                  <Route exact path={EDITOR_PATHS.component} component={EditorComponentView} />
+                  {addingBlock && <AddBlockView />}
                 </div>
               </div>
-            </SelectedComponentContextWrapper>
-          </EditorContextWrapper>
-        </EditorUIContextWrapper>
-      </EditorRouteHandler>
+            </div>
+          </SelectedComponentContextWrapper>
+        </EditorContextWrapper>
+      </EditorUIContextWrapper>
     );
   }
 }

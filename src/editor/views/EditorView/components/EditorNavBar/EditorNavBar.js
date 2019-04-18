@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import * as styles from './styles';
 import { EDITOR_PATHS } from '../../../../routing/routing';
 
@@ -8,10 +8,35 @@ const EditorNavBar = (props: any) => {
   console.log('props', props);
   return (
     <nav className={styles.containerClass}>
-      <a href={EDITOR_PATHS.dashboard}>Dashboard</a>
-      <a href={EDITOR_PATHS.pages}>Pages</a>
-      <a href={EDITOR_PATHS.components}>Components</a>
-      <a href={EDITOR_PATHS.mixins}>Mixins</a>
+      <NavLink
+        className={styles.linkClass}
+        exact
+        activeClassName={styles.activeLinkClass}
+        to={EDITOR_PATHS.dashboard}
+      >
+        Dashboard
+      </NavLink>
+      <NavLink
+        className={styles.linkClass}
+        activeClassName={styles.activeLinkClass}
+        to={EDITOR_PATHS.pages}
+      >
+        Pages
+      </NavLink>
+      <NavLink
+        className={styles.linkClass}
+        activeClassName={styles.activeLinkClass}
+        to={EDITOR_PATHS.components}
+      >
+        Components
+      </NavLink>
+      <NavLink
+        className={styles.linkClass}
+        activeClassName={styles.activeLinkClass}
+        to={EDITOR_PATHS.mixins}
+      >
+        Mixins
+      </NavLink>
     </nav>
   );
 };

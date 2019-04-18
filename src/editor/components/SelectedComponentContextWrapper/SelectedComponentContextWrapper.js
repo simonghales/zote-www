@@ -11,14 +11,11 @@ type Props = {
   component: ComponentModel,
 };
 
-const SelectedComponentContextWrapper = ({ children, component }: Props) => {
-  if (!component) return null;
-  return (
-    <SelectedComponentContext.Provider value={component}>
-      {children}
-    </SelectedComponentContext.Provider>
-  );
-};
+const SelectedComponentContextWrapper = ({ children, component }: Props) => (
+  <SelectedComponentContext.Provider value={component}>
+    {children}
+  </SelectedComponentContext.Provider>
+);
 
 const mapStateToProps = (state: ReduxState) => {
   const component = getSelectedComponentSelector(state);

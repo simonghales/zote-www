@@ -15,16 +15,20 @@ export const containerClass = css`
   text-transform: uppercase;
   font-weight: ${fontWeights.medium};
   letter-spacing: 0.35px;
+`;
 
-  a {
-    color: #586175;
-    display: inline-block;
-    margin-right: 30px;
-    text-decoration: none;
-    transition: color 200ms ease;
+export const linkClass = css`
+  color: #586175;
+  display: inline-block;
+  margin-right: 30px;
+  text-decoration: none;
+  transition: color 200ms ease;
 
-    &:hover {
-      color: #d5dae2;
-    }
+  &:hover {
+    color: #d5dae2;
   }
+`;
+
+export const activeLinkClass = css`
+  color: #d5dae2;
 `;

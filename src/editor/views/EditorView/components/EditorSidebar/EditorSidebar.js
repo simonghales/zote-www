@@ -1,10 +1,11 @@
 // @flow
 import React from 'react';
 import { FaCaretDown, FaSearch } from 'react-icons/fa';
+import { Route } from 'react-router-dom';
 import styles from './styles';
 import { SolidButton } from '../../../../components/Button/Button';
-import SiteLogo from '../../../../components/SiteLogo/SiteLogo';
-import EditorSidebarModules from './views/EditorSidebarModules/EditorSidebarModules';
+import { EDITOR_PATHS } from '../../../../routing/routing';
+import EditorSidebarComponentView from './views/EditorSidebarComponentView/EditorSidebarComponentView';
 
 const NavSelector = () => (
   <div className={styles.navSelectorClass}>
@@ -30,7 +31,7 @@ const EditorSidebar = () => (
       <div className={styles.logoClass}>Components</div>
     </div>
     <div className={styles.middleClass}>
-      <EditorSidebarModules />
+      <Route exact path={EDITOR_PATHS.component} component={EditorSidebarComponentView} />
     </div>
     <div className={styles.footerClass}>
       <SolidButton>Save Changes</SolidButton>
