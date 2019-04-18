@@ -37,6 +37,13 @@ const EditorNavBar = (props: any) => {
       >
         Mixins
       </NavLink>
+      <NavLink
+        className={styles.linkClass}
+        activeClassName={styles.activeLinkClass}
+        to={EDITOR_PATHS.data}
+      >
+        Data
+      </NavLink>
     </nav>
   );
 };

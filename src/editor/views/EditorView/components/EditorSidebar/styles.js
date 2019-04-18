@@ -22,25 +22,6 @@ const containerClass = css`
   flex-direction: column;
 `;
 
-const headerClass = css`
-  padding: 0 10px 0 ${commonSidePadding};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const logoClass = css`
-  height: ${commonHeaderHeight};
-  display: flex;
-  align-items: center;
-  //color: ${colors.vibrant};
-  font-weight: ${fontWeights.medium};
-
-  svg {
-    display: block;
-  }
-`;
-
 const middleClass = css`
   flex: 1;
 `;
@@ -85,8 +66,6 @@ const quickSearchIconClass = css`
 
 export default {
   containerClass,
-  headerClass,
-  logoClass,
   middleClass,
   footerClass,
   navSelectorClass,

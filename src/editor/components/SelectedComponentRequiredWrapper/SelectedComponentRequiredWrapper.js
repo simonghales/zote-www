@@ -13,3 +13,9 @@ const SelectedComponentRequiredWrapper = ({ children }: Props) => {
 };
 
 export default SelectedComponentRequiredWrapper;
+
+export const selectedComponentRequired = (WrappedComponent: any) => (
+  <SelectedComponentRequiredWrapper>
+    <WrappedComponent />
+  </SelectedComponentRequiredWrapper>
+);

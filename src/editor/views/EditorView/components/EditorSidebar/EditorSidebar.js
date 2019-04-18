@@ -3,9 +3,9 @@ import React from 'react';
 import { FaCaretDown, FaSearch } from 'react-icons/fa';
 import { Route } from 'react-router-dom';
 import styles from './styles';
-import { SolidButton } from '../../../../components/Button/Button';
 import { EDITOR_PATHS } from '../../../../routing/routing';
-import EditorSidebarComponentView from './views/EditorSidebarComponentView/EditorSidebarComponentView';
+import ComponentView from './views/ComponentView/ComponentView';
+import DashboardView from './views/DashboardView/DashboardView';
 
 const NavSelector = () => (
   <div className={styles.navSelectorClass}>
@@ -27,15 +27,8 @@ const QuickSearch = () => (
 
 const EditorSidebar = () => (
   <div className={styles.containerClass}>
-    <div className={styles.headerClass}>
-      <div className={styles.logoClass}>Components</div>
-    </div>
-    <div className={styles.middleClass}>
-      <Route exact path={EDITOR_PATHS.component} component={EditorSidebarComponentView} />
-    </div>
-    <div className={styles.footerClass}>
-      <SolidButton>Save Changes</SolidButton>
-    </div>
+    <Route exact path={EDITOR_PATHS.dashboard} component={DashboardView} />
+    <Route exact path={EDITOR_PATHS.component} component={ComponentView} />
   </div>
 );
 

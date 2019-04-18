@@ -30,4 +30,5 @@ export const EDITOR_PATHS = {
     EDITOR_ROUTE_PARAMS.previousComponentKey
   }?`,
   mixins: `${EDITOR_ROUTE_PATH}/mixins`,
+  data: `${EDITOR_ROUTE_PATH}/data`,
 };
