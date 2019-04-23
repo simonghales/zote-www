@@ -30,6 +30,7 @@ export type UIReduxState = {
   selectedComponentKeyHistory: Array<string>,
   componentsSelectedBlockKeys: ComponentsSelectedBlockKeys,
   editorFormSectionsVisibility: EditorFormSectionsVisibility,
+  selectedPageKey: string,
 };
 
 export const initialUiReduxState: UIReduxState = {
@@ -43,8 +44,39 @@ export const initialUiReduxState: UIReduxState = {
   editorFormSectionsVisibility: {
     [customFormSection.key]: false,
   },
+  selectedPageKey: '',
   ...dummyUiReduxState,
 };
+
+const SET_SELECTED_PAGE_KEY = 'SET_SELECTED_PAGE_KEY';
+
+type SetSelectedPageKeyPayload = {
+  pageKey: string,
+};
+
+type SetSelectedPageKeyAction = {
+  type: string,
+  payload: SetSelectedPageKeyPayload,
+};
+
+export function setSelectedPageKeyRedux(pageKey: string): SetSelectedPageKeyAction {
+  return {
+    type: SET_SELECTED_PAGE_KEY,
+    payload: {
+      pageKey,
+    },
+  };
+}
+
+function handleSetSelectedPageKey(
+  state: UIReduxState,
+  { pageKey }: SetSelectedPageKeyPayload
+): UIReduxState {
+  return {
+    ...state,
+    selectedPageKey: pageKey,
+  };
+}
 
 const SET_SELECTED_COMPONENT_KEY = 'SET_SELECTED_COMPONENT_KEY';
 
@@ -268,6 +300,7 @@ function handleSetEditorFormSectionVisibility(
 }
 
 const ACTION_HANDLERS = {
+  [SET_SELECTED_PAGE_KEY]: handleSetSelectedPageKey,
   [SET_HOVERED_BLOCK_KEY]: handleSetHoveredBlockKey,
   [SET_ADDING_BLOCK_SELECTED]: handleSetAddingBlockSelected,
   [SET_ADDING_BLOCK]: handleSetAddingBlock,

@@ -9,8 +9,8 @@ import {
 } from '../../../preview/event';
 
 type Props = {
-  width: number,
-  height: number,
+  width: number | string,
+  height: number | string,
   zoom: number,
   data: any,
   hoveredBlockKey: string,

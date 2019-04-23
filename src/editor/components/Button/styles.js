@@ -77,6 +77,20 @@ const roundIconActiveButtonClass = css`
   ${roundIconActiveButtonCss};
 `;
 
+const squareButtonClass = css`
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${colors.shadeBlue};
+  border-radius: 4px;
+
+  &:hover {
+    background-color: ${colors.lightFaintShade};
+  }
+`;
+
 export default {
   classNames,
   buttonClass,
@@ -86,4 +100,5 @@ export default {
   slimIconDarkerButtonClass,
   roundIconButtonClass,
   roundIconActiveButtonClass,
+  squareButtonClass,
 };

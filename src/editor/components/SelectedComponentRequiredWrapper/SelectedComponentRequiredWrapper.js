@@ -14,8 +14,14 @@ const SelectedComponentRequiredWrapper = ({ children }: Props) => {
 
 export default SelectedComponentRequiredWrapper;
 
-export const selectedComponentRequired = (WrappedComponent: any) => (
-  <SelectedComponentRequiredWrapper>
-    <WrappedComponent />
-  </SelectedComponentRequiredWrapper>
-);
+export function selectedComponentRequired(WrappedComponent: any) {
+  return class extends React.Component<{}> {
+    render() {
+      return (
+        <SelectedComponentRequiredWrapper>
+          <WrappedComponent />
+        </SelectedComponentRequiredWrapper>
+      );
+    }
+  };
+}

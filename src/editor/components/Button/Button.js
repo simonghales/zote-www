@@ -12,6 +12,7 @@ export const BUTTON_THEMES = {
   slimIconDarker: 'slimIconDarker',
   roundIcon: 'roundIcon',
   roundIconActive: 'roundIconActive',
+  square: 'square',
 };
 
 export type buttonThemes = $Keys<typeof BUTTON_THEMES>;
@@ -41,6 +42,7 @@ const Button = ({ children, icon, theme, disabled, onClick, type, highlighted }:
       [styles.slimIconDarkerButtonClass]: theme === BUTTON_THEMES.slimIconDarker,
       [styles.roundIconButtonClass]: theme === BUTTON_THEMES.roundIcon,
       [styles.roundIconActiveButtonClass]: theme === BUTTON_THEMES.roundIconActive,
+      [styles.squareButtonClass]: theme === BUTTON_THEMES.square,
       [styles.classNames.buttonHighlighted]: highlighted,
     })}
     type={type}
@@ -84,3 +86,5 @@ export const RoundIconButton = (props: Props) => (
 export const RoundIconActiveButton = (props: Props) => (
   <Button {...props} theme={BUTTON_THEMES.roundIconActive} />
 );
+
+export const SquareButton = (props: Props) => <Button {...props} theme={BUTTON_THEMES.square} />;

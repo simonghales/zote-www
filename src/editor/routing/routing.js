@@ -24,9 +24,10 @@ export const EDITOR_ROUTE_PATH = '/editor';
 export const EDITOR_PATHS = {
   dashboard: `${EDITOR_ROUTE_PATH}`,
   pages: `${EDITOR_ROUTE_PATH}/pages`,
+  pagesWithSlug: `${EDITOR_ROUTE_PATH}/pages/:pageSlug?`,
   page: `${EDITOR_ROUTE_PATH}/pages/:pageSlug`,
-  components: `${EDITOR_ROUTE_PATH}/components`,
-  component: `${EDITOR_ROUTE_PATH}/components/:${EDITOR_ROUTE_PARAMS.componentKey}/:${
+  components: `${EDITOR_ROUTE_PATH}/blocks`,
+  component: `${EDITOR_ROUTE_PATH}/blocks/:${EDITOR_ROUTE_PARAMS.componentKey}/:${
     EDITOR_ROUTE_PARAMS.previousComponentKey
   }?`,
   mixins: `${EDITOR_ROUTE_PATH}/mixins`,

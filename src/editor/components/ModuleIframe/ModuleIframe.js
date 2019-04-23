@@ -1,8 +1,9 @@
 // @flow
 import React from 'react';
 import styles from './styles';
+import { PREVIEW_ROUTE_PATH } from '../../../preview/routing/routing';
 
-const getPreviewUrl = (): string => `${window.location.origin}/preview`;
+const getPreviewUrl = (): string => `${window.location.origin}${PREVIEW_ROUTE_PATH}`;
 
 type Props = {};
 

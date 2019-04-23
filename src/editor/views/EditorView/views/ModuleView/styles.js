@@ -9,10 +9,14 @@ const containerClass = css`
   display: flex;
 `;
 
-const editorContainerClass = css`
+export const editorContainerCss = css`
   width: 100%;
   max-width: ${getRem(360)};
   height: 100%;
+`;
+
+const editorContainerClass = css`
+  ${editorContainerCss};
 `;
 
 const previewContainerClass = css`

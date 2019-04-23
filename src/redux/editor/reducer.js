@@ -34,13 +34,16 @@ import type { AddBlockPositions } from '../../editor/components/ComponentSortabl
 import { ADD_BLOCK_POSITIONS } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import { generateComponentImportBlock } from '../../data/block/types/groups/component/ComponentImport/generate';
 import RepeaterBlock from '../../data/block/types/groups/functional/Repeater';
+import type { PagesModel } from '../../data/page/model';
 
 export type EditorReduxState = {
   components: ComponentsModels,
+  pages: PagesModel,
 };
 
 export const initialEditorReduxState: EditorReduxState = {
   components: {},
+  pages: {},
   ...dummyEditorReduxState,
 };
 
@@ -80,7 +83,7 @@ function handleWrapBlockWithRepeater(
 ): EditorReduxState {
   const components = getComponentsFromReduxEditorState(state);
   const component = getComponentFromComponents(componentKey, components);
-  const repeaterBlock = RepeaterBlock.generate();
+  const repeaterBlock = RepeaterBlock.generate({});
   const updatedComponent = wrapBlockInComponentWithNewBlock(component, blockKey, repeaterBlock);
   return {
     ...state,

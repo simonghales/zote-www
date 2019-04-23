@@ -4,12 +4,12 @@ import SidebarHeader from '../../components/SidebarHeader/SidebarHeader';
 import SidebarBody from '../../components/SidebarBody/SidebarBody';
 import SidebarFooter from '../../components/SidebarFooter/SidebarFooter';
 
-const DashboardView = () => (
+const MixinsView = () => (
   <React.Fragment>
-    <SidebarHeader>Dashboard</SidebarHeader>
+    <SidebarHeader>Mixins</SidebarHeader>
     <SidebarBody>something...</SidebarBody>
     <SidebarFooter />
   </React.Fragment>
 );
 
-export default DashboardView;
+export default MixinsView;

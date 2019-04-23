@@ -16,7 +16,7 @@ export const blockItemClassNames = classNames;
 
 const isAddingBlockState = `.${classNames.addingBlock} &`;
 
-const sliverCss = css`
+export const sliverCss = css`
   content: '';
   visibility: hidden;
   position: absolute;
@@ -45,22 +45,9 @@ const selectedClass = css`
   background-color: ${highlightColor};
 `;
 
-const clickableClass = css`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  padding: ${getRem(7)};
+export const interactiveSliverCss = css`
   position: relative;
   overflow: hidden;
-
-  &:hover {
-    color: ${colors.vibrant};
-    background-color: ${highlightColor};
-  }
-
-  &.${classNames.blockItemSelected} {
-    color: ${colors.vibrant};
-  }
 
   &::before {
     ${sliverCss};
@@ -83,6 +70,23 @@ const clickableClass = css`
     &::after {
       transform: translateY(0);
     }
+  }
+`;
+
+const clickableClass = css`
+  ${interactiveSliverCss};
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: ${getRem(7)};
+
+  &:hover {
+    color: ${colors.vibrant};
+    background-color: ${highlightColor};
+  }
+
+  &.${classNames.blockItemSelected} {
+    color: ${colors.vibrant};
   }
 `;
 

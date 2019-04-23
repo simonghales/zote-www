@@ -1,16 +1,17 @@
 // @flow
 
-import type {ComponentModel} from '../component/model';
-import type {BlockModel} from '../block/model';
+import type { ComponentModel } from '../component/model';
+import type { BlockModel } from '../block/model';
 import ContainerBlock from '../block/types/groups/basic/Container';
-import {getBlockStyleKeyFormat} from '../block/state';
+import { getBlockStyleKeyFormat } from '../block/state';
 import ComponentBlock from '../block/types/groups/component/Component';
 import ComponentImportBlock from '../block/types/groups/component/ComponentImport';
 import HeadingBlock from '../block/types/groups/basic/Heading';
 import TextBlock from '../block/types/groups/basic/Text';
 import HtmlElementBlock from '../block/types/groups/html/Element';
 import RepeaterBlock from '../block/types/groups/functional/Repeater';
-import {BLOCK_PROPS_CONFIG_TYPES} from '../block/props/model';
+import { BLOCK_PROPS_CONFIG_TYPES } from '../block/props/model';
+import PageComponentBlock from '../block/types/groups/component/PageComponent';
 
 export const DUMMY_TEXT_BLOCK: BlockModel = {
   key: 'DUMMY_TEXT_BLOCK',
@@ -221,6 +222,38 @@ export const DUMMY_TEST_COMPONENT: ComponentModel = {
   },
   rootBlockKey: DUMMY_BLOCK.key,
   isReusable: true,
+};
+
+const DUMMY_PAGE_COMPONENT_BLOCK: BlockModel = {
+  key: 'DUMMY_PAGE_COMPONENT_BLOCK',
+  blockTypeKey: PageComponentBlock.key,
+  name: 'Page',
+  props: {},
+};
+
+export const DUMMY_PAGE_COMPONENT: ComponentModel = {
+  key: 'DUMMY_PAGE_COMPONENT',
+  blocks: {
+    [DUMMY_PAGE_COMPONENT_BLOCK.key]: DUMMY_PAGE_COMPONENT_BLOCK,
+  },
+  rootBlockKey: DUMMY_PAGE_COMPONENT_BLOCK.key,
+  isReusable: false,
+};
+
+const DUMMY_SECOND_PAGE_COMPONENT_BLOCK: BlockModel = {
+  key: 'DUMMY_SECOND_PAGE_COMPONENT_BLOCK',
+  blockTypeKey: PageComponentBlock.key,
+  name: 'Page',
+  props: {},
+};
+
+export const DUMMY_SECOND_PAGE_COMPONENT: ComponentModel = {
+  key: 'DUMMY_SECOND_PAGE_COMPONENT',
+  blocks: {
+    [DUMMY_SECOND_PAGE_COMPONENT_BLOCK.key]: DUMMY_SECOND_PAGE_COMPONENT_BLOCK,
+  },
+  rootBlockKey: DUMMY_SECOND_PAGE_COMPONENT_BLOCK.key,
+  isReusable: false,
 };
 
 const DUMMY_SECOND_COMPONENT_HEADING: BlockModel = {

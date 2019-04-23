@@ -20,6 +20,7 @@ import {
 } from '../../data/block/state';
 import { isValueDefined } from '../../utils/validation';
 import type { BlockPropModel } from '../../data/block/props/model';
+import type { PagesModel } from '../../data/page/model';
 
 export function getReduxEditorComponents(state: ReduxState): ComponentsModels {
   return state.editor.components;
@@ -103,4 +104,8 @@ export function getBlockPropAvailableProps(
   if (!parentBlockKey) return [];
   const ancestorBlockKeys = getTargetBlockAncestorsKeys(rootBlockKey, blockKey, blocks);
   return getRecursiveBlockPropAvailableProps(rootBlockKey, blockKey, blocks, ancestorBlockKeys, {});
+}
+
+export function getPagesFromReduxState(state: ReduxState): PagesModel {
+  return state.editor.pages;
 }

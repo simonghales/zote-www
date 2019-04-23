@@ -28,7 +28,7 @@ const EditorNavBar = (props: any) => {
         activeClassName={styles.activeLinkClass}
         to={EDITOR_PATHS.components}
       >
-        Components
+        Blocks
       </NavLink>
       <NavLink
         className={styles.linkClass}
