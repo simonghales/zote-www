@@ -4,7 +4,7 @@ import React from 'react';
 import type { EditorFormInputModel, EditorFormReduxTypes } from '../../data/models';
 import FormInputHeader from './components/FormInputHeader/FormInputHeader';
 import FormInputBody from './components/FormInputBody/FormInputBody';
-import type { FormInputProps } from './props';
+import type { FormInputComponentProps } from './props';
 import { PropFormInput } from './components/PropFormInput/PropFormInput';
 import { EDITOR_FORM_REDUX_TYPES } from '../../data/models';
 import StyleFormInput from './components/StyleFormInput/StyleFormInput';
@@ -16,7 +16,7 @@ export type DefaultFormInputProps = {
   updateValue: (value: any) => void,
 };
 
-type Props = FormInputProps;
+type Props = FormInputComponentProps;
 
 export function getFormInputId(key: string) {
   return `form-input-${key}`;
