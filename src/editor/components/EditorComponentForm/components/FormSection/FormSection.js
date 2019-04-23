@@ -40,9 +40,11 @@ const FormSection = ({ heading, children, visibilityKey = '' }: Props) => {
       {heading && (
         <header className={styles.headerClass} onClick={toggleVisible}>
           <div className={styles.headerTextClass}>{heading}</div>
-          <div className={styles.headerIconClass}>
-            {visible ? <FaChevronDown size={8} /> : <FaChevronRight size={8} />}
-          </div>
+          {visibilityKey && (
+            <div className={styles.headerIconClass}>
+              {visible ? <FaChevronDown size={8} /> : <FaChevronRight size={8} />}
+            </div>
+          )}
         </header>
       )}
       <div

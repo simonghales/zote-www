@@ -8,7 +8,7 @@ import SidebarFooter from '../../components/SidebarFooter/SidebarFooter';
 
 const ComponentView = () => (
   <React.Fragment>
-    <SidebarHeader />
+    <SidebarHeader>Something?</SidebarHeader>
     <SidebarBody>
       <EditorSidebarModules />
     </SidebarBody>

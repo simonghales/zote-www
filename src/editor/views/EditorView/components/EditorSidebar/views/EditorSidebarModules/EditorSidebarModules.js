@@ -3,7 +3,7 @@ import React from 'react';
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import styles from './styles';
-import { SlimIconButton } from '../../../../../../components/Button/Button';
+import { SlimAddButton, SlimIconButton } from '../../../../../../components/Button/Button';
 import { ReduxComponentSortable } from '../../../../../../components/ComponentSortable/ComponentSortable';
 import { setAddingBlockRedux } from '../../../../../../../redux/ui/reducer';
 import type { ReduxState } from '../../../../../../../redux/store';
@@ -32,9 +32,7 @@ const EditorSidebarModules = ({ addingBlock, setAddingBlock }: Props) => (
             Cancel
           </SlimIconButton>
         ) : (
-          <SlimIconButton icon={<FaPlus size={9} />} onClick={() => setAddingBlock(true)}>
-            Add Block
-          </SlimIconButton>
+          <SlimAddButton onClick={() => setAddingBlock(true)}>Add Block</SlimAddButton>
         )}
       </div>
     </div>

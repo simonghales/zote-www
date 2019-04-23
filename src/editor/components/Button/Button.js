@@ -2,6 +2,7 @@
 import React from 'react';
 import type { Node } from 'react';
 import { cx } from 'emotion';
+import { FaPlus } from 'react-icons/fa';
 import styles from './styles';
 
 export const BUTTON_THEMES = {
@@ -73,6 +74,10 @@ export const SlimSolidButton = (props: Props) => (
 
 export const SlimIconButton = (props: Props) => (
   <Button {...props} theme={BUTTON_THEMES.slimIcon} />
+);
+
+export const SlimAddButton = (props: Props) => (
+  <SlimIconButton {...props} icon={<FaPlus size={9} />} />
 );
 
 export const SlimIconDarkerButton = (props: Props) => (
