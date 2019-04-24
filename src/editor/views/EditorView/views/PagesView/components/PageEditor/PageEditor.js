@@ -11,6 +11,7 @@ import FormInput from '../../../../../../components/EditorComponentForm/componen
 import { FORM_INPUT_TYPES } from '../../../../../../components/EditorComponentForm/components/FormInput/components/FormInputBody/FormInputBody';
 import FormSectionRow from '../../../../../../components/EditorComponentForm/components/FormSection/components/FormSectionRow/FormSectionRow';
 import type { PageModel } from '../../../../../../../data/page/model';
+import { goToEditPageComponent } from '../../../../../../routing/actions';
 
 type Props = {
   page: PageModel,
@@ -37,7 +38,14 @@ const PageEditor = ({ page }: Props) => {
       <EditorHeader title={getPageName(page)} />
       <section className={styles.bodyClass}>
         <div className={styles.editBlocksWrapperClass}>
-          <SlimIconButton icon={<FaEdit size={9} />}>Edit Blocks</SlimIconButton>
+          <SlimIconButton
+            icon={<FaEdit size={9} />}
+            onClick={() => {
+              goToEditPageComponent(page.key);
+            }}
+          >
+            Edit Blocks
+          </SlimIconButton>
         </div>
         <FormSection heading="Page Settings">
           <FormSectionRow>

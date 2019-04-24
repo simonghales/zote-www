@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ReduxProvider } from 'reactive-react-redux';
+import history from 'router/history';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App/App';
 import store from './redux/store';
@@ -10,7 +11,7 @@ import store from './redux/store';
 ReactDOM.render(
   <ReduxProvider store={store}>
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <App />
       </Router>
     </Provider>
