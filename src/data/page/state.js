@@ -15,6 +15,13 @@ export function getPageFromPages(pageKey: string, pages: PagesModel): PageModel 
   return page || null;
 }
 
+export function getPageFromPagesBySlug(slug: string, pages: PagesModel): PageModel | null {
+  const matchedPage = Object.keys(pages)
+    .map(pageKey => pages[pageKey])
+    .find(page => page.slug === slug);
+  return matchedPage || null;
+}
+
 export function getPageComponentKey(page: PageModel): string {
   return page.pageComponentKey;
 }

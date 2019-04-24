@@ -7,7 +7,11 @@ import type { UIReduxState } from '../../../redux/ui/reducer';
 import type { ReduxState } from '../../../redux/store';
 import { getSelectedPageKeyFromUIReduxState } from '../../../redux/ui/state';
 import type { MappedBlockModel } from '../../../preview/data/block/model';
-import { getPageComponentKey, getPageFromPages } from '../../../data/page/state';
+import {
+  getPageComponentKey,
+  getPageFromPages,
+  getPageFromPagesBySlug,
+} from '../../../data/page/state';
 import { useComponent, useComponents } from './components';
 import { useMixins, useStyles } from './styles';
 import { mapComponentBlocksToMappedBlocks } from '../../../preview/data/block/state';
@@ -25,6 +29,11 @@ export const usePages = (): PagesModel => {
   return getPagesFromReduxState(state);
 };
 
+export const usePage = (pageKey: string): PageModel | null => {
+  const pages = usePages();
+  return getPageFromPages(pageKey, pages);
+};
+
 export const useSelectedPageKey = (): string => {
   const state: UIReduxState = useUIState();
   const selectedPageKey = getSelectedPageKeyFromUIReduxState(state);
@@ -33,20 +42,24 @@ export const useSelectedPageKey = (): string => {
 
 export const useSelectedPage = (): PageModel | null => {
   const selectedPageKey = useSelectedPageKey();
-  const pages = usePages();
-  return getPageFromPages(selectedPageKey, pages);
+  return usePage(selectedPageKey);
 };
 
-export const useSelectedPageMappedBlocks = (): Array<MappedBlockModel> => {
-  const selectedPage = useSelectedPage();
-  if (!selectedPage) return [];
-  const selectedPageComponentKey = getPageComponentKey(selectedPage);
+export const useMappedPageBlocks = (pageKey: string): Array<MappedBlockModel> => {
+  const page = usePage(pageKey);
+  if (!page) return [];
+  const selectedPageComponentKey = getPageComponentKey(page);
   const selectedPageComponent = useComponent(selectedPageComponentKey);
   if (!selectedPageComponent) return [];
   const components = useComponents();
   const styles = useStyles();
   const mixins = useMixins();
   return mapComponentBlocksToMappedBlocks(selectedPageComponent, styles, mixins, {}, components);
+};
+
+export const useSelectedPageMappedBlocks = (): Array<MappedBlockModel> => {
+  const selectedPageKey = useSelectedPageKey();
+  return useMappedPageBlocks(selectedPageKey);
 };
 
 export const useDispatchUpdatePageDetails = (): ((
@@ -66,4 +79,9 @@ export const useDispatchCreateNewPage = () => {
     dispatch(addNewPageRedux(page, component));
     dispatch(setSelectedPageKeyRedux(page.key));
   };
+};
+
+export const usePageBySlug = (slug: string): PageModel | null => {
+  const pages = usePages();
+  return getPageFromPagesBySlug(slug, pages);
 };
