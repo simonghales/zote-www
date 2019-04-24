@@ -10,16 +10,25 @@ import FormSection from '../../../../../../components/EditorComponentForm/compon
 import FormInput from '../../../../../../components/EditorComponentForm/components/FormInput/FormInput';
 import { FORM_INPUT_TYPES } from '../../../../../../components/EditorComponentForm/components/FormInput/components/FormInputBody/FormInputBody';
 import FormSectionRow from '../../../../../../components/EditorComponentForm/components/FormSection/components/FormSectionRow/FormSectionRow';
+import type { PageModel } from '../../../../../../../data/page/model';
 
-const PageEditor = () => {
-  const page = useSelectedPage();
-  if (!page) return null;
+type Props = {
+  page: PageModel,
+};
+
+const PageEditor = ({ page }: Props) => {
   const name = getPageName(page);
   const [nameInput, setName] = useState(name);
   const slug = getPageSlug(page);
   const [slugInput, setSlug] = useState(slug);
   const pendingChanges = name !== nameInput || slug !== slugInput;
   const updatePageDetails = useDispatchUpdatePageDetails();
+  const handleSetSlug = (newSlug: string) => {
+    if (newSlug.startsWith('/')) {
+      newSlug = newSlug.slice(1);
+    }
+    setSlug(newSlug);
+  };
   const handleSaveChanges = () => {
     updatePageDetails(page.key, nameInput, slugInput);
   };
@@ -44,9 +53,9 @@ const PageEditor = () => {
           </FormSectionRow>
           <FormSectionRow>
             <FormInput
-              updateValue={setSlug}
+              updateValue={handleSetSlug}
               defaultValue=""
-              value={slugInput}
+              value={`/${slugInput}`}
               inputType={FORM_INPUT_TYPES.string}
               name="Slug"
               inputKey="page-slug"
