@@ -1,9 +1,9 @@
 // @flow
-import React from 'react';
+import React, { useState } from 'react';
 import { FaEdit, FaPlus } from 'react-icons/fa';
 import EditorHeader from '../../../../../../components/EditorHeader/EditorHeader';
-import { useSelectedPage } from '../../../../../../state/hooks/pages';
-import { getPageName } from '../../../../../../../data/page/state';
+import { useDispatchUpdatePageDetails, useSelectedPage } from '../../../../../../state/hooks/pages';
+import { getPageName, getPageSlug } from '../../../../../../../data/page/state';
 import * as styles from './styles';
 import { SlimIconButton, SolidButton } from '../../../../../../components/Button/Button';
 import FormSection from '../../../../../../components/EditorComponentForm/components/FormSection/FormSection';
@@ -14,6 +14,15 @@ import FormSectionRow from '../../../../../../components/EditorComponentForm/com
 const PageEditor = () => {
   const page = useSelectedPage();
   if (!page) return null;
+  const name = getPageName(page);
+  const [nameInput, setName] = useState(name);
+  const slug = getPageSlug(page);
+  const [slugInput, setSlug] = useState(slug);
+  const pendingChanges = name !== nameInput || slug !== slugInput;
+  const updatePageDetails = useDispatchUpdatePageDetails();
+  const handleSaveChanges = () => {
+    updatePageDetails(page.key, nameInput, slugInput);
+  };
   return (
     <div className={styles.containerClass}>
       <EditorHeader title={getPageName(page)} />
@@ -24,30 +33,32 @@ const PageEditor = () => {
         <FormSection heading="Page Settings">
           <FormSectionRow>
             <FormInput
-              updateValue={() => {}}
+              updateValue={setName}
               defaultValue=""
-              value=""
+              value={nameInput}
               inputType={FORM_INPUT_TYPES.string}
               name="Name"
-              inputKey=""
-              inactive={false}
+              inputKey="page-name"
+              inactive={!nameInput}
             />
           </FormSectionRow>
           <FormSectionRow>
             <FormInput
-              updateValue={() => {}}
+              updateValue={setSlug}
               defaultValue=""
-              value=""
+              value={slugInput}
               inputType={FORM_INPUT_TYPES.string}
               name="Slug"
-              inputKey=""
+              inputKey="page-slug"
               inactive={false}
             />
           </FormSectionRow>
         </FormSection>
       </section>
       <footer className={styles.footerClass}>
-        <SolidButton>Save Changes</SolidButton>
+        <SolidButton disabled={!pendingChanges} onClick={handleSaveChanges}>
+          Save Changes
+        </SolidButton>
       </footer>
     </div>
   );

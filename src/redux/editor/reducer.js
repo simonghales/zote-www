@@ -35,6 +35,7 @@ import { ADD_BLOCK_POSITIONS } from '../../editor/components/ComponentSortable/c
 import { generateComponentImportBlock } from '../../data/block/types/groups/component/ComponentImport/generate';
 import RepeaterBlock from '../../data/block/types/groups/functional/Repeater';
 import type { PagesModel } from '../../data/page/model';
+import { updatePageDetails } from '../../data/page/modifiers';
 
 export type EditorReduxState = {
   components: ComponentsModels,
@@ -51,6 +52,47 @@ export type GenericAction = {
   type: string,
   payload: {},
 };
+
+const UPDATE_PAGE_DETAILS = 'UPDATE_PAGE_DETAILS';
+
+type UpdatePageDetailsPayload = {
+  name: string,
+  slug: string,
+  pageKey: string,
+};
+
+type UpdatePageDetailsAction = {
+  type: string,
+  payload: UpdatePageDetailsPayload,
+};
+
+export function updatePageDetailsRedux(
+  pageKey: string,
+  name: string,
+  slug: string
+): UpdatePageDetailsAction {
+  return {
+    type: UPDATE_PAGE_DETAILS,
+    payload: {
+      name,
+      slug,
+      pageKey,
+    },
+  };
+}
+
+function handleUpdatePageDetailsRedux(
+  state: EditorReduxState,
+  { name, slug, pageKey }: UpdatePageDetailsPayload
+): EditorReduxState {
+  return {
+    ...state,
+    pages: {
+      ...state.pages,
+      [pageKey]: updatePageDetails(state.pages[pageKey], name, slug),
+    },
+  };
+}
 
 const WRAP_BLOCK_WITH_REPEATER = 'WRAP_BLOCK_WITH_REPEATER';
 
@@ -623,6 +665,7 @@ function handleUpdateComponentBlocksOrder(
 }
 
 const ACTION_HANDLERS = {
+  [UPDATE_PAGE_DETAILS]: handleUpdatePageDetailsRedux,
   [WRAP_BLOCK_WITH_REPEATER]: handleWrapBlockWithRepeater,
   [CONVERT_BLOCK_INTO_COMPONENT]: handleConvertBlockIntoComponent,
   [SET_BLOCK_NAME]: handleSetBlockName,

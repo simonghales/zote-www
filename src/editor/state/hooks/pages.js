@@ -1,6 +1,6 @@
 // @flow
 
-import { useReduxState } from 'reactive-react-redux';
+import { useReduxDispatch, useReduxState } from 'reactive-react-redux';
 import { getPagesFromReduxState } from '../../../redux/editor/state';
 import type { PageModel, PagesModel } from '../../../data/page/model';
 import type { UIReduxState } from '../../../redux/ui/reducer';
@@ -11,6 +11,7 @@ import { getPageComponentKey, getPageFromPages } from '../../../data/page/state'
 import { useComponent, useComponents } from './components';
 import { useMixins, useStyles } from './styles';
 import { mapComponentBlocksToMappedBlocks } from '../../../preview/data/block/state';
+import { updatePageDetailsRedux } from '../../../redux/editor/reducer';
 
 export const useUIState = (): UIReduxState => {
   const state: ReduxState = useReduxState();
@@ -44,4 +45,14 @@ export const useSelectedPageMappedBlocks = (): Array<MappedBlockModel> => {
   const styles = useStyles();
   const mixins = useMixins();
   return mapComponentBlocksToMappedBlocks(selectedPageComponent, styles, mixins, {}, components);
+};
+
+export const useDispatchUpdatePageDetails = (): ((
+  pageKey: string,
+  name: string,
+  slug: string
+) => void) => {
+  const dispatch = useReduxDispatch();
+  return (pageKey: string, name: string, slug: string) =>
+    dispatch(updatePageDetailsRedux(pageKey, name, slug));
 };
