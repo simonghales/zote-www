@@ -14,3 +14,7 @@ const generateBlock = (): BlockModel => ({
 });
 
 export default generateBlock;
+
+export function generatePageComponentBlock(): BlockModel {
+  return generateBlock();
+}

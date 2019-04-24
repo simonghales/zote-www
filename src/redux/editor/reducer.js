@@ -1,6 +1,6 @@
 // @flow
 
-import type { ComponentsModels } from '../../data/component/model';
+import type { ComponentModel, ComponentsModels } from '../../data/component/model';
 import { dummyEditorReduxState } from '../../data/dummy/redux';
 import type { BlocksOrder } from '../../editor/components/ComponentSortable/ComponentSortable';
 import { getComponentsFromReduxEditorState } from './state';
@@ -34,7 +34,7 @@ import type { AddBlockPositions } from '../../editor/components/ComponentSortabl
 import { ADD_BLOCK_POSITIONS } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import { generateComponentImportBlock } from '../../data/block/types/groups/component/ComponentImport/generate';
 import RepeaterBlock from '../../data/block/types/groups/functional/Repeater';
-import type { PagesModel } from '../../data/page/model';
+import type { PageModel, PagesModel } from '../../data/page/model';
 import { updatePageDetails } from '../../data/page/modifiers';
 
 export type EditorReduxState = {
@@ -52,6 +52,45 @@ export type GenericAction = {
   type: string,
   payload: {},
 };
+
+const ADD_NEW_PAGE = 'ADD_NEW_PAGE';
+
+type AddNewPagePayload = {
+  page: PageModel,
+  component: ComponentModel,
+};
+
+type AddNewPageAction = {
+  type: string,
+  payload: AddNewPagePayload,
+};
+
+export function addNewPageRedux(page: PageModel, component: ComponentModel): AddNewPageAction {
+  return {
+    type: ADD_NEW_PAGE,
+    payload: {
+      page,
+      component,
+    },
+  };
+}
+
+function handleAddNewPage(
+  state: EditorReduxState,
+  { page, component }: AddNewPagePayload
+): EditorReduxState {
+  return {
+    ...state,
+    pages: {
+      ...state.pages,
+      [page.key]: page,
+    },
+    components: {
+      ...state.components,
+      [component.key]: component,
+    },
+  };
+}
 
 const UPDATE_PAGE_DETAILS = 'UPDATE_PAGE_DETAILS';
 
@@ -665,6 +704,7 @@ function handleUpdateComponentBlocksOrder(
 }
 
 const ACTION_HANDLERS = {
+  [ADD_NEW_PAGE]: handleAddNewPage,
   [UPDATE_PAGE_DETAILS]: handleUpdatePageDetailsRedux,
   [WRAP_BLOCK_WITH_REPEATER]: handleWrapBlockWithRepeater,
   [CONVERT_BLOCK_INTO_COMPONENT]: handleConvertBlockIntoComponent,

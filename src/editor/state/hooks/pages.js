@@ -11,7 +11,9 @@ import { getPageComponentKey, getPageFromPages } from '../../../data/page/state'
 import { useComponent, useComponents } from './components';
 import { useMixins, useStyles } from './styles';
 import { mapComponentBlocksToMappedBlocks } from '../../../preview/data/block/state';
-import { updatePageDetailsRedux } from '../../../redux/editor/reducer';
+import { addNewPageRedux, updatePageDetailsRedux } from '../../../redux/editor/reducer';
+import { generateNewPageAndComponent } from '../../../data/page/generators';
+import { setSelectedPageKeyRedux } from '../../../redux/ui/reducer';
 
 export const useUIState = (): UIReduxState => {
   const state: ReduxState = useReduxState();
@@ -55,4 +57,13 @@ export const useDispatchUpdatePageDetails = (): ((
   const dispatch = useReduxDispatch();
   return (pageKey: string, name: string, slug: string) =>
     dispatch(updatePageDetailsRedux(pageKey, name, slug));
+};
+
+export const useDispatchCreateNewPage = () => {
+  const dispatch = useReduxDispatch();
+  return () => {
+    const { page, component } = generateNewPageAndComponent();
+    dispatch(addNewPageRedux(page, component));
+    dispatch(setSelectedPageKeyRedux(page.key));
+  };
 };

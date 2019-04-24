@@ -16,3 +16,7 @@ export function generateRepeaterDataModelFieldKey(): string {
 export function generateRepeaterDataItem(): string {
   return uniqueId(`item_`);
 }
+
+export function generatePageKey(): string {
+  return uniqueId(`page_`);
+}
