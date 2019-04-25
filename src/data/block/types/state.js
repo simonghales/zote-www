@@ -7,6 +7,7 @@ import ContainerBlock from './groups/basic/Container';
 import HeadingBlock from './groups/basic/Heading';
 import TextBlock from './groups/basic/Text';
 import HtmlElementBlock from './groups/html/Element';
+import LinkBlock from './groups/basic/Link';
 
 export function getPropsConfigFromBlockType(blockType: BlockTypeModel): BlockPropsConfigModel {
   const { propsConfig = {} } = blockType;
@@ -38,5 +39,5 @@ export function getAddPropsEnabledFromBlockType(blockType: BlockTypeModel): bool
 }
 
 export function getDefaultBlocks(): Array<BlockTypeModel> {
-  return [ContainerBlock, HeadingBlock, TextBlock, HtmlElementBlock];
+  return [ContainerBlock, HeadingBlock, TextBlock, LinkBlock, HtmlElementBlock];
 }

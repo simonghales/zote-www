@@ -5,15 +5,20 @@ import { selectedComponentRequired } from '../../../../../../components/Selected
 import SidebarBody from '../../components/SidebarBody/SidebarBody';
 import SidebarHeader from '../../components/SidebarHeader/SidebarHeader';
 import SidebarFooter from '../../components/SidebarFooter/SidebarFooter';
+import { useGetSelectedComponent } from '../../../../../../components/SelectedComponentContextWrapper/context';
+import { getComponentName } from '../../../../../../../data/component/state';
 
-const ComponentView = () => (
-  <React.Fragment>
-    <SidebarHeader>Something?</SidebarHeader>
-    <SidebarBody>
-      <EditorSidebarModules />
-    </SidebarBody>
-    <SidebarFooter />
-  </React.Fragment>
-);
+const ComponentView = () => {
+  const component = useGetSelectedComponent();
+  return (
+    <React.Fragment>
+      <SidebarHeader>{getComponentName(component)}</SidebarHeader>
+      <SidebarBody>
+        <EditorSidebarModules />
+      </SidebarBody>
+      <SidebarFooter />
+    </React.Fragment>
+  );
+};
 
 export default selectedComponentRequired(ComponentView);
