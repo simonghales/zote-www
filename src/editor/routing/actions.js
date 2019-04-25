@@ -2,10 +2,11 @@
 import history from 'router/history';
 import store from '../../redux/store';
 import type { ReduxState } from '../../redux/store';
-import { getPageComponentKey, getPageFromPages } from '../../data/page/state';
+import { getPageComponentKey, getPageFromPages, getPageSlug } from '../../data/page/state';
 import type { PageModel } from '../../data/page/model';
 import { getPagesFromReduxState } from '../../redux/editor/state';
 import { getComponentRoute } from './routing';
+import { getPreviewSiteLinkPath } from '../../preview/routing/routing';
 
 export function getPageFromReduxState(state: ReduxState, pageKey: string): PageModel | null {
   const pages = getPagesFromReduxState(state);
@@ -18,4 +19,8 @@ export function goToEditPageComponent(pageKey: string) {
   if (!page) return;
   const componentKey = getPageComponentKey(page);
   history.push(getComponentRoute(componentKey));
+}
+
+export function openPagePreview(page: PageModel) {
+  window.open(`${getPreviewSiteLinkPath(getPageSlug(page))}`, '_blank');
 }

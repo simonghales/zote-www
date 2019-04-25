@@ -11,7 +11,7 @@ import FormInput from '../../../../../../components/EditorComponentForm/componen
 import { FORM_INPUT_TYPES } from '../../../../../../components/EditorComponentForm/components/FormInput/components/FormInputBody/FormInputBody';
 import FormSectionRow from '../../../../../../components/EditorComponentForm/components/FormSection/components/FormSectionRow/FormSectionRow';
 import type { PageModel } from '../../../../../../../data/page/model';
-import { goToEditPageComponent } from '../../../../../../routing/actions';
+import { goToEditPageComponent, openPagePreview } from '../../../../../../routing/actions';
 
 type Props = {
   page: PageModel,
@@ -49,7 +49,7 @@ const PageEditor = ({ page }: Props) => {
           <SlimIconButton
             icon={<FaExternalLinkAlt size={9} />}
             onClick={() => {
-              goToEditPageComponent(page.key);
+              openPagePreview(page);
             }}
           >
             Preview Page
