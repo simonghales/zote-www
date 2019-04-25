@@ -9,7 +9,7 @@ import { getReactPropsFromHtmlAttributes } from '../../../../props/types/state';
 import type { DefaultBlockProps } from '../../../props';
 import { withBlockHighlighter } from '../../../../../../preview/components/BlockHighlighterWrapper/BlockHighlighterWrapper';
 
-function renderChildren(content, children) {
+export function renderChildren(content: any, children: any) {
   return (
     <React.Fragment>
       {content && content}

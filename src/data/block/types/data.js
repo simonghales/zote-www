@@ -8,6 +8,7 @@ import TextBlock from './groups/basic/Text';
 import HtmlElementBlock from './groups/html/Element';
 import RepeaterBlock from './groups/functional/Repeater';
 import PageComponentBlock from './groups/component/PageComponent';
+import LinkBlock from './groups/basic/Link';
 
 export const BLOCK_TYPES = {
   [ContainerBlock.key]: ContainerBlock,
@@ -18,4 +19,5 @@ export const BLOCK_TYPES = {
   [ComponentImportBlock.key]: ComponentImportBlock,
   [RepeaterBlock.key]: RepeaterBlock,
   [PageComponentBlock.key]: PageComponentBlock,
+  [LinkBlock.key]: LinkBlock,
 };

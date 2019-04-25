@@ -8,6 +8,7 @@ import ComponentBlock from '../block/types/groups/component/Component';
 import ComponentImportBlock from '../block/types/groups/component/ComponentImport';
 import HeadingBlock from '../block/types/groups/basic/Heading';
 import TextBlock from '../block/types/groups/basic/Text';
+import LinkBlock from '../block/types/groups/basic/Link';
 import HtmlElementBlock from '../block/types/groups/html/Element';
 import RepeaterBlock from '../block/types/groups/functional/Repeater';
 import { BLOCK_PROPS_CONFIG_TYPES } from '../block/props/model';
@@ -25,6 +26,18 @@ export const DUMMY_TEXT_BLOCK: BlockModel = {
   },
 };
 
+export const DUMMY_LINK_BLOCK: BlockModel = {
+  key: 'DUMMY_LINK_BLOCK',
+  blockTypeKey: LinkBlock.key,
+  name: 'Dummy Link Block',
+  props: {
+    content: {
+      key: 'content',
+      value: 'Hello world!',
+    },
+  },
+};
+
 export const DUMMY_HTML_ELEMENT_BLOCK: BlockModel = {
   key: 'DUMMY_HTML_ELEMENT_BLOCK',
   blockTypeKey: HtmlElementBlock.key,
@@ -32,7 +45,7 @@ export const DUMMY_HTML_ELEMENT_BLOCK: BlockModel = {
   props: {
     children: {
       key: 'children',
-      value: [DUMMY_TEXT_BLOCK.key],
+      value: [DUMMY_LINK_BLOCK.key, DUMMY_TEXT_BLOCK.key],
     },
     content: {
       key: 'content',
@@ -213,6 +226,7 @@ export const DUMMY_TEST_COMPONENT: ComponentModel = {
   key: 'DUMMY_TEST_COMPONENT',
   blocks: {
     [DUMMY_BLOCK.key]: DUMMY_BLOCK,
+    [DUMMY_LINK_BLOCK.key]: DUMMY_LINK_BLOCK,
     [DUMMY_TEXT_BLOCK.key]: DUMMY_TEXT_BLOCK,
     [DUMMY_HEADING_BLOCK.key]: DUMMY_HEADING_BLOCK,
     [DUMMY_CONTAINER_BLOCK.key]: DUMMY_CONTAINER_BLOCK,
