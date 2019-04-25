@@ -1,6 +1,6 @@
 // @flow
 import React, { useState } from 'react';
-import { FaEdit, FaPlus } from 'react-icons/fa';
+import { FaEdit, FaExternalLinkAlt, FaPlus } from 'react-icons/fa';
 import EditorHeader from '../../../../../../components/EditorHeader/EditorHeader';
 import { useDispatchUpdatePageDetails, useSelectedPage } from '../../../../../../state/hooks/pages';
 import { getPageName, getPageSlug } from '../../../../../../../data/page/state';
@@ -45,6 +45,14 @@ const PageEditor = ({ page }: Props) => {
             }}
           >
             Edit Blocks
+          </SlimIconButton>
+          <SlimIconButton
+            icon={<FaExternalLinkAlt size={9} />}
+            onClick={() => {
+              goToEditPageComponent(page.key);
+            }}
+          >
+            Preview Page
           </SlimIconButton>
         </div>
         <FormSection heading="Page Settings">

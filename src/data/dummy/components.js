@@ -238,16 +238,38 @@ export const DUMMY_TEST_COMPONENT: ComponentModel = {
   isReusable: true,
 };
 
+export const DUMMY_PAGE_LINK_BLOCK: BlockModel = {
+  key: 'DUMMY_PAGE_LINK_BLOCK',
+  blockTypeKey: LinkBlock.key,
+  name: 'Dummy Link Block',
+  props: {
+    content: {
+      key: 'content',
+      value: 'Hello world!',
+    },
+    to: {
+      key: 'to',
+      value: 'about',
+    },
+  },
+};
+
 const DUMMY_PAGE_COMPONENT_BLOCK: BlockModel = {
   key: 'DUMMY_PAGE_COMPONENT_BLOCK',
   blockTypeKey: PageComponentBlock.key,
   name: 'Page',
-  props: {},
+  props: {
+    children: {
+      key: 'children',
+      value: [DUMMY_PAGE_LINK_BLOCK.key],
+    },
+  },
 };
 
 export const DUMMY_PAGE_COMPONENT: ComponentModel = {
   key: 'DUMMY_PAGE_COMPONENT',
   blocks: {
+    [DUMMY_PAGE_LINK_BLOCK.key]: DUMMY_PAGE_LINK_BLOCK,
     [DUMMY_PAGE_COMPONENT_BLOCK.key]: DUMMY_PAGE_COMPONENT_BLOCK,
   },
   rootBlockKey: DUMMY_PAGE_COMPONENT_BLOCK.key,

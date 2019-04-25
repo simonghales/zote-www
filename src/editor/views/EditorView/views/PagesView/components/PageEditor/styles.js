@@ -15,7 +15,12 @@ export const bodyClass = css`
 `;
 
 export const editBlocksWrapperClass = css`
+  display: flex;
   margin-bottom: 20px;
+
+  > * {
+    margin-right: 5px;
+  }
 `;
 
 export const footerClass = css`

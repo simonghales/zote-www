@@ -20,7 +20,8 @@ import {
 } from '../../data/block/state';
 import { isValueDefined } from '../../utils/validation';
 import type { BlockPropModel } from '../../data/block/props/model';
-import type { PagesModel } from '../../data/page/model';
+import type { PageModel, PagesModel } from '../../data/page/model';
+import { getPageFromPagesBySlug } from '../../data/page/state';
 
 export function getReduxEditorComponents(state: ReduxState): ComponentsModels {
   return state.editor.components;
@@ -108,4 +109,9 @@ export function getBlockPropAvailableProps(
 
 export function getPagesFromReduxState(state: ReduxState): PagesModel {
   return state.editor.pages;
+}
+
+export function getPageBySlugFromReduxState(slug: string, state: ReduxState): PageModel | null {
+  const pages = getPagesFromReduxState(state);
+  return getPageFromPagesBySlug(slug, pages);
 }

@@ -1,16 +1,75 @@
 // @flow
 import React from 'react';
-import ModuleIframeWrapper from '../../../../../../components/ModuleIframeWrapper/ModuleIframeWrapper';
-import { useSelectedPageMappedBlocks } from '../../../../../../state/hooks/pages';
+import store from 'redux/store';
+import { connect } from 'react-redux';
+import * as styles from './styles';
+import type { PageModel } from '../../../../../../../data/page/model';
+import { getPageSlug } from '../../../../../../../data/page/state';
+import {
+  getPageSlugFromPreviewPathname,
+  getPreviewSiteLinkPath,
+} from '../../../../../../../preview/routing/routing';
+import { PREVIEW_IFRAME_ROUTE_CHANGED } from '../../../../../../../preview/event';
+import { getPageBySlugFromReduxState } from '../../../../../../../redux/editor/state';
+import type { ReduxState } from '../../../../../../../redux/store';
+import { setSelectedPageKeyRedux } from '../../../../../../../redux/ui/reducer';
 
-const PagePreview = () => {
-  const data = useSelectedPageMappedBlocks();
-  const width = '100%';
-  const height = '100%';
-  const zoom = 100;
-  return (
-    <ModuleIframeWrapper data={data} width={width} height={height} zoom={zoom} hoveredBlockKey="" />
-  );
+type Props = {
+  page: PageModel,
+  selectPage: (pageKey: string) => void,
 };
 
-export default PagePreview;
+class PagePreview extends React.Component<Props> {
+  componentDidMount(): void {
+    this.addIframeListener();
+  }
+
+  componentWillUnmount() {
+    this.removeIframeListener();
+  }
+
+  addIframeListener() {
+    window.addEventListener('message', this.handleIframeMessage);
+  }
+
+  removeIframeListener() {
+    window.removeEventListener('message', this.handleIframeMessage);
+  }
+
+  handleIframeMessage = (event: any) => {
+    const { data } = event;
+    if (event.origin !== window.origin) {
+      console.warn(`Message is from ${event.origin} and has been ignored.`);
+      return;
+    }
+    if (data && data.message && data.message === PREVIEW_IFRAME_ROUTE_CHANGED) {
+      const { pathname } = data.data;
+      this.handleRouteChanged(pathname);
+    }
+  };
+
+  handleRouteChanged(pathname: string) {
+    const { page, selectPage } = this.props;
+    const state: ReduxState = store.getState();
+    const slug = getPageSlugFromPreviewPathname(pathname);
+    const newPage = getPageBySlugFromReduxState(slug, state);
+    if (newPage && page.key !== newPage.key) {
+      selectPage(newPage.key);
+    }
+  }
+
+  render() {
+    const { page } = this.props;
+    const slug = getPageSlug(page);
+    return <iframe className={styles.iframeClass} src={getPreviewSiteLinkPath(slug)} />;
+  }
+}
+
+const mapDispatchToProps = {
+  selectPage: (pageKey: string) => setSelectedPageKeyRedux(pageKey),
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(PagePreview);
