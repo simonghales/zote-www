@@ -13,14 +13,17 @@ export function getPageFromReduxState(state: ReduxState, pageKey: string): PageM
   return getPageFromPages(pageKey, pages);
 }
 
+export function goToEditComponent(componentKey: string) {
+  history.push(getComponentRoute(componentKey));
+}
+
 export function goToEditPageComponent(pageKey: string) {
   const state: ReduxState = store.getState();
   const page = getPageFromReduxState(state, pageKey);
   if (!page) return;
   const componentKey = getPageComponentKey(page);
-  history.push(getComponentRoute(componentKey));
+  goToEditComponent(componentKey);
 }
-
 export function openPagePreview(page: PageModel) {
   window.open(`${getPreviewSiteLinkPath(getPageSlug(page))}`, '_blank');
 }

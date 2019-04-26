@@ -10,7 +10,7 @@ export const containerClass = css`
   height: 34px;
   display: flex;
   align-items: center;
-  padding: 0 ${spacing.medium}px;
+  padding: 0 ${spacing.medium}px 0 ${spacing.medium - 5}px;
   font-size: 11px;
   text-transform: uppercase;
   font-weight: ${fontWeights.medium};
@@ -19,10 +19,25 @@ export const containerClass = css`
 
 export const linkClass = css`
   color: #586175;
-  display: inline-block;
-  margin-right: 30px;
+  margin-right: 20px;
   text-decoration: none;
   transition: color 200ms ease;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 5px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: ${colors.vibrant};
+    visibility: hidden;
+  }
 
   &:hover {
     color: #d5dae2;
@@ -31,4 +46,8 @@ export const linkClass = css`
 
 export const activeLinkClass = css`
   color: #d5dae2;
+
+  &::before {
+    visibility: visible;
+  }
 `;

@@ -1,7 +1,7 @@
 // @flow
 
 import { dummyUiReduxState } from '../../data/dummy/redux';
-import type { GenericAction } from '../editor/reducer';
+import type { EditorReduxState, GenericAction } from '../editor/reducer';
 import { customFormSection } from '../../editor/components/EditorComponentForm/data/styles';
 import type { AddBlockPositions } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import { ADD_BLOCK_POSITIONS } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
@@ -31,6 +31,7 @@ export type UIReduxState = {
   componentsSelectedBlockKeys: ComponentsSelectedBlockKeys,
   editorFormSectionsVisibility: EditorFormSectionsVisibility,
   selectedPageKey: string,
+  selectedPreviewComponentKey: string,
 };
 
 export const initialUiReduxState: UIReduxState = {
@@ -45,8 +46,41 @@ export const initialUiReduxState: UIReduxState = {
     [customFormSection.key]: false,
   },
   selectedPageKey: '',
+  selectedPreviewComponentKey: '',
   ...dummyUiReduxState,
 };
+
+const SET_SELECTED_PREVIEW_COMPONENT_KEY = 'SET_SELECTED_PREVIEW_COMPONENT_KEY';
+
+type SetSelectedPreviewComponentKeyPayload = {
+  componentKey: string,
+};
+
+type SetSelectedPreviewComponentKeyAction = {
+  type: string,
+  payload: SetSelectedPreviewComponentKeyPayload,
+};
+
+export function setSelectedPreviewComponentKeyRedux(
+  componentKey: string
+): SetSelectedPreviewComponentKeyAction {
+  return {
+    type: SET_SELECTED_PREVIEW_COMPONENT_KEY,
+    payload: {
+      componentKey,
+    },
+  };
+}
+
+function handleSetSelectedPreviewComponentKey(
+  state: UIReduxState,
+  { componentKey }: SetSelectedPreviewComponentKeyPayload
+): UIReduxState {
+  return {
+    ...state,
+    selectedPreviewComponentKey: componentKey,
+  };
+}
 
 const SET_SELECTED_PAGE_KEY = 'SET_SELECTED_PAGE_KEY';
 
@@ -300,6 +334,7 @@ function handleSetEditorFormSectionVisibility(
 }
 
 const ACTION_HANDLERS = {
+  [SET_SELECTED_PREVIEW_COMPONENT_KEY]: handleSetSelectedPreviewComponentKey,
   [SET_SELECTED_PAGE_KEY]: handleSetSelectedPageKey,
   [SET_HOVERED_BLOCK_KEY]: handleSetHoveredBlockKey,
   [SET_ADDING_BLOCK_SELECTED]: handleSetAddingBlockSelected,

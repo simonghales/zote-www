@@ -71,3 +71,7 @@ export function getReduxPreviousComponentKey(state: ReduxState): string {
 export function getSelectedPageKeyFromUIReduxState(state: UIReduxState): string {
   return state.selectedPageKey;
 }
+
+export function getSelectedPreviewComponentKeyFromUIReduxState(state: UIReduxState): string {
+  return state.selectedPreviewComponentKey;
+}

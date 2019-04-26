@@ -10,7 +10,11 @@ const generateBlock = (): BlockModel => ({
   name: config.name,
   props: {},
   propsConfig: {},
-  isRootBlock: false,
+  isRootBlock: true,
 });
 
 export default generateBlock;
+
+export function generateComponentBlock(): BlockModel {
+  return generateBlock();
+}

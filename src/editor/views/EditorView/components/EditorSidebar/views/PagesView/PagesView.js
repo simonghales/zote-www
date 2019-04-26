@@ -14,7 +14,7 @@ const PagesView = () => {
       <SidebarHeader>Pages</SidebarHeader>
       <SidebarBody>
         <div className={styles.buttonWrapperClass}>
-          <SlimAddButton onClick={createNewPage}>Add Page</SlimAddButton>
+          <SlimAddButton onClick={createNewPage}>New Page</SlimAddButton>
         </div>
         <PagesList />
       </SidebarBody>

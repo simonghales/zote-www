@@ -3,15 +3,23 @@
 import { css } from 'emotion';
 import { mediumPadding } from '../../../../../../components/EditorHeader/styles';
 
-export const containerClass = css`
+export const pageEditorContainerCss = css`
   height: 100%;
   display: flex;
   flex-direction: column;
 `;
 
-export const bodyClass = css`
+export const containerClass = css`
+  ${pageEditorContainerCss};
+`;
+
+export const pageEditorBodyCss = css`
   padding: ${mediumPadding};
   flex: 1;
+`;
+
+export const bodyClass = css`
+  ${pageEditorBodyCss};
 `;
 
 export const editBlocksWrapperClass = css`

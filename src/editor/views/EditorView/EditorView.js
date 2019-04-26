@@ -18,6 +18,7 @@ import EditorNavBar from './components/EditorNavBar/EditorNavBar';
 import EditorComponentView from './views/EditorComponentView/EditorComponentView';
 import { EDITOR_PATHS } from '../../routing/routing';
 import PagesView from './views/PagesView/PagesView';
+import ComponentsView from './views/ComponentsView/ComponentsView';
 
 type Props = {
   addingBlock: boolean,
@@ -42,6 +43,7 @@ class EditorView extends React.Component<Props> {
                 </div>
                 <div className={styles.mainClass}>
                   <Route exact path={EDITOR_PATHS.component} component={EditorComponentView} />
+                  <Route exact path={EDITOR_PATHS.components} component={ComponentsView} />
                   <Route path={EDITOR_PATHS.pagesWithSlug} component={PagesView} />
                   {addingBlock && <AddBlockView />}
                 </div>

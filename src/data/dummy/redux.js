@@ -35,6 +35,7 @@ export const dummyUiReduxState = {
     DUMMY_TEST_COMPONENT: 'DUMMY_CONTAINER_BLOCK',
   },
   selectedPageKey: 'DUMMY_SECOND_PAGE',
+  selectedPreviewComponentKey: 'DUMMY_SECOND_COMPONENT',
 };
 
 export const dummyStylesReduxState: StylesReduxState = {

@@ -53,6 +53,39 @@ export type GenericAction = {
   payload: {},
 };
 
+const ADD_NEW_COMPONENT = 'ADD_NEW_COMPONENT';
+
+type AddNewComponentPayload = {
+  component: ComponentModel,
+};
+
+type AddNewComponentAction = {
+  type: string,
+  payload: AddNewComponentPayload,
+};
+
+export function addNewComponentRedux(component: ComponentModel): AddNewComponentAction {
+  return {
+    type: ADD_NEW_COMPONENT,
+    payload: {
+      component,
+    },
+  };
+}
+
+function handleAddNewComponent(
+  state: EditorReduxState,
+  { component }: AddNewComponentPayload
+): EditorReduxState {
+  return {
+    ...state,
+    components: {
+      ...state.components,
+      [component.key]: component,
+    },
+  };
+}
+
 const ADD_NEW_PAGE = 'ADD_NEW_PAGE';
 
 type AddNewPagePayload = {
@@ -704,6 +737,7 @@ function handleUpdateComponentBlocksOrder(
 }
 
 const ACTION_HANDLERS = {
+  [ADD_NEW_COMPONENT]: handleAddNewComponent,
   [ADD_NEW_PAGE]: handleAddNewPage,
   [UPDATE_PAGE_DETAILS]: handleUpdatePageDetailsRedux,
   [WRAP_BLOCK_WITH_REPEATER]: handleWrapBlockWithRepeater,

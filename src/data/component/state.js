@@ -3,6 +3,7 @@
 import type { ComponentModel, ComponentsModels } from './model';
 import type { BlockModel, BlocksModel } from '../block/model';
 import { getBlockComponentImportKey, getBlockName, isBlockComponentImport } from '../block/state';
+import ComponentImportBlock from '../block/types/groups/component/ComponentImport';
 
 export function getComponentFromComponents(
   componentKey: string,
@@ -62,6 +63,10 @@ export function getComponentName(component: ComponentModel): string {
   const rootBlockKey = getRootBlockKeyFromComponent(component);
   const rootBlock = getBlockFromComponent(component, rootBlockKey);
   return getBlockName(rootBlock);
+}
+
+export function getComponentIcon(component: ComponentModel): any {
+  return ComponentImportBlock.icon;
 }
 
 export function getComponentKey(component: ComponentModel): string {
