@@ -6,6 +6,7 @@ import ComponentsList from './components/ComponentsList/ComponentsList';
 import { SlimAddButton } from '../../../../../../components/Button/Button';
 import * as styles from './styles';
 import { useDispatchCreateNewComponent } from '../../../../../../state/hooks/components';
+import SidebarFooter from '../../components/SidebarFooter/SidebarFooter';
 
 const ComponentsView = () => {
   const createNewComponent = useDispatchCreateNewComponent();
@@ -18,7 +19,7 @@ const ComponentsView = () => {
         </div>
         <ComponentsList />
       </SidebarBody>
-      {/* <SidebarFooter /> */}
+      <SidebarFooter />
     </React.Fragment>
   );
 };

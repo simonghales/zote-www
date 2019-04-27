@@ -3,6 +3,8 @@ import React from 'react';
 import 'styles/global';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
+import { debounce, throttle } from 'lodash';
+import store from 'redux/store';
 import styles from './styles';
 import EditorSidebar from './components/EditorSidebar/EditorSidebar';
 import ModuleView from './views/ModuleView/ModuleView';
@@ -19,6 +21,7 @@ import EditorComponentView from './views/EditorComponentView/EditorComponentView
 import { EDITOR_PATHS } from '../../routing/routing';
 import PagesView from './views/PagesView/PagesView';
 import ComponentsView from './views/ComponentsView/ComponentsView';
+import { storeReduxStateInLocalStorage } from '../../../redux/storage';
 
 type Props = {
   addingBlock: boolean,
@@ -27,6 +30,19 @@ type Props = {
 };
 
 class EditorView extends React.Component<Props> {
+  unsubscribeToStore;
+
+  constructor(props: Props) {
+    super(props);
+    this.unsubscribeToStore = store.subscribe(debounce(storeReduxStateInLocalStorage, 1000));
+  }
+
+  componentWillUnmount(): void {
+    if (this.unsubscribeToStore) {
+      this.unsubscribeToStore();
+    }
+  }
+
   render() {
     const { addingBlock } = this.props;
     return (

@@ -15,6 +15,35 @@ export const initialStylesReduxState: StylesReduxState = {
   ...dummyStylesReduxState,
 };
 
+const SET_STYLES_STATE = 'SET_STYLES_STATE';
+
+type SetStylesStatePayload = {
+  state: StylesReduxState,
+};
+
+type SetStylesStateAction = {
+  type: string,
+  payload: SetStylesStatePayload,
+};
+
+export function setStylesStateRedux(state: StylesReduxState): SetStylesStateAction {
+  return {
+    type: SET_STYLES_STATE,
+    payload: {
+      state,
+    },
+  };
+}
+
+function handleSetStylesState(
+  oldState: StylesReduxState,
+  { state }: SetStylesStatePayload
+): StylesReduxState {
+  return {
+    ...state,
+  };
+}
+
 const REMOVE_MIXIN_FROM_STYLE = 'REMOVE_MIXIN_FROM_STYLE';
 
 type RemoveMixinFromStylePayload = {
@@ -232,6 +261,7 @@ function handleSetModuleStyleValue(
 }
 
 const ACTION_HANDLERS = {
+  [SET_STYLES_STATE]: handleSetStylesState,
   [REMOVE_MIXIN_FROM_STYLE]: handleRemoveMixinFromStyle,
   [ADD_MIXIN_TO_STYLE]: handleAddMixinToStyle,
   [CLEAR_STYLE_STATE]: handleClearStyleState,

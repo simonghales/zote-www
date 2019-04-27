@@ -53,6 +53,35 @@ export type GenericAction = {
   payload: {},
 };
 
+const SET_EDITOR_STATE = 'SET_EDITOR_STATE';
+
+type SetEditorStatePayload = {
+  state: EditorReduxState,
+};
+
+type SetEditorStateAction = {
+  type: string,
+  payload: SetEditorStatePayload,
+};
+
+export function setEditorStateRedux(state: EditorReduxState): SetEditorStateAction {
+  return {
+    type: SET_EDITOR_STATE,
+    payload: {
+      state,
+    },
+  };
+}
+
+function handleSetEditorState(
+  oldState: EditorReduxState,
+  { state }: SetEditorStatePayload
+): EditorReduxState {
+  return {
+    ...state,
+  };
+}
+
 const ADD_NEW_COMPONENT = 'ADD_NEW_COMPONENT';
 
 type AddNewComponentPayload = {
@@ -737,6 +766,7 @@ function handleUpdateComponentBlocksOrder(
 }
 
 const ACTION_HANDLERS = {
+  [SET_EDITOR_STATE]: handleSetEditorState,
   [ADD_NEW_COMPONENT]: handleAddNewComponent,
   [ADD_NEW_PAGE]: handleAddNewPage,
   [UPDATE_PAGE_DETAILS]: handleUpdatePageDetailsRedux,
