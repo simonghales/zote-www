@@ -1,5 +1,5 @@
 // @flow
-import type { ReduxState } from '../store';
+import type { ReduxHistoryState, ReduxState } from '../store';
 import type { EditorFormInputModel } from '../../editor/components/EditorComponentForm/data/models';
 import type { StyleValueWrapper } from '../../data/styles/state';
 import {
@@ -69,4 +69,8 @@ export function getReduxStyleStyles(
     key: styleKey,
     value: stateStyles[styleKey].value,
   }));
+}
+
+export function getReduxPresentState(state: ReduxHistoryState): ReduxState {
+  return state.present;
 }

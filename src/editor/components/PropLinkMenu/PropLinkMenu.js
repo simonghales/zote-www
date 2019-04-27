@@ -6,7 +6,7 @@ import Menu, { MENU_LAYOUTS } from '../Menu/Menu';
 import styles from './styles';
 import Text from '../Text/Text';
 import { mapBlockPropsToPropLinkBlockModels } from './state';
-import type { ReduxState } from '../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../redux/store';
 import {
   getBlockPropAvailableProps,
   getComponentBlockFromReduxEditorState,
@@ -14,6 +14,7 @@ import {
 import { filterAvailableProps, getMergedPropConfigFromBlock } from '../../../data/block/state';
 import { DEFAULT_PROP_CONFIG_TYPE } from '../../../data/block/props/model';
 import { setBlockPropLinkedRedux } from '../../../redux/editor/reducer';
+import { getReduxPresentState } from '../../../redux/styles/state';
 
 export type PropLinkOptionModel = {
   key: string,
@@ -88,7 +89,11 @@ const PropLinkMenu = ({ close, blocks, selectProp }: Props) => (
   </Menu>
 );
 
-const mapStateToProps = (state: ReduxState, { componentKey, blockKey, propKey }: Props) => {
+const mapStateToProps = (
+  historyState: ReduxHistoryState,
+  { componentKey, blockKey, propKey }: Props
+) => {
+  const state = getReduxPresentState(historyState);
   const availableProps = getBlockPropAvailableProps(componentKey, blockKey, state.editor);
   const block = getComponentBlockFromReduxEditorState(state.editor, componentKey, blockKey);
   const propConfig = getMergedPropConfigFromBlock(propKey, block);

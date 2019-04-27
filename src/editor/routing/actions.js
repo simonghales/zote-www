@@ -7,6 +7,7 @@ import type { PageModel } from '../../data/page/model';
 import { getPagesFromReduxState } from '../../redux/editor/state';
 import { getComponentRoute } from './routing';
 import { getPreviewSiteLinkPath } from '../../preview/routing/routing';
+import { getReduxPresentState } from '../../redux/styles/state';
 
 export function getPageFromReduxState(state: ReduxState, pageKey: string): PageModel | null {
   const pages = getPagesFromReduxState(state);
@@ -18,7 +19,8 @@ export function goToEditComponent(componentKey: string) {
 }
 
 export function goToEditPageComponent(pageKey: string) {
-  const state: ReduxState = store.getState();
+  const historyState = store.getState();
+  const state = getReduxPresentState(historyState);
   const page = getPageFromReduxState(state, pageKey);
   if (!page) return;
   const componentKey = getPageComponentKey(page);

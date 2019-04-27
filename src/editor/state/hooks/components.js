@@ -1,6 +1,6 @@
 // @flow
 
-import { useReduxDispatch, useReduxState } from 'reactive-react-redux';
+import { useReduxDispatch } from 'reactive-react-redux';
 import type { EditorReduxState } from '../../../redux/editor/reducer';
 import type { ReduxState } from '../../../redux/store';
 import type { ComponentModel, ComponentsModels } from '../../../data/component/model';
@@ -15,9 +15,10 @@ import {
 } from '../../../data/component/generators';
 import { setSelectedPreviewComponentKeyRedux } from '../../../redux/ui/reducer';
 import { addNewComponentRedux } from '../../../redux/editor/reducer';
+import { useReduxPresentState } from './shared';
 
 export const useEditorState = (): EditorReduxState => {
-  const state: ReduxState = useReduxState();
+  const state: ReduxState = useReduxPresentState();
   return state.editor;
 };
 

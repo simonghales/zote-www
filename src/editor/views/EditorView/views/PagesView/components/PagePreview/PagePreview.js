@@ -13,6 +13,7 @@ import { PREVIEW_IFRAME_ROUTE_CHANGED } from '../../../../../../../preview/event
 import { getPageBySlugFromReduxState } from '../../../../../../../redux/editor/state';
 import type { ReduxState } from '../../../../../../../redux/store';
 import { setSelectedPageKeyRedux } from '../../../../../../../redux/ui/reducer';
+import { getReduxPresentState } from '../../../../../../../redux/styles/state';
 
 type Props = {
   page: PageModel,
@@ -50,7 +51,8 @@ class PagePreview extends React.Component<Props> {
 
   handleRouteChanged(pathname: string) {
     const { page, selectPage } = this.props;
-    const state: ReduxState = store.getState();
+    const historyState = store.getState();
+    const state = getReduxPresentState(historyState);
     const slug = getPageSlugFromPreviewPathname(pathname);
     const newPage = getPageBySlugFromReduxState(slug, state);
     if (newPage && page.key !== newPage.key) {

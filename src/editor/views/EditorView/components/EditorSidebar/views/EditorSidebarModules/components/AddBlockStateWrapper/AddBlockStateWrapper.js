@@ -1,9 +1,10 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import type { ReduxState } from '../../../../../../../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../../../../../../../redux/store';
 import { getReduxUiAddingBlock } from '../../../../../../../../../redux/ui/state';
 import { getSelectedComponentSelectedBlockKey } from '../../../../../../../../state/reselect/ui';
+import { getReduxPresentState } from '../../../../../../../../../redux/styles/state';
 
 export const ADD_BLOCK_POSITIONS = {
   inside: 'inside',
@@ -54,7 +55,8 @@ class AddBlockStateWrapper extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: ReduxState) => {
+const mapStateToProps = (historyState: ReduxHistoryState) => {
+  const state = getReduxPresentState(historyState);
   const selectedBlockKey = getSelectedComponentSelectedBlockKey(state);
   return {
     addingBlock: getReduxUiAddingBlock(state),

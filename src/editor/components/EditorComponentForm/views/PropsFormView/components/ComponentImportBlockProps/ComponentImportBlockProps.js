@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import BlockProps from '../BlockProps/BlockProps';
 import type { EditorFormSectionsVisibility } from '../../../../../../../redux/ui/reducer';
 import type { contentFormViewTypes } from '../../shared';
-import type { ReduxState } from '../../../../../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../../../../../redux/store';
 import {
   getComponentBlockFromReduxEditorState,
   getComponentFromReduxEditorState,
 } from '../../../../../../../redux/editor/state';
 import { getBlockComponentImportKey } from '../../../../../../../data/block/state';
 import { getRootBlockKeyFromComponent } from '../../../../../../../data/component/state';
+import { getReduxPresentState } from '../../../../../../../redux/styles/state';
 
 type Props = {
   componentKey: string,
@@ -35,7 +36,8 @@ const ComponentImportBlockProps = ({
   );
 };
 
-const mapStateToProps = (state: ReduxState, { componentKey, blockKey }: Props) => {
+const mapStateToProps = (historyState: ReduxHistoryState, { componentKey, blockKey }: Props) => {
+  const state = getReduxPresentState(historyState);
   const block = getComponentBlockFromReduxEditorState(state.editor, componentKey, blockKey);
   const componentImportKey = getBlockComponentImportKey(block);
   let componentImportRootBlockKey = '';

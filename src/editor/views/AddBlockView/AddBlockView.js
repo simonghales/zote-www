@@ -5,7 +5,7 @@ import styles from './styles';
 import { setAddingBlockRedux } from '../../../redux/ui/reducer';
 import AddBlockFilter from './components/AddBlockFilter/AddBlockFilter';
 import BlocksList from './components/BlocksList/BlocksList';
-import type { ReduxState } from '../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../redux/store';
 import {
   getReduxUiAddingBlockSelectedKey,
   getReduxUiAddingBlockSelectedPosition,
@@ -16,6 +16,7 @@ import type { BlockModel } from '../../../data/block/model';
 import type { AddBlockPositions } from '../../components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import { getSelectedComponentKeySelector } from '../../state/reselect/component';
 import { getReduxSafeAddingBlockSelectedKeyAndPosition } from '../../../redux/shared/state';
+import { getReduxPresentState } from '../../../redux/styles/state';
 
 type Props = {
   componentKey: string,
@@ -89,7 +90,8 @@ class AddBlockView extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: ReduxState) => {
+const mapStateToProps = (historyState: ReduxHistoryState) => {
+  const state = getReduxPresentState(historyState);
   const componentKey = getSelectedComponentKeySelector(state);
   const [
     addingBlockSelectedKey,

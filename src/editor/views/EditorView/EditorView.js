@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { debounce, throttle } from 'lodash';
 import store from 'redux/store';
+import type { ReduxHistoryState } from 'redux/store';
 import styles from './styles';
 import EditorSidebar from './components/EditorSidebar/EditorSidebar';
 import ModuleView from './views/ModuleView/ModuleView';
@@ -22,6 +23,7 @@ import { EDITOR_PATHS } from '../../routing/routing';
 import PagesView from './views/PagesView/PagesView';
 import ComponentsView from './views/ComponentsView/ComponentsView';
 import { storeReduxStateInLocalStorage } from '../../../redux/storage';
+import { getReduxPresentState } from '../../../redux/styles/state';
 
 type Props = {
   addingBlock: boolean,
@@ -72,8 +74,11 @@ class EditorView extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ReduxState) => ({
-  addingBlock: getReduxUiAddingBlock(state),
-});
+const mapStateToProps = (historyState: ReduxHistoryState) => {
+  const state = getReduxPresentState(historyState);
+  return {
+    addingBlock: getReduxUiAddingBlock(state),
+  };
+};
 
 export default connect(mapStateToProps)(EditorView);

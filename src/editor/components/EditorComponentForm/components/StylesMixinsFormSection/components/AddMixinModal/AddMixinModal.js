@@ -5,11 +5,12 @@ import CustomModal from '../../../../../CustomModal/CustomModal';
 import * as styles from './styles';
 import SearchForm, { SearchFormItem } from '../../../../../SearchForm/SearchForm';
 import type { SearchResultItem } from '../../../../../SearchForm/SearchForm';
-import type { ReduxState } from '../../../../../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../../../../../redux/store';
 import { getMixinsFromRedux } from './state';
 import type { MixinModel } from '../../../../../../../data/mixin/model';
 import { addMixinToStyleRedux } from '../../../../../../../redux/styles/reducer';
 import type { StyleMixinTag } from '../../state';
+import { getReduxPresentState } from '../../../../../../../redux/styles/state';
 
 function filterMixins(input: string, items: Array<SearchResultItem>): Array<SearchResultItem> {
   if (!input) return items;
@@ -66,7 +67,8 @@ const AddMixinModal = ({ isOpen, onClose, mixins, addedMixins, addMixinToStyle }
   );
 };
 
-const mapStateToProps = (state: ReduxState) => {
+const mapStateToProps = (historyState: ReduxHistoryState) => {
+  const state = getReduxPresentState(historyState);
   const mixins = getMixinsFromRedux(state);
   return {
     mixins,

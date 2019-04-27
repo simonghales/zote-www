@@ -2,8 +2,10 @@
 import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { FaRedo, FaUndo } from 'react-icons/fa';
+import { connect } from 'react-redux';
 import * as styles from './styles';
 import { EDITOR_PATHS } from '../../../../routing/routing';
+import type { ReduxHistoryState, ReduxState } from '../../../../../redux/store';
 
 const EditorNavBar = (props: any) => (
   <div className={styles.containerClass}>

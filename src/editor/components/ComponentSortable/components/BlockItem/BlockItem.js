@@ -13,7 +13,7 @@ import {
   getBlockTypeFromBlock,
   getNameFromBlock,
 } from '../../../../../data/block/state';
-import type { ReduxState } from '../../../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../../../redux/store';
 import { getIconFromBlockType } from '../../../../../data/block/types/state';
 import AddButton, { ADD_BLOCK_POSITIONS } from './components/AddButton/AddButton';
 import type { AddBlockPositions } from './components/AddButton/AddButton';
@@ -24,6 +24,7 @@ import {
 import OpenComponentButton from './components/OpenComponentButton/OpenComponentButton';
 import { getComponentsFromReduxEditorState } from '../../../../../redux/editor/state';
 import { EditorUIContext } from '../../../../context/components/EditorUIContextWrapper/EditorUIContextWrapper';
+import { getReduxPresentState } from '../../../../../redux/styles/state';
 
 function isButtonSelected(
   blockKey: string,
@@ -152,7 +153,8 @@ class BlockItem extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ReduxState, { blockKey }: Props) => {
+const mapStateToProps = (historyState: ReduxHistoryState, { blockKey }: Props) => {
+  const state = getReduxPresentState(historyState);
   const components = getComponentsFromReduxEditorState(state.editor);
   const selectedComponent = getSelectedComponentSelector(state);
   const blocks = getBlocksFromComponent(selectedComponent);

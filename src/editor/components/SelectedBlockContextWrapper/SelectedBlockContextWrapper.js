@@ -2,9 +2,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { SelectedBlockContext } from './context';
-import type { ReduxState } from '../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../redux/store';
 import type { BlockModel } from '../../../data/block/model';
 import { getSelectedComponentSelectedBlock } from '../../state/reselect/ui';
+import { getReduxPresentState } from '../../../redux/styles/state';
 
 type Props = {
   block: BlockModel,
@@ -15,7 +16,8 @@ const SelectedBlockContextWrapper = ({ block, children }: Props) => (
   <SelectedBlockContext.Provider value={block}>{children}</SelectedBlockContext.Provider>
 );
 
-const mapStateToProps = (state: ReduxState) => {
+const mapStateToProps = (historyState: ReduxHistoryState) => {
+  const state = getReduxPresentState(historyState);
   const block = getSelectedComponentSelectedBlock(state);
   return {
     block,

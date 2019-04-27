@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import type { ReduxState } from '../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../redux/store';
 import { getSelectedComponentKeySelector } from '../../state/reselect/component';
 import { EditorComponentFormContext } from './components/EditorComponentFormContextWrapper/context';
 import {
@@ -36,6 +36,7 @@ import { getSelectedComponentSelectedBlock } from '../../state/reselect/ui';
 import { CONTENT_FORM_VIEW_TYPES } from './views/PropsFormView/shared';
 import EditorComponentFormContextWrapper from './components/EditorComponentFormContextWrapper/EditorComponentFormContextWrapper';
 import { getBlockStylesSelector } from './components/StylesStateFormSection/StylesStateFormSection';
+import { getReduxPresentState } from '../../../redux/styles/state';
 
 export function getFormSectionVisibility(
   sectionKey: string,
@@ -122,7 +123,8 @@ class EditorComponentForm extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ReduxState) => {
+const mapStateToProps = (historyState: ReduxHistoryState) => {
+  const state = getReduxPresentState(historyState);
   const componentKey = getSelectedComponentKeySelector(state);
   const block = getSelectedComponentSelectedBlock(state);
   const blockStyleKey = getStyleKeyFromBlock(block);

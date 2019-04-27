@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import type { ReduxState } from '../../../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../../../redux/store';
 import * as styles from './styles';
 import { getDefaultBlocks } from '../../../../../data/block/types/state';
 import BlockItem from './components/BlockItem/BlockItem';
@@ -10,6 +10,7 @@ import type { AddBlockModel } from './state';
 import { getComponentsFromReduxEditorState } from '../../../../../redux/editor/state';
 import { getAddableComponents } from '../../../../../data/component/state';
 import { getSelectedComponentKeySelector } from '../../../../state/reselect/component';
+import { getReduxPresentState } from '../../../../../redux/styles/state';
 
 function filterBlocks(blocks: Array<AddBlockModel>, filter: string): Array<AddBlockModel> {
   return blocks.filter(block => block.name.toLowerCase().indexOf(filter.toLowerCase()) > -1);
@@ -40,7 +41,8 @@ const BlocksList = ({ blocks, filter, addBlock }: Props) => (
   </ul>
 );
 
-const mapStateToProps = (state: ReduxState) => {
+const mapStateToProps = (historyState: ReduxHistoryState) => {
+  const state = getReduxPresentState(historyState);
   const componentKey = getSelectedComponentKeySelector(state);
   const blocks = getDefaultBlocks();
   const mappedBlocks = mapBlockTypesToAddBlock(blocks);

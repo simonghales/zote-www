@@ -1,14 +1,14 @@
 // @flow
 
-import { useReduxState } from 'reactive-react-redux';
 import type { StylesReduxState } from '../../../redux/styles/state';
 import type { ReduxState } from '../../../redux/store';
 import type { StylesModels } from '../../../data/styles/model';
 import { getStylesFromStylesReduxState } from '../../../redux/styles/state';
 import type { MixinsModel } from '../../../data/mixin/model';
+import { useReduxPresentState } from './shared';
 
 export const useStylesState = (): StylesReduxState => {
-  const state: ReduxState = useReduxState();
+  const state: ReduxState = useReduxPresentState();
   return state.styles;
 };
 

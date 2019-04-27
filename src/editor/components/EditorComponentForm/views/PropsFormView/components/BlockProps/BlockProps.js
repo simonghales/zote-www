@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getFormSectionVisibility } from '../../../../EditorComponentForm';
 import type { EditorFormSectionsVisibility } from '../../../../../../../redux/ui/reducer';
-import type { ReduxState } from '../../../../../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../../../../../redux/store';
 import { getComponentsFromReduxEditorState } from '../../../../../../../redux/editor/state';
 import {
   getBlockFromComponent,
@@ -19,6 +19,7 @@ import { mapBlockPropConfigsToEditorFormInputModel } from '../../../../data/stat
 import FormColumnsSection from '../../../../components/FormColumnsSection/FormColumnsSection';
 import { CONTENT_FORM_VIEW_TYPES } from '../../shared';
 import type { contentFormViewTypes } from '../../shared';
+import { getReduxPresentState } from '../../../../../../../redux/styles/state';
 
 type Props = {
   blockKey: string,
@@ -40,7 +41,11 @@ const BlockProps = ({ sections }: Props) => (
   </React.Fragment>
 );
 
-const mapStateToProps = (state: ReduxState, { blockKey, componentKey, viewType }: Props) => {
+const mapStateToProps = (
+  historyState: ReduxHistoryState,
+  { blockKey, componentKey, viewType }: Props
+) => {
+  const state = getReduxPresentState(historyState);
   const components = getComponentsFromReduxEditorState(state.editor);
   const component = getComponentFromComponents(componentKey, components);
   const block = getBlockFromComponent(component, blockKey);

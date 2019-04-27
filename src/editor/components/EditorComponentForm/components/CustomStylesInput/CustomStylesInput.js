@@ -1,11 +1,11 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import type { ReduxState } from '../../../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../../../redux/store';
 import CustomStyle from './components/CustomStyle/CustomStyle';
 import styles from './styles';
 import { SlimIconDarkerButton } from '../../../Button/Button';
-import { getReduxStyleStyles } from '../../../../../redux/styles/state';
+import { getReduxPresentState, getReduxStyleStyles } from '../../../../../redux/styles/state';
 import {
   clearModuleStyleValueRedux,
   setModuleStyleValueRedux,
@@ -112,7 +112,11 @@ class CustomStylesInput extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: ReduxState, { blockStyleKey, styleStateKey }: Props) => {
+const mapStateToProps = (
+  historyState: ReduxHistoryState,
+  { blockStyleKey, styleStateKey }: Props
+) => {
+  const state = getReduxPresentState(historyState);
   const customStyles = getReduxStyleStyles(state, styleStateKey, blockStyleKey);
   return {
     customStyles,

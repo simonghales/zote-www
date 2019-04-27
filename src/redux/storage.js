@@ -4,6 +4,9 @@ import type { EditorReduxState } from './editor/reducer';
 import type { StylesReduxState } from './styles/state';
 import { setEditorStateRedux } from './editor/reducer';
 import { setStylesStateRedux } from './styles/reducer';
+import type { ReduxState } from './store';
+import { useReduxPresentState } from '../editor/state/hooks/shared';
+import { getReduxPresentState } from './styles/state';
 
 export const REDUX_STORAGE_STATE = 'REDUX_STORAGE_STATE';
 
@@ -48,6 +51,8 @@ const saveState = (state: ReduxStorageState) => {
 };
 
 export function storeReduxStateInLocalStorage() {
-  const { editor, styles } = store.getState();
+  const historyState = store.getState();
+  const state = getReduxPresentState(historyState);
+  const { editor, styles } = state;
   saveState({ editor, styles, timestamp: Date.now() });
 }

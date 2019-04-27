@@ -1,6 +1,6 @@
 // @flow
 
-import { useReduxDispatch, useReduxState } from 'reactive-react-redux';
+import { useReduxDispatch } from 'reactive-react-redux';
 import { getPagesFromReduxState } from '../../../redux/editor/state';
 import type { PageModel, PagesModel } from '../../../data/page/model';
 import type { UIReduxState } from '../../../redux/ui/reducer';
@@ -18,14 +18,15 @@ import { mapComponentBlocksToMappedBlocks } from '../../../preview/data/block/st
 import { addNewPageRedux, updatePageDetailsRedux } from '../../../redux/editor/reducer';
 import { generateNewPageAndComponent } from '../../../data/page/generators';
 import { setSelectedPageKeyRedux } from '../../../redux/ui/reducer';
+import { useReduxPresentState } from './shared';
 
 export const useUIState = (): UIReduxState => {
-  const state: ReduxState = useReduxState();
+  const state: ReduxState = useReduxPresentState();
   return state.ui;
 };
 
 export const usePages = (): PagesModel => {
-  const state: ReduxState = useReduxState();
+  const state: ReduxState = useReduxPresentState();
   return getPagesFromReduxState(state);
 };
 

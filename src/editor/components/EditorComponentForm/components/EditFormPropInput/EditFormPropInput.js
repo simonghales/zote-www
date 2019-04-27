@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import type { ReduxState } from '../../../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../../../redux/store';
 import { getComponentBlockFromReduxEditorState } from '../../../../../redux/editor/state';
 import { getBlockPropsConfigKeys, getPropConfigFromBlock } from '../../../../../data/block/state';
 import EditFormInput from '../EditFormInput/EditFormInput';
@@ -12,6 +12,7 @@ import {
 import { DEFAULT_PROP_CONFIG_TYPE } from '../../../../../data/block/props/model';
 import { updateBlockPropConfigRedux } from '../../../../../redux/editor/reducer';
 import type { BlockPropsConfigTypes } from '../../../../../data/block/props/model';
+import { getReduxPresentState } from '../../../../../redux/styles/state';
 
 type Props = {
   componentKey: string,
@@ -20,7 +21,11 @@ type Props = {
   onSubmit: () => void,
 };
 
-const mapStateToProps = (state: ReduxState, { componentKey, blockKey, propKey }: Props) => {
+const mapStateToProps = (
+  historyState: ReduxHistoryState,
+  { componentKey, blockKey, propKey }: Props
+) => {
+  const state = getReduxPresentState(historyState);
   const block = getComponentBlockFromReduxEditorState(state.editor, componentKey, blockKey);
   const propKeys = getBlockPropsConfigKeys(block).filter(blockPropKey => blockPropKey !== propKey);
   const propConfig = getPropConfigFromBlock(propKey, block);

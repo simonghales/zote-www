@@ -2,9 +2,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { SelectedComponentContext } from './context';
-import type { ReduxState } from '../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../redux/store';
 import type { ComponentModel } from '../../../data/component/model';
 import { getSelectedComponentSelector } from '../../state/reselect/component';
+import { getReduxPresentState } from '../../../redux/styles/state';
 
 type Props = {
   children: any,
@@ -17,7 +18,8 @@ const SelectedComponentContextWrapper = ({ children, component }: Props) => (
   </SelectedComponentContext.Provider>
 );
 
-const mapStateToProps = (state: ReduxState) => {
+const mapStateToProps = (historyState: ReduxHistoryState) => {
+  const state = getReduxPresentState(historyState);
   const component = getSelectedComponentSelector(state);
   return {
     component,

@@ -8,11 +8,12 @@ import TagsList from '../TagsList/TagsList';
 import { EditorComponentFormContext } from '../EditorComponentFormContextWrapper/context';
 import type { BlockStylesSelector } from '../EditorComponentFormContextWrapper/context';
 import { STYLE_STATES } from '../../../../../data/styles/model';
-import type { ReduxState } from '../../../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../../../redux/store';
 import { getStateSelectorsFromRedux } from './state';
 import type { StateSelector } from './state';
 import type { TagModel } from '../TagsList/TagsList';
 import { clearStyleStateRedux } from '../../../../../redux/styles/reducer';
+import { getReduxPresentState } from '../../../../../redux/styles/state';
 
 export function getBlockStylesSelector(
   blockStylesSelector: BlockStylesSelector,
@@ -64,7 +65,8 @@ const StylesStateFormSection = ({ selectors, clearStyleState }: Props) => {
   );
 };
 
-const mapStateToProps = (state: ReduxState, { styleKey }: Props) => {
+const mapStateToProps = (historyState: ReduxHistoryState, { styleKey }: Props) => {
+  const state = getReduxPresentState(historyState);
   const selectors = getStateSelectorsFromRedux(state, styleKey);
   return {
     selectors,

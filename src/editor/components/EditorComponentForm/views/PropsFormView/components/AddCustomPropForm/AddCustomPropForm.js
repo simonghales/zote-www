@@ -5,12 +5,13 @@ import { connect } from 'react-redux';
 import { SlimIconButton } from '../../../../../Button/Button';
 import styles from './styles';
 import { PROP_TYPES_OPTIONS } from '../../../../../inputs/SelectInput/data';
-import type { ReduxState } from '../../../../../../../redux/store';
+import type { ReduxHistoryState, ReduxState } from '../../../../../../../redux/store';
 import { getBlockPropsConfigKeys } from '../../../../../../../data/block/state';
 import { getComponentBlockFromReduxEditorState } from '../../../../../../../redux/editor/state';
 import type { BlockPropsConfigTypes } from '../../../../../../../data/block/props/model';
 import { addNewPropToBlockRedux } from '../../../../../../../redux/editor/reducer';
 import EditFormInput from '../../../../components/EditFormInput/EditFormInput';
+import { getReduxPresentState } from '../../../../../../../redux/styles/state';
 
 type Props = {
   componentKey: string,
@@ -104,7 +105,8 @@ class AddCustomPropForm extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: ReduxState, { componentKey, blockKey }: Props) => {
+const mapStateToProps = (historyState: ReduxHistoryState, { componentKey, blockKey }: Props) => {
+  const state = getReduxPresentState(historyState);
   const block = getComponentBlockFromReduxEditorState(state.editor, componentKey, blockKey);
   const propKeys = getBlockPropsConfigKeys(block);
   return {
