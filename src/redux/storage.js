@@ -10,6 +10,7 @@ export const REDUX_STORAGE_STATE = 'REDUX_STORAGE_STATE';
 export type ReduxStorageState = {
   editor: EditorReduxState,
   styles: StylesReduxState,
+  timestamp: number,
 };
 
 export const loadState = (): ReduxStorageState | typeof undefined => {
@@ -24,12 +25,17 @@ export const loadState = (): ReduxStorageState | typeof undefined => {
   }
 };
 
+export function storeLocalStorageState(state: ReduxStorageState) {
+  const { editor, styles, timestamp } = state;
+  // todo - check if timestamp is more recent than fetched data...
+  store.dispatch(setEditorStateRedux(editor));
+  store.dispatch(setStylesStateRedux(styles));
+}
+
 export function loadStateFromLocalStorage() {
   const state = loadState();
   if (!state) return;
-  const { editor, styles } = state;
-  store.dispatch(setEditorStateRedux(editor));
-  store.dispatch(setStylesStateRedux(styles));
+  storeLocalStorageState(state);
 }
 
 const saveState = (state: ReduxStorageState) => {
@@ -43,5 +49,5 @@ const saveState = (state: ReduxStorageState) => {
 
 export function storeReduxStateInLocalStorage() {
   const { editor, styles } = store.getState();
-  saveState({ editor, styles });
+  saveState({ editor, styles, timestamp: Date.now() });
 }
