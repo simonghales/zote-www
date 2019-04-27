@@ -32,6 +32,7 @@ export const EDITOR_PATHS = {
   }?`,
   mixins: `${EDITOR_ROUTE_PATH}/mixins`,
   data: `${EDITOR_ROUTE_PATH}/data`,
+  media: `${EDITOR_ROUTE_PATH}/media`,
 };
 
 export function getComponentRoute(componentKey: string): string {

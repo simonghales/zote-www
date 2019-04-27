@@ -9,6 +9,11 @@ export const containerClass = css`
   background-color: #1e2431;
   height: 34px;
   display: flex;
+  justify-content: space-between;
+`;
+
+export const navClass = css`
+  display: flex;
   align-items: center;
   padding: 0 ${spacing.medium}px 0 ${spacing.medium - 5}px;
   font-size: 11px;
@@ -50,4 +55,32 @@ export const activeLinkClass = css`
   &::before {
     visibility: visible;
   }
+`;
+
+export const optionsClass = css`
+  display: flex;
+  align-items: center;
+`;
+
+export const smallButtonClass = css`
+  height: 34px;
+  width: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+export const saveChangesClass = css`
+  height: 34px;
+  display: flex;
+  align-items: center;
+  background-color: ${colors.vibrant};
+  color: #ffffff;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: ${fontWeights.medium};
+  letter-spacing: 0.35px;
+  padding: 0 15px;
+  cursor: pointer;
 `;
