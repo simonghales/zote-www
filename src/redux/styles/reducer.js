@@ -229,6 +229,7 @@ export function setModuleStyleValueRedux(
   styleValueKey: string,
   value: any
 ): SetModuleStyleValueAction {
+  // todo - check input type to determine whether to set undoGroup
   return {
     type: SET_MODULE_STYLE_VALUE,
     payload: {
@@ -268,6 +269,15 @@ const ACTION_HANDLERS = {
   [CLEAR_MODULE_STYLE_VALUE]: handleClearModuleStyleValue,
   [SET_MODULE_STYLE_VALUE]: handleSetModuleStyleValue,
 };
+
+export const STYLES_UNDOABLE_ACTIONS = [
+  SET_STYLES_STATE,
+  REMOVE_MIXIN_FROM_STYLE,
+  ADD_MIXIN_TO_STYLE,
+  CLEAR_STYLE_STATE,
+  CLEAR_MODULE_STYLE_VALUE,
+  SET_MODULE_STYLE_VALUE,
+];
 
 export default function stylesReducer(
   state: StylesReduxState = initialStylesReduxState,

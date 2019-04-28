@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import * as styles from './styles';
 import { EDITOR_PATHS } from '../../../../routing/routing';
 import type { ReduxHistoryState, ReduxState } from '../../../../../redux/store';
+import SaveControls from './components/SaveControls/SaveControls';
 
 const EditorNavBar = (props: any) => (
   <div className={styles.containerClass}>
@@ -54,15 +55,7 @@ const EditorNavBar = (props: any) => (
         Data
       </NavLink>
     </nav>
-    <div className={styles.optionsClass}>
-      <div className={styles.smallButtonClass}>
-        <FaRedo size={11} />
-      </div>
-      <div className={styles.smallButtonClass}>
-        <FaUndo size={11} />
-      </div>
-      <div className={styles.saveChangesClass}>Save Changes</div>
-    </div>
+    <SaveControls />
   </div>
 );
 

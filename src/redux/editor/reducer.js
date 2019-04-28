@@ -51,6 +51,7 @@ export const initialEditorReduxState: EditorReduxState = {
 export type GenericAction = {
   type: string,
   payload: {},
+  undoGroup?: string,
 };
 
 const SET_EDITOR_STATE = 'SET_EDITOR_STATE';
@@ -697,6 +698,7 @@ export function setBlockPropValueRedux(
       propKey,
       value,
     },
+    undoGroup: `${componentKey}:${blockKey}:${propKey}`,
   };
 }
 
@@ -782,6 +784,8 @@ const ACTION_HANDLERS = {
   [SET_BLOCK_PROP_LINKED]: handleSetBlockPropLinked,
   [SET_BLOCK_PROP_VALUE]: handleSetBlockPropValue,
 };
+
+export const EDITOR_UNDOABLE_ACTIONS = [SET_BLOCK_PROP_VALUE];
 
 export default function editorReducer(
   state: EditorReduxState = initialEditorReduxState,
