@@ -35,6 +35,10 @@ export const EDITOR_PATHS = {
   media: `${EDITOR_ROUTE_PATH}/media`,
 };
 
-export function getComponentRoute(componentKey: string): string {
-  return `${EDITOR_ROUTE_PATH}/blocks/${componentKey}`;
+export function getComponentRoute(componentKey: string, previousComponentKey?: string): string {
+  let url = `${EDITOR_ROUTE_PATH}/blocks/${componentKey}`;
+  if (previousComponentKey) {
+    url = `${url}/${previousComponentKey}`;
+  }
+  return url;
 }

@@ -6,6 +6,7 @@ import { EditorContext } from '../../context';
 import type { ReduxHistoryState, ReduxState } from '../../../../redux/store';
 import { getSelectedComponentKeySelector } from '../../../state/reselect/component';
 import { getReduxPresentState } from '../../../../redux/styles/state';
+import { getComponentRoute } from '../../../routing/routing';
 
 type Props = {
   children: any,
@@ -16,8 +17,7 @@ type Props = {
 class EditorContextWrapper extends React.Component<Props> {
   navigateToComponent = (newComponentKey: string) => {
     const { componentKey, history } = this.props;
-    console.log('navigate to', newComponentKey);
-    history.push(`/editor/${newComponentKey}/${componentKey}`);
+    history.push(getComponentRoute(newComponentKey, componentKey));
   };
 
   render() {
