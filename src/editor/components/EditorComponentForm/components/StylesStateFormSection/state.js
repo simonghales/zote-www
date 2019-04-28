@@ -1,6 +1,6 @@
 // @flow
 
-import type { ReduxState } from '../../../../../redux/store';
+import type { ReduxDataState } from '../../../../../redux/store';
 import type { StyleModel, StylesModels } from '../../../../../data/styles/model';
 import { getReduxMixins, getStylesFromStylesReduxState } from '../../../../../redux/styles/state';
 import {
@@ -16,7 +16,7 @@ import {
 import { getMixinFromMixins, getMixinStylesKey } from '../../../../../data/mixin/state';
 import { STYLE_STATES } from '../../../../../data/styles/model';
 
-export function getStyleFromRedux(styleKey: string, state: ReduxState): StyleModel | null {
+export function getStyleFromRedux(styleKey: string, state: ReduxDataState): StyleModel | null {
   const styles = getStylesFromStylesReduxState(state.styles);
   return getStyleFromStyles(styleKey, styles);
 }
@@ -97,12 +97,12 @@ function getStyleStateSelectors(
   return styleStateSelectors;
 }
 
-export function getStylesFromRedux(state: ReduxState): StylesModels {
+export function getStylesFromRedux(state: ReduxDataState): StylesModels {
   return getStylesFromStylesReduxState(state.styles);
 }
 
 export function getStateSelectorsFromRedux(
-  state: ReduxState,
+  state: ReduxDataState,
   styleKey: string
 ): Array<StateSelector> {
   const selectors = {

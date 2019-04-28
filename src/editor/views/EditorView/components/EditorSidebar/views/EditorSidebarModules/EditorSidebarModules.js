@@ -6,11 +6,12 @@ import styles from './styles';
 import { SlimAddButton, SlimIconButton } from '../../../../../../components/Button/Button';
 import { ReduxComponentSortable } from '../../../../../../components/ComponentSortable/ComponentSortable';
 import { setAddingBlockRedux } from '../../../../../../../redux/ui/reducer';
-import type { ReduxHistoryState, ReduxState } from '../../../../../../../redux/store';
+import type { ReduxRootState, ReduxDataState } from '../../../../../../../redux/store';
 import { getReduxUiAddingBlock } from '../../../../../../../redux/ui/state';
 import AddBlockStateWrapper from './components/AddBlockStateWrapper/AddBlockStateWrapper';
 import PreviousComponentLink from './components/PreviousComponentLink/PreviousComponentLink';
 import { getReduxPresentState } from '../../../../../../../redux/styles/state';
+import { getReduxUIState } from '../../../../../../../redux/shared/state';
 
 type Props = {
   addingBlock: boolean,
@@ -43,10 +44,10 @@ const EditorSidebarModules = ({ addingBlock, setAddingBlock }: Props) => (
   </div>
 );
 
-const mapStateToProps = (historyState: ReduxHistoryState) => {
-  const state = getReduxPresentState(historyState);
+const mapStateToProps = (rootState: ReduxRootState) => {
+  const uiState = getReduxUIState(rootState);
   return {
-    addingBlock: getReduxUiAddingBlock(state),
+    addingBlock: getReduxUiAddingBlock(uiState),
   };
 };
 

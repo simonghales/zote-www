@@ -1,10 +1,11 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import type { ReduxHistoryState, ReduxState } from '../../../../../../../../../redux/store';
+import type { ReduxRootState, ReduxDataState } from '../../../../../../../../../redux/store';
 import { getReduxUiAddingBlock } from '../../../../../../../../../redux/ui/state';
 import { getSelectedComponentSelectedBlockKey } from '../../../../../../../../state/reselect/ui';
 import { getReduxPresentState } from '../../../../../../../../../redux/styles/state';
+import { getReduxUIState } from '../../../../../../../../../redux/shared/state';
 
 export const ADD_BLOCK_POSITIONS = {
   inside: 'inside',
@@ -55,11 +56,11 @@ class AddBlockStateWrapper extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (historyState: ReduxHistoryState) => {
-  const state = getReduxPresentState(historyState);
-  const selectedBlockKey = getSelectedComponentSelectedBlockKey(state);
+const mapStateToProps = (rootState: ReduxRootState) => {
+  const uiState = getReduxUIState(rootState);
+  const selectedBlockKey = getSelectedComponentSelectedBlockKey(rootState);
   return {
-    addingBlock: getReduxUiAddingBlock(state),
+    addingBlock: getReduxUiAddingBlock(uiState),
     selectedBlockKey,
   };
 };

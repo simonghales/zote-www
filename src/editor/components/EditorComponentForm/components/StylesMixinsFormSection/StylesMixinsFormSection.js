@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { stylesMixinsFormSection } from '../../data/styles';
 import FormSection from '../FormSection/FormSection';
 import TagsList from '../TagsList/TagsList';
-import type { ReduxHistoryState, ReduxState } from '../../../../../redux/store';
+import type { ReduxRootState } from '../../../../../redux/store';
 import { getStyleMixinsFromRedux } from './state';
 import type { StyleMixinTag } from './state';
 import type { TagModel } from '../TagsList/TagsList';
@@ -71,8 +71,8 @@ const StylesMixinsFormSection = ({ mixins, styleKey, removeMixinFromStyle }: Pro
   );
 };
 
-const mapStateToProps = (historyState: ReduxHistoryState, { styleKey }: Props) => {
-  const state = getReduxPresentState(historyState);
+const mapStateToProps = (rootState: ReduxRootState, { styleKey }: Props) => {
+  const state = getReduxPresentState(rootState);
   const mixins = getStyleMixinsFromRedux(state, styleKey);
   return {
     mixins,

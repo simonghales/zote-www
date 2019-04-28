@@ -1,6 +1,6 @@
 // @flow
 
-import type { ReduxState } from '../../../../../redux/store';
+import type { ReduxDataState } from '../../../../../redux/store';
 import { getStyleFromRedux } from '../StylesStateFormSection/state';
 import type { StyleModel } from '../../../../../data/styles/model';
 import type { MixinsModel } from '../../../../../data/mixin/model';
@@ -43,7 +43,10 @@ export function getStyleMixinsTags(style: StyleModel, mixins: MixinsModel): Arra
     };
   });
 }
-export function getStyleMixinsFromRedux(state: ReduxState, styleKey: string): Array<StyleMixinTag> {
+export function getStyleMixinsFromRedux(
+  state: ReduxDataState,
+  styleKey: string
+): Array<StyleMixinTag> {
   const style = getStyleFromRedux(styleKey, state);
   if (!style) return [];
   const mixins = getReduxMixins(state);

@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import type { EditorFormInputModel, EditorFormReduxTypes } from '../../data/models';
-import type { ReduxHistoryState, ReduxState } from '../../../../../redux/store';
+import type { ReduxRootState, ReduxDataState } from '../../../../../redux/store';
 import FormInput, { getFormInputComponent } from '../FormInput/FormInput';
 import { getReduxPresentState, getReduxStyleStyleValue } from '../../../../../redux/styles/state';
 import { setModuleStyleValueRedux } from '../../../../../redux/styles/reducer';
@@ -76,10 +76,10 @@ const ReduxFormInput = ({
 };
 
 const mapStateToProps = (
-  historyState: ReduxHistoryState,
+  rootState: ReduxRootState,
   { input, blockStyleKey, styleStateKey, reduxType, componentKey, blockKey }: Props
 ) => {
-  const state = getReduxPresentState(historyState);
+  const state = getReduxPresentState(rootState);
   let value;
   let valueStyleKey = '';
   let linkedBlockKey = null;

@@ -13,7 +13,7 @@ import {
   getBlockTypeFromBlock,
   getNameFromBlock,
 } from '../../../../../data/block/state';
-import type { ReduxHistoryState, ReduxState } from '../../../../../redux/store';
+import type { ReduxRootState, ReduxDataState } from '../../../../../redux/store';
 import { getIconFromBlockType } from '../../../../../data/block/types/state';
 import AddButton, { ADD_BLOCK_POSITIONS } from './components/AddButton/AddButton';
 import type { AddBlockPositions } from './components/AddButton/AddButton';
@@ -153,10 +153,10 @@ class BlockItem extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (historyState: ReduxHistoryState, { blockKey }: Props) => {
-  const state = getReduxPresentState(historyState);
+const mapStateToProps = (rootState: ReduxRootState, { blockKey }: Props) => {
+  const state = getReduxPresentState(rootState);
   const components = getComponentsFromReduxEditorState(state.editor);
-  const selectedComponent = getSelectedComponentSelector(state);
+  const selectedComponent = getSelectedComponentSelector(rootState);
   const blocks = getBlocksFromComponent(selectedComponent);
   const block = getBlockFromBlocks(blockKey, blocks);
   const blockType = getBlockTypeFromBlock(block);

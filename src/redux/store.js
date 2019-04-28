@@ -9,39 +9,45 @@ import stylesReducer, { initialStylesReduxState } from './styles/reducer';
 import type { StylesReduxState } from './styles/state';
 import { FILTER_ALLOWED_ACTIONS, groupHistory } from './history';
 
-const rootReducer = undoable(
-  combineReducers({
-    editor: editorReducer,
-    ui: uiReducer,
-    styles: stylesReducer,
-  }),
-  {
+const dataReducer = combineReducers({
+  editor: editorReducer,
+  styles: stylesReducer,
+});
+
+const rootReducer = combineReducers({
+  data: undoable(dataReducer, {
     limit: 10,
     groupBy: groupHistory,
     filter: includeAction(FILTER_ALLOWED_ACTIONS),
-  }
-);
+  }),
+  ui: uiReducer,
+});
 
-export type ReduxState = {
+export type ReduxDataState = {
   editor: EditorReduxState,
-  ui: UIReduxState,
+  // ui: UIReduxState,
   styles: StylesReduxState,
 };
 
-export type ReduxHistoryState = {
-  past: Array<ReduxState>,
-  future: Array<ReduxState>,
-  present: ReduxState,
+export type ReduxRootState = {
+  data: {
+    past: Array<ReduxDataState>,
+    future: Array<ReduxDataState>,
+    present: ReduxDataState,
+  },
+  ui: UIReduxState,
 };
 
-const initialReduxState: ReduxHistoryState = {
-  past: [],
-  future: [],
-  present: {
-    editor: initialEditorReduxState,
-    ui: initialUiReduxState,
-    styles: initialStylesReduxState,
+const initialReduxState: ReduxRootState = {
+  data: {
+    past: [],
+    future: [],
+    present: {
+      editor: initialEditorReduxState,
+      styles: initialStylesReduxState,
+    },
   },
+  ui: initialUiReduxState,
 };
 
 const store = createStore(rootReducer, initialReduxState);

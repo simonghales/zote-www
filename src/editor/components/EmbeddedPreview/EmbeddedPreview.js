@@ -7,7 +7,7 @@ import EmbeddedPreviewBody from './components/EmbeddedPreviewBody/EmbeddedPrevie
 import { EMBEDDED_PREVIEW_CONFIG_CAUSES, EmbeddedPreviewConfigContext } from './context';
 import { EMBEDDED_PREVIEW_CONFIG_PRESETS, getPresetDimensions } from './presets';
 import type { EmbeddedPreviewConfigLastCause } from './context';
-import type { ReduxHistoryState, ReduxState } from '../../../redux/store';
+import type { ReduxRootState, ReduxDataState } from '../../../redux/store';
 import { getSelectedComponentSelector } from '../../state/reselect/component';
 import { mapComponentBlocksToMappedBlocks } from '../../../preview/data/block/state';
 import { getReduxMixins, getReduxPresentState, getReduxStyles } from '../../../redux/styles/state';
@@ -138,9 +138,9 @@ class EmbeddedPreview extends Component<Props, State> {
 
 export default EmbeddedPreview;
 
-const mapStateToProps = (historyState: ReduxHistoryState) => {
-  const state = getReduxPresentState(historyState);
-  const selectedComponent = getSelectedComponentSelector(state);
+const mapStateToProps = (rootState: ReduxRootState) => {
+  const state = getReduxPresentState(rootState);
+  const selectedComponent = getSelectedComponentSelector(rootState);
   const components = getComponentsFromReduxEditorState(state.editor);
   const reduxStyles = getReduxStyles(state);
   const reduxMixins = getReduxMixins(state);

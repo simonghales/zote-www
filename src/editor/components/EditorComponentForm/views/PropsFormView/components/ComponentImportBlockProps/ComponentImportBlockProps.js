@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import BlockProps from '../BlockProps/BlockProps';
 import type { EditorFormSectionsVisibility } from '../../../../../../../redux/ui/reducer';
 import type { contentFormViewTypes } from '../../shared';
-import type { ReduxHistoryState, ReduxState } from '../../../../../../../redux/store';
+import type { ReduxRootState, ReduxDataState } from '../../../../../../../redux/store';
 import {
   getComponentBlockFromReduxEditorState,
   getComponentFromReduxEditorState,
@@ -36,8 +36,8 @@ const ComponentImportBlockProps = ({
   );
 };
 
-const mapStateToProps = (historyState: ReduxHistoryState, { componentKey, blockKey }: Props) => {
-  const state = getReduxPresentState(historyState);
+const mapStateToProps = (rootState: ReduxRootState, { componentKey, blockKey }: Props) => {
+  const state = getReduxPresentState(rootState);
   const block = getComponentBlockFromReduxEditorState(state.editor, componentKey, blockKey);
   const componentImportKey = getBlockComponentImportKey(block);
   let componentImportRootBlockKey = '';

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import type { ReduxHistoryState, ReduxState } from '../../../../../redux/store';
+import type { ReduxRootState, ReduxDataState } from '../../../../../redux/store';
 import { getComponentBlockFromReduxEditorState } from '../../../../../redux/editor/state';
 import { getBlockPropsConfigKeys, getPropConfigFromBlock } from '../../../../../data/block/state';
 import EditFormInput from '../EditFormInput/EditFormInput';
@@ -22,10 +22,10 @@ type Props = {
 };
 
 const mapStateToProps = (
-  historyState: ReduxHistoryState,
+  rootState: ReduxRootState,
   { componentKey, blockKey, propKey }: Props
 ) => {
-  const state = getReduxPresentState(historyState);
+  const state = getReduxPresentState(rootState);
   const block = getComponentBlockFromReduxEditorState(state.editor, componentKey, blockKey);
   const propKeys = getBlockPropsConfigKeys(block).filter(blockPropKey => blockPropKey !== propKey);
   const propConfig = getPropConfigFromBlock(propKey, block);

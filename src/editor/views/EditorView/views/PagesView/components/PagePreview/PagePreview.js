@@ -11,7 +11,7 @@ import {
 } from '../../../../../../../preview/routing/routing';
 import { PREVIEW_IFRAME_ROUTE_CHANGED } from '../../../../../../../preview/event';
 import { getPageBySlugFromReduxState } from '../../../../../../../redux/editor/state';
-import type { ReduxState } from '../../../../../../../redux/store';
+import type { ReduxDataState } from '../../../../../../../redux/store';
 import { setSelectedPageKeyRedux } from '../../../../../../../redux/ui/reducer';
 import { getReduxPresentState } from '../../../../../../../redux/styles/state';
 

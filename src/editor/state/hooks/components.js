@@ -2,23 +2,20 @@
 
 import { useReduxDispatch } from 'reactive-react-redux';
 import type { EditorReduxState } from '../../../redux/editor/reducer';
-import type { ReduxState } from '../../../redux/store';
+import type { ReduxDataState } from '../../../redux/store';
 import type { ComponentModel, ComponentsModels } from '../../../data/component/model';
 import { getComponentsFromReduxEditorState } from '../../../redux/editor/state';
 import { getComponentFromComponents, getReusableComponents } from '../../../data/component/state';
 import type { UIReduxState } from '../../../redux/ui/reducer';
 import { useUIState } from './pages';
 import { getSelectedPreviewComponentKeyFromUIReduxState } from '../../../redux/ui/state';
-import {
-  generateNewComponent,
-  generateNewComponentWithDefaultBlocks,
-} from '../../../data/component/generators';
+import { generateNewComponentWithDefaultBlocks } from '../../../data/component/generators';
 import { setSelectedPreviewComponentKeyRedux } from '../../../redux/ui/reducer';
 import { addNewComponentRedux } from '../../../redux/editor/reducer';
 import { useReduxPresentState } from './shared';
 
 export const useEditorState = (): EditorReduxState => {
-  const state: ReduxState = useReduxPresentState();
+  const state: ReduxDataState = useReduxPresentState();
   return state.editor;
 };
 

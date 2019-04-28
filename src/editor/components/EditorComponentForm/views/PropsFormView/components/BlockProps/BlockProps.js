@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getFormSectionVisibility } from '../../../../EditorComponentForm';
 import type { EditorFormSectionsVisibility } from '../../../../../../../redux/ui/reducer';
-import type { ReduxHistoryState, ReduxState } from '../../../../../../../redux/store';
+import type { ReduxRootState, ReduxDataState } from '../../../../../../../redux/store';
 import { getComponentsFromReduxEditorState } from '../../../../../../../redux/editor/state';
 import {
   getBlockFromComponent,
@@ -42,10 +42,10 @@ const BlockProps = ({ sections }: Props) => (
 );
 
 const mapStateToProps = (
-  historyState: ReduxHistoryState,
+  rootState: ReduxRootState,
   { blockKey, componentKey, viewType }: Props
 ) => {
-  const state = getReduxPresentState(historyState);
+  const state = getReduxPresentState(rootState);
   const components = getComponentsFromReduxEditorState(state.editor);
   const component = getComponentFromComponents(componentKey, components);
   const block = getBlockFromComponent(component, blockKey);

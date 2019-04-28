@@ -1,25 +1,27 @@
 // @flow
 
-import type { ReduxState } from '../store';
+import type { ReduxDataState, ReduxRootState } from '../store';
 import type {
   ComponentsSelectedBlockKeys,
   EditorFormSectionsVisibility,
   UIReduxState,
 } from './reducer';
 import type { AddBlockPositions } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
+import { getReduxUIState } from '../shared/state';
 
 export function getReduxUiSelectedComponentKey(state: UIReduxState): string {
   return state.selectedComponentKey;
 }
 
-export function getReduxSelectedComponentKey(state: ReduxState): string {
+export function getReduxSelectedComponentKey(state: ReduxRootState): string {
   return getReduxUiSelectedComponentKey(state.ui);
 }
 
 export function getReduxUiComponentsSelectedBlockKeys(
-  state: ReduxState
+  state: ReduxRootState
 ): ComponentsSelectedBlockKeys {
-  return state.ui.componentsSelectedBlockKeys;
+  const uiState = getReduxUIState(state);
+  return uiState.componentsSelectedBlockKeys;
 }
 
 export function getComponentSelectedBlockKey(
@@ -40,19 +42,19 @@ export function getEditorFormSectionsVisibility(state: UIReduxState): EditorForm
   return state.editorFormSectionsVisibility;
 }
 
-export function getReduxUiAddingBlock(state: ReduxState): boolean {
-  return state.ui.addingBlock;
+export function getReduxUiAddingBlock(state: UIReduxState): boolean {
+  return state.addingBlock;
 }
 
-export function getReduxUiAddingBlockSelectedKey(state: ReduxState): string {
+export function getReduxUiAddingBlockSelectedKey(state: ReduxRootState): string {
   return state.ui.addingBlockSelectedKey;
 }
 
-export function getReduxUiAddingBlockSelectedPosition(state: ReduxState): AddBlockPositions {
+export function getReduxUiAddingBlockSelectedPosition(state: ReduxRootState): AddBlockPositions {
   return state.ui.addingBlockSelectedPosition;
 }
 
-export function getReduxUiHoveredBlockKey(state: ReduxState): string {
+export function getReduxUiHoveredBlockKey(state: ReduxRootState): string {
   return state.ui.hoveredBlockKey;
 }
 
@@ -64,7 +66,7 @@ export function getReduxUiPreviousComponentKey(state: UIReduxState): string {
   return '';
 }
 
-export function getReduxPreviousComponentKey(state: ReduxState): string {
+export function getReduxPreviousComponentKey(state: ReduxRootState): string {
   return getReduxUiPreviousComponentKey(state.ui);
 }
 

@@ -5,7 +5,7 @@ import { FaRedo, FaUndo } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import * as styles from './styles';
 import { EDITOR_PATHS } from '../../../../routing/routing';
-import type { ReduxHistoryState, ReduxState } from '../../../../../redux/store';
+import type { ReduxRootState, ReduxDataState } from '../../../../../redux/store';
 import SaveControls from './components/SaveControls/SaveControls';
 
 const EditorNavBar = (props: any) => (

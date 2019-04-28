@@ -1,5 +1,5 @@
 // @flow
-import type { ReduxHistoryState, ReduxState } from '../store';
+import type { ReduxRootState, ReduxDataState } from '../store';
 import type { EditorFormInputModel } from '../../editor/components/EditorComponentForm/data/models';
 import type { StyleValueWrapper } from '../../data/styles/state';
 import {
@@ -10,17 +10,18 @@ import {
 import type { StylesModels } from '../../data/styles/model';
 import { isValueDefined } from '../../utils/validation';
 import type { MixinsModel } from '../../data/mixin/model';
+import { getReduxEditorState, getReduxStylesState } from '../shared/state';
 
 export type StylesReduxState = {
   styles: StylesModels,
   mixins: MixinsModel,
 };
 
-export function getReduxStyles(state: ReduxState): StylesModels {
+export function getReduxStyles(state: ReduxDataState): StylesModels {
   return state.styles.styles;
 }
 
-export function getReduxMixins(state: ReduxState): MixinsModel {
+export function getReduxMixins(state: ReduxDataState): MixinsModel {
   return state.styles.mixins;
 }
 
@@ -29,7 +30,7 @@ export function getStylesFromStylesReduxState(state: StylesReduxState): StylesMo
 }
 
 export function getReduxStyleStyleValue(
-  state: ReduxState,
+  state: ReduxDataState,
   input: EditorFormInputModel,
   stateKey: string,
   blockStyleKey: string
@@ -55,7 +56,7 @@ export function getReduxStyleStyleValue(
 }
 
 export function getReduxStyleStyles(
-  state: ReduxState,
+  state: ReduxDataState,
   stateKey: string,
   blockStyleKey: string
 ): Array<{}> {
@@ -71,6 +72,6 @@ export function getReduxStyleStyles(
   }));
 }
 
-export function getReduxPresentState(state: ReduxHistoryState): ReduxState {
-  return state.present;
+export function getReduxPresentState(state: ReduxRootState): ReduxDataState {
+  return state.data.present;
 }

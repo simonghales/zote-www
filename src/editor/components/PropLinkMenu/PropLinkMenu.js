@@ -6,7 +6,7 @@ import Menu, { MENU_LAYOUTS } from '../Menu/Menu';
 import styles from './styles';
 import Text from '../Text/Text';
 import { mapBlockPropsToPropLinkBlockModels } from './state';
-import type { ReduxHistoryState, ReduxState } from '../../../redux/store';
+import type { ReduxRootState, ReduxDataState } from '../../../redux/store';
 import {
   getBlockPropAvailableProps,
   getComponentBlockFromReduxEditorState,
@@ -90,10 +90,10 @@ const PropLinkMenu = ({ close, blocks, selectProp }: Props) => (
 );
 
 const mapStateToProps = (
-  historyState: ReduxHistoryState,
+  rootState: ReduxRootState,
   { componentKey, blockKey, propKey }: Props
 ) => {
-  const state = getReduxPresentState(historyState);
+  const state = getReduxPresentState(rootState);
   const availableProps = getBlockPropAvailableProps(componentKey, blockKey, state.editor);
   const block = getComponentBlockFromReduxEditorState(state.editor, componentKey, blockKey);
   const propConfig = getMergedPropConfigFromBlock(propKey, block);

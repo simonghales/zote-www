@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { debounce, throttle } from 'lodash';
 import store from 'redux/store';
-import type { ReduxHistoryState } from 'redux/store';
+import type { ReduxRootState } from 'redux/store';
 import styles from './styles';
 import EditorSidebar from './components/EditorSidebar/EditorSidebar';
 import ModuleView from './views/ModuleView/ModuleView';
 import AddBlockView from '../AddBlockView/AddBlockView';
-import type { ReduxState } from '../../../redux/store';
+import type { ReduxDataState } from '../../../redux/store';
 import { getReduxUiAddingBlock } from '../../../redux/ui/state';
 import SelectedComponentContextWrapper from '../../components/SelectedComponentContextWrapper/SelectedComponentContextWrapper';
 import type { EditorRoutingMatch } from '../../routing/routing';
@@ -24,6 +24,7 @@ import PagesView from './views/PagesView/PagesView';
 import ComponentsView from './views/ComponentsView/ComponentsView';
 import { storeReduxStateInLocalStorage } from '../../../redux/storage';
 import { getReduxPresentState } from '../../../redux/styles/state';
+import { getReduxUIState } from '../../../redux/shared/state';
 
 type Props = {
   addingBlock: boolean,
@@ -74,10 +75,10 @@ class EditorView extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (historyState: ReduxHistoryState) => {
-  const state = getReduxPresentState(historyState);
+const mapStateToProps = (rootState: ReduxRootState) => {
+  const uiState = getReduxUIState(rootState);
   return {
-    addingBlock: getReduxUiAddingBlock(state),
+    addingBlock: getReduxUiAddingBlock(uiState),
   };
 };
 

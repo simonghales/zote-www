@@ -1,5 +1,5 @@
 // @flow
-import type { ReduxState } from '../store';
+import type { ReduxRootState } from '../store';
 import type { AddBlockPositions } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import { ADD_BLOCK_POSITIONS } from '../../editor/components/ComponentSortable/components/BlockItem/components/AddButton/AddButton';
 import {
@@ -10,7 +10,6 @@ import { getComponentParentComponents, isBlockInComponent } from '../../data/com
 import { getSelectedComponentSelectedBlockKey } from '../../editor/state/reselect/ui';
 import {
   getComponentBlockFromReduxEditorState,
-  getComponentFromReduxEditorState,
   getComponentsFromReduxEditorState,
 } from '../editor/state';
 import { doesBlockAllowChildBlocks } from '../../data/block/state';
@@ -20,16 +19,32 @@ import {
   getReduxPreviousComponentKey,
 } from '../ui/state';
 import type { ComponentModel } from '../../data/component/model';
+import type { UIReduxState } from '../ui/reducer';
+import type { EditorReduxState } from '../editor/reducer';
+import type { StylesReduxState } from '../styles/state';
+
+export function getReduxUIState(state: ReduxRootState): UIReduxState {
+  return state.ui;
+}
+
+export function getReduxEditorState(state: ReduxRootState): EditorReduxState {
+  return state.data.present.editor;
+}
+
+export function getReduxStylesState(state: ReduxRootState): StylesReduxState {
+  return state.data.present.styles;
+}
 
 export function getReduxSafeAddingBlockSelectedKeyAndPosition(
-  state: ReduxState
+  rootState: ReduxRootState
 ): [string, AddBlockPositions] {
-  const component = getSelectedComponentSelector(state);
-  let blockKey = getReduxUiAddingBlockSelectedKey(state);
-  let position = getReduxUiAddingBlockSelectedPosition(state);
+  const component = getSelectedComponentSelector(rootState);
+  let blockKey = getReduxUiAddingBlockSelectedKey(rootState);
+  let position = getReduxUiAddingBlockSelectedPosition(rootState);
   if (!isBlockInComponent(component, blockKey)) {
-    blockKey = getSelectedComponentSelectedBlockKey(state);
-    const block = getComponentBlockFromReduxEditorState(state.editor, component.key, blockKey);
+    blockKey = getSelectedComponentSelectedBlockKey(rootState);
+    const editorState = getReduxEditorState(rootState);
+    const block = getComponentBlockFromReduxEditorState(editorState, component.key, blockKey);
     if (!doesBlockAllowChildBlocks(block)) {
       position = ADD_BLOCK_POSITIONS.before;
     } else {
@@ -39,20 +54,13 @@ export function getReduxSafeAddingBlockSelectedKeyAndPosition(
   return [blockKey, position];
 }
 
-export function getReduxPreviousComponent(state: ReduxState): ComponentModel | null {
-  const previousComponentKey = getReduxPreviousComponentKey(state);
-  if (previousComponentKey) {
-    return getComponentFromReduxEditorState(state.editor, previousComponentKey);
-  }
-  return null;
-}
-
-export function getReduxParentComponent(state: ReduxState): ComponentModel | null {
-  const currentComponentKey = getSelectedComponentKeySelector(state);
-  const components = getComponentsFromReduxEditorState(state.editor);
+export function getReduxParentComponent(rootState: ReduxRootState): ComponentModel | null {
+  const currentComponentKey = getSelectedComponentKeySelector(rootState);
+  const editorState = getReduxEditorState(rootState);
+  const components = getComponentsFromReduxEditorState(editorState);
   const parentComponents = getComponentParentComponents(components, currentComponentKey);
   if (parentComponents.length > 0) {
-    const previousComponentKey = getReduxPreviousComponentKey(state);
+    const previousComponentKey = getReduxPreviousComponentKey(rootState);
     const previousParentComponent = parentComponents.find(
       component => component.key === previousComponentKey
     );

@@ -1,6 +1,6 @@
 // @flow
 
-import type { ReduxState } from '../store';
+import type { ReduxDataState, ReduxRootState } from '../store';
 import type { ComponentModel, ComponentsModels } from '../../data/component/model';
 import type { EditorReduxState } from './reducer';
 import type { BlockModel } from '../../data/block/model';
@@ -22,9 +22,11 @@ import { isValueDefined } from '../../utils/validation';
 import type { BlockPropModel } from '../../data/block/props/model';
 import type { PageModel, PagesModel } from '../../data/page/model';
 import { getPageFromPagesBySlug } from '../../data/page/state';
+import { getReduxEditorState } from '../shared/state';
 
-export function getReduxEditorComponents(state: ReduxState): ComponentsModels {
-  return state.editor.components;
+export function getReduxEditorComponents(state: ReduxRootState): ComponentsModels {
+  const editorState = getReduxEditorState(state);
+  return editorState.components;
 }
 
 export function getComponentsFromReduxEditorState(state: EditorReduxState): ComponentsModels {
@@ -107,11 +109,11 @@ export function getBlockPropAvailableProps(
   return getRecursiveBlockPropAvailableProps(rootBlockKey, blockKey, blocks, ancestorBlockKeys, {});
 }
 
-export function getPagesFromReduxState(state: ReduxState): PagesModel {
+export function getPagesFromReduxState(state: ReduxDataState): PagesModel {
   return state.editor.pages;
 }
 
-export function getPageBySlugFromReduxState(slug: string, state: ReduxState): PageModel | null {
+export function getPageBySlugFromReduxState(slug: string, state: ReduxDataState): PageModel | null {
   const pages = getPagesFromReduxState(state);
   return getPageFromPagesBySlug(slug, pages);
 }

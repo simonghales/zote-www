@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { EditorContext } from '../../context';
-import type { ReduxHistoryState, ReduxState } from '../../../../redux/store';
+import type { ReduxRootState, ReduxDataState } from '../../../../redux/store';
 import { getSelectedComponentKeySelector } from '../../../state/reselect/component';
 import { getReduxPresentState } from '../../../../redux/styles/state';
 import { getComponentRoute } from '../../../routing/routing';
@@ -30,9 +30,8 @@ class EditorContextWrapper extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (historyState: ReduxHistoryState) => {
-  const state = getReduxPresentState(historyState);
-  const componentKey = getSelectedComponentKeySelector(state);
+const mapStateToProps = (rootState: ReduxRootState) => {
+  const componentKey = getSelectedComponentKeySelector(rootState);
   return {
     componentKey,
   };

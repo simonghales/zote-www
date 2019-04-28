@@ -4,7 +4,7 @@ import type { EditorReduxState } from './editor/reducer';
 import type { StylesReduxState } from './styles/state';
 import { setEditorStateRedux } from './editor/reducer';
 import { setStylesStateRedux } from './styles/reducer';
-import type { ReduxState } from './store';
+import type { ReduxDataState } from './store';
 import { useReduxPresentState } from '../editor/state/hooks/shared';
 import { getReduxPresentState } from './styles/state';
 

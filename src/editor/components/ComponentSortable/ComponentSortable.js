@@ -7,7 +7,7 @@ import type { SortableBlockModel } from './models';
 import styles from './styles';
 import NestList from './components/NestList/NestList';
 import BlockItem from './components/BlockItem/BlockItem';
-import type { ReduxHistoryState, ReduxState } from '../../../redux/store';
+import type { ReduxRootState, ReduxDataState } from '../../../redux/store';
 import { getSelectedComponentSelector } from '../../state/reselect/component';
 import { mapComponentBlocksToSortableBlocks } from './state';
 import { getSelectedComponentSelectedBlockKey } from '../../state/reselect/ui';
@@ -133,18 +133,17 @@ class ComponentSortable extends React.Component<Props> {
 
 export default ComponentSortable;
 
-const mapStateToProps = (historyState: ReduxHistoryState) => {
-  const state = getReduxPresentState(historyState);
-  const component = getSelectedComponentSelector(state);
+const mapStateToProps = (rootState: ReduxRootState) => {
+  const component = getSelectedComponentSelector(rootState);
   const componentKey = getKeyFromComponent(component);
-  const selectedBlockKey = getSelectedComponentSelectedBlockKey(state);
+  const selectedBlockKey = getSelectedComponentSelectedBlockKey(rootState);
   const blocks = mapComponentBlocksToSortableBlocks(component, selectedBlockKey);
   const rootBlockKey = getRootBlockKeyFromComponent(component);
 
   const [
     addingBlockSelectedKey,
     addingBlockSelectedPosition,
-  ] = getReduxSafeAddingBlockSelectedKeyAndPosition(state);
+  ] = getReduxSafeAddingBlockSelectedKeyAndPosition(rootState);
   return {
     componentKey,
     blocks,

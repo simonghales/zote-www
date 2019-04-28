@@ -3,7 +3,7 @@ import React from 'react';
 import { FaLink, FaTimes } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import styles from './styles';
-import type { ReduxHistoryState, ReduxState } from '../../../../../redux/store';
+import type { ReduxRootState, ReduxDataState } from '../../../../../redux/store';
 import { getComponentBlockFromReduxEditorState } from '../../../../../redux/editor/state';
 import {
   getMergedPropConfigFromBlock,
@@ -44,10 +44,10 @@ const LinkedPropInput = ({ blockName, propName, removePropLink, editLink }: Prop
 );
 
 const mapStateToProps = (
-  historyState: ReduxHistoryState,
+  rootState: ReduxRootState,
   { componentKey, linkedBlockKey, linkedPropKey, linkedFieldKey = '' }: Props
 ) => {
-  const state = getReduxPresentState(historyState);
+  const state = getReduxPresentState(rootState);
   let block;
   try {
     block = getComponentBlockFromReduxEditorState(state.editor, componentKey, linkedBlockKey);
