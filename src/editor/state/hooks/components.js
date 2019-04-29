@@ -12,12 +12,7 @@ import { getSelectedPreviewComponentKeyFromUIReduxState } from '../../../redux/u
 import { generateNewComponentWithDefaultBlocks } from '../../../data/component/generators';
 import { setSelectedPreviewComponentKeyRedux } from '../../../redux/ui/reducer';
 import { addNewComponentRedux } from '../../../redux/editor/reducer';
-import { useReduxPresentState } from './shared';
-
-export const useEditorState = (): EditorReduxState => {
-  const state: ReduxDataState = useReduxPresentState();
-  return state.editor;
-};
+import { useEditorState, useReduxPresentState } from './shared';
 
 export const useComponents = (): ComponentsModels => {
   const state: EditorReduxState = useEditorState();

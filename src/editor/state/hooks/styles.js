@@ -5,12 +5,7 @@ import type { ReduxDataState } from '../../../redux/store';
 import type { StylesModels } from '../../../data/styles/model';
 import { getStylesFromStylesReduxState } from '../../../redux/styles/state';
 import type { MixinsModel } from '../../../data/mixin/model';
-import { useReduxPresentState } from './shared';
-
-export const useStylesState = (): StylesReduxState => {
-  const state: ReduxDataState = useReduxPresentState();
-  return state.styles;
-};
+import { useReduxPresentState, useStylesState } from './shared';
 
 export const useStyles = (): StylesModels => {
   const state = useStylesState();

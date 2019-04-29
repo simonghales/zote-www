@@ -40,11 +40,13 @@ import { updatePageDetails } from '../../data/page/modifiers';
 export type EditorReduxState = {
   components: ComponentsModels,
   pages: PagesModel,
+  unsavedChanges: boolean,
 };
 
 export const initialEditorReduxState: EditorReduxState = {
   components: {},
   pages: {},
+  unsavedChanges: false,
   ...dummyEditorReduxState,
 };
 
@@ -113,6 +115,7 @@ function handleAddNewComponent(
       ...state.components,
       [component.key]: component,
     },
+    unsavedChanges: true,
   };
 }
 
@@ -152,6 +155,7 @@ function handleAddNewPage(
       ...state.components,
       [component.key]: component,
     },
+    unsavedChanges: true,
   };
 }
 
@@ -193,6 +197,7 @@ function handleUpdatePageDetailsRedux(
       ...state.pages,
       [pageKey]: updatePageDetails(state.pages[pageKey], name, slug),
     },
+    unsavedChanges: true,
   };
 }
 
@@ -235,6 +240,7 @@ function handleWrapBlockWithRepeater(
       ...components,
       [componentKey]: updatedComponent,
     },
+    unsavedChanges: true,
   };
 }
 
@@ -293,6 +299,7 @@ function handleConvertBlockIntoComponent(
       [componentKey]: updatedComponent,
       [newComponent.key]: newComponent,
     },
+    unsavedChanges: true,
   };
 }
 
@@ -343,6 +350,7 @@ function handleSetBlockName(
         },
       },
     },
+    unsavedChanges: true,
   };
 }
 
@@ -386,6 +394,7 @@ function handleDeleteBlockFromComponent(
       ...components,
       [componentKey]: removeBlockFromComponent(component, blockKey, deleteChildren),
     },
+    unsavedChanges: true,
   };
 }
 
@@ -432,6 +441,7 @@ function handleAddBlockToComponent(
       ...components,
       [componentKey]: addBlockToComponent(component, block, selectedBlockKey, selectedPosition),
     },
+    unsavedChanges: true,
   };
 }
 
@@ -490,6 +500,7 @@ function handleUpdateBlockPropConfig(
         },
       },
     },
+    unsavedChanges: true,
   };
 }
 
@@ -545,6 +556,7 @@ function handleAddNewPropToBlock(
         },
       },
     },
+    unsavedChanges: true,
   };
 }
 
@@ -595,6 +607,7 @@ function handleRemoveBlockPropLink(
         },
       },
     },
+    unsavedChanges: true,
   };
 }
 
@@ -667,6 +680,7 @@ function handleSetBlockPropLinked(
         },
       },
     },
+    unsavedChanges: true,
   };
 }
 
@@ -721,6 +735,7 @@ function handleSetBlockPropValue(
         },
       },
     },
+    unsavedChanges: true,
   };
 }
 
@@ -764,6 +779,7 @@ function handleUpdateComponentBlocksOrder(
       ...components,
       [componentKey]: updateComponentBlocksOrder(component, blocksOrder, rootBlocksKeysOrder),
     },
+    unsavedChanges: true,
   };
 }
 

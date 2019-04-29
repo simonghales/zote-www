@@ -34,6 +34,7 @@ export const saveChangesClass = css`
   height: 34px;
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: ${colors.vibrant};
   color: #ffffff;
   font-size: 11px;
@@ -42,4 +43,6 @@ export const saveChangesClass = css`
   letter-spacing: 0.35px;
   padding: 0 15px;
   cursor: pointer;
+  min-width: 115px;
+  text-align: center;
 `;

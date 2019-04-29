@@ -6,8 +6,11 @@ import { FaRedo, FaUndo } from 'react-icons/fa';
 import { cx } from 'emotion';
 import * as styles from './styles';
 import { useCanRedo, useCanUndo } from '../../../../../../state/hooks/history';
+import { useHasUnsavedChanges } from '../../../../../../state/hooks/ui';
 
 const SaveControls = () => {
+  const unsavedChanges = useHasUnsavedChanges();
+
   const dispatch = useReduxDispatch();
 
   const canUndo = useCanUndo();
@@ -36,15 +39,14 @@ const SaveControls = () => {
       </div>
       <div
         className={cx(styles.smallButtonClass, {
-          [styles.enabledButtonClass]:
-          canRedo,
+          [styles.enabledButtonClass]: canRedo,
           [styles.disabledButtonClass]: !canRedo,
         })}
         onClick={handleRedo}
       >
         <FaRedo size={11} />
       </div>
-      <div className={styles.saveChangesClass}>Save Changes</div>
+      <div className={styles.saveChangesClass}>{unsavedChanges ? 'Save Changes' : 'Published'}</div>
     </div>
   );
 };

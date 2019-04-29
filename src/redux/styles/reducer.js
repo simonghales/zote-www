@@ -12,6 +12,7 @@ import type { StylesReduxState } from './state';
 import { getStylesFromStylesReduxState } from './state';
 
 export const initialStylesReduxState: StylesReduxState = {
+  unsavedChanges: false,
   ...dummyStylesReduxState,
 };
 
@@ -83,6 +84,7 @@ function handleRemoveMixinFromStyle(
       ...styles,
       [styleKey]: removeMixinFromStyle(styles[styleKey], styleKey, styleStateKey, mixinKey),
     },
+    unsavedChanges: true,
   };
 }
 
@@ -125,6 +127,7 @@ function handleAddMixinToStyle(
       ...styles,
       [styleKey]: addMixinToStyle(styles[styleKey], styleKey, styleStateKey, mixinKey),
     },
+    unsavedChanges: true,
   };
 }
 
@@ -164,6 +167,7 @@ function handleClearStyleState(
       ...styles,
       [styleKey]: clearStyleStyleState(styles[styleKey], styleStateKey),
     },
+    unsavedChanges: true,
   };
 }
 
@@ -206,6 +210,7 @@ function handleClearModuleStyleValue(
       ...styles,
       [styleKey]: updateStyleStyleValue(styles[styleKey], styleKey, styleStateKey, styleValueKey),
     },
+    unsavedChanges: true,
   };
 }
 
@@ -258,6 +263,7 @@ function handleSetModuleStyleValue(
         value
       ),
     },
+    unsavedChanges: true,
   };
 }
 

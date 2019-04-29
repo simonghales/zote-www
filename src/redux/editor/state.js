@@ -117,3 +117,7 @@ export function getPageBySlugFromReduxState(slug: string, state: ReduxDataState)
   const pages = getPagesFromReduxState(state);
   return getPageFromPagesBySlug(slug, pages);
 }
+
+export function getEditorReduxUnsavedChanges(state: EditorReduxState): boolean {
+  return state.unsavedChanges;
+}

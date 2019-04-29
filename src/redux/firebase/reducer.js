@@ -2,13 +2,9 @@
 
 import type { GenericAction } from '../editor/reducer';
 
-export type FirebaseReduxState = {
-  unsavedChanges: boolean,
-};
+export type FirebaseReduxState = {};
 
-export const initialFirebaseReduxState: FirebaseReduxState = {
-  unsavedChanges: false,
-};
+export const initialFirebaseReduxState: FirebaseReduxState = {};
 
 const ACTION_HANDLERS = {};
 

@@ -169,3 +169,8 @@ export const ReduxComponentSortable = connect(
   mapStateToProps,
   mapDispatchToProps
 )(ComponentSortable);
+
+// 6 fails
+// 1 pass
+// 8 credits
+// 6 distinctions

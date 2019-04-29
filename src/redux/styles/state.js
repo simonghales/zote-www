@@ -15,6 +15,7 @@ import { getReduxEditorState, getReduxStylesState } from '../shared/state';
 export type StylesReduxState = {
   styles: StylesModels,
   mixins: MixinsModel,
+  unsavedChanges: boolean,
 };
 
 export function getReduxStyles(state: ReduxDataState): StylesModels {
@@ -74,4 +75,8 @@ export function getReduxStyleStyles(
 
 export function getReduxPresentState(state: ReduxRootState): ReduxDataState {
   return state.data.present;
+}
+
+export function getStylesReduxUnsavedChanges(state: StylesReduxState): boolean {
+  return state.unsavedChanges;
 }
