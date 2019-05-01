@@ -46,3 +46,9 @@ export const saveChangesClass = css`
   min-width: 115px;
   text-align: center;
 `;
+
+export const saveChangesDisabledClass = css`
+  cursor: default;
+  background-color: rgb(37, 44, 60);
+  color: rgb(72, 80, 98);
+`;

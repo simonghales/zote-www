@@ -15,7 +15,7 @@ export function getPageFromReduxState(state: ReduxDataState, pageKey: string): P
 }
 
 export function goToEditComponent(componentKey: string) {
-  history.push(getComponentRoute(componentKey));
+  history.push(getComponentRoute('todo', componentKey));
 }
 
 export function goToEditPageComponent(pageKey: string) {

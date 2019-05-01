@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "emotion": "^10.0.6",
+    "gatsby-cli": "^2.5.12",
     "history": "^4.9.0",
     "html-tags": "^2.0.0",
     "lodash": "^4.17.11",

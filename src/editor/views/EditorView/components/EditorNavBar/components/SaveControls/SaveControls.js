@@ -46,7 +46,13 @@ const SaveControls = () => {
       >
         <FaRedo size={11} />
       </div>
-      <div className={styles.saveChangesClass}>{unsavedChanges ? 'Save Changes' : 'Published'}</div>
+      <div
+        className={cx(styles.saveChangesClass, {
+          [styles.saveChangesDisabledClass]: !unsavedChanges,
+        })}
+      >
+        {unsavedChanges ? 'Save Changes' : 'Published'}
+      </div>
     </div>
   );
 };

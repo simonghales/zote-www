@@ -7,6 +7,7 @@ export const EDITOR_ROUTE_PARAMS = {
 
 export type EditorRoutingMatch = {
   params: {
+    siteKey: string,
     componentKey?: string,
     previousComponentKey?: string,
   },
@@ -19,7 +20,7 @@ export function getEditorRoutingMatchParam(
   return match.params[paramName];
 }
 
-export const EDITOR_ROUTE_PATH = '/editor';
+export const EDITOR_ROUTE_PATH = '/:siteKey/editor';
 
 export const EDITOR_PATHS = {
   dashboard: `${EDITOR_ROUTE_PATH}`,
@@ -35,8 +36,16 @@ export const EDITOR_PATHS = {
   media: `${EDITOR_ROUTE_PATH}/media`,
 };
 
-export function getComponentRoute(componentKey: string, previousComponentKey?: string): string {
-  let url = `${EDITOR_ROUTE_PATH}/blocks/${componentKey}`;
+export function getEditorPath(path: string, { siteKey }: { siteKey: string }): string {
+  return path.replace(':siteKey', siteKey);
+}
+
+export function getComponentRoute(
+  siteKey: string,
+  componentKey: string,
+  previousComponentKey?: string
+): string {
+  let url = `/${siteKey}/editor/blocks/${componentKey}`;
   if (previousComponentKey) {
     url = `${url}/${previousComponentKey}`;
   }
