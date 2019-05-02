@@ -1,22 +1,32 @@
 // @flow
+import firebase from 'firebase';
 import { uniqueId } from 'lodash';
 
+function generateUniqueId(prefix: string): string {
+  return `${prefix}${
+    firebase
+      .database()
+      .ref()
+      .push().key
+  }`;
+}
+
 export function generateComponentKey(): string {
-  return uniqueId(`component_`);
+  return generateUniqueId(`component_`);
 }
 
 export function generateBlockKey(): string {
-  return uniqueId(`block_`);
+  return generateUniqueId(`block_`);
 }
 
 export function generateRepeaterDataModelFieldKey(): string {
-  return uniqueId(`field_`);
+  return generateUniqueId(`field_`);
 }
 
 export function generateRepeaterDataItem(): string {
-  return uniqueId(`item_`);
+  return generateUniqueId(`item_`);
 }
 
 export function generatePageKey(): string {
-  return uniqueId(`page_`);
+  return generateUniqueId(`page_`);
 }
