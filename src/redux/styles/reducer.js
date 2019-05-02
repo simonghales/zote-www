@@ -10,6 +10,7 @@ import {
 } from '../../data/styles/modifiers';
 import type { StylesReduxState } from './state';
 import { getStylesFromStylesReduxState } from './state';
+import { SHARED_CHANGES_SAVED } from '../shared/actions';
 
 export const initialStylesReduxState: StylesReduxState = {
   unsavedChanges: false,
@@ -17,6 +18,13 @@ export const initialStylesReduxState: StylesReduxState = {
   mixins: {},
   // ...dummyStylesReduxState,
 };
+
+function handleSetChangesSaved(state: StylesReduxState): StylesReduxState {
+  return {
+    ...state,
+    unsavedChanges: false,
+  };
+}
 
 const SET_STYLES_STATE = 'SET_STYLES_STATE';
 
@@ -270,6 +278,7 @@ function handleSetModuleStyleValue(
 }
 
 const ACTION_HANDLERS = {
+  [SHARED_CHANGES_SAVED]: handleSetChangesSaved,
   [SET_STYLES_STATE]: handleSetStylesState,
   [REMOVE_MIXIN_FROM_STYLE]: handleRemoveMixinFromStyle,
   [ADD_MIXIN_TO_STYLE]: handleAddMixinToStyle,

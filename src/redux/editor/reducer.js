@@ -1,7 +1,6 @@
 // @flow
 
 import type { ComponentModel, ComponentsModels } from '../../data/component/model';
-import { dummyEditorReduxState } from '../../data/dummy/redux';
 import type { BlocksOrder } from '../../editor/components/ComponentSortable/ComponentSortable';
 import { getComponentsFromReduxEditorState } from './state';
 import {
@@ -36,6 +35,7 @@ import { generateComponentImportBlock } from '../../data/block/types/groups/comp
 import RepeaterBlock from '../../data/block/types/groups/functional/Repeater';
 import type { PageModel, PagesModel } from '../../data/page/model';
 import { updatePageDetails } from '../../data/page/modifiers';
+import { SHARED_CHANGES_SAVED } from '../shared/actions';
 
 export type EditorReduxState = {
   components: ComponentsModels,
@@ -55,6 +55,13 @@ export type GenericAction = {
   payload: {},
   undoGroup?: string,
 };
+
+function handleSetChangesSaved(state: EditorReduxState): EditorReduxState {
+  return {
+    ...state,
+    unsavedChanges: false,
+  };
+}
 
 const SET_EDITOR_STATE = 'SET_EDITOR_STATE';
 
@@ -784,6 +791,7 @@ function handleUpdateComponentBlocksOrder(
 }
 
 const ACTION_HANDLERS = {
+  [SHARED_CHANGES_SAVED]: handleSetChangesSaved,
   [SET_EDITOR_STATE]: handleSetEditorState,
   [ADD_NEW_COMPONENT]: handleAddNewComponent,
   [ADD_NEW_PAGE]: handleAddNewPage,

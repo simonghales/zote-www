@@ -80,3 +80,7 @@ export function getReduxPresentState(state: ReduxRootState): ReduxDataState {
 export function getStylesReduxUnsavedChanges(state: StylesReduxState): boolean {
   return state.unsavedChanges;
 }
+
+export function getMixinsFromStylesReduxState(state: StylesReduxState): MixinsModel {
+  return state.mixins;
+}

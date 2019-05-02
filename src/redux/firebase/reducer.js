@@ -36,7 +36,7 @@ function handleSetLoadedSiteKey(
 ): FirebaseReduxState {
   return {
     ...state,
-    siteKey,
+    loadedSiteKey: siteKey,
   };
 }
 

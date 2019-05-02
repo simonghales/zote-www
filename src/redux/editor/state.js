@@ -109,8 +109,12 @@ export function getBlockPropAvailableProps(
   return getRecursiveBlockPropAvailableProps(rootBlockKey, blockKey, blocks, ancestorBlockKeys, {});
 }
 
+export function getPagesFromEditorReduxState(state: EditorReduxState): PagesModel {
+  return state.pages;
+}
+
 export function getPagesFromReduxState(state: ReduxDataState): PagesModel {
-  return state.editor.pages;
+  return getPagesFromEditorReduxState(state.editor);
 }
 
 export function getPageBySlugFromReduxState(slug: string, state: ReduxDataState): PageModel | null {
