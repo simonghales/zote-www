@@ -72,7 +72,7 @@ export function updateStyleStateMixins(
 export function removeStyleStateMixin(
   styleState: StyleStateModel,
   removeMixinKey: string
-): StyleStateMixinsModel {
+): StyleStateModel {
   const { mixins = {} } = styleState;
   const finalMixins = {};
   Object.keys(mixins).forEach(mixinKey => {
@@ -126,6 +126,7 @@ export function removeMixinFromStyle(
   let styleState = style.states[stateKey];
   if (!styleState) {
     styleState = {
+      selector: '',
       mixins: {},
       styles: {},
     };

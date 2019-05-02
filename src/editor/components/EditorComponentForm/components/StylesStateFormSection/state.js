@@ -29,6 +29,7 @@ export type StateSelector = {
 
 type RawStateSelectors = {
   [string]: {
+    label: string,
     removable: boolean,
   },
 };
@@ -36,8 +37,9 @@ type RawStateSelectors = {
 function mapSelectors(selectors: RawStateSelectors): Array<StateSelector> {
   return Object.keys(selectors).map(stateKey => {
     const isDefault = stateKey === STYLE_STATES.default;
+    const state = selectors[stateKey];
     return {
-      label: isDefault ? 'Default' : stateKey,
+      label: isDefault ? 'Default' : state.label,
       key: stateKey,
       removable: isDefault ? false : selectors[stateKey].removable,
     };
@@ -69,9 +71,10 @@ function getStyleStateSelectors(
   let styleStateSelectors = {};
   const styleStates = getStyleStatesFromStyle(style);
   Object.keys(styleStates).forEach(stateKey => {
+    const state = styleStates[stateKey];
     const mergedMappedStateKey = getMergedMappedStateKey(stateKey, parentStateKey);
     styleStateSelectors[mergedMappedStateKey] = {
-      key: mergedMappedStateKey,
+      label: state.selector,
       removable: root,
     };
     if (recursiveEnabled) {
@@ -106,7 +109,8 @@ export function getStateSelectorsFromRedux(
   styleKey: string
 ): Array<StateSelector> {
   const selectors = {
-    '': {
+    [STYLE_STATES.default]: {
+      label: '',
       removable: false,
     },
   };

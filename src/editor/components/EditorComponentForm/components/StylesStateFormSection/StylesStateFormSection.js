@@ -1,6 +1,5 @@
 // @flow
 import React, { useContext } from 'react';
-import { css, cx } from 'emotion';
 import { connect } from 'react-redux';
 import { stylesStateFormSection } from '../../data/styles';
 import FormSection from '../FormSection/FormSection';
@@ -8,7 +7,7 @@ import TagsList from '../TagsList/TagsList';
 import { EditorComponentFormContext } from '../EditorComponentFormContextWrapper/context';
 import type { BlockStylesSelector } from '../EditorComponentFormContextWrapper/context';
 import { STYLE_STATES } from '../../../../../data/styles/model';
-import type { ReduxRootState, ReduxDataState } from '../../../../../redux/store';
+import type { ReduxRootState } from '../../../../../redux/store';
 import { getStateSelectorsFromRedux } from './state';
 import type { StateSelector } from './state';
 import type { TagModel } from '../TagsList/TagsList';

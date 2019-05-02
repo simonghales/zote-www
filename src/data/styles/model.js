@@ -9,7 +9,7 @@ export type StateStylesModel = {
 };
 
 export const STYLE_STATES = {
-  default: '',
+  default: '_zoteDefaultStyleState',
 };
 
 export type StyleStateMixinsModel = {
@@ -21,6 +21,7 @@ export type StyleStateMixinsModel = {
 };
 
 export type StyleStateModel = {
+  selector: '',
   mixins: StyleStateMixinsModel,
   styles: StateStylesModel,
 };

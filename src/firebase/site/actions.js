@@ -41,7 +41,7 @@ export function updateFirestoreSiteHistoryData(
 ): Promise<any> {
   const siteDocRef = sitesCollection.doc(siteKey);
   return siteDocRef.update({
-    'data.history': firebase.firestore.FieldValue.arrayUnion(data),
+    'data.history': [data],
   });
 }
 
