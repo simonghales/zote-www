@@ -8,6 +8,8 @@ import type { UIReduxState } from './ui/reducer';
 import stylesReducer, { initialStylesReduxState } from './styles/reducer';
 import type { StylesReduxState } from './styles/state';
 import { FILTER_ALLOWED_ACTIONS, groupHistory } from './history';
+import firebaseReducer, { initialFirebaseReduxState } from './firebase/reducer';
+import type { FirebaseReduxState } from './firebase/reducer';
 
 const dataReducer = combineReducers({
   editor: editorReducer,
@@ -21,6 +23,7 @@ const rootReducer = combineReducers({
     filter: includeAction(FILTER_ALLOWED_ACTIONS),
   }),
   ui: uiReducer,
+  firebase: firebaseReducer,
 });
 
 export type ReduxDataState = {
@@ -36,6 +39,7 @@ export type ReduxRootState = {
     present: ReduxDataState,
   },
   ui: UIReduxState,
+  firebase: FirebaseReduxState,
 };
 
 const initialReduxState: ReduxRootState = {
@@ -48,6 +52,7 @@ const initialReduxState: ReduxRootState = {
     },
   },
   ui: initialUiReduxState,
+  firebase: initialFirebaseReduxState,
 };
 
 const store = createStore(rootReducer, initialReduxState);

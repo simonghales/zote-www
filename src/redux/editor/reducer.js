@@ -47,7 +47,7 @@ export const initialEditorReduxState: EditorReduxState = {
   components: {},
   pages: {},
   unsavedChanges: false,
-  ...dummyEditorReduxState,
+  // ...dummyEditorReduxState,
 };
 
 export type GenericAction = {

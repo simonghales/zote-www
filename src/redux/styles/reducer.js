@@ -13,7 +13,9 @@ import { getStylesFromStylesReduxState } from './state';
 
 export const initialStylesReduxState: StylesReduxState = {
   unsavedChanges: false,
-  ...dummyStylesReduxState,
+  styles: {},
+  mixins: {},
+  // ...dummyStylesReduxState,
 };
 
 const SET_STYLES_STATE = 'SET_STYLES_STATE';

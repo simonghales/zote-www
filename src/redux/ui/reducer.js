@@ -49,7 +49,7 @@ export const initialUiReduxState: UIReduxState = {
   },
   selectedPageKey: '',
   selectedPreviewComponentKey: '',
-  ...dummyUiReduxState,
+  // ...dummyUiReduxState,
 };
 
 const SET_SITE_KEY = 'SET_SITE_KEY';
