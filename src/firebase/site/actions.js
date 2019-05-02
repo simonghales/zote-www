@@ -48,6 +48,7 @@ export function updateFirestoreSiteHistoryData(
 export function storeReduxStateInFirestore(): Promise<any> {
   const state = store.getState();
   const data = getCurrentReduxStateAsFirestoreSiteHistoryData(state);
+  console.log('storeReduxStateInFirestore', data);
   const siteKey = getSiteKeyFromRootReduxState(state);
   return updateFirestoreSiteHistoryData(siteKey, data).then(() => {
     store.dispatch(reduxSetChangesSaved());

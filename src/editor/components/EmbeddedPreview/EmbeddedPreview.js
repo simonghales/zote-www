@@ -41,7 +41,7 @@ class EmbeddedPreview extends Component<Props, State> {
         height: EMBEDDED_PREVIEW_CONFIG_PRESETS.largeDesktop.height,
         zoom: 100,
         preferredZoom: 100,
-        lastCause: null,
+        lastCause: EMBEDDED_PREVIEW_CONFIG_CAUSES.zoom, // null?
       },
     };
   }
