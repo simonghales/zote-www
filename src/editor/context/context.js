@@ -2,7 +2,6 @@
 import React, { useContext } from 'react';
 
 export const EditorContext = React.createContext({
-  siteKey: '',
   navigateToComponent: (componentKey: string) => {},
 });
 

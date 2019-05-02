@@ -22,6 +22,7 @@ export type EditorFormSectionsVisibility = {
 };
 
 export type UIReduxState = {
+  siteKey: string,
   hoveredBlockKey: string,
   addingBlock: boolean,
   addingBlockSelectedKey: string,
@@ -35,6 +36,7 @@ export type UIReduxState = {
 };
 
 export const initialUiReduxState: UIReduxState = {
+  siteKey: '',
   hoveredBlockKey: '',
   addingBlock: false,
   addingBlockSelectedKey: '',
@@ -49,6 +51,33 @@ export const initialUiReduxState: UIReduxState = {
   selectedPreviewComponentKey: '',
   ...dummyUiReduxState,
 };
+
+const SET_SITE_KEY = 'SET_SITE_KEY';
+
+type SetSiteKeyPayload = {
+  siteKey: string,
+};
+
+type SetSiteKeyAction = {
+  type: string,
+  payload: SetSiteKeyPayload,
+};
+
+export function setSiteKeyRedux(siteKey: string): SetSiteKeyAction {
+  return {
+    type: SET_SITE_KEY,
+    payload: {
+      siteKey,
+    },
+  };
+}
+
+function handleSetSiteKey(state: UIReduxState, { siteKey }: SetSiteKeyPayload): UIReduxState {
+  return {
+    ...state,
+    siteKey,
+  };
+}
 
 const SET_SELECTED_PREVIEW_COMPONENT_KEY = 'SET_SELECTED_PREVIEW_COMPONENT_KEY';
 
@@ -334,6 +363,7 @@ function handleSetEditorFormSectionVisibility(
 }
 
 const ACTION_HANDLERS = {
+  [SET_SITE_KEY]: handleSetSiteKey,
   [SET_SELECTED_PREVIEW_COMPONENT_KEY]: handleSetSelectedPreviewComponentKey,
   [SET_SELECTED_PAGE_KEY]: handleSetSelectedPageKey,
   [SET_HOVERED_BLOCK_KEY]: handleSetHoveredBlockKey,

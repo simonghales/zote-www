@@ -77,3 +77,11 @@ export function getSelectedPageKeyFromUIReduxState(state: UIReduxState): string 
 export function getSelectedPreviewComponentKeyFromUIReduxState(state: UIReduxState): string {
   return state.selectedPreviewComponentKey;
 }
+
+export function getSiteKeyFromUIState(state: UIReduxState): string {
+  return state.siteKey;
+}
+
+export function getSiteKeyFromRootReduxState(state: ReduxRootState): string {
+  return getSiteKeyFromUIState(getReduxUIState(state));
+}

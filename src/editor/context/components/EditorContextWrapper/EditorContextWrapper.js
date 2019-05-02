@@ -6,27 +6,25 @@ import { EditorContext } from '../../context';
 import type { ReduxRootState } from '../../../../redux/store';
 import { getSelectedComponentKeySelector } from '../../../state/reselect/component';
 import { getComponentRoute } from '../../../routing/routing';
-import type { EditorRoutingMatch } from '../../../routing/routing';
+import { getSiteKeyFromRootReduxState } from '../../../../redux/ui/state';
 
 type Props = {
   children: any,
   componentKey: string,
+  siteKey: string,
   history: any,
-  match: EditorRoutingMatch,
 };
 
 class EditorContextWrapper extends React.Component<Props> {
   navigateToComponent = (newComponentKey: string) => {
-    const { componentKey, history, match } = this.props;
-    const { siteKey } = match.params;
+    const { componentKey, history, siteKey } = this.props;
     history.push(getComponentRoute(siteKey, newComponentKey, componentKey));
   };
 
   render() {
-    const { children, match } = this.props;
-    const { siteKey } = match.params;
+    const { children } = this.props;
     return (
-      <EditorContext.Provider value={{ navigateToComponent: this.navigateToComponent, siteKey }}>
+      <EditorContext.Provider value={{ navigateToComponent: this.navigateToComponent }}>
         {children}
       </EditorContext.Provider>
     );
@@ -35,8 +33,10 @@ class EditorContextWrapper extends React.Component<Props> {
 
 const mapStateToProps = (rootState: ReduxRootState) => {
   const componentKey = getSelectedComponentKeySelector(rootState);
+  const siteKey = getSiteKeyFromRootReduxState(rootState);
   return {
     componentKey,
+    siteKey,
   };
 };
 
