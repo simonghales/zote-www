@@ -12,6 +12,7 @@ import { FORM_INPUT_TYPES } from '../../../../../../components/EditorComponentFo
 import FormSectionRow from '../../../../../../components/EditorComponentForm/components/FormSection/components/FormSectionRow/FormSectionRow';
 import type { PageModel } from '../../../../../../../data/page/model';
 import { goToEditPageComponent, openPagePreview } from '../../../../../../routing/actions';
+import {useSiteKeyRedux} from '../../../../../../state/hooks/routing';
 
 type Props = {
   page: PageModel,
@@ -24,6 +25,7 @@ const PageEditor = ({ page }: Props) => {
   const [slugInput, setSlug] = useState(slug);
   const pendingChanges = name !== nameInput || slug !== slugInput;
   const updatePageDetails = useDispatchUpdatePageDetails();
+  const siteKey = useSiteKeyRedux();
   const handleSetSlug = (newSlug: string) => {
     if (newSlug.startsWith('/')) {
       newSlug = newSlug.slice(1);
@@ -49,7 +51,7 @@ const PageEditor = ({ page }: Props) => {
           <SlimIconButton
             icon={<FaExternalLinkAlt size={9} />}
             onClick={() => {
-              openPagePreview(page);
+              openPagePreview(siteKey, page);
             }}
           >
             Preview Page

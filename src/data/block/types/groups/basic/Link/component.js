@@ -13,21 +13,28 @@ export type LinkParsedProps = DefaultBlockProps & {
   children: Node,
   content: string,
   to: string,
+  zoteExternalUrl?: boolean,
   zoteStyles: ParsedStylesModel,
 };
 
 class LinkComponent extends PureComponent<LinkParsedProps> {
+  static defaultProps = {
+    zoteExternalUrl: false,
+  };
+
   render() {
-    const { children, content, to, zoteStyles } = this.props;
-    const Element = Link;
-    return React.createElement(
-      Element,
-      {
-        className: css(zoteStyles),
-        to: getPreviewSiteLinkPath(to),
-      },
-      renderChildren(content, children)
-    );
+    const { children, content, to, zoteExternalUrl, zoteStyles } = this.props;
+    const props: any = {
+      className: css(zoteStyles),
+    };
+    let Element = Link;
+    if (zoteExternalUrl) {
+      props.href = to;
+      Element = 'a';
+    } else {
+      props.to = to;
+    }
+    return React.createElement(Element, props, renderChildren(content, children));
   }
 }
 

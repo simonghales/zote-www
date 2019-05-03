@@ -14,9 +14,12 @@ import { getPageBySlugFromReduxState } from '../../../../../../../redux/editor/s
 import type { ReduxDataState } from '../../../../../../../redux/store';
 import { setSelectedPageKeyRedux } from '../../../../../../../redux/ui/reducer';
 import { getReduxPresentState } from '../../../../../../../redux/styles/state';
+import type {ReduxRootState} from 'redux/store';
+import {getSiteKeyFromRootReduxState} from '../../../../../../../redux/ui/state';
 
 type Props = {
   page: PageModel,
+  siteKey: string,
   selectPage: (pageKey: string) => void,
 };
 
@@ -61,9 +64,15 @@ class PagePreview extends React.Component<Props> {
   }
 
   render() {
-    const { page } = this.props;
+    const { page, siteKey } = this.props;
     const slug = getPageSlug(page);
-    return <iframe className={styles.iframeClass} src={getPreviewSiteLinkPath(slug)} />;
+    return <iframe className={styles.iframeClass} src={getPreviewSiteLinkPath(siteKey, slug)} />;
+  }
+}
+
+const mapStateToProps = (state: ReduxRootState) => {
+  return {
+    siteKey: getSiteKeyFromRootReduxState(state),
   }
 }
 
@@ -72,6 +81,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(PagePreview);

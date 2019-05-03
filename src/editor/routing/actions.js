@@ -31,6 +31,6 @@ export function goToEditPageComponent(pageKey: string) {
   const componentKey = getPageComponentKey(page);
   goToEditComponent(componentKey);
 }
-export function openPagePreview(page: PageModel) {
-  window.open(`${getPreviewSiteLinkPath(getPageSlug(page))}`, '_blank');
+export function openPagePreview(siteKey: string, page: PageModel) {
+  window.open(`${getPreviewSiteLinkPath(siteKey, getPageSlug(page))}`, '_blank');
 }
