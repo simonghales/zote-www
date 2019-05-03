@@ -10,6 +10,7 @@ const containerClass = css`
 
 const contentClass = css`
   flex: 1;
+  min-height: 0;
 `;
 
 export default {

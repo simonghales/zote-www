@@ -1,4 +1,5 @@
 // @flow
+import React from 'react';
 
 import type {
   EditorFormInputModel,
@@ -24,7 +25,7 @@ const defaultReduxStyleInput = {
 
 const fontFamilyInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'font-family',
+  name: 'Font',
   key: 'font-family',
   inputType: FORM_INPUT_TYPES.fontFamily,
 };
@@ -36,7 +37,7 @@ const fontFamilyColumn: EditorFormSectionColumnModel = {
 
 const fontSizeInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'font-size',
+  name: 'Size',
   key: 'font-size',
 };
 
@@ -47,7 +48,7 @@ const fontSizeColumn: EditorFormSectionColumnModel = {
 
 const fontWeightInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'font-weight',
+  name: 'Weight',
   key: 'font-weight',
   inputType: FORM_INPUT_TYPES.fontWeight,
 };
@@ -59,7 +60,7 @@ const fontWeightColumn: EditorFormSectionColumnModel = {
 
 const colorInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'color',
+  name: 'Color',
   key: 'color',
   inputType: FORM_INPUT_TYPES.color,
 };
@@ -71,7 +72,7 @@ const colorColumn: EditorFormSectionColumnModel = {
 
 const fontStyleInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'font-style',
+  name: 'Style',
   key: 'font-style',
   inputType: FORM_INPUT_TYPES.fontStyle,
 };
@@ -83,7 +84,7 @@ const fontStyleColumn: EditorFormSectionColumnModel = {
 
 const lineHeightInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'line-height',
+  name: 'Height',
   key: 'line-height',
   inputType: FORM_INPUT_TYPES.string,
 };
@@ -95,7 +96,7 @@ const lineHeightColumn: EditorFormSectionColumnModel = {
 
 const textAlignInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'text-align',
+  name: 'Align',
   key: 'text-align',
   inputType: FORM_INPUT_TYPES.textAlign,
 };
@@ -106,87 +107,114 @@ const textAlignColumn: EditorFormSectionColumnModel = {
 };
 
 const textFormSection: EditorFormSectionModel = {
-  heading: 'Text',
-  key: 'text',
+  heading: 'Typography',
+  key: 'typography',
   columns: [
     fontFamilyColumn,
     fontSizeColumn,
     fontWeightColumn,
-    colorColumn,
-    fontStyleColumn,
     lineHeightColumn,
+    fontStyleColumn,
+    colorColumn,
     textAlignColumn,
+  ],
+};
+
+// Layout
+
+const displayInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'Display',
+  key: 'display',
+  inputType: FORM_INPUT_TYPES.display,
+};
+
+const layoutFormSection: EditorFormSectionModel = {
+  heading: 'Layout',
+  key: 'layout',
+  columns: [
+    {
+      columns: 4,
+      input: displayInput,
+    },
   ],
 };
 
 // Appearance
 
-const displayInput: EditorFormInputModel = {
-  ...defaultReduxStyleInput,
-  name: 'display',
-  key: 'display',
-  inputType: FORM_INPUT_TYPES.display,
-};
-
 const visibilityInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'visibility',
+  name: 'Visibility',
   key: 'visibility',
   inputType: FORM_INPUT_TYPES.visibility,
 };
 
 const marginInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'margin',
+  name: 'Margin',
   key: 'margin',
   inputType: FORM_INPUT_TYPES.string,
 };
 
 const paddingInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'padding',
+  name: 'Padding',
   key: 'padding',
   inputType: FORM_INPUT_TYPES.string,
 };
 
 const widthInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'width',
+  name: 'Width',
   key: 'width',
   inputType: FORM_INPUT_TYPES.string,
 };
 
 const minWidthInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'min-width',
+  name: 'Min W',
   key: 'min-width',
+  inputType: FORM_INPUT_TYPES.string,
+};
+
+const maxWidthInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'Max W',
+  key: 'max-width',
   inputType: FORM_INPUT_TYPES.string,
 };
 
 const heightInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'height',
+  name: 'Height',
   key: 'height',
   inputType: FORM_INPUT_TYPES.string,
 };
 
 const minHeightInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'minheight',
+  name: 'Min H',
   key: 'min-height',
+  inputType: FORM_INPUT_TYPES.string,
+};
+
+const maxHeightInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'Max H',
+  key: 'max-height',
   inputType: FORM_INPUT_TYPES.string,
 };
 
 const opacityInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'opacity',
+  name: 'Opacity',
   key: 'opacity',
   inputType: FORM_INPUT_TYPES.string,
 };
 
 const backgroundColorInput: EditorFormInputModel = {
   ...defaultReduxStyleInput,
-  name: 'bg-color',
+  name: 'BG Color',
   key: 'background-color',
   inputType: FORM_INPUT_TYPES.color,
 };
@@ -196,11 +224,7 @@ const appearanceFormSection: EditorFormSectionModel = {
   key: 'appearance',
   columns: [
     {
-      columns: 2,
-      input: displayInput,
-    },
-    {
-      columns: 2,
+      columns: 4,
       input: visibilityInput,
     },
     {
@@ -213,6 +237,14 @@ const appearanceFormSection: EditorFormSectionModel = {
     },
     {
       columns: 1,
+      input: opacityInput,
+    },
+    {
+      columns: 1,
+      input: backgroundColorInput,
+    },
+    {
+      columns: 2,
       input: widthInput,
     },
     {
@@ -221,6 +253,10 @@ const appearanceFormSection: EditorFormSectionModel = {
     },
     {
       columns: 1,
+      input: maxWidthInput,
+    },
+    {
+      columns: 2,
       input: heightInput,
     },
     {
@@ -229,11 +265,7 @@ const appearanceFormSection: EditorFormSectionModel = {
     },
     {
       columns: 1,
-      input: opacityInput,
-    },
-    {
-      columns: 1,
-      input: backgroundColorInput,
+      input: maxHeightInput,
     },
   ],
 };
@@ -263,5 +295,5 @@ export const stylesMixinsFormSection: EditorFormSectionModel = {
 };
 
 export const STYLES_FORM_DATA: FormDataModel = {
-  sections: [textFormSection, appearanceFormSection],
+  sections: [layoutFormSection, textFormSection, appearanceFormSection],
 };

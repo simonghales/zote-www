@@ -22,6 +22,7 @@ const containerClass = css`
 const bodyClass = css`
   margin-top: ${padding};
   flex: 1;
+  min-height: 0;
 `;
 
 export default {

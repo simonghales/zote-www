@@ -19,6 +19,7 @@ const bodyClass = css`
   flex: 1;
   display: flex;
   position: relative;
+  min-height: 0;
 `;
 
 const sidebarClass = css`

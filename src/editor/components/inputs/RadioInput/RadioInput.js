@@ -4,7 +4,7 @@ import type { Node } from 'react';
 import { cx } from 'emotion';
 import type { DefaultFormInputProps } from '../../EditorComponentForm/components/FormInput/FormInput';
 import styles from './styles';
-import { TEXT_ALIGN_OPTIONS } from './data';
+import {DISPLAY_OPTIONS, TEXT_ALIGN_OPTIONS} from './data';
 import { buttonize } from '../../../../utils/form';
 
 export type RadioInputOptionModel = {
@@ -93,4 +93,8 @@ export default RadioInput;
 
 export const TextAlignInput = (props: DefaultFormInputProps) => (
   <RadioInput {...props} options={TEXT_ALIGN_OPTIONS} />
+);
+
+export const DisplayRadioOptions = (props: DefaultFormInputProps) => (
+  <RadioInput {...props} options={DISPLAY_OPTIONS} />
 );

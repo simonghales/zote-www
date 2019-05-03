@@ -10,19 +10,7 @@ import { EditorComponentFormContext } from '../EditorComponentFormContextWrapper
 import type { EditorComponentFormContextState } from '../EditorComponentFormContextWrapper/context';
 import FormSection from '../FormSection/FormSection';
 import { getBlockStylesSelector } from '../StylesStateFormSection/StylesStateFormSection';
-
-const Column = ({ children, columns }: { children: Node, columns: number }) => (
-  <div
-    className={cx(styles.columnClass, {
-      [styles.sharedRowColumnClass]: columns < 4, // 4 is full
-    })}
-    style={{
-      gridColumn: `span ${columns}`,
-    }}
-  >
-    {children}
-  </div>
-);
+import FormColumn from './components/FormColumn/FormColumn';
 
 const Row = ({ children }: { children: Node }) => (
   <div className={cx(styles.rowClass, styles.rowGridClass)}>{children}</div>
@@ -87,9 +75,9 @@ class FormColumnsSection extends Component<Props> {
       <FormSection visibilityKey={visibilityKey} heading={heading}>
         <Row>
           {columns.map(({ columns: numberOfColumns, input }) => (
-            <Column columns={numberOfColumns} key={input.key}>
+            <FormColumn columns={numberOfColumns} key={input.key}>
               {getFormInput(input, componentKey, blockKey, blockStyleKey, styleStateKey)}
-            </Column>
+            </FormColumn>
           ))}
         </Row>
       </FormSection>

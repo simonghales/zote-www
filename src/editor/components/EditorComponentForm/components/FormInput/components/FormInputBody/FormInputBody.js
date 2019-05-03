@@ -2,7 +2,6 @@
 import React from 'react';
 import TextInput from '../../../../../inputs/TextInput/TextInput';
 import {
-  DisplayInput,
   FontFamilyInput,
   FontStyleInput,
   FontWeightInput,
@@ -15,6 +14,7 @@ import ColorInput from '../../../../../inputs/ColorInput/ColorInput';
 import { TextAlignInput } from '../../../../../inputs/RadioInput/RadioInput';
 import ArrayKeyValueInput from '../../../../../inputs/ArrayKeyValueInput/ArrayKeyValueInput';
 import RepeaterDataInput from '../../../../../inputs/RepeaterDataInput/RepeaterDataInput';
+import DisplayInput from '../../../../../inputs/DisplayInput/DisplayInput';
 
 export const FORM_INPUT_TYPES = {
   string: 'string',

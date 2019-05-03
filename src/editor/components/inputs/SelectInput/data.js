@@ -51,29 +51,6 @@ export const VISIBILITY_OPTIONS: Array<SelectOptionType> = [
   },
 ];
 
-export const DISPLAY_OPTIONS: Array<SelectOptionType> = [
-  {
-    value: 'block',
-    label: 'block',
-  },
-  {
-    value: 'none',
-    label: 'none',
-  },
-  {
-    value: 'flex',
-    label: 'flex',
-  },
-  {
-    value: 'inline',
-    label: 'inline',
-  },
-  {
-    value: 'inline-block',
-    label: 'inline-block',
-  },
-];
-
 export const PROP_TYPES_OPTIONS: Array<SelectOptionType> = [
   {
     value: BLOCK_PROPS_CONFIG_TYPES.string,

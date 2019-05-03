@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import type { DefaultFormInputProps } from '../../EditorComponentForm/components/FormInput/FormInput';
 import { PlainDropdownSelect } from '../../DropdownSelect/DropdownSelect';
 import {
-  DISPLAY_OPTIONS,
   FONT_FAMILY_OPTIONS,
   FONT_STYLE_OPTIONS,
   FONT_WEIGHT_OPTIONS,
@@ -97,10 +96,6 @@ export const FontWeightInput = (props: DefaultFormInputProps) => (
 
 export const FontStyleInput = (props: DefaultFormInputProps) => (
   <SelectInput {...props} isCreatable isMulti={false} options={FONT_STYLE_OPTIONS} />
-);
-
-export const DisplayInput = (props: DefaultFormInputProps) => (
-  <SelectInput {...props} isCreatable isMulti={false} options={DISPLAY_OPTIONS} />
 );
 
 export const VisibilityInput = (props: DefaultFormInputProps) => (

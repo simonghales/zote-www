@@ -8,6 +8,7 @@ import type { FormInputComponentProps } from './props';
 import { PropFormInput } from './components/PropFormInput/PropFormInput';
 import { EDITOR_FORM_REDUX_TYPES } from '../../data/models';
 import StyleFormInput from './components/StyleFormInput/StyleFormInput';
+import FormInputWrapper from './components/FormInputWrapper/FormInputWrapper';
 
 export type DefaultFormInputProps = {
   inputId: string,
@@ -33,8 +34,7 @@ const FormInput = ({
 }: Props) => {
   const inputId = getFormInputId(inputKey);
   return (
-    <div>
-      <FormInputHeader inactive={inactive} inputId={inputId} name={name} />
+    <FormInputWrapper inactive={inactive} inputId={inputId} name={name}>
       <FormInputBody
         updateValue={updateValue}
         value={value}
@@ -42,7 +42,7 @@ const FormInput = ({
         inputType={inputType}
         inputId={inputId}
       />
-    </div>
+    </FormInputWrapper>
   );
 };
 

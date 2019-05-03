@@ -29,7 +29,7 @@ const optionClass = css`
 
   svg {
     display: block;
-    width: 10px;
+    //width: 10px;
   }
 `;
 
