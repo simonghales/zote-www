@@ -7,12 +7,16 @@ import { setStylesStateRedux } from './styles/reducer';
 import type { ReduxDataState } from './store';
 import { useReduxPresentState } from '../editor/state/hooks/shared';
 import { getReduxPresentState } from './styles/state';
+import { getReduxUIState } from './shared/state';
+import type { UIReduxState } from './ui/reducer';
+import { setUIStateRedux } from './ui/reducer';
 
 export const REDUX_STORAGE_STATE = 'REDUX_STORAGE_STATE';
 
 export type ReduxStorageState = {
   editor: EditorReduxState,
   styles: StylesReduxState,
+  ui: UIReduxState,
   timestamp: number,
 };
 
@@ -35,10 +39,21 @@ export function storeLocalStorageState(state: ReduxStorageState) {
   store.dispatch(setStylesStateRedux(styles));
 }
 
+function storeLocalStorageUIState(state: ReduxStorageState) {
+  const { ui } = state;
+  store.dispatch(setUIStateRedux(ui));
+}
+
 export function loadStateFromLocalStorage() {
   const state = loadState();
   if (!state) return;
   storeLocalStorageState(state);
+}
+
+export function loadUIStateFromLocalStorage() {
+  const state = loadState();
+  if (!state) return;
+  storeLocalStorageUIState(state);
 }
 
 const saveState = (state: ReduxStorageState) => {
@@ -51,8 +66,9 @@ const saveState = (state: ReduxStorageState) => {
 };
 
 export function storeReduxStateInLocalStorage() {
-  const historyState = store.getState();
-  const state = getReduxPresentState(historyState);
+  const rootState = store.getState();
+  const state = getReduxPresentState(rootState);
   const { editor, styles } = state;
-  saveState({ editor, styles, timestamp: Date.now() });
+  const uiState = getReduxUIState(rootState);
+  saveState({ editor, styles, ui: uiState, timestamp: Date.now() });
 }

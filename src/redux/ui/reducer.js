@@ -52,6 +52,32 @@ export const initialUiReduxState: UIReduxState = {
   // ...dummyUiReduxState,
 };
 
+const SET_UI_STATE = 'SET_UI_STATE';
+
+type SetUIStatePayload = {
+  state: UIReduxState,
+};
+
+type SetUIStateAction = {
+  type: string,
+  payload: SetUIStatePayload,
+};
+
+export function setUIStateRedux(state: UIReduxState): SetUIStateAction {
+  return {
+    type: SET_UI_STATE,
+    payload: {
+      state,
+    },
+  };
+}
+
+function handleSetUIState(oldState: UIReduxState, { state }: SetUIStatePayload): UIReduxState {
+  return {
+    ...state,
+  };
+}
+
 const SET_SITE_KEY = 'SET_SITE_KEY';
 
 type SetSiteKeyPayload = {
@@ -363,6 +389,7 @@ function handleSetEditorFormSectionVisibility(
 }
 
 const ACTION_HANDLERS = {
+  [SET_UI_STATE]: handleSetUIState,
   [SET_SITE_KEY]: handleSetSiteKey,
   [SET_SELECTED_PREVIEW_COMPONENT_KEY]: handleSetSelectedPreviewComponentKey,
   [SET_SELECTED_PAGE_KEY]: handleSetSelectedPageKey,

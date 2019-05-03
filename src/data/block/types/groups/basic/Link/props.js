@@ -18,7 +18,7 @@ export const linkPropsConfig: BlockPropsConfigModel = {
   to: {
     key: 'to',
     label: 'To',
-    type: BLOCK_PROPS_CONFIG_TYPES.string,
+    type: BLOCK_PROPS_CONFIG_TYPES.link,
     defaultValue: '',
   },
   [HTML_ATTRIBUTES_PROP_CONFIG.key]: {

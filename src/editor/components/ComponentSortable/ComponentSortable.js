@@ -77,12 +77,9 @@ class ComponentSortable extends React.Component<Props> {
   };
 
   handleUpdateBlocksOrder = (items: Array<SortableBlockModel>) => {
-    console.log('handleUpdateBlocksOrder', items);
     const { componentKey, updateComponentBlocksOrder } = this.props;
     const rootBlocksKeysOrder = mapRootBlocksKeysOrder(items);
     const blocksOrder = mapBlocksOrder(items);
-    console.log('rootBlocksKeysOrder', rootBlocksKeysOrder);
-    console.log('blocksOrder', blocksOrder);
     updateComponentBlocksOrder(blocksOrder, rootBlocksKeysOrder, componentKey);
   };
 

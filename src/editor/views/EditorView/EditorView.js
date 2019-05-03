@@ -22,7 +22,7 @@ import EditorComponentView from './views/EditorComponentView/EditorComponentView
 import { EDITOR_PATHS } from '../../routing/routing';
 import PagesView from './views/PagesView/PagesView';
 import ComponentsView from './views/ComponentsView/ComponentsView';
-import { storeReduxStateInLocalStorage } from '../../../redux/storage';
+import { loadUIStateFromLocalStorage, storeReduxStateInLocalStorage } from '../../../redux/storage';
 import { getReduxPresentState } from '../../../redux/styles/state';
 import { getReduxUIState } from '../../../redux/shared/state';
 
@@ -38,6 +38,7 @@ class EditorView extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.unsubscribeToStore = store.subscribe(debounce(storeReduxStateInLocalStorage, 1000));
+    loadUIStateFromLocalStorage();
   }
 
   componentWillUnmount(): void {

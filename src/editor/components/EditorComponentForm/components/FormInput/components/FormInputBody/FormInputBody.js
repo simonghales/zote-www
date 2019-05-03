@@ -2,12 +2,14 @@
 import React from 'react';
 import TextInput from '../../../../../inputs/TextInput/TextInput';
 import {
+  DisplayInput,
   FontFamilyInput,
   FontStyleInput,
   FontWeightInput,
   HtmlContainerInput,
   HtmlHeadingInput,
   HtmlInput,
+  VisibilityInput,
 } from '../../../../../inputs/SelectInput/SelectInput';
 import ColorInput from '../../../../../inputs/ColorInput/ColorInput';
 import { TextAlignInput } from '../../../../../inputs/RadioInput/RadioInput';
@@ -16,10 +18,13 @@ import RepeaterDataInput from '../../../../../inputs/RepeaterDataInput/RepeaterD
 
 export const FORM_INPUT_TYPES = {
   string: 'string',
+  link: 'link',
   fontFamily: 'fontFamily',
   fontWeight: 'fontWeight',
   fontStyle: 'fontStyle',
   textAlign: 'textAlign',
+  display: 'display',
+  visibility: 'visibility',
   color: 'color',
   html: 'html',
   htmlContainer: 'htmlContainer',
@@ -31,11 +36,14 @@ export type FormInputTypes = $Keys<typeof FORM_INPUT_TYPES>;
 
 const MAPPED_FORM_INPUT_TYPES = {
   [FORM_INPUT_TYPES.string]: TextInput,
+  [FORM_INPUT_TYPES.link]: TextInput,
   [FORM_INPUT_TYPES.fontFamily]: FontFamilyInput,
   [FORM_INPUT_TYPES.fontWeight]: FontWeightInput,
   [FORM_INPUT_TYPES.fontStyle]: FontStyleInput,
   [FORM_INPUT_TYPES.color]: ColorInput,
   [FORM_INPUT_TYPES.textAlign]: TextAlignInput,
+  [FORM_INPUT_TYPES.display]: DisplayInput,
+  [FORM_INPUT_TYPES.visibility]: VisibilityInput,
   [FORM_INPUT_TYPES.html]: HtmlInput,
   [FORM_INPUT_TYPES.htmlContainer]: HtmlContainerInput,
   [FORM_INPUT_TYPES.htmlHeading]: HtmlHeadingInput,

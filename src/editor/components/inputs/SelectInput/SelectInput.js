@@ -4,10 +4,12 @@ import React, { Component } from 'react';
 import type { DefaultFormInputProps } from '../../EditorComponentForm/components/FormInput/FormInput';
 import { PlainDropdownSelect } from '../../DropdownSelect/DropdownSelect';
 import {
+  DISPLAY_OPTIONS,
   FONT_FAMILY_OPTIONS,
   FONT_STYLE_OPTIONS,
   FONT_WEIGHT_OPTIONS,
   PROP_TYPES_OPTIONS,
+  VISIBILITY_OPTIONS,
 } from './data';
 import type { SelectOptionType } from '../../DropdownSelect/DropdownSelect';
 
@@ -97,6 +99,14 @@ export const FontStyleInput = (props: DefaultFormInputProps) => (
   <SelectInput {...props} isCreatable isMulti={false} options={FONT_STYLE_OPTIONS} />
 );
 
+export const DisplayInput = (props: DefaultFormInputProps) => (
+  <SelectInput {...props} isCreatable isMulti={false} options={DISPLAY_OPTIONS} />
+);
+
+export const VisibilityInput = (props: DefaultFormInputProps) => (
+  <SelectInput {...props} isCreatable isMulti={false} options={VISIBILITY_OPTIONS} />
+);
+
 const mapHtmlTags = (tags: Array<string>): Array<SelectOptionType> =>
   tags.map((tag: string) => ({
     value: tag,
@@ -105,7 +115,7 @@ const mapHtmlTags = (tags: Array<string>): Array<SelectOptionType> =>
 
 const allHtmlTags = mapHtmlTags(htmlTags);
 const headingHtmlTags = mapHtmlTags(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
-const containerHtmlTags = mapHtmlTags(['div', 'section']);
+const containerHtmlTags = mapHtmlTags(['div', 'section', 'nav', 'article', 'header']);
 
 export const HtmlInput = (props: DefaultFormInputProps) => (
   <SelectInput {...props} isCreatable={false} isMulti={false} options={allHtmlTags} />

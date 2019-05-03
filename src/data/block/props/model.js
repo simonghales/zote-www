@@ -21,6 +21,7 @@ export type BlockPropsModel = {
 
 export const BLOCK_PROPS_CONFIG_TYPES = {
   string: 'string',
+  link: 'link',
   html: 'html',
   module: 'module',
   blocks: 'blocks',

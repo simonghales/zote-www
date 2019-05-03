@@ -121,10 +121,121 @@ const textFormSection: EditorFormSectionModel = {
 
 // Appearance
 
+const displayInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'display',
+  key: 'display',
+  inputType: FORM_INPUT_TYPES.display,
+};
+
+const visibilityInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'visibility',
+  key: 'visibility',
+  inputType: FORM_INPUT_TYPES.visibility,
+};
+
+const marginInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'margin',
+  key: 'margin',
+  inputType: FORM_INPUT_TYPES.string,
+};
+
+const paddingInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'padding',
+  key: 'padding',
+  inputType: FORM_INPUT_TYPES.string,
+};
+
+const widthInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'width',
+  key: 'width',
+  inputType: FORM_INPUT_TYPES.string,
+};
+
+const minWidthInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'min-width',
+  key: 'min-width',
+  inputType: FORM_INPUT_TYPES.string,
+};
+
+const heightInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'height',
+  key: 'height',
+  inputType: FORM_INPUT_TYPES.string,
+};
+
+const minHeightInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'minheight',
+  key: 'min-height',
+  inputType: FORM_INPUT_TYPES.string,
+};
+
+const opacityInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'opacity',
+  key: 'opacity',
+  inputType: FORM_INPUT_TYPES.string,
+};
+
+const backgroundColorInput: EditorFormInputModel = {
+  ...defaultReduxStyleInput,
+  name: 'bg-color',
+  key: 'background-color',
+  inputType: FORM_INPUT_TYPES.color,
+};
+
 const appearanceFormSection: EditorFormSectionModel = {
   heading: 'Appearance',
   key: 'appearance',
-  columns: [],
+  columns: [
+    {
+      columns: 2,
+      input: displayInput,
+    },
+    {
+      columns: 2,
+      input: visibilityInput,
+    },
+    {
+      columns: 1,
+      input: marginInput,
+    },
+    {
+      columns: 1,
+      input: paddingInput,
+    },
+    {
+      columns: 1,
+      input: widthInput,
+    },
+    {
+      columns: 1,
+      input: minWidthInput,
+    },
+    {
+      columns: 1,
+      input: heightInput,
+    },
+    {
+      columns: 1,
+      input: minHeightInput,
+    },
+    {
+      columns: 1,
+      input: opacityInput,
+    },
+    {
+      columns: 1,
+      input: backgroundColorInput,
+    },
+  ],
 };
 
 // Custom
